@@ -13,3 +13,7 @@ export interface Post {
 		picture: SanityImageSource;
 	}
 }
+
+export interface Event {
+	name: string;
+}

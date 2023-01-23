@@ -11,6 +11,12 @@ const postFields = groq`
   "author": author->{name, picture},
 `;
 
+export const eventFields = groq`
+  *[_type == "event"] {
+    name,
+  }
+`;
+
 export const settingsQuery = groq`*[_type == "settings"][0]{title}`;
 
 export const postVisionQuery = groq`*[_type == "post"] | order(date desc, _updatedAt desc) {
