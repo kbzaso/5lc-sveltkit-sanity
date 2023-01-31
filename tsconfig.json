@@ -29,5 +29,5 @@
 		"./tests/**/*.js",
 		"./tests/**/*.ts",
 		"./tests/**/*.svelte"
-	]
+, "postcss.config.js"	]
 }

@@ -2,7 +2,6 @@
   import { page } from "$app/stores";
   import type { LayoutData } from "./$types";
   export let data: LayoutData;
-  import "virtual:windi.css";
 
   import PreviewBanner from "$lib/components/PreviewBanner.svelte";
 
