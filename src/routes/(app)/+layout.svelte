@@ -5,11 +5,11 @@
 <div class="drawer">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
+        <div class="flex w-full justify-between items-center md:container px-4 mt-4 fixed left-[50%] -translate-x-[50%]">
+            <img src="logo-white.svg" class="w-28" alt="Logo 5LC">
+            <label for="my-drawer" class="btn btn-primary drawer-button">Menu</label>
+        </div>
         <slot />
-    <div class="flex w-full justify-between items-center md:container mx-auto px-4 mt-4">
-        <img src="logo-white.svg" class="w-28" alt="Logo 5LC">
-        <label for="my-drawer" class="btn btn-primary drawer-button">Menu</label>
-    </div>
     </div> 
     <div class="drawer-side">
       <label for="my-drawer" class="drawer-overlay"></label>

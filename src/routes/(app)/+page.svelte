@@ -1,6 +1,7 @@
 <script lang="ts">
   import { urlForImage } from "$lib/config/sanity";
   import type { PageData } from "./$types";
+  import Header from "$lib/components/Header.svelte";
 
   export let data: PageData;
 
@@ -13,3 +14,6 @@
 </svelte:head>
 
 
+<div class="">
+  <Header/>
+</div>
