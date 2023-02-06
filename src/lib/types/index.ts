@@ -17,3 +17,15 @@ export interface Post {
 export interface Event {
 	name: string;
 }
+
+export interface Settings {
+	title: string;
+	description: string;
+}
+
+export interface Welcome {
+	pretitle: string;
+	imageTitle: SanityImageSource;
+	textTitle: string;
+	description: string;
+}

@@ -2,8 +2,8 @@ import { UserIcon } from '@sanity/icons';
 import { defineType } from 'sanity';
 
 export default defineType({
-	name: 'event',
-	title: 'Event',
+	name: 'home',
+	title: 'Home',
 	icon: UserIcon,
 	type: 'document',
 	fields: [
@@ -22,3 +22,6 @@ export default defineType({
 		},
 	],
 });
+
+
+

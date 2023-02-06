@@ -9,11 +9,19 @@ export default defineType({
 	fields: [
 		{
 			name: 'title',
-			description: 'This field is the title of your blog.',
-			title: 'Title',
+			title: 'Titulo del sitio',
 			type: 'string',
-			initialValue: 'Blog.',
+			initialValue: 'Titulo del sitio',
 			validation: (rule) => rule.required(),
 		},
+		{
+			type: "string",
+			name: "description",
+			title: "Descripción",
+			validation: Rule => [Rule.required()]
+		  }
 	],
+	"preview": {
+	  "prepare": () => ({ title: 'Settings' })
+	}
 });

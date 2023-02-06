@@ -1,6 +1,7 @@
 import { defineConfig, type Slug } from 'sanity'
 import { PostsPreview } from './components/PostsPreview';
 import app from '../app';
+import { myStructure } from './deskStructure';
 
 /*-------------- PLUGINS --------------*/
 import { visionTool } from '@sanity/vision';
@@ -11,7 +12,8 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 /*-------------- SCHEMAS --------------*/
 import authorType from '$lib/config/sanity/schemas/author';
 import postType from '$lib/config/sanity/schemas/post';
-import eventType from '$lib/config/sanity/schemas/events';
+import settingType from '$lib/config/sanity/schemas/settings';
+import welcomeType from '$lib/config/sanity/schemas/welcome';
 /*------------------------------------*/
 
 export default defineConfig({
@@ -21,10 +23,11 @@ export default defineConfig({
 	title: app.appName + ' - Studio',
 	schema: {
 		// If you want more content types, you can add them to this array
-		types: [ postType, authorType, eventType]
+		types: [ postType, authorType, settingType, welcomeType]
 	},
 	plugins: [
 		deskTool({
+			structure: myStructure,
 			// `defaultDocumentNode is responsible for adding a “Preview” tab to the document pane
 			// You can add any React component to `S.view.component` and it will be rendered in the pane
 			// and have access to content in the form in real-time.

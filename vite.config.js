@@ -5,7 +5,7 @@ const config = {
 	plugins: [sveltekit()],
 	optimizeDeps: {
 		include: ['sanity']
-	}
+	},
 };
 
 export default config;

@@ -17,7 +17,9 @@ export const eventFields = groq`
   }
 `;
 
-export const settingsQuery = groq`*[_type == "settings"][0]{title}`;
+export const settingsQuery = groq`*[_type == "settings"][0]`;
+
+export const welcomeQuery = groq`*[_type == "welcome"][0]`;
 
 export const postVisionQuery = groq`*[_type == "post"] | order(date desc, _updatedAt desc) {
   ...

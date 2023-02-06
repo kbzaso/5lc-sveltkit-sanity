@@ -5,15 +5,24 @@
 
   export let data: PageData;
 
-  $: ({ posts, events } = data);
+  $: ({ posts, events, settings, welcome } = data);
+
+  console.log(data)
 
 </script>
 
 <svelte:head>
-  <title>5 Luchas Clandestino</title>
+  <title>{settings.title}</title>
+  <meta name="description" content={settings.description} />
 </svelte:head>
 
 
 <div class="">
-  <Header/>
+  <Header 
+    imageTitle={urlForImage(welcome.imageTitle).crop("focalpoint").url()} 
+    preTitle={welcome.pretitle}
+    textTitle={welcome.textTitle}
+    backgroundImage={urlForImage(welcome.backgroundImage).crop("focalpoint").url()}
+    description={welcome.description}
+    />
 </div>
