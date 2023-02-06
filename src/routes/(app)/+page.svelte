@@ -7,7 +7,6 @@
 
   $: ({ posts, events, settings, welcome } = data);
 
-  console.log(data)
 
 </script>
 
@@ -20,7 +19,7 @@
 <div class="">
   <Header 
     imageTitle={urlForImage(welcome.imageTitle).crop("focalpoint").url()} 
-    preTitle={welcome.pretitle}
+    preTitle={welcome.preTitle}
     textTitle={welcome.textTitle}
     backgroundImage={urlForImage(welcome.backgroundImage).crop("focalpoint").url()}
     description={welcome.description}
