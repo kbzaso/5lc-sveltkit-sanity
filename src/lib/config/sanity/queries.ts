@@ -12,9 +12,14 @@ const postFields = groq`
 `;
 
 export const eventFields = groq`
-  *[_type == "event"] {
+    _id,
     name,
-  }
+    title,
+    date,
+    slug,
+    description,
+    poster,
+    "slug": slug.current,
 `;
 
 export const settingsQuery = groq`*[_type == "settings"][0]`;
@@ -60,5 +65,37 @@ export const postSlugsQuery = groq`
 export const postBySlugQuery = groq`
 *[_type == "post" && slug.current == $slug][0] {
   ${postFields}
+}
+`;
+
+// EVENT STUFF
+export const eventQuery = groq`
+{
+  "draft": *[_type == "event" && slug.current == $slug && defined(draft) && draft == true][0]{
+    content,
+    ${eventFields}
+  },
+  "event": *[_type == "event" && slug.current == $slug] | order(_updatedAt desc) [0] {
+    content,
+    ${eventFields}
+  },
+  "moreEvents": *[_type == "event" && slug.current != $slug] | order(date desc, _updatedAt desc) [0...2] {
+    content,
+    ${eventFields}
+  }
+}`;
+
+export const allEventsQuery = groq`
+*[_type == "event"] | order(date desc, _updatedAt desc) {
+  ${eventFields}
+}`;
+
+export const eventSlugsQuery = groq`
+*[_type == "event" && defined(slug.current)][].slug.current
+`;
+
+export const eventBySlugQuery = groq`
+*[_type == "event" && slug.current == $slug][0] {
+  ${eventFields}
 }
 `;

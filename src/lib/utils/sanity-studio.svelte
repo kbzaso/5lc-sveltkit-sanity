@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { renderStudio, createConfig, type StudioProps } from "sanity";
+  import { renderStudio, defineConfig, type StudioProps } from "sanity";
   import { onMount } from "svelte";
 
   export let config: StudioProps["config"];
@@ -8,7 +8,7 @@
 
   onMount(() => {
     if (studioEl) {
-      const sanityConfig = createConfig(config);
+      const sanityConfig = defineConfig(config);
 
       renderStudio(studioEl, sanityConfig);
     }

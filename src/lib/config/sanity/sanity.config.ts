@@ -1,5 +1,5 @@
 import { defineConfig, type Slug } from 'sanity'
-import { PostsPreview } from './components/PostsPreview';
+import { DataPreview } from './components/DataPreview';
 import app from '../app';
 import { myStructure } from './deskStructure';
 
@@ -12,6 +12,7 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 /*-------------- SCHEMAS --------------*/
 import authorType from '$lib/config/sanity/schemas/author';
 import postType from '$lib/config/sanity/schemas/post';
+import eventType from '$lib/config/sanity/schemas/event';
 import settingType from '$lib/config/sanity/schemas/settings';
 import welcomeType from '$lib/config/sanity/schemas/welcome';
 /*------------------------------------*/
@@ -23,7 +24,7 @@ export default defineConfig({
 	title: app.appName + ' - Studio',
 	schema: {
 		// If you want more content types, you can add them to this array
-		types: [ postType, authorType, settingType, welcomeType]
+		types: [ postType, authorType, settingType, welcomeType, eventType]
 	},
 	plugins: [
 		deskTool({
@@ -34,8 +35,8 @@ export default defineConfig({
 			// It's part of the Studio's “Structure Builder API” and is documented here:
 			// https://www.sanity.io/docs/structure-builder-reference
 			defaultDocumentNode: (S, { schemaType }) => {
-				if (schemaType === 'post') {
-					return S.document().views([S.view.form(), S.view.component(PostsPreview).title('Preview')]);
+				if (schemaType === 'post' || schemaType === 'event') {
+					return S.document().views([S.view.form(), S.view.component(DataPreview).title('Preview')]);
 				}
 
 				return null;

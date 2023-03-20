@@ -7,7 +7,7 @@
 
   $: ({ posts, events, settings, welcome } = data);
 
-
+  console.log(data.events)
 </script>
 
 <svelte:head>

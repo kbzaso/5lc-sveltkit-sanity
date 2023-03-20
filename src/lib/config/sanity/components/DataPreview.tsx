@@ -5,12 +5,12 @@
 import { Card, Text } from '@sanity/ui';
 import React from 'react';
 
-export function PostsPreview(props: unknown) {
+export function DataPreview(props: unknown) {
 	// @ts-expect-error - TODO: Fix this
 	if (!props.document.displayed.slug) {
 		return (
 			<Card tone="primary" margin={5} padding={6}>
-				<Text align="center">Please add a slug to the post to see the preview!</Text>
+				<Text align="center">Please add a slug to the post/event to see the preview!</Text>
 			</Card>
 		);
 	}

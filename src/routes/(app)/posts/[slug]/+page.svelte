@@ -28,6 +28,7 @@
 
         <div>
           <h1 class="text-4xl font-bold">{$postData.post.title}</h1>
+          <h1 class="text-4xl font-bold">{$postData.post.peo}</h1>
           <div class="mt-3 flex items-center">
             <div class="flex-shrink-0">
               <span class="sr-only">Roel Aufderehar</span>

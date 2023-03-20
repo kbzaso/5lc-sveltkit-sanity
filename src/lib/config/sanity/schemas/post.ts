@@ -28,6 +28,12 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 		},
 		{
+			name: 'peo',
+			title: 'Peo',
+			type: 'string',
+			validation: (Rule) => Rule.required(),
+		},
+		{
 			name: 'slug',
 			title: 'Slug',
 			type: 'slug',

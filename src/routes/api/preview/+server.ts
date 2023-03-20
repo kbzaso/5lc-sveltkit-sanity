@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 import { env } from '$env/dynamic/private';
 import { error, redirect } from '@sveltejs/kit';
 import { getSanityServerClient } from '$lib/config/sanity/client';
-import { postBySlugQuery } from '$lib/config/sanity/queries';
+import { postBySlugQuery, eventBySlugQuery } from '$lib/config/sanity/queries';
 import { setPreviewCookie } from '$lib/utils';
 
 export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
@@ -41,6 +41,22 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
 		// Set the redirect slug and append the isPreview query
 		// param, so that the app knows it's a Sanity preview.
 		redirectSlug = `/posts/${post.slug}?isPreview=true`;
+	}
+
+	if (type === 'event') {
+		const event = await getSanityServerClient(true).fetch(eventBySlugQuery, {
+			slug,
+		});
+
+		if (!event || !event.slug) {
+			throw error(401, 'No event found');
+		}
+
+		isPreviewing = true;
+
+		// Set the redirect slug and append the isPreview query
+		// param, so that the app knows it's a Sanity preview.
+		redirectSlug = `/events/${event.slug}?isPreview=true`;
 	}
 
 	// Set the preview cookie.
