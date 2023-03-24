@@ -5,9 +5,7 @@
 
   export let data: PageData;
 
-  $: ({ posts, events, settings, welcome } = data);
-
-  console.log(data.events)
+  $: ({ settings, welcome } = data);
 </script>
 
 <svelte:head>

@@ -21,7 +21,21 @@ export interface Event {
 	name: string;
 	title: string;
 	date: string;
+	boveda: boolean;
+	venue: {
+		venueName: string;
+		venueUrl: string;
+		venueAdress: string;
+	}
+	ticket: {
+		url: string;
+		price: number;
+		soldOut: boolean;
+	}
 	description: InputValue;
+	result: InputValue;
+	active: boolean;
+	extract: string;
 	poster: SanityImageSource;
 	slug: string
 }

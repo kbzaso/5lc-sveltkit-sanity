@@ -3,13 +3,13 @@ export const myStructure = (S) =>
     .title('Contenido')
     .items([
       S.listItem()
-        .title('SEO')
+        .title('Settings')
         .child(
           S.document()
             .schemaType('settings')
             .documentId('settings')),
       S.listItem()
-          .title('Welcome')
+          .title('Home')
           .child(
             S.document()
               .schemaType('welcome')

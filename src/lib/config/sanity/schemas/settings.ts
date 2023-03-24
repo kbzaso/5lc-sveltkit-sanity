@@ -15,9 +15,39 @@ export default defineType({
 			validation: (rule) => rule.required(),
 		},
 		{
+			type: "image",
+			options: {
+			  accept: ".png,.svg"
+			},
+			name: "logo",
+			title: "Logo blanco",
+			description: "Agrega el logotipo blanco del proyecto",
+			validation: Rule => [Rule.required()]
+		  },
+		  {
+			type: "image",
+			options: {
+			  accept: ".png,.svg"
+			},
+			name: "logoBlack",
+			title: "Logo negro",
+			description: "Agrega el logotipo blanco del proyecto",
+			validation: Rule => [Rule.required()]
+		  },
+		  {
+			type: "image",
+			options: {
+			  accept: ".png,.svg"
+			},
+			name: "bovedin",
+			title: "Bovedin",
+			description: "Agrega al bovedin del menu lateral",
+			validation: Rule => [Rule.required()]
+		  },
+		{
 			type: "string",
 			name: "description",
-			title: "Descripción",
+			title: "Descripción para SEO",
 			validation: Rule => [Rule.required()]
 		  }
 	],
