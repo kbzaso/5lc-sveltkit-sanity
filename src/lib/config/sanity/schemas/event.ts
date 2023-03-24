@@ -92,7 +92,7 @@ export default defineType({
 		type: "string",
 		name: "extract",
 		title: "Extracto del evento",
-		validation: Rule => [Rule.required(), Rule.max(160).warning(`A title shouldn't be more than 160 characters.`), Rule.max(160)]
+		validation: Rule => [Rule.required(), Rule.max(200).warning(`A title shouldn't be more than 160 characters.`), Rule.max(200)]
 	  },
 	  {
 		type: "image",

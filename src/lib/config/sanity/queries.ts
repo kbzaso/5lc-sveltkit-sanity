@@ -106,3 +106,9 @@ export const eventBySlugQuery = groq`
   ${eventFields}
 }
 `;
+
+export const nextEventQuery = groq`
+*[_type == "event" && active == true][0]{
+  ${eventFields}
+}
+`

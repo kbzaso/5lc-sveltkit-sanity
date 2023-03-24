@@ -49,5 +49,5 @@ export interface Welcome {
 	pretitle: string;
 	imageTitle: SanityImageSource;
 	textTitle: string;
-	description: string;
+	description: InputValue;
 }
