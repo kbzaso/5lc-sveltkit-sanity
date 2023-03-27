@@ -5,12 +5,16 @@
 
     export let data: PageData;
 
-    $: ({ settings } = data);
+    $: ({ settings, staff } = data);
 
     const siteMap = {
         home: {
             index: '/',
             title: 'Inicio',
+        },
+        staff: {
+            index: '/staff',
+            title: 'Equipo',
         },
         events: {
             index: '/events',
@@ -44,6 +48,9 @@
         <img src={urlForImage(settings.logoBlack).url()}  alt="Logo de 5 luchas clandestino">
         <!-- Sidebar content here -->
         <li class="mt-10"><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.home.index}>{siteMap.home.title}</button></li>
+        {#if staff.length > 0}
+        <li><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.staff.index}>{siteMap.staff.title}</button></li>
+        {/if}
         <li><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.events.index}>{siteMap.events.title}</button></li>
         <picture class="absolute bottom-0 left-0">
             <img src={urlForImage(settings.bovedin).url()} alt="Bovedin">

@@ -20,7 +20,7 @@
 <div id="header" class={`bg-[url('${backgroundImage}')] bg-cover bg-center h-screen relative`}>
     <div class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full">
     </div>
-    <div class="container relative mx-auto flex flex-col justify-end h-screen pb-40 px-4">
+    <div class="container relative mx-auto flex flex-col justify-end h-screen pb-28 px-4">
         <h1 class="text-md font-bold uppercase tracking-widest lg:-mb-4 text-white">{preTitle}</h1>
         <div class="w-full">
             {#if !imageTitle}

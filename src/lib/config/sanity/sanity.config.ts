@@ -11,7 +11,7 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 
 /*-------------- SCHEMAS --------------*/
 import authorType from '$lib/config/sanity/schemas/author';
-import postType from '$lib/config/sanity/schemas/post';
+import staffType from '$lib/config/sanity/schemas/staff';
 import eventType from '$lib/config/sanity/schemas/event';
 import settingType from '$lib/config/sanity/schemas/settings';
 import welcomeType from '$lib/config/sanity/schemas/welcome';
@@ -24,7 +24,7 @@ export default defineConfig({
 	title: app.appName + ' - Studio',
 	schema: {
 		// If you want more content types, you can add them to this array
-		types: [ postType, authorType, settingType, welcomeType, eventType]
+		types: [ staffType, authorType, settingType, welcomeType, eventType]
 	},
 	plugins: [
 		deskTool({
@@ -35,10 +35,9 @@ export default defineConfig({
 			// It's part of the Studio's “Structure Builder API” and is documented here:
 			// https://www.sanity.io/docs/structure-builder-reference
 			defaultDocumentNode: (S, { schemaType }) => {
-				if (schemaType === 'post' || schemaType === 'event') {
+				if (schemaType === 'staff' || schemaType === 'event') {
 					return S.document().views([S.view.form(), S.view.component(DataPreview).title('Preview')]);
 				}
-
 				return null;
 			},
 		}),
@@ -60,7 +59,7 @@ export default defineConfig({
 
 			try {
 				switch (document._type) {
-					case postType.name:
+					case eventType.name:
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 						url.searchParams.set('slug', (document.slug as Slug).current!);
 						break;

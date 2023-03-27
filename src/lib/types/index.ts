@@ -1,18 +1,25 @@
 import type { InputValue } from '@portabletext/svelte/ptTypes';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
-export interface Post {
+export interface Staff {
 	_id: string;
-	name: string;
 	title: string;
-	date: string;
-	postContent: string;
-	peo: string,
-	coverImage: SanityImageSource;
+	pseudonym: string;
+	staffImage: SanityImageSource;
 	slug: string
-	author: {
-		name: string;
-		picture: SanityImageSource;
+	imageTitle: SanityImageSource;
+	data: {
+		weight: number;
+		height: number;
+		date: string;
+	},
+	social: {
+		instagram: string;
+		twitter: string;
+		youtube: string;
+		facebook: string;
+		tiktok: string;
+		other: string;
 	}
 }
 

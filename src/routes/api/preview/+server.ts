@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 import { env } from '$env/dynamic/private';
 import { error, redirect } from '@sveltejs/kit';
 import { getSanityServerClient } from '$lib/config/sanity/client';
-import { postBySlugQuery, eventBySlugQuery } from '$lib/config/sanity/queries';
+import { staffBySlugQuery, eventBySlugQuery } from '$lib/config/sanity/queries';
 import { setPreviewCookie } from '$lib/utils';
 
 export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
@@ -27,20 +27,20 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
 	let isPreviewing = false;
 
 	// Our query may vary depending on the type.
-	if (type === 'post') {
-		const post = await getSanityServerClient(true).fetch(postBySlugQuery, {
+	if (type === 'staff') {
+		const staff = await getSanityServerClient(true).fetch(staffBySlugQuery, {
 			slug,
 		});
 
-		if (!post || !post.slug) {
-			throw error(401, 'No post found');
+		if (!staff || !staff.slug) {
+			throw error(401, 'No staff found');
 		}
 
 		isPreviewing = true;
 
 		// Set the redirect slug and append the isPreview query
 		// param, so that the app knows it's a Sanity preview.
-		redirectSlug = `/posts/${post.slug}?isPreview=true`;
+		redirectSlug = `/staff/${staff.slug}?isPreview=true`;
 	}
 
 	if (type === 'event') {

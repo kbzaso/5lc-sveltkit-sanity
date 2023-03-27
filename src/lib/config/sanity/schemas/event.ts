@@ -89,7 +89,7 @@ export default defineType({
 		hidden: ({ document }) => document?.active === true,
 	  },
 	  {
-		type: "string",
+		type: "text",
 		name: "extract",
 		title: "Extracto del evento",
 		validation: Rule => [Rule.required(), Rule.max(200).warning(`A title shouldn't be more than 160 characters.`), Rule.max(200)]
@@ -97,14 +97,14 @@ export default defineType({
 	  {
 		type: "image",
 		options: {
-		  accept: ".jpg,.png,.svg,.avif"
+		  accept: ".jpg,.png,.svg,.avif",
+		  hotspot: true,
 		},
 		name: "poster",
 		title: "Poster",
 		description: "Afiche del evento",
 		validation: Rule => [Rule.required()],
 	  },
-	  
 	  {
 		name: 'ticket',
 		type: 'object',
