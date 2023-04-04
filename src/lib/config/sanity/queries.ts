@@ -9,6 +9,8 @@ const staffFields = groq`
   imageTitle,
   social,
   staffImage,
+  description,
+  gallery,
 `;
 
 export const eventFields = groq`

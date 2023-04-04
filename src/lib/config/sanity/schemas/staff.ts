@@ -69,6 +69,22 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
+      type: "text",
+      name: "description",
+      title: "Descripción del luchador/a",
+      hidden: ({ document }) => document?.active === false,
+    },
+    {
+      name: "gallery",
+      title: "Galeria de imagenes",
+      description: "Las mejores 5 imagenes de combate del luchador/a",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      hidden: ({ document }) => document?.active === false,
+    },
+    {
       name: "data",
       type: "object",
       title: "Información del Luchador/a",
