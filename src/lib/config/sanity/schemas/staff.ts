@@ -21,43 +21,44 @@ export default defineType({
   icon: BookIcon,
   type: "document",
   fields: [
-	{
-		title: '¿Es un luchador/a?',
-		name: 'active',
-		type: 'boolean',
-		description: "Si no lo es, es un staff y los campos de luchador no se muestran",
-		initialValue: true
-	},
+    {
+      title: "¿Es un luchador/a?",
+      name: "active",
+      type: "boolean",
+      description:
+        "Si no lo es, es un staff y los campos de luchador no se muestran",
+      initialValue: true,
+    },
     {
       name: "title",
       title: "Nombre del Luchador/a o Staff",
       type: "string",
       validation: (Rule) => Rule.required(),
     },
-	{
-		name: "pseudonym",
-		title: "Seudonimo",
-		type: "string",
-		hidden: ({ document }) => document?.active === false,
-	  },
+    {
+      name: "pseudonym",
+      title: "Seudonimo",
+      type: "string",
+      hidden: ({ document }) => document?.active === false,
+    },
     {
       name: "staffImage",
       title: "Imgen del Staff",
       type: "image",
-	  validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required(),
       options: {
         hotspot: true,
       },
     },
     {
-		type: "image",
-    name: "imageTitle",
-    title: "Imagen con texto",
-    hidden: ({ document }) => document?.active === false,
-		options: {
-		  accept: ".png,.svg,.avif,.webp",
-		},
-	  },
+      type: "image",
+      name: "imageTitle",
+      title: "Imagen con texto",
+      hidden: ({ document }) => document?.active === false,
+      options: {
+        accept: ".png,.svg,.avif,.webp",
+      },
+    },
     {
       name: "slug",
       title: "Slug",
@@ -76,19 +77,57 @@ export default defineType({
     },
     {
       name: "gallery",
-      title: "Galeria de imagenes",
-      description: "Las mejores 5 imagenes de combate del luchador/a",
-      type: "image",
-      options: {
-        hotspot: true,
+      type: "object",
+      title: "Galería de fotos",
+      description: "Selecciona las mejores 5 fotos del staff en acción",
+      fields: [
+        {
+          name: "images",
+          type: "array",
+          title: "Images",
+          of: [
+            {
+              name: "image",
+              type: "image",
+              title: "Image",
+              options: {
+                hotspot: true,
+              },
+              fields: [
+                {
+                  name: "alt",
+                  type: "string",
+                  title: "Alternative text",
+                },
+              ],
+            },
+          ],
+          options: {
+            layout: "grid",
+          },
+        },
+      ],
+      preview: {
+        select: {
+          images: "images",
+          image: "images.0",
+        },
+        prepare(selection) {
+          const { images, image } = selection;
+
+          return {
+            title: `Gallery block of ${Object.keys(images).length} images`,
+            subtitle: `Alt text: ${image.alt}`,
+            media: image,
+          };
+        },
       },
-      hidden: ({ document }) => document?.active === false,
     },
     {
       name: "data",
       type: "object",
       title: "Información del Luchador/a",
-	  hidden: ({ document }) => document?.active === false,
+      hidden: ({ document }) => document?.active === false,
       fields: [
         {
           name: "weight",
