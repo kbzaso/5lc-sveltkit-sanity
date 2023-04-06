@@ -26,6 +26,8 @@
 
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
+
+  
 </script>
 
 <div class="relative">
@@ -37,7 +39,7 @@
         <div class="flex flex-col items-center">
           <figure class="relative max-w-[670px] md:min-w-[670px]">
             <img
-              src={urlForImage($staffData.staff.staffImage).url()}
+              src={urlForImage($staffData.staff.staffImage).width(800).quality(70).url()}
               alt={$staffData.staff.title}
             />
           </figure>
@@ -64,24 +66,31 @@
               />
             {/if}
           </div>
+ 
           <div class="flex flex-col items-center">
             <div>
+              {#if $staffData.staff.data?.weight}
               <p class="text-gray-300">
                 Peso: <span class="text-primary font-bold"
-                  >{$staffData.staff.data.weight} kgs.</span
+                  >{$staffData.staff.data?.weight} kgs.</span
                 >
               </p>
+              {/if}
+              {#if $staffData.staff.data?.height}
               <p class="text-gray-300">
                 Altura: <span class="text-primary font-bold"
-                  >{$staffData.staff.data.height} cms.</span
+                  >{$staffData.staff.data?.height} cms.</span
                 >
               </p>
+              {/if}
+              {#if eventDateFormatted}
               <p class="text-gray-300">
                 Debut en la bóveda: <time class="text-primary font-bold"
                   >{eventDateFormatted.charAt(0).toUpperCase() +
                     eventDateFormatted.slice(1)}</time
                 >
               </p>
+              {/if}
               {#if $staffData.staff.description}
                 <p
                   class="pt-4 prose prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300"
@@ -179,6 +188,7 @@
 
             </div>
           </div>
+
         </section>
       {/if}
     </div>
@@ -187,7 +197,8 @@
     />
   </header>
 
-  {#if $staffData?.staff.gallery.images.length > 0}
+
+  <!-- {#if $staffData?.staff.gallery !== null || $staffData?.staff.gallery !== undefined}
     <div class="container mx-auto w-full xl:w-1/2 flex flex-col justify-center">
       <section
         class=" mx-auto bg-primary p-8"
@@ -200,5 +211,5 @@
         )}
       </p>
     </div>
-  {/if}
+  {/if} -->
 </div>
