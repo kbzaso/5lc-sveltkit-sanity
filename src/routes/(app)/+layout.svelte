@@ -3,6 +3,8 @@
     import { urlForImage } from "$lib/config/sanity";
     import type { PageData } from "./$types";
 
+    import Footer from '$lib/components/Footer.svelte';
+
     export let data: PageData;
 
     $: ({ settings, staff } = data);
@@ -34,13 +36,16 @@
 <div class="drawer">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
-        <div class="flex w-full justify-between items-center md:container px-8 md:px-0 mt-4 fixed left-[50%] -translate-x-[50%]  z-50">
-            <a href="/">
-            <img src={urlForImage(settings.logo).url()} class="w-28" alt="Logo 5LC">
-            </a>
-            <label for="my-drawer" class="btn btn-primary drawer-button">Menu</label>
-        </div>
+        <div class="w-full px-8 py-4 md:px-4 fixed flex justify-center bg-black/50 z-50 backdrop-blur-md">
+            <div class="container flex w-full justify-between items-center">
+                <a href="/">
+                <img src={urlForImage(settings.logo).url()} class="w-28" alt="Logo 5LC">
+                </a>
+                <label for="my-drawer" class="btn btn-primary drawer-button">Menu</label>
+                </div>
+            </div>
         <slot />
+        <Footer/>
     </div> 
     <div class="drawer-side">
       <label for="my-drawer" class="drawer-overlay"></label>

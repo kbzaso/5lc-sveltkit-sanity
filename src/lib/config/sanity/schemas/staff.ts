@@ -102,7 +102,12 @@ export default defineType({
                 {
                   name: "alt",
                   type: "string",
-                  title: "Alternative text",
+                  title: "Texto alternativo",
+                },
+                {
+                  name: "author",
+                  type: "string",
+                  title: "Fotografo/a",
                 },
               ],
             },
