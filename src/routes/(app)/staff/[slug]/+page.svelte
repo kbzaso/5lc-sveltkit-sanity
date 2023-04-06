@@ -91,7 +91,7 @@
     </div>
   </header>
   
-  {#if $staffData?.staff.gallery}
+  {#if $staffData?.staff.gallery.images.length > 0}
     <section class="container w-full xl:w-1/2 mx-auto bg-primary p-8 mb-20">
       <Carousel images={$staffData.staff.gallery.images} />
     </section>
