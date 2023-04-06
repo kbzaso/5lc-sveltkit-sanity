@@ -70,9 +70,14 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
-      type: "text",
+      type: "array",
+      of: [
+        {
+        "type": "block"
+        }
+      ],
       name: "description",
-      title: "Descripción del luchador/a",
+      title: "Descripción del Luchador/a",
       hidden: ({ document }) => document?.active === false,
     },
     {

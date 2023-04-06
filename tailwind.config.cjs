@@ -7,6 +7,7 @@ module.exports = {
     extend: {},
   },
   plugins: [require("daisyui"), require('@tailwindcss/typography'),require('flowbite/plugin')],
+  darkMode: 'class',
   daisyui: {
 		styled: true,
 		themes: [

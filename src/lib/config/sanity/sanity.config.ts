@@ -63,6 +63,10 @@ export default defineConfig({
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 						url.searchParams.set('slug', (document.slug as Slug).current!);
 						break;
+					case staffType.name:
+						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+						url.searchParams.set('slug', (document.slug as Slug).current!);
+						break;
 					default:
 						return prev;
 				}

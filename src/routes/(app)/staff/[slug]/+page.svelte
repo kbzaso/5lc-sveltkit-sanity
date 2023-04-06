@@ -12,6 +12,8 @@
   import FiTwitter from "svelte-icons-pack/fi/FiTwitter";
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
+  import { onMount } from "svelte";
+  import Carousel from "$lib/components/Carousel.svelte";
 
   export let data: PageData;
 
@@ -25,47 +27,73 @@
   $: eventDate = new Date($staffData.staff.data.date)
   $: eventDateFormatted = eventDate.toLocaleDateString('es-CL', LocaleConfig)
 
-</script>
 
-<div class="relative overflow-hidden bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1679921653/5LC/background.avif')] bg-cover h-fit">
-  <div class="pt-28 container mx-auto flex flex-col lg:flex-row justify-center lg:space-x-10">
-  {#if $staffData?.staff}
-    <figure class="max-w-[670px] md:min-w-[670px]">
-      <img class="" src={urlForImage($staffData.staff.staffImage).url()} alt={$staffData.staff.title}>
-    </figure>
-    <section class="bg-black/75 lg:h-fit p-8 xl:w-[500px] w-full space-y-2 z-10 -mt-36 lg:mt-40">
-      <h2 class="text-sm uppercase tracking-widest text-white">{$staffData.staff.pseudonym}</h2>
-      {#if !$staffData.staff.imageTitle}
-        <h1 class="text-4xl font-bold text-primary">{$staffData.staff.title}</h1>
-      {:else}
-        <img class="pb-10" src={urlForImage($staffData.staff.imageTitle).url()} alt={$staffData.staff.title}>
+</script>
+<div class="relative">
+  <header class="relative overflow-hidden bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1679921653/5LC/background.avif')] bg-cover">
+    <div class="pt-10 z-10 w-full flex flex-col xl:flex-row justify-center ">
+      {#if $staffData?.staff}
+        <div class="flex flex-col items-center">
+          <figure class="relative max-w-[670px] md:min-w-[670px]">
+            <img src={urlForImage($staffData.staff.staffImage).url()} alt={$staffData.staff.title}>
+          </figure>
+          <div class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full invisible xl:visible">
+          </div>
+        </div>
+        <section class="bg-black/75 lg:h-fit p-8  w-full xl:w-fit space-y-2 z-10 -mt-72 xl:mt-20 backdrop-blur-md">
+          <div class="flex flex-col items-center space-y-4 xl:items-start">
+            <h2 class="text-sm uppercase tracking-widest text-white">{$staffData.staff.pseudonym}</h2>
+            {#if !$staffData.staff.imageTitle}
+              <h1 class="text-4xl font-bold text-primary">{$staffData.staff.title}</h1>
+            {:else}
+              <img class="pb-10 max-w-sm md:max-w-md" src={urlForImage($staffData.staff.imageTitle).url()} alt={$staffData.staff.title}>
+            {/if}
+         </div>
+         <div class="flex flex-col items-center">
+          <div>
+          <p class="text-gray-300">Peso: <span class="text-primary font-bold">{$staffData.staff.data.weight} kgs.</span></p>
+          <p class="text-gray-300">Altura: <span class="text-primary font-bold">{$staffData.staff.data.height} cms.</span></p>
+          <p class="text-gray-300">Debut en la bóveda: <time class="text-primary font-bold">{eventDateFormatted.charAt(0).toUpperCase() + eventDateFormatted.slice(1)}</time></p>
+          {#if $staffData.staff.description}
+          <p class="pt-4 prose prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300">
+            <PortableText value={$staffData.staff.description} />
+          </p>
+          {/if}
+        </div>
+        <div class="w-full">
+          <ul class="flex space-x-4 pt-10">
+            {#if $staffData.staff.social.instagram}
+            <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.instagram}><Icon src={AiOutlineInstagram} className="fill-white hover:fill-primary" size="26"/></a></li>
+            {/if}
+            {#if $staffData.staff.social.facebook}
+            <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.facebook}><Icon src={AiOutlineFacebook} className="fill-white hover:fill-primary" size="26"/></a></li>
+            {/if}
+            {#if $staffData.staff.social.youtube}
+            <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.youtube}><Icon src={AiOutlineYoutube} className="fill-white hover:fill-primary" size="26"/></a></li>
+            {/if}
+            {#if $staffData.staff.social.twitter}
+            <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.twitter}><Icon src={FiTwitter} className="fill-white hover:fill-primary" size="24"/></a></li>
+            {/if}
+            {#if $staffData.staff.social.tiktok}
+            <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.tiktok}><Icon src={SiTiktok} className="fill-white hover:fill-primary" size="22"/></a></li>
+            {/if}
+            {#if $staffData.staff.social.other}
+            <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.other}><Icon src={BiLink} className="fill-white hover:fill-primary" size="26"/></a></li>
+            {/if}
+          </ul> 
+        </div>
+        </div>
+        </section>
       {/if}
-      <p>Peso: <span class="text-primary font-bold">{$staffData.staff.data.weight} kgs.</span></p>
-      <p>Altura: <span class="text-primary font-bold">{$staffData.staff.data.height} cms.</span></p>
-      <p>Debut en la bóveda: <time class="text-primary font-bold">{eventDateFormatted.charAt(0).toUpperCase() + eventDateFormatted.slice(1)}</time></p>
-      <ul class="flex space-x-4 pt-10">
-        {#if $staffData.staff.social.instagram}
-        <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.instagram}><Icon src={AiOutlineInstagram} className="fill-white hover:fill-primary" size="26"/></a></li>
-        {/if}
-        {#if $staffData.staff.social.facebook}
-        <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.facebook}><Icon src={AiOutlineFacebook} className="fill-white hover:fill-primary" size="26"/></a></li>
-        {/if}
-        {#if $staffData.staff.social.youtube}
-        <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.youtube}><Icon src={AiOutlineYoutube} className="fill-white hover:fill-primary" size="26"/></a></li>
-        {/if}
-        {#if $staffData.staff.social.twitter}
-        <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.twitter}><Icon src={FiTwitter} className="fill-white hover:fill-primary" size="24"/></a></li>
-        {/if}
-        {#if $staffData.staff.social.tiktok}
-        <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.tiktok}><Icon src={SiTiktok} className="fill-white hover:fill-primary" size="22"/></a></li>
-        {/if}
-        {#if $staffData.staff.social.other}
-        <li><a target="_blank" rel="noreferrer" href={$staffData.staff.social.other}><Icon src={BiLink} className="fill-white hover:fill-primary" size="26"/></a></li>
-        {/if}
-      </ul> 
+      
+      </div>
+    <div class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full">
+    </div>
+  </header>
+  
+  {#if $staffData?.staff.gallery}
+    <section class="container w-full xl:w-1/2 mx-auto bg-primary p-8 mb-20">
+      <Carousel images={$staffData.staff.gallery.images} />
     </section>
   {/if}
-  </div>
-  <div class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full">
-  </div>
 </div>

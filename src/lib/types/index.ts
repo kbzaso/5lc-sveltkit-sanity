@@ -8,6 +8,10 @@ export interface Staff {
 	staffImage: SanityImageSource;
 	slug: string
 	imageTitle: SanityImageSource;
+	description: InputValue;
+	gallery: {
+		images: SanityImageSource[];
+	};
 	data: {
 		weight: number;
 		height: number;

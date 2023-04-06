@@ -17,7 +17,7 @@
 <a href={`staff/${staff.slug}`}>
     <div class="card w-full border-gray-500 border hover:border-primary rounded-none">
       <figure>
-        <img class="object-cover object-top h-96 w-full hover:bg-primary" src={urlForImage(staff.staffImage).url()} alt={staff.title}>
+        <img class="object-cover object-top h-96 w-full hover:bg-primary" src={urlForImage(staff.staffImage).crop("focalpoint").url()} alt={staff.title}>
       </figure>
       <div class="bg-zinc-900">
         <p class="text-md uppercase tracking-widest text-white mt-4 px-4 pt-0">{staff.pseudonym}</p>
