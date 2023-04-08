@@ -12,7 +12,6 @@
   import FiTwitter from "svelte-icons-pack/fi/FiTwitter";
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
-  import { onMount } from "svelte";
   import Carousel from "$lib/components/Carousel.svelte";
 
   export let data: PageData;
@@ -37,7 +36,7 @@
     <div class="pt-24 z-10 w-full flex flex-col xl:flex-row justify-center ">
       {#if $staffData?.staff}
         <div class="flex flex-col items-center">
-          <figure class="relative max-w-[670px] md:min-w-[670px]">
+          <figure class="relative max-w-[670px] md:min-w-[670px] flex justify-center">
             <img
               src={urlForImage($staffData.staff.staffImage).width(800).quality(70).url()}
               alt={$staffData.staff.title}
@@ -197,19 +196,20 @@
     />
   </header>
 
-
-  <!-- {#if $staffData?.staff.gallery !== null || $staffData?.staff.gallery !== undefined}
+  {#if $staffData?.staff.gallery !== null && $staffData.staff.gallery.images.length > 0 }
     <div class="container mx-auto w-full xl:w-1/2 flex flex-col justify-center">
       <section
         class=" mx-auto bg-primary p-8"
       >
         <Carousel images={$staffData.staff.gallery.images} />
       </section>
-      <p class="text-gray-500 text-center py-2 text-sm mt-2">
-        Fotografós: {$staffData.staff.gallery.images.map(
-          (image) => image.author
-        )}
-      </p>
+
+        <p class="text-gray-500 text-center py-2 text-sm mt-2">
+          Fotografós: {$staffData.staff.gallery.images.map(
+            (image) => image.author
+            )}
+        </p>
+
     </div>
-  {/if} -->
+  {/if}
 </div>
