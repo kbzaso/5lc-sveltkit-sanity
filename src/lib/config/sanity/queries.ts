@@ -64,7 +64,7 @@ export const staffQuery = groq`
 }`;
 
 export const allStaffQuery = groq`
-*[_type == "staff"] | order(date desc, _updatedAt desc) {
+*[_type == "staff"] | order(title asc) {
   ${staffFields}
 }`;
 

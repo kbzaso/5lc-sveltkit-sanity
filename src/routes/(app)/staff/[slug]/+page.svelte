@@ -45,6 +45,7 @@
         <div class="flex flex-col items-center">
           <figure class="relative max-w-[670px] md:min-w-[670px] flex justify-center">
             <img
+              loading="lazy"
               src={urlForImage($staffData.staff.staffImage).width(800).quality(70).url()}
               alt={$staffData.staff.title}
             />
