@@ -114,6 +114,7 @@ export default defineType({
           ],
           options: {
             layout: "grid",
+            hotspot: true,
           },
         },
       ],

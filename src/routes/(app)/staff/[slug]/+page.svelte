@@ -13,6 +13,8 @@
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
   import Carousel from "$lib/components/Carousel.svelte";
+  import { element, onMount } from "svelte/internal";
+  import { P } from "flowbite-svelte";
 
   export let data: PageData;
 
@@ -26,7 +28,12 @@
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
 
-  
+  let authors: string[] = []
+  onMount(() => {
+    let gallery = $staffData.staff.gallery.images
+    authors = gallery.map(image => image.author).filter(Boolean).join(", ")
+  })
+
 </script>
 
 <div class="relative">
@@ -204,11 +211,14 @@
         <Carousel images={$staffData.staff.gallery.images} />
       </section>
 
-        <p class="text-gray-500 text-center py-2 text-sm mt-2">
-          Fotografós: {$staffData.staff.gallery.images.map(
-            (image) => image.author
-            )}
+      {#if authors.length > 0}
+      <p class="text-gray-500 text-center py-2 text-sm mt-2">
+        Fotografós: 
+            {#each authors as author}
+              <span>{author}</span>
+            {/each}
         </p>
+      {/if}
 
     </div>
   {/if}

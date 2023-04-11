@@ -16,14 +16,12 @@ const handleClickSum = () => {
     if (counter !== images.length) {
         counter++
     } 
-    console.log(counter)
 }
 
 const handleClickMin = () => {
     if (counter !== 1) {
         counter--
     }
-    console.log(counter)
 }
 
 
@@ -32,10 +30,10 @@ const handleClickMin = () => {
     
 </p>
 
-<div class="relative carousel w-full flex">
+<div class="relative carousel aspect-square flex max-w-3xl">
     {#each images as image }
         <div id={image.id} class="carousel-item relative w-full">
-            <img src={urlForImage(image).url()} class="w-full object-cover" alt={image.alt}/>
+            <img src={urlForImage(image).height(800).width(800).quality(100).url()} class="" alt={image.alt}/>
             <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
 
                 <a on:click={handleClickMin} href={`#${counter}`} class={`transition-all delay-300 btn btn-circle ${counter !== 1 ? 'opacity-100' : 'opacity-0' }`}>❮</a> 

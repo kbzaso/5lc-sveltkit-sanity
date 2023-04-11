@@ -11,7 +11,7 @@ export interface Staff {
 	description: InputValue;
 	gallery: {
 		images: SanityImageSource[];
-		author: string;
+		author: string[];
 	};
 	data: {
 		weight: number;
