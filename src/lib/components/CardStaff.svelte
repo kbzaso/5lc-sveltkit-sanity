@@ -17,10 +17,10 @@
 <a href={`staff/${staff.slug}`}>
     <div class="card w-full group border-gray-500 border hover:border-primary rounded-none transition-all h-full">
       <figure class="bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/c_scale,o_100,w_793,z_3/a_270/v1681216807/1000_F_293406669_YWBByHAkamkhveh3GAQAzWiUEwG8HNof.webp')]">
-        <img loading="lazy" class="object-cover object-top h-96 w-full group-hover:bg-primary" src={urlForImage(staff.staffImage).height(600).width(600).quality(100).url()} alt={staff.title}>
+        <img loading="lazy" class="object-cover object-top h-40 md:h-96 w-full group-hover:bg-primary" src={urlForImage(staff.staffImage).height(600).width(600).quality(100).url()} alt={staff.title}>
       </figure>
       <div class="bg-zinc-900/50 h-max grow">
-        <p class="text-md uppercase tracking-widest text-gray-300 mt-4 px-4 pt-0">{staff.pseudonym}</p>
+        <p class="text-sm md:text-md uppercase tracking-widest text-gray-300 mt-4 px-4 pt-0">{staff.pseudonym ? staff.pseudonym : ''}</p>
 
         <h3 class="text-primary font-bold text-2xl px-4 pt-0">{staff.title}</h3>
         <ul class="flex space-x-2 mt-4 px-4 pt-0 pb-4">

@@ -36,7 +36,7 @@
 <div class="drawer">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
-        <div class="w-full px-8 py-4 md:px-4 fixed flex justify-center bg-black/50 z-50 backdrop-blur-md">
+        <div class="w-full px-8 py-4 md:px-4 fixed flex justify-center z-50">
             <div class="container flex w-full justify-between items-center">
                 <a href="/">
                 <img src={urlForImage(settings.logo).url()} class="w-28" alt="Logo 5LC">
@@ -51,7 +51,7 @@
       <label for="my-drawer" class="drawer-overlay"></label>
       <ul class="menu p-4 w-80 bg-primary text-base-100 relative">
         <img src={urlForImage(settings.logoBlack).url()}  alt="Logo de 5 luchas clandestino">
-        <!-- Sidebar content here -->
+         <!-- Sidebar content here -->
         <li class="mt-10"><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.home.index}>{siteMap.home.title}</button></li>
         {#if staff.length > 0}
         <li><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.staff.index}>{siteMap.staff.title}</button></li>
@@ -62,6 +62,7 @@
         </picture>
       </ul>
     </div>
-</div>
+</div> 
 
 
+<!-- <slot></slot> -->

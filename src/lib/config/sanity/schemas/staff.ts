@@ -49,6 +49,20 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Texto alternativo",
+          description: "Describe la imagen para personas con discapacidad visual",
+        },
+        {
+          name: "author",
+          type: "string",
+          title: "Fotografo/a",
+          description: "Quien tomo la foto",
+        },
+      ],
     },
     {
       type: "image",

@@ -16,7 +16,7 @@
   <figure>
     <img src="/equipo.svg" class="h-24" alt="Titulo eventos" />
   </figure>
-  <div class="mt-8 grid gap-6 md:grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] lg:grid-cols-4">
+  <div class="mt-8 grid gap-6 grid-cols-2 md:grid-cols-[repeat(auto-fit,minmax(20rem,2fr))] lg:grid-cols-4">
   {#each allStaff as staff}
     <CardStaff {staff} />
   {/each}

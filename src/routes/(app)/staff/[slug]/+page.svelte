@@ -44,8 +44,8 @@
       {#if $staffData?.staff}
         <div class="flex flex-col items-center">
           <figure class="relative max-w-[670px] md:min-w-[670px] flex justify-center">
-            <img
-              loading="lazy"
+            <img 
+              fetchpriority="high"
               src={urlForImage($staffData.staff.staffImage).width(800).quality(70).url()}
               alt={$staffData.staff.title}
             />
@@ -55,11 +55,11 @@
           />
         </div>
         <section
-          class="bg-black/75 lg:h-fit p-8  w-full xl:w-fit space-y-2 z-10 -mt-72 xl:mt-20 backdrop-blur-md"
+          class="bg-black/75 lg:h-fit p-8  w-full xl:w-fit space-y-2 z-10 -mt-40 xl:mt-20 backdrop-blur-md"
         >
           <div class="flex flex-col items-center space-y-4 xl:items-start">
             <h2 class="text-sm uppercase tracking-widest text-white">
-              {$staffData.staff.pseudonym}
+              {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ''}
             </h2>
             {#if !$staffData.staff.imageTitle}
               <h1 class="text-4xl font-bold text-primary">
@@ -67,7 +67,7 @@
               </h1>
             {:else}
               <img
-                class="pb-10 max-w-sm md:max-w-md"
+                class="pb-10 max-w-full md:max-w-md px-2"
                 src={urlForImage($staffData.staff.imageTitle).url()}
                 alt={$staffData.staff.title}
               />
@@ -206,12 +206,7 @@
 
   {#if $staffData?.staff.gallery !== null && $staffData.staff.gallery.images.length > 0 }
     <div class="container mx-auto w-full xl:w-1/2 flex flex-col justify-center">
-      <section
-        class=" mx-auto bg-primary p-8"
-      >
         <Carousel images={$staffData.staff.gallery.images} />
-      </section>
-
       {#if authors.length > 0}
       <p class="text-gray-500 text-center py-2 text-sm mt-2">
         Fotografós: 
