@@ -9,21 +9,24 @@
 
     $: ({ settings, staff } = data);
 
-    const siteMap = {
-        home: {
+    let siteMap = [
+        {
             index: '/',
             title: 'Inicio',
         },
-        staff: {
+        {
             index: '/staff',
             title: 'Equipo',
         },
-        events: {
+        {
             index: '/events',
             title: 'Eventos',
         },
-        posts: '/posts',
-    }
+        {
+            index: '/results',
+            title: 'Resultados',
+        },
+    ]
 </script>
 
 <svelte:head>
@@ -35,9 +38,9 @@
 
 </svelte:head>
 
-<div class="drawer">
+<div class="drawer min-w-[350px]">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
+    <div class="drawer-content min-w-[350px]">
         <div class="w-full px-8 py-4 md:px-4 fixed flex justify-center z-50">
             <div class="container flex w-full justify-between items-center">
                 <a href="/">
@@ -52,13 +55,13 @@
     <div class="drawer-side">
       <label for="my-drawer" class="drawer-overlay"></label>
       <ul class="menu p-4 w-80 bg-primary text-base-100 relative">
-        <img src={urlForImage(settings.logoBlack).url()}  alt="Logo de 5 luchas clandestino">
-         <!-- Sidebar content here -->
-        <li class="mt-10"><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.home.index}>{siteMap.home.title}</button></li>
-        {#if staff.length > 0}
-        <li><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.staff.index}>{siteMap.staff.title}</button></li>
-        {/if}
-        <li><button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = siteMap.events.index}>{siteMap.events.title}</button></li>
+        <img src={urlForImage(settings.logoBlack).url()}  alt="Logo de 5 luchas clandestino" class="mt-5 md:mb-10">
+        {#each siteMap as {index, title} }
+            <li>
+                <button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = index}>{title}
+                </button>
+            </li>
+        {/each}
         <picture class="absolute bottom-0 left-0">
             <img src={urlForImage(settings.bovedin).url()} alt="Bovedin">
         </picture>
