@@ -14,7 +14,6 @@
   import BiLink from "svelte-icons-pack/bi/BiLink";
   import Carousel from "$lib/components/Carousel.svelte";
   import { element, onMount } from "svelte/internal";
-  import { P } from "flowbite-svelte";
 
   export let data: PageData;
 
@@ -34,21 +33,37 @@
     authors = gallery.map(image => image.author).filter(Boolean).join(", ")
   })
 
+  let innerWidth = 0
+	let innerHeight = 0
+	
+	$: condition = innerWidth < 768
+
+
 </script>
+
+<svelte:window bind:innerWidth />
 
 <div class="relative">
   <header
-    class="relative overflow-hidden bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1679921653/5LC/background.avif')] bg-auto bg-no-repeat"
+    class={`relative overflow-hidden bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1671485780/5LC/hero-image.webp')] bg-fixed bg-cover bg-center bg-no-repeat`}
   >
     <div class="pt-24 z-10 w-full flex flex-col xl:flex-row justify-center ">
       {#if $staffData?.staff}
         <div class="flex flex-col items-center">
           <figure class="relative max-w-[670px] md:min-w-[670px] flex justify-center">
-            <img 
-              fetchpriority="high"
-              src={urlForImage($staffData.staff.staffImage).width(800).quality(70).url()}
-              alt={$staffData.staff.title}
-            />
+            {#if condition}
+              <img 
+                fetchpriority="high"
+                src={urlForImage($staffData.staff.staffImage).width(600).height(1000).quality(70).url()}
+                alt={$staffData.staff.title}
+              />
+              {:else}
+              <img 
+                fetchpriority="high"
+                src={urlForImage($staffData.staff.staffImage).width(800).quality(70).url()}
+                alt={$staffData.staff.title}
+              />
+            {/if}
           </figure>
           <div
             class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full invisible xl:visible"

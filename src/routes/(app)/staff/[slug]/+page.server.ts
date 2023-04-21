@@ -1,11 +1,13 @@
 import { getSanityServerClient, overlayDrafts } from '$lib/config/sanity/client';
-import { staffQuery } from '$lib/config/sanity/queries';
+import { staffQuery, welcomeQuery } from '$lib/config/sanity/queries';
 import type { Staff } from '$lib/types';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent, params }) => {
 	const { previewMode } = await parent();
+
+	const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
 
 	const { staff, moreStaff} = await getSanityServerClient(previewMode).fetch<{
 		staff: Staff;
@@ -25,5 +27,6 @@ export const load: PageServerLoad = async ({ parent, params }) => {
 			staff,
 			moreStaff: overlayDrafts(moreStaff),
 		},
+		welcome,
 	};
 };

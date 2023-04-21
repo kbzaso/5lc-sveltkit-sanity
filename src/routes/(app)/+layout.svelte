@@ -2,6 +2,7 @@
     import './../../styles.css'
     import { urlForImage } from "$lib/config/sanity";
     import type { PageData } from "./$types";
+    import {afterNavigate} from '$app/navigation';
 
     import Footer from '$lib/components/Footer.svelte';
 
@@ -27,7 +28,17 @@
             title: 'Resultados',
         },
     ]
+
+
+    afterNavigate(() => {
+		const main = window.document.getElementById('main');
+		if (main) {
+			main.scrollIntoView();
+		}
+	});
 </script>
+
+<svelte:window />
 
 <svelte:head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +60,9 @@
                 <label for="my-drawer" class="btn btn-primary drawer-button">Menu</label>
                 </div>
             </div>
-        <slot />
+            <div id="main">
+                <slot />
+            </div>
         <Footer/>
     </div> 
     <div class="drawer-side">
@@ -58,8 +71,8 @@
         <img src={urlForImage(settings.logoBlack).url()}  alt="Logo de 5 luchas clandestino" class="mt-5 md:mb-10">
         {#each siteMap as {index, title} }
             <li>
-                <button class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest" on:click={() => location.href = index}>{title}
-                </button>
+                <a on:click={() => {document.getElementById('my-drawer').click()}} href={index} type="button" class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest">{title}
+                </a>
             </li>
         {/each}
         <picture class="absolute bottom-0 left-0">

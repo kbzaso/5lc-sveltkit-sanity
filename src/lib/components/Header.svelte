@@ -26,7 +26,7 @@
             {#if !imageTitle}
                 <h1>{textTitle}</h1>
             {:else}
-                <img src={imageTitle} class="" alt="Siempre buena onda">
+                <img src={imageTitle} alt="Siempre buena onda">
             {/if}
         </div>
         
