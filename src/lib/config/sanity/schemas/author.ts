@@ -3,7 +3,7 @@ import { defineType } from 'sanity';
 
 export default defineType({
 	name: 'author',
-	title: 'Author',
+	title: 'Fotografo/a',
 	icon: UserIcon,
 	type: 'document',
 	fields: [
@@ -14,11 +14,12 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 		},
 		{
-			name: 'picture',
-			title: 'Picture',
-			type: 'image',
-			options: { hotspot: true },
-			validation: (Rule) => Rule.required(),
-		},
+			title: 'Image URL',
+			name: 'imageUrl',
+			type: 'url',
+			validation: Rule => Rule.uri({
+				scheme: ['http', 'https', 'mailto', 'tel']
+			  })
+		  }
 	],
 });

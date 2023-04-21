@@ -4,7 +4,12 @@ module.exports = {
   			"./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
 		],
   theme: {
-    extend: {},
+    extend: {
+		fontFamily: {
+			ibm: ['IBM Plex Sans Condensed', 'sans-serif'],
+			'ibm-sans': ['IBM Plex Sans', 'sans-serif'],
+		},
+	},
   },
   plugins: [require("daisyui"), require('@tailwindcss/typography'),require('flowbite/plugin')],
   darkMode: 'class',

@@ -38,7 +38,7 @@
 
 <div class="relative">
   <header
-    class="relative overflow-hidden bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1679921653/5LC/background.avif')] bg-cover"
+    class="relative overflow-hidden bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1679921653/5LC/background.avif')] bg-auto bg-no-repeat"
   >
     <div class="pt-24 z-10 w-full flex flex-col xl:flex-row justify-center ">
       {#if $staffData?.staff}
@@ -55,26 +55,18 @@
           />
         </div>
         <section
-          class="bg-black/75 lg:h-fit p-8  w-full xl:w-fit space-y-2 z-10 -mt-40 xl:mt-20 backdrop-blur-md"
+          class="bg-black/50 lg:h-fit p-8  w-full xl:w-fit space-y-2 z-10 -mt-40 xl:mt-10 backdrop-blur-xl"
         >
-          <div class="flex flex-col items-center space-y-4 xl:items-start">
+          <div class="flex flex-col items-center space-y-1 xl:items-start pb-8">
             <h2 class="text-sm uppercase tracking-widest text-white">
               {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ''}
             </h2>
-            {#if !$staffData.staff.imageTitle}
-              <h1 class="text-4xl font-bold text-primary">
+              <h1 class="text-5xl md:text-7xl text-primary ">
                 {$staffData.staff.title}
               </h1>
-            {:else}
-              <img
-                class="pb-10 max-w-full md:max-w-md px-2"
-                src={urlForImage($staffData.staff.imageTitle).url()}
-                alt={$staffData.staff.title}
-              />
-            {/if}
           </div>
  
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center prose-p:text-lg">
             <div>
               {#if $staffData.staff.data?.weight}
               <p class="text-gray-300">
@@ -106,7 +98,10 @@
                 </p>
               {/if}
 
-                <ul class="flex space-x-4 pt-10">
+              <div class="mt-8 space-y-4">
+              <h4 class="text-primary font-ibm text-2xl">Redes Sociales</h4>
+
+                <ul class="flex space-x-4">
                   {#if $staffData.staff.social.instagram}
                     <li>
                       <a
@@ -192,7 +187,7 @@
                     </li>
                   {/if}
                 </ul>
-
+              </div>
             </div>
           </div>
 

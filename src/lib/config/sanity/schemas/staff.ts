@@ -57,21 +57,13 @@ export default defineType({
           description: "Describe la imagen para personas con discapacidad visual",
         },
         {
-          name: "author",
-          type: "string",
-          title: "Fotografo/a",
-          description: "Quien tomo la foto",
-        },
+          name: 'photographer',
+          title: 'Fotofrafo/a',
+          type: 'reference',
+          description: 'Quien fue el fotografo/a de la imagen',
+          to: [{type: 'author'}]
+        }
       ],
-    },
-    {
-      type: "image",
-      name: "imageTitle",
-      title: "Imagen con texto",
-      hidden: ({ document }) => document?.active === false,
-      options: {
-        accept: ".png,.svg,.avif,.webp",
-      },
     },
     {
       name: "slug",
@@ -117,12 +109,15 @@ export default defineType({
                   name: "alt",
                   type: "string",
                   title: "Texto alternativo",
+                  description: "Describe la imagen para personas con discapacidad visual",
                 },
                 {
-                  name: "author",
-                  type: "string",
-                  title: "Fotografo/a",
-                },
+                  name: 'photographer',
+                  title: 'Fotofrafo/a',
+                  type: 'reference',
+                  description: 'Quien fue el fotografo/a de la imagen',
+                  to: [{type: 'author'}]
+                }
               ],
             },
           ],
