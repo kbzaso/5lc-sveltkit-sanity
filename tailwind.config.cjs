@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
 		fontFamily: {
-			ibm: ['IBM Plex Sans Condensed', 'sans-serif'],
+			'ibm': ['IBM Plex Sans Condensed', 'sans-serif'],
 			'ibm-sans': ['IBM Plex Sans', 'sans-serif'],
 		},
 	},

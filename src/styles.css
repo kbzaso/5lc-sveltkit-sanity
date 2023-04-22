@@ -5,6 +5,7 @@
 @layer base {
   h1 {
     @apply font-ibm;
+    font-style: italic;
   }
   p, span, a, li, button, input, textarea {
     @apply font-ibm-sans;

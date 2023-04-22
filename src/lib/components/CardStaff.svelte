@@ -16,7 +16,7 @@
       <div class="bg-zinc-900/50 h-max grow backdrop-blur-xl absolute bottom-0 z-20 w-full pb-4">
         <p class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-gray-300 mt-4 px-4 pt-0">{staff.pseudonym ? staff.pseudonym : ''}</p>
 
-        <h3 class="text-primary font-ibm text-2xl md:text-4xl px-4 pt-0">{staff.title}</h3>
+        <h3 class="text-primary font-ibm font-black text-2xl italic md:text-4xl px-4 pt-0">{staff.title}</h3>
       </div> 
     </div>
   </a>
