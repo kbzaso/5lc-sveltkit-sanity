@@ -34,7 +34,7 @@ const handleClickMin = () => {
 <div class="carousel aspect-video flex">
     {#each images as image }
         <div id={image.id} class="carousel-item relative w-full">
-            <img loading="lazy" class="object-cover w-full" src={urlForImage(image).width(1000).quality(100).url()} alt={image.alt}/>
+            <img loading="lazy" class="object-cover w-full" src={urlForImage(image).width(800).quality(80).url()} alt={image.alt}/>
             <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
 
                 <a on:click={handleClickMin} href={`#${counter}`} class={`transition-all delay-300 btn btn-circle ${counter !== 1 ? 'opacity-100' : 'opacity-0' }`}>❮</a> 

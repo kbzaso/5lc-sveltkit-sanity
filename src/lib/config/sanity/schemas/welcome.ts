@@ -17,7 +17,8 @@ export default defineType({
 	  {
 		type: "image",
 		options: {
-		  accept: ".png,.jpg"
+		  accept: ".png,.jpg",
+		  hotspot: true,
 		},
 		name: "backgroundImage",
 		title: "Background image",

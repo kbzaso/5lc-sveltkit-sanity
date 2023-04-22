@@ -71,7 +71,7 @@
         <img src={urlForImage(settings.logoBlack).url()}  alt="Logo de 5 luchas clandestino" class="mt-5 md:mb-10">
         {#each siteMap as {index, title} }
             <li>
-                <a on:click={() => {document.getElementById('my-drawer').click()}} href={index} type="button" class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest">{title}
+                <a data-sveltekit-preload-data on:click={() => {document.getElementById('my-drawer').click()}} href={index} type="button" class="hover:bg-base-100 hover:text-primary font-bold uppercase tracking-widest">{title}
                 </a>
             </li>
         {/each}

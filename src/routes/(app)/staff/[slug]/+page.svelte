@@ -17,7 +17,7 @@
 
   export let data: PageData;
 
-  $: ({ initialData, previewMode, slug } = data);
+  $: ({ initialData, previewMode, slug, welcome } = data);
   $: ({ data: staffData } = previewSubscription(staffQuery, {
     params: { slug },
     initialData,
@@ -28,14 +28,17 @@
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
 
   let authors: string[] = []
+  let backgroundImage: string;
   onMount(() => {
     let gallery = $staffData.staff.gallery.images
     authors = gallery.map(image => image.author).filter(Boolean).join(", ")
+
+    backgroundImage = urlForImage(welcome.backgroundImage).quality(90).url()
+    let header = document.querySelector('#header');
+    header.style.backgroundImage = `url(${backgroundImage})`;
   })
 
   let innerWidth = 0
-	let innerHeight = 0
-	
 	$: condition = innerWidth < 768
 
 
@@ -43,9 +46,9 @@
 
 <svelte:window bind:innerWidth />
 
-<div class="relative">
-  <header
-    class={`relative overflow-hidden bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1671485780/5LC/hero-image.webp')] bg-fixed bg-cover bg-center bg-no-repeat`}
+<div class="relative w-full">
+  <header id="header"
+    class={`relative overflow-hidden bg-cover bg-center lg:bg-top lg:bg-contain bg-fixed bg-no-repeat`}
   >
     <div class="pt-24 z-10 w-full flex flex-col xl:flex-row justify-center ">
       {#if $staffData?.staff}
@@ -54,7 +57,7 @@
             {#if condition}
               <img 
                 fetchpriority="high"
-                src={urlForImage($staffData.staff.staffImage).width(600).height(1000).quality(70).url()}
+                src={urlForImage($staffData.staff.staffImage).width(500).height(700).quality(70).url()}
                 alt={$staffData.staff.title}
               />
               {:else}

@@ -7,7 +7,7 @@
 
 </script>
 
-<a href={`staff/${staff.slug}`}>
+<a href={`staff/${staff.slug}`} data-sveltekit-preload-data>
     <div class="relative overflow-hidden w-full group border-gray-600 border hover:border-primary rounded-none transition-all h-fit md:h-96 bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/c_scale,o_100,w_793,z_3/a_270/v1681216807/1000_F_293406669_YWBByHAkamkhveh3GAQAzWiUEwG8HNof.webp')]">
       <figure class="z-10">
         <img loading="lazy" class="object-cover object-top w-full group-hover:bg-primary" src={urlForImage(staff.staffImage).height(600).width(337).quality(100).url()} alt={staff.title}>
