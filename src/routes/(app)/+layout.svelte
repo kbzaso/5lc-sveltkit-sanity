@@ -3,6 +3,7 @@
     import { urlForImage } from "$lib/config/sanity";
     import type { PageData } from "./$types";
     import {afterNavigate} from '$app/navigation';
+    import { page } from '$app/stores';
 
     import Footer from '$lib/components/Footer.svelte';
 
@@ -34,6 +35,7 @@
 		const main = window.document.getElementById('main');
 		if (main) {
 			main.scrollIntoView();
+            console.log('scrolling')
 		}
 	});
 </script>
@@ -48,7 +50,7 @@
 
 </svelte:head>
 
-<div class="drawer min-w-[350px]">
+<div id="main" class="drawer min-w-[350px]">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content min-w-[350px]">
         <div class="w-full px-8 py-4 md:px-4 fixed flex justify-center z-50">
@@ -56,12 +58,20 @@
                 <a href="/">
                 <img src={urlForImage(settings.logo).url()} class="w-28" alt="Logo 5LC">
                 </a>
-                <label for="my-drawer" class="btn btn-primary drawer-button">Menu</label>
+                <label for="my-drawer" class="btn btn-primary drawer-button md:hidden">Menu</label>
+                <div class="flex-none hidden md:flex">
+                    <ul class="menu menu-horizontal px-1">
+                        {#each siteMap as {index, title} }
+                        <li><a class="text-primary font-ibm font-black text-2xl italic" href={index}>{title}</a></li>
+                        {/each}
+                    </ul>
+                  </div>
+                
                 </div>
             </div>
-            <div id="main">
+            {#key $page.url.pathname}
                 <slot />
-            </div>
+            {/key}
         <Footer/>
     </div> 
     <div class="drawer-side">

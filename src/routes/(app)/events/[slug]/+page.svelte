@@ -29,7 +29,7 @@
 <div class="xl:container xl:mx-auto min-w-[350px]">
 <div class="mt-28 flex flex-col md:flex-row px-4 gap-4">
     <figure class="mb-8 md:w-2/3">
-      <img class="h-72 md:h-full object-cover w-full" loading="lazy" src={urlForImage($eventData?.event.poster).height(800).quality(100).url()} alt="Boveda Secreta">
+      <img class="h-72 md:h-full object-cover w-fit" loading="lazy" src={urlForImage($eventData?.event.poster).width(800).quality(90).url()} alt="Boveda Secreta">
     </figure>  
 
       <div class="mx-auto max-w-prose prose-p:text-lg">

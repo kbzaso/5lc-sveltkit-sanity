@@ -89,12 +89,6 @@ export default defineType({
 		hidden: ({ document }) => document?.active === true,
 	  },
 	  {
-		type: "text",
-		name: "extract",
-		title: "Extracto del evento",
-		validation: Rule => [Rule.required(), Rule.max(200).warning(`A title shouldn't be more than 160 characters.`), Rule.max(200)]
-	  },
-	  {
 		type: "image",
 		options: {
 		  accept: ".jpg,.png,.svg,.avif",
@@ -127,6 +121,26 @@ export default defineType({
 				type: 'boolean',
 				initialValue: false
 			},
+		]
+	},
+	{
+		title: 'Asitencia al evento',
+		name: 'assistance',
+		type: 'number',
+		hidden: ({ document }) => document?.active === true,
+		description: 'Cantidad de personas que asistieron al evento'
+	},
+	{
+		name: 'referenceStaff',
+		title: 'Staff',
+		type: 'array',
+		description: 'Equipo que participo en el evento',
+		hidden: ({ document }) => document?.active === true,
+		of: [
+			{
+				type: 'reference',
+				to: [{type: 'staff'}]
+			}
 		]
 	}
 	]
