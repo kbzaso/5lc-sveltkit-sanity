@@ -124,6 +124,64 @@ export default defineType({
 		]
 	},
 	{
+		name: "gallery",
+		type: "object",
+		title: "Galería de fotos",
+		description: "Selecciona las mejores 10 fotos del evento",
+		hidden: ({ document }) => document?.active === true,
+		fields: [
+		  {
+			name: "images",
+			type: "array",
+			title: "Images",
+			of: [
+			  {
+				name: "image",
+				type: "image",
+				title: "Image",
+				options: {
+				  hotspot: true,
+				},
+				fields: [
+				  {
+					name: "alt",
+					type: "string",
+					title: "Texto alternativo",
+					description: "Describe la imagen para personas con discapacidad visual",
+				  },
+				  {
+					name: 'photographer',
+					title: 'Fotofrafo/a',
+					type: 'reference',
+					description: 'Quien fue el fotografo/a de la imagen',
+					to: [{type: 'author'}]
+				  }
+				],
+			  },
+			],
+			options: {
+			  layout: "grid",
+			  hotspot: true,
+			},
+		  },
+		],
+		preview: {
+		  select: {
+			images: "images",
+			image: "images.0",
+		  },
+		  prepare(selection) {
+			const { images, image } = selection;
+  
+			return {
+			  title: `Gallery block of ${Object.keys(images).length} images`,
+			  subtitle: `Alt text: ${image.alt}`,
+			  media: image,
+			};
+		  },
+		},
+	  },
+	{
 		title: 'Asitencia al evento',
 		name: 'assistance',
 		type: 'number',
