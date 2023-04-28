@@ -117,7 +117,7 @@ export const nextEventQuery = groq`
 `;
 
 export const resultsQuery = groq`
-*[_type == "event" && active == false]{
+*[_type == "event" && active == false] | order(date desc, _updatedAt desc) {
   ${eventFields}
 }
 `;
