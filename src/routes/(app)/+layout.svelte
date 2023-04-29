@@ -2,7 +2,6 @@
     import './../../styles.css'
     import { urlForImage } from "$lib/config/sanity";
     import type { PageData } from "./$types";
-    import {afterNavigate} from '$app/navigation';
     import { page } from '$app/stores';
 
     import Footer from '$lib/components/Footer.svelte';
@@ -29,15 +28,7 @@
             title: 'Resultados',
         },
     ]
-
-
-    afterNavigate(() => {
-		const main = window.document.getElementById('main');
-		if (main) {
-			main.scrollIntoView();
-            console.log('scrolling')
-		}
-	});
+    
 </script>
 
 <svelte:window />
@@ -50,7 +41,8 @@
 
 </svelte:head>
 
-<div id="main" class="drawer min-w-[350px]">
+<!-- <div bind:this={top} /> -->
+<div id="main" class="drawer min-w-[350px] h-full">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content min-w-[350px]">
         <div class="w-full px-8 py-4 md:px-4 fixed flex justify-center z-50">

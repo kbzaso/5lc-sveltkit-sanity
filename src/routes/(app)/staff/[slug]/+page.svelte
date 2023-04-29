@@ -12,8 +12,8 @@
   import FiTwitter from "svelte-icons-pack/fi/FiTwitter";
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
-  import Carousel from "$lib/components/Carousel.svelte";
   import { element, onMount } from "svelte/internal";
+  import Gallery from "$lib/components/Gallery.svelte";
 
   export let data: PageData;
 
@@ -45,6 +45,10 @@
 </script>
 
 <svelte:window bind:innerWidth />
+
+<svelte:head>
+	<title>{$staffData.staff.title} - {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ''}</title>
+</svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">
   <header id="header"
@@ -217,10 +221,10 @@
   </section>
 
 
-
   {#if $staffData?.staff.gallery !== null && $staffData.staff.gallery.images.length > 0 }
-    <div class="container mx-auto w-full xl:w-1/2 flex flex-col justify-center">
-        <Carousel images={$staffData.staff.gallery.images} />
+  <div class="container mx-auto w-full flex flex-col justify-center md:mt-20 ">
+        <h4 class="text-primary font-ibm italic text-2xl md:text-7xl ml-8 md:ml-0 mb-4">Galería de fotos</h4>
+        <Gallery images={$staffData.staff.gallery.images} />
       {#if authors.length > 0}
       <p class="text-gray-500 text-center py-2 text-sm mt-2">
         Fotografós: 

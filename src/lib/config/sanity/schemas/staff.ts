@@ -90,7 +90,7 @@ export default defineType({
       name: "gallery",
       type: "object",
       title: "Galería de fotos",
-      description: "Selecciona las mejores 5 fotos del staff en acción",
+      description: "Sube entre 5 y 10 fotos en acción sobre el ring, recuerda que las imagenes no pueden pesar mas de 500kb",
       fields: [
         {
           name: "images",
@@ -117,7 +117,14 @@ export default defineType({
                   type: 'reference',
                   description: 'Quien fue el fotografo/a de la imagen',
                   to: [{type: 'author'}]
-                }
+                },
+                {
+                  title: "¿La foto es vertical?",
+                  name: "vertical",
+                  type: "boolean",
+                  initialValue: false,
+                  validation: (Rule) => Rule.required(),
+                },
               ],
             },
           ],
