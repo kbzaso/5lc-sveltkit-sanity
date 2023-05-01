@@ -41,7 +41,6 @@
   let innerWidth = 0
 	$: condition = innerWidth < 768
 
-
 </script>
 
 <svelte:window bind:innerWidth />
@@ -224,7 +223,7 @@
   {#if $staffData?.staff.gallery !== null && $staffData.staff.gallery.images.length > 0 }
   <div class="container mx-auto w-full flex flex-col justify-center md:mt-20 ">
         <h4 class="text-primary font-ibm italic text-2xl md:text-7xl ml-8 md:ml-0 mb-4">Galería de fotos</h4>
-        <Gallery images={$staffData.staff.gallery.images} />
+        <Gallery images={$staffData.staff.gallery.images} staffId={$staffData.staff._id}/>
       {#if authors.length > 0}
       <p class="text-gray-500 text-center py-2 text-sm mt-2">
         Fotografós: 
