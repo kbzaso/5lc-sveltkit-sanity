@@ -1,7 +1,7 @@
-import { isDev } from '$lib/config/environment';
-import type { Cookies } from '@sveltejs/kit';
+import { isDev } from "$lib/config/environment";
+import type { Cookies } from "@sveltejs/kit";
 
-const cookieName = '__preview_mode';
+const cookieName = "__preview_mode";
 
 /**
  * Preview mode cookie name.
@@ -10,12 +10,12 @@ const cookieName = '__preview_mode';
  * @returns The cookies object with the preview cookie set
  */
 export const setPreviewCookie = (cookies: Cookies) =>
-	cookies.set(cookieName, 'true', {
-		httpOnly: true,
-		path: '/',
-		sameSite: 'strict',
-		secure: !isDev,
-	});
+  cookies.set(cookieName, "true", {
+    httpOnly: true,
+    path: "/",
+    sameSite: "strict",
+    secure: !isDev,
+  });
 
 /**
  * Get the preview mode cookie value.
@@ -32,11 +32,11 @@ export const getPreviewCookie = (cookies: Cookies) => cookies.get(cookieName);
  * @returns The cookies object with the preview cookie removed
  */
 export const clearPreviewCookie = (cookies: Cookies) => {
-	cookies.set(cookieName, 'true', {
-		httpOnly: true,
-		path: '/',
-		sameSite: 'strict',
-		secure: !isDev,
-		expires: new Date(0),
-	});
+  cookies.set(cookieName, "true", {
+    httpOnly: true,
+    path: "/",
+    sameSite: "strict",
+    secure: !isDev,
+    expires: new Date(0),
+  });
 };

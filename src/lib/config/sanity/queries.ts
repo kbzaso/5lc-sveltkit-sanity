@@ -1,4 +1,4 @@
-import groq from 'groq';
+import groq from "groq";
 
 const staffFields = groq`
   _id,
@@ -44,7 +44,6 @@ export const indexQuery = groq`
 *[_type == "staff"] | order(date desc, _updatedAt desc) {
   ${staffFields}
 }`;
-
 
 // POSTS STUFF
 export const staffQuery = groq`
@@ -121,4 +120,3 @@ export const resultsQuery = groq`
   ${eventFields}
 }
 `;
-

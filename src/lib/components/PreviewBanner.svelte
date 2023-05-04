@@ -12,11 +12,17 @@
       <div class="flex flex-row items-center justify-between">
         <div class="flex items-center">
           {#if $data?.profileImage}
-            <img class="inline-block mr-3 h-8 w-8 rounded-full" src={$data.profileImage} alt="" />
+            <img
+              class="inline-block mr-3 h-8 w-8 rounded-full"
+              src={$data.profileImage}
+              alt=""
+            />
           {/if}
 
           <p class="truncate text-sm font-medium text-white">
-            <span class="hidden sm:inline font-bold">Hi {$data?.name ? $data.name : "there"}!</span>
+            <span class="hidden sm:inline font-bold"
+              >Hi {$data?.name ? $data.name : "there"}!</span
+            >
             <span> This page is a draft.</span>
             <span class="hidden md:inline hover:underline">
               <a rel="external" href="/api/exit-preview">Exit?</a>

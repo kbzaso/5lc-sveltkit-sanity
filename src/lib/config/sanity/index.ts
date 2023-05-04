@@ -1,8 +1,8 @@
-import createImageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { createPreviewSubscriptionStore } from './sveltekit/previewSubscriptionStore';
-import { sanityConfig } from './config';
-import { createCurrentUserStore } from './sveltekit/currentUser';
+import createImageUrlBuilder from "@sanity/image-url";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { createPreviewSubscriptionStore } from "./sveltekit/previewSubscriptionStore";
+import { sanityConfig } from "./config";
+import { createCurrentUserStore } from "./sveltekit/currentUser";
 
 export const previewSubscription = createPreviewSubscriptionStore(sanityConfig);
 export const imageBuilder = createImageUrlBuilder(sanityConfig);
@@ -12,7 +12,7 @@ export const imageBuilder = createImageUrlBuilder(sanityConfig);
  * Read more: https://www.sanity.io/docs/image-url
  **/
 export const urlForImage = (source: SanityImageSource) => {
-	return imageBuilder.image(source).auto('format').fit('max');
+  return imageBuilder.image(source).auto("format").fit("max");
 };
 
 export const sanityUser = createCurrentUserStore(sanityConfig);

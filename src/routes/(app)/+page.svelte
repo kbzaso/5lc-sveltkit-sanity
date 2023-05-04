@@ -13,7 +13,6 @@
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
-
 </script>
 
 <svelte:head>

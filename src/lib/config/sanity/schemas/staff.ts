@@ -54,15 +54,16 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Texto alternativo",
-          description: "Describe la imagen para personas con discapacidad visual",
+          description:
+            "Describe la imagen para personas con discapacidad visual",
         },
         {
-          name: 'photographer',
-          title: 'Fotofrafo/a',
-          type: 'reference',
-          description: 'Quien fue el fotografo/a de la imagen',
-          to: [{type: 'author'}]
-        }
+          name: "photographer",
+          title: "Fotofrafo/a",
+          type: "reference",
+          description: "Quien fue el fotografo/a de la imagen",
+          to: [{ type: "author" }],
+        },
       ],
     },
     {
@@ -79,8 +80,8 @@ export default defineType({
       type: "array",
       of: [
         {
-        "type": "block"
-        }
+          type: "block",
+        },
       ],
       name: "description",
       title: "Descripción del Luchador/a",
@@ -90,7 +91,8 @@ export default defineType({
       name: "gallery",
       type: "object",
       title: "Galería de fotos",
-      description: "Sube entre 5 y 10 fotos en acción sobre el ring, recuerda que las imagenes no pueden pesar mas de 500kb",
+      description:
+        "Sube entre 5 y 10 fotos en acción sobre el ring, recuerda que las imagenes no pueden pesar mas de 500kb",
       fields: [
         {
           name: "images",
@@ -109,14 +111,15 @@ export default defineType({
                   name: "alt",
                   type: "string",
                   title: "Texto alternativo",
-                  description: "Describe la imagen para personas con discapacidad visual",
+                  description:
+                    "Describe la imagen para personas con discapacidad visual",
                 },
                 {
-                  name: 'photographer',
-                  title: 'Fotofrafo/a',
-                  type: 'reference',
-                  description: 'Quien fue el fotografo/a de la imagen',
-                  to: [{type: 'author'}]
+                  name: "photographer",
+                  title: "Fotofrafo/a",
+                  type: "reference",
+                  description: "Quien fue el fotografo/a de la imagen",
+                  to: [{ type: "author" }],
                 },
                 {
                   title: "¿La foto es vertical?",

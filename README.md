@@ -1,4 +1,5 @@
 # 5LC Sveltekit x Sanity Studio v3
+
 ## Developing
 
 Once you've created a project and installed dependencies with `pnpm install`. Make sure you have added all the environment variables (see env.example).
@@ -19,6 +20,7 @@ pnpm build
 ```
 
 To preview the build, run:
+
 ```bash
 pnpm preview
 ```

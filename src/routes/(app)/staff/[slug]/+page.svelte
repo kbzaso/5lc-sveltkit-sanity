@@ -27,46 +27,65 @@
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
 
-  let authors: string[] = []
+  let authors: string[] = [];
   let backgroundImage: string;
   onMount(() => {
-    let gallery = $staffData.staff.gallery.images
-    authors = gallery.map(image => image.author).filter(Boolean).join(", ")
+    let gallery = $staffData.staff.gallery.images;
+    authors = gallery
+      .map((image) => image.author)
+      .filter(Boolean)
+      .join(", ");
 
-    backgroundImage = urlForImage(welcome.backgroundImage).quality(90).url()
-    let header = document.querySelector('#header');
+    backgroundImage = urlForImage(welcome.backgroundImage).quality(90).url();
+    let header = document.querySelector("#header");
     header.style.backgroundImage = `url(${backgroundImage})`;
-  })
+  });
 
-  let innerWidth = 0
-	$: condition = innerWidth < 768
+  let innerWidth = 0;
+  $: condition = innerWidth < 768;
 
 </script>
 
 <svelte:window bind:innerWidth />
 
 <svelte:head>
-	<title>{$staffData.staff.title} - {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ''}</title>
+  <title
+    >{$staffData.staff.title} - {$staffData?.staff?.pseudonym
+      ? $staffData?.staff?.pseudonym
+      : ""}</title
+  >
 </svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">
-  <header id="header"
+  <header
+    id="header"
     class={`relative overflow-hidden bg-cover lg:h-fit bg-center bg-no-repeat`}
   >
-    <div class="pt-24 z-10 w-full flex flex-col xl:flex-row xl:justify-left items-center">
+    <div
+      class="pt-24 z-10 w-full flex flex-col xl:flex-row xl:justify-left items-center"
+    >
       {#if $staffData?.staff}
         <div class="">
-          <figure class="relative max-w-[670px] md:min-w-[670px] flex justify-center xl:z-0">
+          <figure
+            class="relative max-w-[670px] md:min-w-[670px] flex justify-center xl:z-0"
+          >
             {#if condition}
-              <img 
+              <img
                 fetchpriority="high"
-                src={urlForImage($staffData.staff.staffImage).width(500).height(700).quality(70).url()}
+                src={urlForImage($staffData.staff.staffImage)
+                  .width(500)
+                  .height(700)
+                  .quality(70)
+                  .url()}
                 alt={$staffData.staff.title}
               />
-              {:else}
-              <img 
+            {:else}
+              <img
                 fetchpriority="high"
-                src={urlForImage($staffData.staff.staffImage).width(800).quality(70).url()}
+                src={urlForImage($staffData.staff.staffImage)
+                  .width(800)
+                  .quality(70)
+                  .url()}
                 alt={$staffData.staff.title}
               />
             {/if}
@@ -75,164 +94,164 @@
             class="absolute bottom-0 bg-gradient-to-t xl:from-black/100 xl:via-black/60 from-black/60 via-black/0  to-transparent h-96 w-full invisible xl:visible z-10"
           />
         </div>
-       
-        {/if}
-      </div>
-      
-    </header>
-    <section
+      {/if}
+    </div>
+  </header>
+  <section
     class="bg-black/25  xl:bg-black/50 lg:h-fit p-8  w-full xl:w-fit space-y-2  -mt-40 xl:mt-10 backdrop-blur-xl xl:absolute top-20 right-5 z-30"
   >
-      <div class="flex flex-col items-center space-y-1 xl:items-start pb-8">
-        <h2 class="text-sm uppercase tracking-widest text-white">
-          {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ''}
-        </h2>
-          <h1 class="text-6xl md:text-7xl font-black italic text-primary text-center">
-            {$staffData.staff.title}
-          </h1>
-      </div>
+    <div class="flex flex-col items-center space-y-1 xl:items-start pb-8">
+      <h2 class="text-sm uppercase tracking-widest text-white">
+        {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ""}
+      </h2>
+      <h1
+        class="text-6xl md:text-7xl font-black italic text-primary text-center"
+      >
+        {$staffData.staff.title}
+      </h1>
+    </div>
 
-      <div class="flex flex-col items-center prose-p:text-lg">
-        <div>
-          {#if $staffData.staff.data?.weight}
+    <div class="flex flex-col items-center prose-p:text-lg">
+      <div>
+        {#if $staffData.staff.data?.weight}
           <p class="text-gray-300">
             Peso: <span class="text-primary font-bold"
               >{$staffData.staff.data?.weight} kgs.</span
             >
           </p>
-          {/if}
-          {#if $staffData.staff.data?.height}
+        {/if}
+        {#if $staffData.staff.data?.height}
           <p class="text-gray-300">
             Altura: <span class="text-primary font-bold"
               >{$staffData.staff.data?.height} cms.</span
             >
           </p>
-          {/if}
-          {#if eventDateFormatted}
+        {/if}
+        {#if eventDateFormatted}
           <p class="text-gray-300">
             Debut en la bóveda: <time class="text-primary font-bold"
               >{eventDateFormatted.charAt(0).toUpperCase() +
                 eventDateFormatted.slice(1)}</time
             >
           </p>
-          {/if}
-          {#if $staffData.staff.description}
-            <p
-              class="pt-4 prose prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300"
-            >
-              <PortableText value={$staffData.staff.description} />
-            </p>
-          {/if}
+        {/if}
+        {#if $staffData.staff.description}
+          <p
+            class="pt-4 prose prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300"
+          >
+            <PortableText value={$staffData.staff.description} />
+          </p>
+        {/if}
 
-          <div class="mt-8 space-y-4">
+        <div class="mt-8 space-y-4">
           <h4 class="text-primary font-ibm italic text-2xl">Redes Sociales</h4>
 
-            <ul class="flex space-x-4">
-              {#if $staffData.staff.social.instagram}
-                <li>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={$staffData.staff.social.instagram}
-                    ><Icon
-                      src={AiOutlineInstagram}
-                      className="fill-white hover:fill-primary"
-                      size="26"
-                    /></a
-                  >
-                </li>
-              {/if}
-              {#if $staffData.staff.social.facebook}
-                <li>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={$staffData.staff.social.facebook}
-                    ><Icon
-                      src={AiOutlineFacebook}
-                      className="fill-white hover:fill-primary"
-                      size="26"
-                    /></a
-                  >
-                </li>
-              {/if}
-              {#if $staffData.staff.social.youtube}
-                <li>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={$staffData.staff.social.youtube}
-                    ><Icon
-                      src={AiOutlineYoutube}
-                      className="fill-white hover:fill-primary"
-                      size="26"
-                    /></a
-                  >
-                </li>
-              {/if}
-              {#if $staffData.staff.social.twitter}
-                <li>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={$staffData.staff.social.twitter}
-                    ><Icon
-                      src={FiTwitter}
-                      className="fill-white hover:fill-primary"
-                      size="24"
-                    /></a
-                  >
-                </li>
-              {/if}
-              {#if $staffData.staff.social.tiktok}
-                <li>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={$staffData.staff.social.tiktok}
-                    ><Icon
-                      src={SiTiktok}
-                      className="fill-white hover:fill-primary"
-                      size="22"
-                    /></a
-                  >
-                </li>
-              {/if}
-              {#if $staffData.staff.social.other}
-                <li>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={$staffData.staff.social.other}
-                    ><Icon
-                      src={BiLink}
-                      className="fill-white hover:fill-primary"
-                      size="26"
-                    /></a
-                  >
-                </li>
-              {/if}
-            </ul>
-          </div>
+          <ul class="flex space-x-4">
+            {#if $staffData.staff.social.instagram}
+              <li>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$staffData.staff.social.instagram}
+                  ><Icon
+                    src={AiOutlineInstagram}
+                    className="fill-white hover:fill-primary"
+                    size="26"
+                  /></a
+                >
+              </li>
+            {/if}
+            {#if $staffData.staff.social.facebook}
+              <li>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$staffData.staff.social.facebook}
+                  ><Icon
+                    src={AiOutlineFacebook}
+                    className="fill-white hover:fill-primary"
+                    size="26"
+                  /></a
+                >
+              </li>
+            {/if}
+            {#if $staffData.staff.social.youtube}
+              <li>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$staffData.staff.social.youtube}
+                  ><Icon
+                    src={AiOutlineYoutube}
+                    className="fill-white hover:fill-primary"
+                    size="26"
+                  /></a
+                >
+              </li>
+            {/if}
+            {#if $staffData.staff.social.twitter}
+              <li>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$staffData.staff.social.twitter}
+                  ><Icon
+                    src={FiTwitter}
+                    className="fill-white hover:fill-primary"
+                    size="24"
+                  /></a
+                >
+              </li>
+            {/if}
+            {#if $staffData.staff.social.tiktok}
+              <li>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$staffData.staff.social.tiktok}
+                  ><Icon
+                    src={SiTiktok}
+                    className="fill-white hover:fill-primary"
+                    size="22"
+                  /></a
+                >
+              </li>
+            {/if}
+            {#if $staffData.staff.social.other}
+              <li>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$staffData.staff.social.other}
+                  ><Icon
+                    src={BiLink}
+                    className="fill-white hover:fill-primary"
+                    size="26"
+                  /></a
+                >
+              </li>
+            {/if}
+          </ul>
         </div>
       </div>
-
+    </div>
   </section>
 
-
-  {#if $staffData?.staff.gallery !== null && $staffData.staff.gallery.images.length > 0 }
-  <div class="container mx-auto w-full flex flex-col justify-center md:mt-20 ">
-        <h4 class="text-primary font-ibm italic text-2xl md:text-7xl ml-8 md:ml-0 mb-4">Galería de fotos</h4>
-        <Gallery images={$staffData.staff.gallery.images} staffId={$staffData.staff._id}/>
+  {#if $staffData?.staff.gallery !== null && $staffData.staff.gallery.images.length > 0}
+    <div
+      class="container mx-auto w-full flex flex-col justify-center md:mt-20 "
+    >
+      <Gallery
+        images={$staffData.staff.gallery.images}
+      />
       {#if authors.length > 0}
-      <p class="text-gray-500 text-center py-2 text-sm mt-2">
-        Fotografós: 
-            {#each authors as author}
-              <span>{author}</span>
-            {/each}
+        <p class="text-gray-500 text-center py-2 text-sm mt-2">
+          Fotografós:
+          {#each authors as author}
+            <span>{author}</span>
+          {/each}
         </p>
       {/if}
-
     </div>
   {/if}
 </div>

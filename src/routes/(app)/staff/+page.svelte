@@ -14,9 +14,11 @@
 
 <div class="container mt-36 mx-auto px-4">
   <h1 class="text-7xl text-primary">Staff</h1>
-  <div class="mt-8 grid gap-6 grid-cols-2 md:grid-cols-[repeat(auto-fit,minmax(20rem,2fr))] lg:grid-cols-4">
-  {#each allStaff as staff}
-    <CardStaff {staff} />
-  {/each}
-</div>
+  <div
+    class="mt-8 grid gap-6 grid-cols-2 md:grid-cols-[repeat(auto-fit,minmax(20rem,2fr))] lg:grid-cols-4"
+  >
+    {#each allStaff as staff}
+      <CardStaff {staff} />
+    {/each}
+  </div>
 </div>

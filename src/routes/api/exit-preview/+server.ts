@@ -1,11 +1,11 @@
-import type { RequestHandler } from './$types';
-import { clearPreviewCookie } from '$lib/utils';
-import { redirect } from '@sveltejs/kit';
+import type { RequestHandler } from "./$types";
+import { clearPreviewCookie } from "$lib/utils";
+import { redirect } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ request, cookies, url }) => {
-	const referer = request.headers.get('referer');
+  const referer = request.headers.get("referer");
 
-	clearPreviewCookie(cookies);
+  clearPreviewCookie(cookies);
 
-	throw redirect(302, referer || url.origin || '/');
+  throw redirect(302, referer || url.origin || "/");
 };

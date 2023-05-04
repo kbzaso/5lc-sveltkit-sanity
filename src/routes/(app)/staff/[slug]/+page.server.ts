@@ -1,32 +1,35 @@
-import { getSanityServerClient, overlayDrafts } from '$lib/config/sanity/client';
-import { staffQuery, welcomeQuery } from '$lib/config/sanity/queries';
-import type { Staff } from '$lib/types';
-import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import {
+  getSanityServerClient,
+  overlayDrafts,
+} from "$lib/config/sanity/client";
+import { staffQuery, welcomeQuery } from "$lib/config/sanity/queries";
+import type { Staff } from "$lib/types";
+import { error } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
-	const { previewMode } = await parent();
+  const { previewMode } = await parent();
 
-	const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
+  const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
 
-	const { staff, moreStaff} = await getSanityServerClient(previewMode).fetch<{
-		staff: Staff;
-		moreStaff: Staff[];
-	}>(staffQuery, {
-		slug: params.slug,
-	});
+  const { staff, moreStaff } = await getSanityServerClient(previewMode).fetch<{
+    staff: Staff;
+    moreStaff: Staff[];
+  }>(staffQuery, {
+    slug: params.slug,
+  });
 
-	if (!staff) {
-		throw error(404, 'Events not found');
-	}
+  if (!staff) {
+    throw error(404, "Events not found");
+  }
 
-	return {
-		previewMode,
-		slug: staff?.slug || params.slug,
-		initialData: {
-			staff,
-			moreStaff: overlayDrafts(moreStaff),
-		},
-		welcome,
-	};
+  return {
+    previewMode,
+    slug: staff?.slug || params.slug,
+    initialData: {
+      staff,
+      moreStaff: overlayDrafts(moreStaff),
+    },
+    welcome,
+  };
 };

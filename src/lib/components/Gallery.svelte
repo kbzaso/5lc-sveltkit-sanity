@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import { urlForImage } from "$lib/config/sanity";
 
   import BiggerPicture from "bigger-picture/svelte";
@@ -27,14 +27,19 @@
     }
   });
 
-  onMount(() => {
-    // initialize
-    let bp = BiggerPicture({
+  let MacyComponent: typeof import("svelte-macy").Macy;
+
+	onMount(async () => {
+	  MacyComponent = (await import("svelte-macy")).Macy // or .default;
+     // initialize
+     let bp = BiggerPicture({
       target: document.body,
     });
 
     // grab image links
     const imageLinks = document.querySelectorAll("#images > a");
+
+    console.log(imageLinks)
 
     // add click listener to open BiggerPicture
     for (let link of imageLinks) {
@@ -49,24 +54,46 @@
         el: e.currentTarget!,
       });
     }
-  });
+	});
 
+  let macy: any;
+
+	let options = {
+		container: "#images",
+    trueOrder: true,
+    waitForImages: true,
+    margin: 4,
+    columns: 3,
+    breakAt: {
+      1200: 3,
+      940: 2,
+      520: 2,
+    },  
+  }
 
   
 </script>
 
 
-<div id="images" class="grid grid-cols-2 md:grid-cols-3">
-  {#each galleryImages as image}
-    <a
-      href={image.src}
-      data-img={image.src}
-      data-thumb={image.thumb}
-      data-height={image.height}
-      data-width={image.width}
-      data-alt={image.alt}
-    >
-      <img loading="lazy" src={image.thumb} alt={image.alt} />
-    </a>
-  {/each}
-</div>
+
+
+
+<section class="lg:w-2/3 w-full mx-auto justify-center">
+<svelte:component this="{MacyComponent}" bind:macy options="{options}">
+    <div id="images">
+      {#each galleryImages as image}
+          <a
+            class="photo"
+            href={image.src}
+            data-img={image.src}
+            data-thumb={image.thumb}
+            data-height={image.height}
+            data-width={image.width}
+            data-alt={image.alt}
+          >
+            <img loading="lazy" src={image.thumb} alt={image.alt} />
+          </a>
+        {/each}
+      </div>
+    </svelte:component>
+</section>

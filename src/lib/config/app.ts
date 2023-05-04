@@ -1,6 +1,5 @@
 const app = {
-	appName: '5LC',
-
+  appName: "5LC",
 };
 
 export { app as default };

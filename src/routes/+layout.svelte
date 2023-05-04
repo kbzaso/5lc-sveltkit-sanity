@@ -11,7 +11,8 @@
   const previewRouteIds = ["/(app)/posts/[slug]"];
 
   $: ({ previewMode, previewModeEmbed: embedded } = data);
-  $: showPreviewBanner = previewMode && previewRouteIds.includes($page.route.id || "");
+  $: showPreviewBanner =
+    previewMode && previewRouteIds.includes($page.route.id || "");
 </script>
 
 {#if showPreviewBanner}
