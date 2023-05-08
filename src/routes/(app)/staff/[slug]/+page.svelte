@@ -67,7 +67,7 @@
       {#if $staffData?.staff}
         <div class="">
           <figure
-            class="relative max-w-[670px] md:min-w-[670px] flex justify-center xl:z-0"
+            class="relative max-w-[670px] md:min-w-[670px] flex justify-center "
           >
             {#if condition}
               <img
@@ -89,6 +89,11 @@
                 alt={$staffData.staff.title}
               />
             {/if}
+            <figcaption
+              class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full h-full flex justify-center items-end text-zinc-400"
+            > 
+            Fotografo/a: <a class=" ml-2 link hover:text-primary" target="_blank" rel="noreferrer" href={$staffData.staff.principalPhotographer.photographer.imageUrl}>{$staffData.staff.principalPhotographer.photographer.name}</a>
+            </figcaption>
           </figure>
           <div
             class="absolute bottom-0 bg-gradient-to-t xl:from-black/100 xl:via-black/60 from-black/60 via-black/0  to-transparent h-96 w-full invisible xl:visible z-10"
@@ -244,14 +249,6 @@
       <Gallery
         images={$staffData.staff.gallery.images}
       />
-      {#if authors.length > 0}
-        <p class="text-gray-500 text-center py-2 text-sm mt-2">
-          Fotografós:
-          {#each authors as author}
-            <span>{author}</span>
-          {/each}
-        </p>
-      {/if}
     </div>
   {/if}
 </div>

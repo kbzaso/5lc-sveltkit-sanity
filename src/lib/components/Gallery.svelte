@@ -39,8 +39,6 @@
     // grab image links
     const imageLinks = document.querySelectorAll("#images > a");
 
-    console.log(imageLinks)
-
     // add click listener to open BiggerPicture
     for (let link of imageLinks) {
       link.addEventListener("click", openGallery);
@@ -70,13 +68,7 @@
       520: 2,
     },  
   }
-
-  
 </script>
-
-
-
-
 
 <section class="lg:w-2/3 w-full mx-auto justify-center">
 <svelte:component this="{MacyComponent}" bind:macy options="{options}">
