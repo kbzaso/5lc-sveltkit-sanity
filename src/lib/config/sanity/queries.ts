@@ -14,10 +14,10 @@ const staffFields = groq`
     photographer-> {
       name,
       imageUrl,
-    }
+    },
   },
   description,
-  gallery
+  gallery,
 `;
 
 export const eventFields = groq`

@@ -30,15 +30,13 @@
   let authors: string[] = [];
   let backgroundImage: string;
   onMount(() => {
-    let gallery = $staffData.staff.gallery.images;
-    authors = gallery
-      .map((image) => image.author)
-      .filter(Boolean)
-      .join(", ");
-
     backgroundImage = urlForImage(welcome.backgroundImage).quality(90).url();
-    let header = document.querySelector("#header");
-    header.style.backgroundImage = `url(${backgroundImage})`;
+    let header: HTMLElement | null = document.querySelector("#header");
+    if(header !== null && header !== undefined){
+      header.style.backgroundImage = `url(${backgroundImage})`;
+    } else {
+      throw new Error("Header not found");
+    }
   });
 
   let innerWidth = 0;
