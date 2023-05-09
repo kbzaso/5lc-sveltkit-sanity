@@ -27,12 +27,12 @@
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
 
-  let authors: string[] = [];
   let backgroundImage: string;
   onMount(() => {
+    console.log($staffData.staff.gallery);
     backgroundImage = urlForImage(welcome.backgroundImage).quality(90).url();
     let header: HTMLElement | null = document.querySelector("#header");
-    if(header !== null && header !== undefined){
+    if (header !== null && header !== undefined) {
       header.style.backgroundImage = `url(${backgroundImage})`;
     } else {
       throw new Error("Header not found");
@@ -41,7 +41,6 @@
 
   let innerWidth = 0;
   $: condition = innerWidth < 768;
-
 </script>
 
 <svelte:window bind:innerWidth />
@@ -89,10 +88,17 @@
             {/if}
             <figcaption
               class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full h-full text-sm flex justify-center items-end text-gray-300"
-            > 
-            <span class="bg-black/25 backdrop-blur-lg px-2 py-1 rounded-sm">
-              Fotografo/a:<a class=" ml-2 link hover:text-primary" target="_blank" rel="noreferrer" href={$staffData.staff.principalPhotographer.photographer.imageUrl}>{$staffData.staff.principalPhotographer.photographer.name}</a>
-            </span>
+            >
+              <span class="bg-black/25 backdrop-blur-lg px-2 py-1 rounded-sm">
+                Fotografo/a:<a
+                  class=" ml-2 link hover:text-primary underline decoration-wavy"
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$staffData.staff.principalPhotographer.photographer
+                    .imageUrl}
+                  >{$staffData.staff.principalPhotographer.photographer.name}</a
+                >
+              </span>
             </figcaption>
           </figure>
           <div
@@ -242,13 +248,11 @@
     </div>
   </section>
 
-  {#if $staffData?.staff.gallery !== null && $staffData.staff.gallery.images.length > 0}
+  {#if $staffData?.staff.gallery !== null}
     <div
-      class="container mx-auto w-full flex flex-col justify-center md:mt-20 "
+      class="container mx-auto w-full flex flex-col justify-center md:mt-20 lg:mt-40"
     >
-      <Gallery
-        images={$staffData.staff.gallery.images}
-      />
+      <Gallery images={$staffData.staff.gallery} />
     </div>
   {/if}
 </div>

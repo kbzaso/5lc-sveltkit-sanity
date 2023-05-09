@@ -17,7 +17,17 @@ const staffFields = groq`
     },
   },
   description,
-  gallery,
+  "gallery": gallery.images[]{
+    alt,
+    active,
+    vertical,
+    crop,
+    hotspot,
+    _type,
+    _key,
+    asset,
+    photographer->
+  }
 `;
 
 export const eventFields = groq`

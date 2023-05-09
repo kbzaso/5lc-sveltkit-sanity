@@ -15,6 +15,8 @@
         alt: image.alt,
         height: 750,
         width: 1000,
+        photographer: image.photographer?.name,
+        photographerUrl: image.photographer?.imageUrl,
       };
     } else if (image.vertical) {
       return {
@@ -23,16 +25,18 @@
         alt: image.alt,
         height: 1000,
         width: 750,
+        photographer: image.photographer?.name,
+        photographerUrl: image.photographer?.imageUrl,
       };
     }
   });
 
   let MacyComponent: typeof import("svelte-macy").Macy;
 
-	onMount(async () => {
-	  MacyComponent = (await import("svelte-macy")).Macy // or .default;
-     // initialize
-     let bp = BiggerPicture({
+  onMount(async () => {
+    MacyComponent = (await import("svelte-macy")).Macy; // or .default;
+    // initialize
+    let bp = BiggerPicture({
       target: document.body,
     });
 
@@ -52,12 +56,12 @@
         el: e.currentTarget!,
       });
     }
-	});
+  });
 
   let macy: any;
 
-	let options = {
-		container: "#images",
+  let options = {
+    container: "#images",
     trueOrder: true,
     waitForImages: true,
     margin: 4,
@@ -66,26 +70,27 @@
       1200: 3,
       940: 2,
       520: 2,
-    },  
-  }
+    },
+  };
 </script>
 
-<section class="lg:w-2/3 w-full mx-auto justify-center">
-<svelte:component this="{MacyComponent}" bind:macy options="{options}">
+<section class="lg:w-2/3 w-full mx-auto justify-center z-30">
+  <svelte:component this={MacyComponent} bind:macy {options}>
     <div id="images">
       {#each galleryImages as image}
-          <a
-            class="photo"
-            href={image.src}
-            data-img={image.src}
-            data-thumb={image.thumb}
-            data-height={image.height}
-            data-width={image.width}
-            data-alt={image.alt}
-          >
-            <img loading="lazy" src={image.thumb} alt={image.alt} />
-          </a>
-        {/each}
-      </div>
-    </svelte:component>
+        <a
+          class="photo"
+          href={image.src}
+          data-img={image.src}
+          data-thumb={image.thumb}
+          data-height={image.height}
+          data-width={image.width}
+          data-alt={image.alt}
+          data-caption={`Fotografía de ${image.photographer} (<a class="underline" target="_blank" href=${image.photographerUrl}>Instagram</a>)`}
+        >
+          <img loading="lazy" src={image.thumb} alt={image.alt} />
+        </a>
+      {/each}
+    </div>
+  </svelte:component>
 </section>
