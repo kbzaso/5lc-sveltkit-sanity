@@ -62,6 +62,7 @@ export default defineType({
           title: "Fotofrafo/a",
           type: "reference",
           description: "Quien fue el fotografo/a de la imagen",
+          validation: (Rule) => Rule.required(),
           to: [{ type: "author" }],
         },
       ],

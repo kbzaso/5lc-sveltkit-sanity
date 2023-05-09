@@ -86,20 +86,6 @@
                 alt={$staffData.staff.title}
               />
             {/if}
-            <figcaption
-              class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full h-full text-sm flex justify-center items-end text-gray-300"
-            >
-              <span class="bg-black/25 backdrop-blur-lg px-2 py-1 rounded-sm">
-                Fotografo/a:<a
-                  class=" ml-2 link hover:text-primary underline decoration-wavy"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={$staffData.staff.principalPhotographer.photographer
-                    .imageUrl}
-                  >{$staffData.staff.principalPhotographer.photographer.name}</a
-                >
-              </span>
-            </figcaption>
           </figure>
           <div
             class="absolute bottom-0 bg-gradient-to-t xl:from-black/100 xl:via-black/60 from-black/60 via-black/0  to-transparent h-96 w-full invisible xl:visible z-10"
