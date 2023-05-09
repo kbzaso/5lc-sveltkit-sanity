@@ -65,7 +65,7 @@
       {#if $staffData?.staff}
         <div class="">
           <figure
-            class="relative max-w-[670px] md:min-w-[670px] flex justify-center "
+            class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-[500px] xl:min-h-[600px] 2xl:min-h-[700px] 3xl:min-h-[800px]"
           >
             {#if condition}
               <img
@@ -88,9 +88,11 @@
               />
             {/if}
             <figcaption
-              class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full h-full flex justify-center items-end text-zinc-400"
+              class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full h-full text-sm flex justify-center items-end text-gray-300"
             > 
-            Fotografo/a: <a class=" ml-2 link hover:text-primary" target="_blank" rel="noreferrer" href={$staffData.staff.principalPhotographer.photographer.imageUrl}>{$staffData.staff.principalPhotographer.photographer.name}</a>
+            <span class="bg-black/25 backdrop-blur-lg px-2 py-1 rounded-sm">
+              Fotografo/a:<a class=" ml-2 link hover:text-primary" target="_blank" rel="noreferrer" href={$staffData.staff.principalPhotographer.photographer.imageUrl}>{$staffData.staff.principalPhotographer.photographer.name}</a>
+            </span>
             </figcaption>
           </figure>
           <div
@@ -104,7 +106,7 @@
     class="bg-black/25  xl:bg-black/50 lg:h-fit p-8  w-full xl:w-fit space-y-2  -mt-40 xl:mt-10 backdrop-blur-xl xl:absolute top-20 right-5 z-30"
   >
     <div class="flex flex-col items-center space-y-1 xl:items-start pb-8">
-      <h2 class="text-sm uppercase tracking-widest text-white">
+      <h2 class="text-sm uppercase tracking-widest text-white text-center">
         {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ""}
       </h2>
       <h1
