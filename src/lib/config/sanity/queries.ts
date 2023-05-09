@@ -10,6 +10,12 @@ const staffFields = groq`
   imageTitle,
   social,
   staffImage,
+  "principalPhotographer": staffImage {
+    photographer-> {
+      name,
+      imageUrl,
+    },
+  },
   description,
   gallery,
 `;

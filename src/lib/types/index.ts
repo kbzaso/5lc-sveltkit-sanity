@@ -18,6 +18,12 @@ export interface Staff {
     height: number;
     date: string;
   };
+  principalPhotographer: {
+    photographer: {
+      name: string;
+      imageUrl: string;
+    }
+  };
   social: {
     instagram: string;
     twitter: string;
