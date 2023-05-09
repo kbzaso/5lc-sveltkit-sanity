@@ -86,7 +86,7 @@
           data-height={image.height}
           data-width={image.width}
           data-alt={image.alt}
-          data-caption={`Fotografo/a: <a class="underline decoration-wavy" target="_blank" href=${image.photographerUrl}>${image.photographer}</a>`}
+          data-caption={`Fotografía de ${image.photographer} (<a class="underline" target="_blank" href=${image.photographerUrl}>Instagram</a>)`}
         >
           <img loading="lazy" src={image.thumb} alt={image.alt} />
         </a>

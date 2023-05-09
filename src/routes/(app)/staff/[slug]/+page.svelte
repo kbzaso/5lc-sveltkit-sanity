@@ -91,7 +91,7 @@
             >
               <span class="bg-black/25 backdrop-blur-lg px-2 py-1 rounded-sm">
                 Fotografo/a:<a
-                  class=" ml-2 link hover:text-primary"
+                  class=" ml-2 link hover:text-primary underline decoration-wavy"
                   target="_blank"
                   rel="noreferrer"
                   href={$staffData.staff.principalPhotographer.photographer
