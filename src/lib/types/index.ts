@@ -22,7 +22,7 @@ export interface Staff {
     photographer: {
       name: string;
       imageUrl: string;
-    }
+    };
   };
   social: {
     instagram: string;
