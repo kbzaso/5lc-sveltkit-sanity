@@ -89,7 +89,7 @@
             {/if}
             {#if $staffData.staff.principalPhotographer !== null && $staffData.staff.principalPhotographer !== undefined}
               <figcaption
-                class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full h-full text-sm flex justify-center items-end text-gray-300"
+                class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full text-sm flex justify-center items-end text-gray-300"
               >
                 <span class="bg-black/50 backdrop-blur-lg px-2 py-1 rounded-sm">
                   Fotografo/a:<a
