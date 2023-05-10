@@ -29,7 +29,6 @@
 
   let backgroundImage: string;
   onMount(() => {
-    console.log($staffData.staff.gallery);
     backgroundImage = urlForImage(welcome.backgroundImage).quality(90).url();
     let header: HTMLElement | null = document.querySelector("#header");
     if (header !== null && header !== undefined) {
@@ -64,10 +63,11 @@
       {#if $staffData?.staff}
         <div class="">
           <figure
-            class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-[500px] xl:min-h-[600px] 2xl:min-h-[700px] 3xl:min-h-[800px]"
+            class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-[500px] xl:min-h-[800px] 2xl:min-h-[700px]"
           >
             {#if condition}
               <img
+              class="object-contain"
                 fetchpriority="high"
                 src={urlForImage($staffData.staff.staffImage)
                   .width(500)
@@ -78,6 +78,7 @@
               />
             {:else}
               <img
+              class="object-contain"
                 fetchpriority="high"
                 src={urlForImage($staffData.staff.staffImage)
                   .width(800)
@@ -85,6 +86,22 @@
                   .url()}
                 alt={$staffData.staff.title}
               />
+            {/if}
+            {#if $staffData.staff.principalPhotographer !== null && $staffData.staff.principalPhotographer !== undefined}
+              <figcaption
+                class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full h-full text-sm flex justify-center items-end text-gray-300"
+              >
+                <span class="bg-black/50 backdrop-blur-lg px-2 py-1 rounded-sm">
+                  Fotografo/a:<a
+                    class=" ml-2 link hover:text-primary underline"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={$staffData.staff.principalPhotographer.photographer
+                      .imageUrl}
+                    >{$staffData.staff.principalPhotographer.photographer.name}</a
+                  >
+                </span>
+              </figcaption>
             {/if}
           </figure>
           <div

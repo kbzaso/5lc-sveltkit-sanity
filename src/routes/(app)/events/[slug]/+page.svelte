@@ -28,19 +28,19 @@
 {#if $eventData?.event}
   <div class="xl:container xl:mx-auto min-w-[350px]">
     <div class="mt-28 flex flex-col md:flex-row px-4 gap-4">
-      <figure class="mb-8 md:w-2/3">
+      <figure class="mb-8 xl:mb-0 xl:w-1/3">
         <img
-          class="h-72 md:h-full object-cover w-fit"
+          class="h-72 xl:h-full object-cover w-full"
           loading="lazy"
           src={urlForImage($eventData?.event.poster)
             .width(800)
             .quality(90)
             .url()}
-          alt="Boveda Secreta"
+          alt="Afiiche de {$eventData?.event?.title}"
         />
       </figure>
 
-      <div class="mx-auto max-w-prose prose-p:text-lg">
+      <div class="prose-p:text-lg md:w-2/3">
         {#if !$eventData?.event?.active}
           <time
             class="italic text-gray-500"
