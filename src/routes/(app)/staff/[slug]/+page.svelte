@@ -67,7 +67,7 @@
           >
             {#if condition}
               <img
-              class="object-contain"
+                class="object-contain"
                 fetchpriority="high"
                 src={urlForImage($staffData.staff.staffImage)
                   .width(500)
@@ -78,7 +78,7 @@
               />
             {:else}
               <img
-              class="object-contain"
+                class="object-contain"
                 fetchpriority="high"
                 src={urlForImage($staffData.staff.staffImage)
                   .width(800)
@@ -98,7 +98,8 @@
                     rel="noreferrer"
                     href={$staffData.staff.principalPhotographer.photographer
                       .imageUrl}
-                    >{$staffData.staff.principalPhotographer.photographer.name}</a
+                    >{$staffData.staff.principalPhotographer.photographer
+                      .name}</a
                   >
                 </span>
               </figcaption>
