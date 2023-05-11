@@ -58,12 +58,12 @@
     class={`relative overflow-hidden bg-cover lg:h-fit bg-center bg-no-repeat`}
   >
     <div
-      class="pt-24 z-10 w-full flex flex-col xl:flex-row xl:justify-left items-center"
+      class="pt-24 z-10 w-full flex flex-col lg:flex-row lg:justify-left items-center"
     >
       {#if $staffData?.staff}
         <div class="">
           <figure
-            class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-[500px] xl:min-h-[800px] 2xl:min-h-[700px]"
+            class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-[500px] lg:min-h-[800px] 2lg:min-h-[700px]"
           >
             {#if condition}
               <img
@@ -89,7 +89,7 @@
             {/if}
             {#if $staffData.staff.principalPhotographer !== null && $staffData.staff.principalPhotographer !== undefined}
               <figcaption
-                class="absolute bottom-44 xl:bottom-20 italic z-20 left-0 w-full text-sm flex justify-center items-end text-gray-300"
+                class="absolute bottom-44 lg:bottom-20 italic z-20 left-0 w-full text-sm flex justify-center items-end text-gray-300"
               >
                 <span class="bg-black/50 backdrop-blur-lg px-2 py-1 rounded-sm">
                   Fotografo/a:<a
@@ -106,16 +106,16 @@
             {/if}
           </figure>
           <div
-            class="absolute bottom-0 bg-gradient-to-t xl:from-black/100 xl:via-black/60 from-black/60 via-black/0  to-transparent h-96 w-full invisible xl:visible z-10"
+            class="absolute bottom-0 bg-gradient-to-t lg:from-black/100 lg:via-black/60 from-black/60 via-black/0  to-transparent h-96 w-full invisible lg:visible z-10"
           />
         </div>
       {/if}
     </div>
   </header>
   <section
-    class="bg-black/25  xl:bg-black/50 lg:h-fit p-8  w-full xl:w-fit space-y-2  -mt-40 xl:mt-10 backdrop-blur-xl xl:absolute top-20 right-5 z-30"
+    class="bg-black/25  lg:bg-black/50 lg:h-fit p-8  w-full lg:w-1/2 space-y-2  -mt-40 lg:mt-10 backdrop-blur-xl lg:absolute top-20 right-5 z-30"
   >
-    <div class="flex flex-col items-center space-y-1 xl:items-start pb-8">
+    <div class="flex flex-col items-center space-y-1 lg:items-start pb-8">
       <h2 class="text-sm uppercase tracking-widest text-white text-center">
         {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ""}
       </h2>
