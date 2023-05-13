@@ -5,9 +5,9 @@
   import BiggerPicture from "bigger-picture/svelte";
   import "bigger-picture/css";
 
-  export let images;
+  export let images: any[] = [];
 
-  const galleryImages = images.map((image: any) => {
+  $: galleryImages = images.map((image: any) => {
     if (!image.vertical) {
       return {
         src: urlForImage(image).height(750).width(1000).quality(90).url(),
@@ -41,7 +41,7 @@
     });
 
     // grab image links
-    const imageLinks = document.querySelectorAll("#images > a");
+    let imageLinks = document.querySelectorAll("#images > a");
 
     // add click listener to open BiggerPicture
     for (let link of imageLinks) {
@@ -65,30 +65,30 @@
     trueOrder: true,
     waitForImages: true,
     margin: 4,
-    columns: 3,
+    columns: 4,
     breakAt: {
-      1200: 3,
+      1200: 4,
       940: 2,
       520: 2,
     },
   };
 </script>
 
-<section class="lg:w-2/3 w-full mx-auto justify-center z-30">
+<section class="w-full mx-auto justify-center z-30">
   <svelte:component this={MacyComponent} bind:macy {options}>
     <div id="images">
       {#each galleryImages as image}
         <a
-          class="photo"
-          href={image.src}
-          data-img={image.src}
-          data-thumb={image.thumb}
-          data-height={image.height}
-          data-width={image.width}
-          data-alt={image.alt}
-          data-caption={`Fotografía de ${image.photographer} (<a class="underline" target="_blank" href=${image.photographerUrl}>Instagram</a>)`}
+          class="photo rounded-md"
+          href={image?.src}
+          data-img={image?.src}
+          data-thumb={image?.thumb}
+          data-height={image?.height}
+          data-width={image?.width}
+          data-alt={image?.alt}
+          data-caption={`Fotografía de ${image?.photographer} (<a class="underline" target="_blank" href=${image.photographerUrl}>Instagram</a>)`}
         >
-          <img loading="lazy" src={image.thumb} alt={image.alt} />
+          <img loading="lazy" src={image?.thumb} alt={image?.alt} />
         </a>
       {/each}
     </div>
