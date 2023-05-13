@@ -12,24 +12,30 @@
   import FiTwitter from "svelte-icons-pack/fi/FiTwitter";
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
-  import { element, onMount } from "svelte/internal";
+  import { beforeUpdate, element, onDestroy, onMount } from "svelte/internal";
   import Gallery from "$lib/components/Gallery.svelte";
+  import Splide from "$lib/components/Splide.svelte";
 
   export let data: PageData;
 
-  $: ({ initialData, previewMode, slug, welcome } = data);
+  $: ({ initialData, previewMode, slug, welcome, allStaff } = data);
   $: ({ data: staffData } = previewSubscription(staffQuery, {
     params: { slug },
     initialData,
     enabled: previewMode && !!slug,
   }));
 
+  // Función para comparar de forma aleatoria
+  function compararAleatoriamente() {
+    return Math.random() - 0.5;
+  }
+
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
 
   let backgroundImage: string;
   onMount(() => {
-    backgroundImage = urlForImage(welcome.backgroundImage).quality(90).url();
+    backgroundImage = urlForImage(welcome.backgroundImage).quality(80).url();
     let header: HTMLElement | null = document.querySelector("#header");
     if (header !== null && header !== undefined) {
       header.style.backgroundImage = `url(${backgroundImage})`;
@@ -69,10 +75,10 @@
               <img
                 class="object-contain"
                 fetchpriority="high"
-                src={urlForImage($staffData.staff.staffImage)
-                  .width(500)
-                  .height(700)
-                  .quality(70)
+                src={urlForImage($staffData.staff?.staffImage)
+                  .width(400)
+                  .height(600)
+                  .quality(80)
                   .url()}
                 alt={$staffData.staff.title}
               />
@@ -80,7 +86,7 @@
               <img
                 class="object-contain"
                 fetchpriority="high"
-                src={urlForImage($staffData.staff.staffImage)
+                src={urlForImage($staffData.staff?.staffImage)
                   .width(800)
                   .quality(70)
                   .url()}
@@ -120,7 +126,7 @@
         {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ""}
       </h2>
       <h1
-        class="text-6xl md:text-7xl font-black italic text-primary text-center"
+        class="text-6xl md:text-7xl font-black italic text-primary text-center sm:text-left"
       >
         {$staffData.staff.title}
       </h1>
@@ -152,7 +158,7 @@
         {/if}
         {#if $staffData.staff.description}
           <p
-            class="pt-4 prose prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300"
+            class="pt-4 prose prose-a:after:content-['_↗']  prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300 prose-a:after:text-blue-500 prose-a:after:font-black prose-a:no-underline"
           >
             <PortableText value={$staffData.staff.description} />
           </p>
@@ -253,10 +259,26 @@
   </section>
 
   {#if $staffData?.staff.gallery !== null}
-    <div
-      class="container mx-auto w-full flex flex-col justify-center md:mt-20 lg:mt-40"
-    >
-      <Gallery images={$staffData.staff.gallery} />
-    </div>
+    <section class="md:mt-20 lg:mt-40">
+      <h4
+        class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
+      >
+        Galería de imagenes
+      </h4>
+      <div
+        class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
+      >
+        <Gallery images={$staffData.staff.gallery} />
+      </div>
+    </section>
   {/if}
+
+  <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
+    <h4
+      class="text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
+    >
+      Otros miembros del equipo
+    </h4>
+    <Splide allStaff={allStaff.sort(compararAleatoriamente)} />
+  </div>
 </div>

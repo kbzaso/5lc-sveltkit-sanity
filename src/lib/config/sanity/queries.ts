@@ -30,6 +30,16 @@ const staffFields = groq`
   }
 `;
 
+// Se solicita en el detalle del staff wrestler
+export const staffSliderFields = groq`
+    *[_type == "staff"] {
+      active,
+      title,
+      pseudonym,
+      "slug": slug.current,
+      staffImage,
+    }`;
+
 export const eventFields = groq`
     _id,
     name,
