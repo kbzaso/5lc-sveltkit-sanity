@@ -25,13 +25,12 @@
     enabled: previewMode && !!slug,
   }));
 
+  
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
-
+  
   let backgroundImage: string;
   onMount(() => {
-    console.log($staffData.staff.staffImage);
-
     backgroundImage = urlForImage(welcome.backgroundImage).quality(80).url();
     let header: HTMLElement | null = document.querySelector("#header");
     if (header !== null && header !== undefined) {
@@ -39,13 +38,6 @@
     } else {
       throw new Error("Header not found");
     }
-  });
-
-  beforeUpdate(() => {
-    console.log("antes de actualizar");
-  });
-  onDestroy(() => {
-    console.log("destruyendo");
   });
 
   let innerWidth = 0;
@@ -162,7 +154,7 @@
         {/if}
         {#if $staffData.staff.description}
           <p
-            class="pt-4 prose prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300"
+            class="pt-4 prose prose-a:after:content-['_↗']  prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300 prose-a:after:text-blue-500 prose-a:after:font-black prose-a:no-underline"
           >
             <PortableText value={$staffData.staff.description} />
           </p>
@@ -270,7 +262,7 @@
         Galería de imagenes
       </h4>
       <div
-        class="container bg-primary p-4 lg:rounded-md mx-auto w-full flex flex-col justify-center"
+        class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
       >
         <Gallery images={$staffData.staff.gallery} />
       </div>

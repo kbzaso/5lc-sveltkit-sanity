@@ -16,7 +16,7 @@
     hasTrack={false}
     options={{
       rewind: true,
-      type: "slide",
+      type: "loop",
       pagination: false,
       gap: "1rem",
       perPage: 2,

@@ -5,7 +5,7 @@
   import BiggerPicture from "bigger-picture/svelte";
   import "bigger-picture/css";
 
-  export let images: any[] = [];
+  export let images;
 
   $: galleryImages = images.map((image: any) => {
     if (!image.vertical) {
@@ -31,10 +31,7 @@
     }
   });
 
-  let MacyComponent: typeof import("svelte-macy").Macy;
-
-  onMount(async () => {
-    MacyComponent = (await import("svelte-macy")).Macy; // or .default;
+  onMount(() => {
     // initialize
     let bp = BiggerPicture({
       target: document.body,
@@ -58,39 +55,23 @@
     }
   });
 
-  let macy: any;
-
-  let options = {
-    container: "#images",
-    trueOrder: true,
-    waitForImages: true,
-    margin: 4,
-    columns: 4,
-    breakAt: {
-      1200: 4,
-      940: 2,
-      520: 2,
-    },
-  };
 </script>
 
-<section class="w-full mx-auto justify-center z-30">
-  <svelte:component this={MacyComponent} bind:macy {options}>
-    <div id="images">
+<section class="w-full mx-auto">
+    <div id="images" class="columns-2 sm:columns-3 md:columns-4 lg:columns-4 xl:columns-5">
       {#each galleryImages as image}
         <a
-          class="photo rounded-md"
+          class="w-52 break-inside-avoid-column"
           href={image?.src}
           data-img={image?.src}
           data-thumb={image?.thumb}
           data-height={image?.height}
           data-width={image?.width}
           data-alt={image?.alt}
-          data-caption={`Fotografía de ${image?.photographer} (<a class="underline" target="_blank" href=${image.photographerUrl}>Instagram</a>)`}
+          data-caption={`Fotografía de ${image?.photographer} (<a class="underline" target="_blank" href=${image?.photographerUrl}>Instagram</a>)`}
         >
-          <img loading="lazy" src={image?.thumb} alt={image?.alt} />
+          <img class="mb-2 rounded-sm" loading="lazy" src={image?.thumb} alt={image?.alt} />
         </a>
       {/each}
     </div>
-  </svelte:component>
 </section>
