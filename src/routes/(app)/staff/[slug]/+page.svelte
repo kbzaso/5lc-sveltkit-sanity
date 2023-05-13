@@ -25,7 +25,11 @@
     enabled: previewMode && !!slug,
   }));
 
-  
+  // Función para comparar de forma aleatoria
+  function compararAleatoriamente() {
+    return Math.random() - 0.5;
+  }
+
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   
@@ -269,12 +273,12 @@
     </section>
   {/if}
 
-  <div class="py-4 px-4 mt-10 rounded-md">
+  <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
     <h4
       class="text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
     >
       Otros miembros del equipo
     </h4>
-    <Splide {allStaff} />
+    <Splide allStaff={allStaff.sort(compararAleatoriamente)} />
   </div>
 </div>
