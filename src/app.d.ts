@@ -10,4 +10,4 @@ declare namespace App {
   // interface PrivateEnv {}
   // interface PublicEnv {}
 }
-declare module 'svelte-image-gallery';
+declare module "svelte-image-gallery";

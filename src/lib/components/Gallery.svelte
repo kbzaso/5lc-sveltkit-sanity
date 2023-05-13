@@ -54,24 +54,31 @@
       });
     }
   });
-
 </script>
 
 <section class="w-full mx-auto">
-    <div id="images" class="columns-2 sm:columns-3 md:columns-4 lg:columns-4 xl:columns-5">
-      {#each galleryImages as image}
-        <a
-          class="w-52 break-inside-avoid-column"
-          href={image?.src}
-          data-img={image?.src}
-          data-thumb={image?.thumb}
-          data-height={image?.height}
-          data-width={image?.width}
-          data-alt={image?.alt}
-          data-caption={`Fotografía de ${image?.photographer} (<a class="underline" target="_blank" href=${image?.photographerUrl}>Instagram</a>)`}
-        >
-          <img class="mb-2 rounded-sm" loading="lazy" src={image?.thumb} alt={image?.alt} />
-        </a>
-      {/each}
-    </div>
+  <div
+    id="images"
+    class="columns-2 sm:columns-3 md:columns-4 lg:columns-4 xl:columns-5"
+  >
+    {#each galleryImages as image}
+      <a
+        class="w-52 break-inside-avoid-column"
+        href={image?.src}
+        data-img={image?.src}
+        data-thumb={image?.thumb}
+        data-height={image?.height}
+        data-width={image?.width}
+        data-alt={image?.alt}
+        data-caption={`Fotografía de ${image?.photographer} (<a class="underline" target="_blank" href=${image?.photographerUrl}>Instagram</a>)`}
+      >
+        <img
+          class="mb-2 rounded-sm"
+          loading="lazy"
+          src={image?.thumb}
+          alt={image?.alt}
+        />
+      </a>
+    {/each}
+  </div>
 </section>

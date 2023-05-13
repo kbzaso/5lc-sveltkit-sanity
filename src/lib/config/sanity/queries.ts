@@ -93,7 +93,6 @@ export const allStaffQuery = groq`
   ${staffFields}
 }`;
 
-
 export const staffSlugsQuery = groq`
 *[_type == "staff" && defined(slug.current)][].slug.current
 `;

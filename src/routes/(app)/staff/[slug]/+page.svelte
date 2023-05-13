@@ -32,7 +32,7 @@
 
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
-  
+
   let backgroundImage: string;
   onMount(() => {
     backgroundImage = urlForImage(welcome.backgroundImage).quality(80).url();
