@@ -12,9 +12,10 @@
   import FiTwitter from "svelte-icons-pack/fi/FiTwitter";
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
-  import { beforeUpdate, element, onDestroy, onMount } from "svelte/internal";
+  import { onMount } from "svelte/internal";
   import Gallery from "$lib/components/Gallery.svelte";
   import Splide from "$lib/components/Splide.svelte";
+  import OGCard from "$lib/components/OGCard.svelte";
 
   export let data: PageData;
 
@@ -50,12 +51,15 @@
 
 <svelte:window bind:innerWidth />
 
+
+
 <svelte:head>
   <title
     >{$staffData.staff.title} - {$staffData?.staff?.pseudonym
       ? $staffData?.staff?.pseudonym
       : ""}</title
   >
+  <meta content={`https://www.clandestino.party/og?message=${$staffData.staff.title}`} property="og:image">
 </svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">
@@ -281,4 +285,20 @@
     </h4>
     <Splide allStaff={allStaff.sort(compararAleatoriamente)} />
   </div>
+  <div class="card">
+    <OGCard  />
+  </div>
 </div>
+
+
+<style>
+	@font-face {
+		font-family: 'Noto Sans';
+		src: url('/src/lib/NotoSans-Regular.ttf');
+	}
+
+	.card {
+		height: 630px;
+		width: 1200px;
+	}
+</style>
