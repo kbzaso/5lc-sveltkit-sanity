@@ -15,7 +15,6 @@
   import { onMount } from "svelte/internal";
   import Gallery from "$lib/components/Gallery.svelte";
   import Splide from "$lib/components/Splide.svelte";
-  import OGCard from "$lib/components/OGCard.svelte";
   import { page } from '$app/stores';
 
   export let data: PageData;
@@ -45,7 +44,6 @@
     } else {
       throw new Error("Header not found");
     }
-    console.log($page)
   });
 
   let innerWidth = 0;
@@ -67,11 +65,11 @@
   <meta name="description" content='Parte del equipo de 5 Luchas Clandestino' />
   <meta property="twitter:image" content={`${$page.url.origin}/og?message=${$staffData.staff.title}`} >
   <meta property="twitter:card" content={`${$page.url.origin}/og?message=${$staffData.staff.title}`}>
-  <meta property="twitter:title" content={`${$staffData.staff.title}`}>
-  <meta property="twitter:description" content="Twitter link preview description">
+  <meta property="twitter:title" content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}>
+  <meta property="twitter:description" content={`${$staffData.staff.seo_description}`}>
 
   <meta property="og:title" content={`${$staffData.staff.title}`}>
-  <meta property="og:description" content="Link preview description" />
+  <meta property="og:description" content={`${$staffData.staff.seo_description}`} />
   <meta property="og:url" content={`${$page.url.origin}/staff/${slug}`}>
 </svelte:head>
 

@@ -9,6 +9,7 @@ export interface Staff {
   slug: string;
   imageTitle: SanityImageSource;
   description: InputValue;
+  seo_description: string;
   gallery: {
     images: SanityImageSource[];
     author: string[];

@@ -89,6 +89,16 @@ export default defineType({
       hidden: ({ document }) => document?.active === false,
     },
     {
+      title: 'SEO',
+      name: 'seo_description',
+      type: 'text',
+      description: 'Describe brevemente el miembro del equipo, este texto aparecerá en los resultados de búsqueda de Google',
+      validation: (Rule) => Rule.required(),
+      options: {
+        maxLength: 160,
+      },
+    },
+    {
       name: "gallery",
       type: "object",
       title: "Galería de fotos",

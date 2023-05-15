@@ -17,6 +17,7 @@ const staffFields = groq`
     },
   },
   description,
+  seo_description,
   "gallery": gallery.images[]{
     alt,
     active,
