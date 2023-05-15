@@ -59,15 +59,15 @@
       ? $staffData?.staff?.pseudonym
       : ""}</title
   >
-  <meta content={`5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`}  property="og:image">
+  <meta content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`}  property="og:image">
   <meta name="description" content='Parte del equipo de 5 Luchas Clandestino' />
-  <meta property="twitter:image" content={`5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`} >
-  <meta property="twitter:card" content={`5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`}>
+  <meta property="twitter:image" content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`} >
+  <meta property="twitter:card" content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`}>
   <meta property="twitter:title" content={`${$staffData.staff.title}`}>
 
   <meta property="og:title" content={`${$staffData.staff.title}`}>
   <meta property="og:description" content="Link preview description" />
-  <meta property="og:url" content={`5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/staff/${slug}`}>
+  <meta property="og:url" content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/staff/${slug}`}>
 </svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">
