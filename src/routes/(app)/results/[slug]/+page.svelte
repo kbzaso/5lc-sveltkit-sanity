@@ -41,11 +41,11 @@
 </svelte:head>
 
 {#if $eventData?.event}
-  <div class="xl:container xl:mx-auto min-w-[350px]">
-    <div class="mt-28 flex flex-col xl:flex-row px-4 gap-8">
-      <figure class="mb-8 xl:mb-0 xl:w-1/3">
+  <div class="container mx-auto min-w-[350px]">
+    <div class="mt-28 flex flex-col lg:flex-row px-4 gap-8">
+      <figure class="mb-8 xl:mb-0 lg:w-1/3">
         <img
-          class="h-72 xl:h-full object-cover w-full"
+          class="h-72 lg:h-full object-cover w-full"
           loading="lazy"
           src={urlForImage($eventData?.event.poster)
             .height(800)

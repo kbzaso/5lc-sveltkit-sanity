@@ -18,7 +18,7 @@
         src={urlForImage(staff.staffImage)
           .height(785)
           .width(500)
-          .quality(80)
+          .quality(40)
           .url()}
         alt={staff.title}
       />

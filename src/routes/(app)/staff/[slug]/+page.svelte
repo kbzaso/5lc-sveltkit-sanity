@@ -32,7 +32,7 @@
     return Math.random() - 0.5;
   }
 
-  $: seo_image = urlForImage($staffData.staff?.staffImage).width(400).height(400).quality(80).url()
+  $: seo_image = urlForImage($staffData.staff?.staffImage).width(200).height(200).quality(90).url()
   
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
