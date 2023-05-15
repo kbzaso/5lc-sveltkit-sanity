@@ -16,6 +16,7 @@
   import Gallery from "$lib/components/Gallery.svelte";
   import Splide from "$lib/components/Splide.svelte";
   import OGCard from "$lib/components/OGCard.svelte";
+  import { page } from '$app/stores';
 
   export let data: PageData;
 
@@ -26,14 +27,15 @@
     enabled: previewMode && !!slug,
   }));
 
+  
   // Función para comparar de forma aleatoria
   function compararAleatoriamente() {
     return Math.random() - 0.5;
   }
-
+  
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
-
+  
   let backgroundImage: string;
   onMount(() => {
     backgroundImage = urlForImage(welcome.backgroundImage).quality(80).url();
@@ -43,10 +45,12 @@
     } else {
       throw new Error("Header not found");
     }
+    console.log($page)
   });
 
   let innerWidth = 0;
   $: condition = innerWidth < 768;
+
 </script>
 
 <svelte:window bind:innerWidth />
@@ -59,15 +63,16 @@
       ? $staffData?.staff?.pseudonym
       : ""}</title
   >
-  <meta content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`}  property="og:image">
+  <meta content={`${$page.url.origin}/og?message=${$staffData.staff.title}`}  property="og:image">
   <meta name="description" content='Parte del equipo de 5 Luchas Clandestino' />
-  <meta property="twitter:image" content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`} >
-  <meta property="twitter:card" content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/og?message=${$staffData.staff.title}`}>
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${$staffData.staff.title}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${$staffData.staff.title}`}>
   <meta property="twitter:title" content={`${$staffData.staff.title}`}>
+  <meta property="twitter:description" content="Twitter link preview description">
 
   <meta property="og:title" content={`${$staffData.staff.title}`}>
   <meta property="og:description" content="Link preview description" />
-  <meta property="og:url" content={`https://www.5lc-sveltkit-sanity-ory7iqwdx-kbzaso.vercel.app/staff/${slug}`}>
+  <meta property="og:url" content={`${$page.url.origin}/staff/${slug}`}>
 </svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">
@@ -293,20 +298,4 @@
     </h4>
     <Splide allStaff={allStaff.sort(compararAleatoriamente)} />
   </div>
-  <div class="card">
-    <OGCard  />
-  </div>
 </div>
-
-
-<style>
-	@font-face {
-		font-family: 'Noto Sans';
-		src: url('/src/lib/NotoSans-Regular.ttf');
-	}
-
-	.card {
-		height: 630px;
-		width: 1200px;
-	}
-</style>
