@@ -4,8 +4,8 @@ import NotoSans from '$lib/NotoSans-Regular.ttf';
 import {html as toReactNode} from 'satori-html';
 import OGCard from '$lib/components/OGCard.svelte';
 
-const height = 630;
-const width = 1200;
+const height = 315;
+const width = 600;
 
 /** @type {import('./$types').RequestHandler} */
 export const GET = async ({ url }) => {

@@ -64,7 +64,7 @@
       : ""}</title
   >
   <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
-  <meta name="description" content='Parte del equipo de 5 Luchas Clandestino' />
+  <meta name="description" content={`${$staffData.staff.seo_description}`} />
   <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
   <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
   <meta property="twitter:title" content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}>

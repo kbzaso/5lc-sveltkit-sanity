@@ -3,7 +3,7 @@
   </script>
 
 <div id="container"> 
-<img src={message} alt="SEO Image"  />
+	<img id="staff" src={message} alt="SEO Image" height="600"  />
 </div>
 
 <style>
@@ -15,5 +15,11 @@
 		width: 100%;
 		display: flex;
 		flex-direction: row;
+		items-align: end;
+		justify-content: center;
+	}
+
+	#staff {
+		height:100%;
 	}
 </style>

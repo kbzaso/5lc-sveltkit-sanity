@@ -1,14 +1,29 @@
 <script lang="ts">
   import type { PageData } from "../$types";
+  import { urlForImage } from "$lib/config/sanity";
   import CardStaff from "$lib/components/CardStaff.svelte";
+  import { page } from "$app/stores";
 
+  
   export let data: PageData;
-
   $: ({ allStaff } = data);
+
+  let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
 
 <svelte:head>
-  <title>5 Luchas Clandestino</title>
+  <title>Equipo de 5 Luchas Clandestino</title>
+  <meta name="description" content={$page.data.settings.description} />
+
+  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
+  <meta property="twitter:title" content={`Equipo de 5 Luchas Clandestino`}>
+  <meta property="twitter:description" content={`Todos los miembrso que hacen posible 5 Luchas Clandestino, luchadores, staff, producción.`}>
+
+  <meta property="og:title" content={`Equipo de 5 Luchas Clandestino`}>
+  <meta property="og:description" content={`Todos los miembrso que hacen posible 5 Luchas Clandestino, luchadores, staff, producción.`} />
+  <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
 <div class="container mt-36 mx-auto px-4">
