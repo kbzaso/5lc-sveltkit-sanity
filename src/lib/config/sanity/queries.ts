@@ -55,6 +55,7 @@ export const eventFields = groq`
     active,
     extract,
     description,
+    seo_description,
     poster,
     "slug": slug.current,
 `;

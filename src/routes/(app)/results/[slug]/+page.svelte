@@ -5,6 +5,7 @@
   import type { PageData } from "./$types";
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
+  import { page } from '$app/stores';
 
   export let data: PageData;
 
@@ -19,10 +20,24 @@
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
+
+  let seo_image = urlForImage($page.data.initialData.event.poster).url();
+
 </script>
 
 <svelte:head>
-  <title>{$eventData?.event?.title}</title>
+  <title>Resultado {$eventData?.event?.title}</title>
+
+  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
+  <meta name="description" content={`${$eventData?.event?.seo_description}`} />
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
+  <meta property="twitter:title" content={`${$eventData?.event?.title}`}>
+  <meta property="twitter:description" content={`${$eventData?.event?.seo_description}`}>
+
+  <meta property="og:title" content={`${$eventData?.event?.title}`}>
+  <meta property="og:description" content={`${$eventData?.event?.seo_description}`} />
+  <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
 {#if $eventData?.event}

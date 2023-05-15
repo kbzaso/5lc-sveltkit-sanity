@@ -3,7 +3,7 @@
   </script>
 
 <div id="container"> 
-	<img id="staff" src={message} alt="SEO Image" height="600"  />
+	<img id="staff" src={message} alt="SEO Image" width="600"  />
 </div>
 
 <style>
@@ -20,6 +20,6 @@
 	}
 
 	#staff {
-		height:100%;
+		/* height:100%; */
 	}
 </style>

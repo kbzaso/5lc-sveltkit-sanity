@@ -2,14 +2,27 @@
   import { urlForImage } from "$lib/config/sanity";
   import type { PageData } from "../$types";
   import { LocaleConfig } from "$lib/utils/index";
+  import { page } from "$app/stores";
 
   export let data: PageData;
 
   $: ({ events, results } = data);
+  let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
 
 <svelte:head>
-  <title>5 Luchas Clandestino</title>
+  <title>Resultados | {$page.data.settings.title}</title>
+  <meta name="description" content='{$page.data.settings.description}' />
+
+  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
+  <meta property="twitter:title" content={`Eventos pasados de 5 Luchas Clandestino`}>
+  <meta property="twitter:description" content={`Revisa los resultados de los últimos eventos de 5 Luchas Clandestino`}>
+
+  <meta property="og:title" content={`Eventos pasados de 5 Luchas Clandestino`}>
+  <meta property="og:description" content={`Revisa los resultados de los últimos eventos de 5 Luchas Clandestino`} />
+  <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
 <main class="container mx-auto px-4 mt-36 mb-20 space-y-20 ">

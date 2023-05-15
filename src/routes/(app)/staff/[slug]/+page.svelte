@@ -72,7 +72,7 @@
 
   <meta property="og:title" content={`${$staffData.staff.title}`}>
   <meta property="og:description" content={`${$staffData.staff.seo_description}`} />
-  <meta property="og:url" content={`${$page.url.origin}/staff/${slug}`}>
+  <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">

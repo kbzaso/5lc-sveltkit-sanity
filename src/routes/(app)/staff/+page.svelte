@@ -12,17 +12,17 @@
 </script>
 
 <svelte:head>
-  <title>Equipo de 5 Luchas Clandestino</title>
+  <title>Equipo | {$page.data.settings.title}</title>
   <meta name="description" content={$page.data.settings.description} />
 
   <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
   <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
   <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
   <meta property="twitter:title" content={`Equipo de 5 Luchas Clandestino`}>
-  <meta property="twitter:description" content={`Todos los miembrso que hacen posible 5 Luchas Clandestino, luchadores, staff, producción.`}>
+  <meta property="twitter:description" content={`Todos los miembros que hacen posible 5 Luchas Clandestino, luchadores, staff, producción.`}>
 
   <meta property="og:title" content={`Equipo de 5 Luchas Clandestino`}>
-  <meta property="og:description" content={`Todos los miembrso que hacen posible 5 Luchas Clandestino, luchadores, staff, producción.`} />
+  <meta property="og:description" content={`Todos los miembros que hacen posible 5 Luchas Clandestino, luchadores, staff, producción.`} />
   <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
