@@ -59,7 +59,8 @@
       ? $staffData?.staff?.pseudonym
       : ""}</title
   >
-  <meta content={`https://www.clandestino.party/og?message=${$staffData.staff.title}`} property="og:image">
+  <meta content="https://www.clandestino.party/og?message=Alexandra" property="og:image">
+  <meta name="description" content='Parte del equipo de 5 Luchas Clandestino' />
 </svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">
