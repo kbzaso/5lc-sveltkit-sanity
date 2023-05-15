@@ -22,7 +22,7 @@ export const GET = async ({ url }) => {
 			}
 		],
 		height,
-		width
+		width,
 	});
 
 	const resvg = new Resvg(svg, {

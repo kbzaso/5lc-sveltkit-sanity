@@ -1,19 +1,19 @@
 <script>
-    export let message = 'Hello, world!';
+    export let message = '';
   </script>
 
-<div class="text-yellow-500">{message}</div>
+<div id="container"> 
+<img src={message} alt="SEO Image"  />
+</div>
 
 <style>
-	div {
+	#container {
 		font-family: 'Noto Sans';
-		display: flex;
-		flex-direction: column;
-		font-size: 50px;
-		background-color: black;
+		background-image: url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1684169465/5LC/seo_image.jpg');
+		background-color: #facc15;
 		height: 100%;
 		width: 100%;
-		align-items: center;
-		justify-content: center;
+		display: flex;
+		flex-direction: row;
 	}
 </style>

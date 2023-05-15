@@ -31,6 +31,8 @@
   function compararAleatoriamente() {
     return Math.random() - 0.5;
   }
+
+  $: seo_image = urlForImage($staffData.staff?.staffImage).width(400).height(400).quality(80).url()
   
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
@@ -61,10 +63,10 @@
       ? $staffData?.staff?.pseudonym
       : ""}</title
   >
-  <meta content={`${$page.url.origin}/og?message=${$staffData.staff.title}`}  property="og:image">
+  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
   <meta name="description" content='Parte del equipo de 5 Luchas Clandestino' />
-  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${$staffData.staff.title}`} >
-  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${$staffData.staff.title}`}>
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
   <meta property="twitter:title" content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}>
   <meta property="twitter:description" content={`${$staffData.staff.seo_description}`}>
 
