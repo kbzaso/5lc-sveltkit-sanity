@@ -16,8 +16,8 @@
 </script>
 
 <svelte:head>
-  <title>{settings.title}</title>
   <meta name="description" content={settings.description} />
+  <title>{settings.title}</title>
 </svelte:head>
 
 <div class="">
