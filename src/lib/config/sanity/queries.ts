@@ -17,6 +17,7 @@ const staffFields = groq`
     },
   },
   description,
+  seo_description,
   "gallery": gallery.images[]{
     alt,
     active,
@@ -54,6 +55,7 @@ export const eventFields = groq`
     active,
     extract,
     description,
+    seo_description,
     poster,
     "slug": slug.current,
 `;

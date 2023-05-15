@@ -5,6 +5,7 @@
   import type { PageData } from "./$types";
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
+  import { page } from '$app/stores';
 
   export let data: PageData;
 
@@ -19,18 +20,32 @@
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
+
+  let seo_image = urlForImage($page.data.initialData.event.poster).url();
+
 </script>
 
 <svelte:head>
-  <title>{$eventData?.event?.title}</title>
+  <title>Resultado {$eventData?.event?.title}</title>
+
+  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
+  <meta name="description" content={`${$eventData?.event?.seo_description}`} />
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
+  <meta property="twitter:title" content={`${$eventData?.event?.title}`}>
+  <meta property="twitter:description" content={`${$eventData?.event?.seo_description}`}>
+
+  <meta property="og:title" content={`${$eventData?.event?.title}`}>
+  <meta property="og:description" content={`${$eventData?.event?.seo_description}`} />
+  <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
 {#if $eventData?.event}
-  <div class="xl:container xl:mx-auto min-w-[350px]">
-    <div class="mt-28 flex flex-col xl:flex-row px-4 gap-8">
-      <figure class="mb-8 xl:mb-0 xl:w-1/3">
+  <div class="container mx-auto min-w-[350px]">
+    <div class="mt-28 flex flex-col lg:flex-row px-4 gap-8">
+      <figure class="mb-8 xl:mb-0 lg:w-1/3">
         <img
-          class="h-72 xl:h-full object-cover w-full"
+          class="h-72 lg:h-full object-cover w-full"
           loading="lazy"
           src={urlForImage($eventData?.event.poster)
             .height(800)

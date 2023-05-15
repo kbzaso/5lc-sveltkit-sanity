@@ -4,6 +4,7 @@
   import Header from "$lib/components/Header.svelte";
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
+  import { page } from "$app/stores";
 
   export let data: PageData;
 
@@ -13,11 +14,23 @@
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
+  
+  let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
 
 <svelte:head>
-  <title>{settings.title}</title>
   <meta name="description" content={settings.description} />
+  <title>{settings.title}</title>
+
+  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
+  <meta property="twitter:title" content={`${settings.title}`}>
+  <meta property="twitter:description" content={`${settings.description}`}>
+
+  <meta property="og:title" content={`${settings.title}`}>
+  <meta property="og:description" content={`${settings.description}`} />
+  <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
 <div class="">

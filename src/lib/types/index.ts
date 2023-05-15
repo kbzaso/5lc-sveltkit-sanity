@@ -9,6 +9,7 @@ export interface Staff {
   slug: string;
   imageTitle: SanityImageSource;
   description: InputValue;
+  seo_description: string;
   gallery: {
     images: SanityImageSource[];
     author: string[];
@@ -38,6 +39,7 @@ export interface Event {
   _id: string;
   name: string;
   title: string;
+  seo_description: string;
   date: string;
   boveda: boolean;
   venue: {

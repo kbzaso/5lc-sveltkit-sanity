@@ -12,9 +12,10 @@
   import FiTwitter from "svelte-icons-pack/fi/FiTwitter";
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
-  import { beforeUpdate, element, onDestroy, onMount } from "svelte/internal";
+  import { onMount } from "svelte/internal";
   import Gallery from "$lib/components/Gallery.svelte";
   import Splide from "$lib/components/Splide.svelte";
+  import { page } from '$app/stores';
 
   export let data: PageData;
 
@@ -25,14 +26,17 @@
     enabled: previewMode && !!slug,
   }));
 
+  
   // Función para comparar de forma aleatoria
   function compararAleatoriamente() {
     return Math.random() - 0.5;
   }
 
+  $: seo_image = urlForImage($staffData.staff?.staffImage).width(200).height(200).quality(90).url()
+  
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
-
+  
   let backgroundImage: string;
   onMount(() => {
     backgroundImage = urlForImage(welcome.backgroundImage).quality(80).url();
@@ -46,9 +50,12 @@
 
   let innerWidth = 0;
   $: condition = innerWidth < 768;
+
 </script>
 
 <svelte:window bind:innerWidth />
+
+
 
 <svelte:head>
   <title
@@ -56,6 +63,16 @@
       ? $staffData?.staff?.pseudonym
       : ""}</title
   >
+  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
+  <meta name="description" content={`${$staffData.staff.seo_description}`} />
+  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
+  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
+  <meta property="twitter:title" content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}>
+  <meta property="twitter:description" content={`${$staffData.staff.seo_description}`}>
+
+  <meta property="og:title" content={`${$staffData.staff.title}`}>
+  <meta property="og:description" content={`${$staffData.staff.seo_description}`} />
+  <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
 <div class="relative w-full max-w-screen-2xl mx-auto">
