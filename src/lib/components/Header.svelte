@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { PortableText } from "@portabletext/svelte";
 
   export let preTitle = "";
@@ -8,16 +8,11 @@
   export let textTitle = "";
 
   import { onMount } from "svelte";
-
-  onMount(() => {
-    let header = document.querySelector("#header");
-    header.style.backgroundImage = `url(${backgroundImage})`;
-  });
 </script>
 
 <div
   id="header"
-  class={`bg-[url('${backgroundImage}')] bg-cover bg-center h-screen relative`}
+  class={`bg-[url('https://cdn.sanity.io/images/izngoptr/production/67836059903820f9cb2e62c1dc4afe078516e61d-1500x1000.jpg?q=80&fit=max&auto=format')] bg-cover bg-center h-screen relative`}
 >
   <div
     class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full"

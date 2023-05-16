@@ -19,7 +19,7 @@
 
   export let data: PageData;
 
-  $: ({ initialData, previewMode, slug, welcome, allStaff } = data);
+  $: ({ initialData, previewMode, slug, welcome, allStaffSlider } = data);
   $: ({ data: staffData } = previewSubscription(staffQuery, {
     params: { slug },
     initialData,
@@ -37,17 +37,6 @@
   $: eventDate = new Date($staffData.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   
-  let backgroundImage: string;
-  onMount(() => {
-    backgroundImage = urlForImage(welcome.backgroundImage).quality(80).url();
-    let header: HTMLElement | null = document.querySelector("#header");
-    if (header !== null && header !== undefined) {
-      header.style.backgroundImage = `url(${backgroundImage})`;
-    } else {
-      throw new Error("Header not found");
-    }
-  });
-
   let innerWidth = 0;
   $: condition = innerWidth < 768;
 
@@ -70,15 +59,15 @@
   <meta property="twitter:title" content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}>
   <meta property="twitter:description" content={`${$staffData.staff.seo_description}`}>
 
-  <meta property="og:title" content={`${$staffData.staff.title}`}>
+  <meta property="og:title" content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}>
   <meta property="og:description" content={`${$staffData.staff.seo_description}`} />
   <meta property="og:url" content={`${$page.url.href}`}>
 </svelte:head>
 
-<div class="relative w-full max-w-screen-2xl mx-auto">
+<div class="relative w-full max-w-screen-2xl mx-auto" data-sveltekit-preload-data="off">
   <header
     id="header"
-    class={`relative overflow-hidden bg-cover lg:h-fit bg-center bg-no-repeat`}
+    class={`bg-[url('https://cdn.sanity.io/images/izngoptr/production/67836059903820f9cb2e62c1dc4afe078516e61d-1500x1000.jpg?q=80&fit=max&auto=format')] relative overflow-hidden bg-cover lg:h-fit bg-center bg-no-repeat`}
   >
     <div
       class="pt-24 z-10 w-full flex flex-col lg:flex-row lg:justify-left items-center"
@@ -104,7 +93,8 @@
                 class="object-contain"
                 fetchpriority="high"
                 src={urlForImage($staffData.staff?.staffImage)
-                  .width(800)
+                  .width(670)
+                  .height(850)
                   .quality(70)
                   .url()}
                 alt={$staffData.staff.title}
@@ -296,6 +286,6 @@
     >
       Otros miembros del equipo
     </h4>
-    <Splide allStaff={allStaff.sort(compararAleatoriamente)} />
+    <Splide allStaff={allStaffSlider.sort(compararAleatoriamente)} />
   </div>
 </div>
