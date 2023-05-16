@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  :body{
+    overflow-y: hidden;
+  }
   h1 {
     @apply font-ibm;
     font-style: italic;

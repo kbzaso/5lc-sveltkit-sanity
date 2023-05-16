@@ -9,6 +9,7 @@
   export let data: PageData;
   import DrawerNav from "$lib/components/DrawerNav.svelte";
   import Footer from "$lib/components/Footer.svelte";
+  import { fade } from "svelte/transition";
 
   $: ({ settings } = data);
 </script>
@@ -33,5 +34,12 @@
   logoBlack={settings.logoBlack}
   bovedin={settings.bovedin}
 />
-<slot />
+  {#key data.url}
+    <div 
+      in:fade={{ duration:300, delay:300}} 
+      out:fade={{ duration:100, delay:0 }}
+      >
+      <slot />
+    </div>
+  {/key}
 <Footer />

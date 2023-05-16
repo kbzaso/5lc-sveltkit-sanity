@@ -34,6 +34,7 @@ const staffFields = groq`
 // Se solicita en el detalle del staff wrestler
 export const staffSliderFields = groq`
     *[_type == "staff"] {
+      _id,
       active,
       title,
       pseudonym,

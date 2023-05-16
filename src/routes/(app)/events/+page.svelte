@@ -13,7 +13,7 @@
 
 <svelte:head>
   <title>Eventos | {$page.data.settings.title}</title>
-  <meta name="description" content='{$page.data.settings.description}' />
+  <meta name="description" content='Enterate de los próximos eventos de 5 Luchas Clandestino' />
 
   <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
   <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
