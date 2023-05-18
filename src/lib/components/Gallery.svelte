@@ -6,8 +6,9 @@
   import "bigger-picture/css";
 
   export let images;
+  export let id: string;
 
-  $: galleryImages = images.map((image: any) => {
+  let galleryImages = images.map((image: any) => {
     if (!image.vertical) {
       return {
         src: urlForImage(image).height(750).width(1000).quality(90).url(),
@@ -31,6 +32,7 @@
     }
   });
 
+  
   onMount(() => {
     // initialize
     let bp = BiggerPicture({
@@ -38,8 +40,7 @@
     });
 
     // grab image links
-    let imageLinks = document.querySelectorAll("#images > a");
-
+    let imageLinks = document.querySelectorAll(`a.${id}`);
     // add click listener to open BiggerPicture
     for (let link of imageLinks) {
       link.addEventListener("click", openGallery);
@@ -63,7 +64,7 @@
   >
     {#each galleryImages as image}
       <a
-        class="w-52 break-inside-avoid-column"
+        class={id}
         href={image?.src}
         data-img={image?.src}
         data-thumb={image?.thumb}

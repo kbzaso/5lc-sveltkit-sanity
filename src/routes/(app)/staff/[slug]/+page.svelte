@@ -19,7 +19,7 @@
 
   export let data: PageData;
 
-  $: ({ initialData, previewMode, slug, welcome, allStaffSlider } = data);
+  $: ({ initialData, previewMode, slug, allStaffSlider } = data);
   $: ({ data: staffData } = previewSubscription(staffQuery, {
     params: { slug },
     initialData,
@@ -75,34 +75,23 @@
       {#if $staffData?.staff}
         <div class="">
           <figure
-            class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-[500px] lg:min-h-[800px] 2lg:min-h-[700px]"
+            class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-fit"
           >
-            {#if condition}
               <img
-                class="object-contain"
-                fetchpriority="high"
-                src={urlForImage($staffData.staff?.staffImage)
-                  .width(400)
-                  .height(600)
-                  .quality(80)
-                  .url()}
-                alt={$staffData.staff.title}
-              />
-            {:else}
-              <img
+                height="850"
+                width="670"
                 class="object-contain"
                 fetchpriority="high"
                 src={urlForImage($staffData.staff?.staffImage)
                   .width(670)
                   .height(850)
-                  .quality(70)
+                  .quality(80)
                   .url()}
                 alt={$staffData.staff.title}
               />
-            {/if}
             {#if $staffData.staff.principalPhotographer !== null && $staffData.staff.principalPhotographer !== undefined}
               <figcaption
-                class="absolute bottom-44 lg:bottom-20 italic z-20 left-0 w-full text-sm flex justify-center items-end text-gray-300"
+                class="absolute bottom-20 lg:bottom-20 italic z-20 left-0 w-full text-sm flex justify-center items-end text-gray-300"
               >
                 <span class="bg-black/50 backdrop-blur-lg px-2 py-1 rounded-sm">
                   Fotografo/a:<a
@@ -126,7 +115,7 @@
     </div>
   </header>
   <section
-    class="bg-black/25  lg:bg-black/50 lg:h-fit p-8  w-full lg:w-1/2 space-y-2  -mt-40 lg:mt-10 backdrop-blur-xl lg:absolute top-20 right-5 z-30"
+    class="bg-black/25  lg:bg-black/50 lg:h-fit p-8  w-full lg:w-1/2 space-y-2  -mt-16 lg:mt-10 backdrop-blur-xl lg:absolute top-20 right-5 z-30"
   >
     <div class="flex flex-col items-center space-y-1 lg:items-start pb-8">
       <h2 class="text-sm uppercase tracking-widest text-white text-center">
@@ -275,7 +264,7 @@
       <div
         class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
       >
-        <Gallery images={$staffData.staff.gallery} />
+        <Gallery id={$staffData.staff.slug} images={$staffData.staff.gallery} />
       </div>
     </section>
   {/if}
