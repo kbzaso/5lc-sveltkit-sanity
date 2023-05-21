@@ -50,6 +50,16 @@ export default defineType({
       title: "Descripción para SEO",
       validation: (Rule) => [Rule.required()],
     },
+    {
+      type: "array",
+      of: [
+        {
+          type: "block",
+        },
+      ],
+      name: "behavior",
+      title: "Código de conducta - asistentes",
+    },
   ],
   preview: {
     prepare: () => ({ title: "Settings" }),

@@ -35,7 +35,7 @@
   bovedin={settings.bovedin}
 />
   {#key data.url}
-    <div 
+    <div class="selection:bg-fuchsia-300 selection:text-fuchsia-900"
       in:fade={{ duration:300, delay:300}} 
       out:fade={{ duration:100, delay:0 }}
       >

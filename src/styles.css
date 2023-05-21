@@ -20,3 +20,13 @@
     @apply font-ibm-sans;
   }
 }
+
+@layer components {
+  .prose-anchor {
+    @apply hover:prose-a:after:text-primary hover:prose-a:decoration-primary prose-a:decoration-blue-500 prose-a:decoration-2 prose-a:underline-offset-2 prose-a:after:content-['_↗'] prose-a:after:font-black prose-a:after:text-blue-500;
+  }
+  .anchor {
+    @apply hover:after:text-primary hover:text-primary hover:decoration-primary decoration-blue-500 decoration-2 underline underline-offset-2 after:content-['_↗'] after:font-black after:text-blue-500;
+  }
+}
+

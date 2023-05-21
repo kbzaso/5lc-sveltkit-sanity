@@ -151,20 +151,20 @@
           {/if}
 
           {#if $eventData?.event.boveda && $eventData?.event?.active}
-            <p class="border border-dashed border-primary p-4">
+            <p class="border border-dashed border-primary p-4 text-sm">
               La Bóveda Secreta se encuentra en el 3er piso de la Galería “Nueva
               Copacabana” ubicada en calle San Antonio #705, Santiago Centro.
               Las estaciones de Metro más cercanas a ella son <span
-                class="underline underline-offset-2 decoration-wavy decoration-primary"
+                class="text-primary"
                 >Plaza de Armas</span
               >,
               <span
-                class="underline underline-offset-2 decoration-wavy decoration-primary"
+                class="text-primary"
                 >Bellas Artes</span
               >
               y
               <span
-                class="underline underline-offset-2 decoration-wavy decoration-primary"
+                class="text-primary"
                 >Puente Cal y Canto</span
               >.
             </p>
@@ -201,7 +201,7 @@
             <div class="rounded-md w-full">
               <a
                 href={$eventData?.event?.ticket?.url}
-                class="flex w-full items-center rounded-none hover:bg-cyan-500 hover:text-white justify-center border border-transparent bg-yellow-400 uppercase tracking-widest px-8 py-3 text-base font-medium text-black md:py-4 md:px-10 md:text-lg"
+                class="btn btn-primary cursor-pointer w-full"
                 >Entrada General</a
               >
               {#if $eventData?.event.ticket.price}
