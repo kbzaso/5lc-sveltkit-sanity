@@ -11,10 +11,28 @@
   import Footer from "$lib/components/Footer.svelte";
   import { fade } from "svelte/transition";
 
+  import navigationState from '$lib/stores/navigationState';
+  import PageLoader from '$lib/components/PageLoader.svelte';
+  import { afterNavigate, beforeNavigate } from "$app/navigation";
+
   $: ({ settings } = data);
+
+  beforeNavigate(() => {
+    navigationState.set('loading');
+  });
+  afterNavigate(() => {
+    navigationState.set('loaded');
+  });
+
 </script>
 
-<svelte:window />
+<svelte:window/>
+
+{#if $navigationState === 'loading'}
+    <div out:fade={{ delay: 500 }}>
+        <PageLoader />
+    </div>
+{/if}
 
 <svelte:head>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
