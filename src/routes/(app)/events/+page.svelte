@@ -6,7 +6,7 @@
 
   export let data: PageData;
 
-  $: ({ events, results } = data);
+  $: ({ events, events } = data);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
@@ -29,38 +29,51 @@
 <main class="container mx-auto px-4 mt-36 mb-20 space-y-20">
   <div>
     <h1 class="text-7xl text-primary">Eventos</h1>
-    <div
-      class="mt-8 grid gap-6 md:grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] lg:grid-cols-2"
-    >
+    <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#if events && events.length > 0}
-        {#each events as event}
-          <a href={`events/${event.slug}`}>
-            <div class="card xl:card-side bg-zinc-900 rounded-none">
-              <figure class="h-96 ">
+        {#each events as result}
+          <a href={`events/${result.slug}`}>
+            <div
+              class="relative overflow-hidden w-full group border-gray-600 border hover:border-primary rounded-none transition-all h-fit md:h-96"
+            >
+              <figure class="z-10">
                 <img
-                  class="object-cover"
-                  src={urlForImage(event.poster).url()}
-                  alt={`Afiche del evento ${event.title}`}
+                  loading="lazy"
+                  class="object-cover object-top h-72 md:h-96 w-full"
+                  src={urlForImage(result.poster)
+                    .height(600)
+                    .width(600)
+                    .quality(80)
+                    .url()}
+                  alt={result.title}
                 />
               </figure>
-              <div class="card-body">
-                <h2 class="card-title text-primary">{event.title}</h2>
-                <time
-                  class="italic text-gray-500"
-                  datetime={event.date.toString()}
+
+              <div
+                class="bg-zinc-900/50 h-max grow backdrop-blur-xl absolute bottom-0 z-20 w-full pb-4"
+              >
+                <p
+                  class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-4 px-4 pt-0"
                 >
-                  {new Date(event.date).toLocaleDateString(
-                    "es-CL",
-                    LocaleConfig
-                  )}
-                </time>
-                <p class="text-gray-400 ">{event.extract}</p>
+                  <time datetime={result.date.toString()}>
+                    {new Date(result.date).toLocaleDateString(
+                      "es-CL",
+                      LocaleConfig
+                    )}
+                  </time>
+                </p>
+
+                <h3
+                  class="text-primary font-ibm italic text-2xl md:text-4xl px-4 pt-0"
+                >
+                  {result.title}
+                </h3>
               </div>
             </div>
           </a>
         {/each}
       {:else}
-        <p>Ups! No tenemos eventos agendados por el momento.</p>
+        <p>Ups! No tenemos resultado en nuestra base de datos.</p>
       {/if}
     </div>
   </div>
