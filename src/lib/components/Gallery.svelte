@@ -32,7 +32,6 @@
     }
   });
 
-  
   onMount(() => {
     // initialize
     let bp = BiggerPicture({
@@ -76,6 +75,7 @@
         <img
           class="mb-2 rounded-sm"
           loading="lazy"
+          width="400"
           src={image?.thumb}
           alt={image?.alt}
         />

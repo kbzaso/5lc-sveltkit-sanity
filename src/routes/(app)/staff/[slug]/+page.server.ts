@@ -11,12 +11,13 @@ import type { Staff } from "$lib/types";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
 
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
-  const allStaffSlider = await getSanityServerClient(false).fetch(staffSliderFields);
+  const allStaffSlider = await getSanityServerClient(false).fetch(
+    staffSliderFields
+  );
 
   const { staff, moreStaff } = await getSanityServerClient(previewMode).fetch<{
     staff: Staff;

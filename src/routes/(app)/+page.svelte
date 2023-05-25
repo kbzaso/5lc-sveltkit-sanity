@@ -14,7 +14,7 @@
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
-  
+
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
 
@@ -22,15 +22,30 @@
   <meta name="description" content={settings.description} />
   <title>{settings.title}</title>
 
-  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
-  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
-  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
-  <meta property="twitter:title" content={`${settings.title}`}>
-  <meta property="twitter:description" content={`${settings.description}`}>
+  <meta
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+    property="og:image"
+  />
+  <meta
+    property="twitter:image"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta
+    property="twitter:card"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta property="twitter:title" content={`${settings.title}`} />
+  <meta
+    property="twitter:description"
+    content={`Vemos el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida cotidiana de nuestra comunidad.`}
+  />
 
-  <meta property="og:title" content={`${settings.title}`}>
-  <meta property="og:description" content={`${settings.description}`} />
-  <meta property="og:url" content={`${$page.url.href}`}>
+  <meta property="og:title" content={`${settings.title}`} />
+  <meta
+    property="og:description"
+    content={`Vemos el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida cotidiana de nuestra comunidad.`}
+  />
+  <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
 <div class="">
@@ -46,15 +61,21 @@
 
   {#if nextEvent}
     <div class="container mx-auto -mt-48 h-min">
-      <div id="nextEvent" class="relative h-screen mt-28 flex flex-col">
+      <div id="nextEvent" class="relative h-fit mt-28 flex flex-col">
         <div class="lg:absolute lg:inset-0">
           <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/2">
-            <img
-              class="h-56 w-full object-cover lg:absolute lg:h-full"
-              loading="lazy"
-              src={urlForImage(nextEvent.poster).url()}
-              alt="Boveda Secreta"
-            />
+            <a
+              href={`/events/${nextEvent.slug}`}
+              title="Próximo evento"
+              target="_self"
+            >
+              <img
+                class="h-56 w-full object-cover lg:hover:scale-105 transition-transform lg:absolute lg:h-full md:rounded-sm"
+                loading="lazy"
+                src={urlForImage(nextEvent.poster).url()}
+                alt="Afiche del próximo evento"
+              />
+            </a>
           </div>
         </div>
         <div
@@ -70,7 +91,7 @@
                 Próximo evento
               </h2>
               <h1
-                class="mt-2 text-3xl font-bold leading-8 tracking-tight text-white sm:text-4xl"
+                class="mt-2 text-3xl font-bold leading-8 text-white sm:text-4xl"
               >
                 {nextEvent.title}
                 <span
@@ -95,7 +116,7 @@
                       {hours}:{minutes < 10 ? "0" + minutes : minutes}
                     </time>
                     → Inicio show
-                    <span class="italic text-gray-500"
+                    <span class="italic text-gray-400"
                       >(apertura 45 minutos antes)</span
                     >
                   </li>
@@ -124,30 +145,9 @@
                     </li>
                   {/if}
                 </ul>
-
-                {#if nextEvent.boveda}
-                  <p class="border border-dashed border-primary p-4">
-                    La Bóveda Secreta se encuentra en el 3er piso de la Galería
-                    “Nueva Copacabana” ubicada en calle San Antonio #705,
-                    Santiago Centro. Las estaciones de Metro más cercanas a ella
-                    son <span
-                      class="underline underline-offset-2 decoration-wavy decoration-primary"
-                      >Plaza de Armas</span
-                    >,
-                    <span
-                      class="underline underline-offset-2 decoration-wavy decoration-primary"
-                      >Bellas Artes</span
-                    >
-                    y
-                    <span
-                      class="underline underline-offset-2 decoration-wavy decoration-primary"
-                      >Puente Cal y Canto</span
-                    >.
-                  </p>
-                {/if}
               </div>
 
-              {#if nextEvent.soldOut && nextEvent.active}
+              {#if nextEvent.ticket.soldOut && nextEvent.active}
                 <div
                   class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
                 >
@@ -157,7 +157,7 @@
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
-                      stroke="currentColor"
+                      stroke="cºurrentColor"
                       class="w-6 h-6"
                     >
                       <path
@@ -204,3 +204,9 @@
     </div>
   {/if}
 </div>
+
+<!-- 
+  <h2 class="font-semibold leading-6 text-primary uppercase tracking-widest">
+Próximo evento
+</h2> 
+-->

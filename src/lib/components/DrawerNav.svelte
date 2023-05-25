@@ -50,7 +50,13 @@
   class="container flex w-full justify-between top-0 items-center absolute z-20 py-2 px-2 left-[50%] translate-x-[-50%]"
 >
   <a href="/">
-    <img src={urlForImage(logo).url()} class="w-28" alt="Logo 5LC" />
+    <img
+      src={urlForImage(logo).url()}
+      class="w-28"
+      width="112"
+      height="63"
+      alt="Logo 5LC"
+    />
   </a>
   <button
     on:click={() => (hidden2 = false)}

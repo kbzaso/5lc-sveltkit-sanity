@@ -5,7 +5,7 @@
   import type { PageData } from "./$types";
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
-  import { page } from '$app/stores';
+  import { page } from "$app/stores";
   export let data: PageData;
 
   $: ({ initialData, previewMode, slug } = data);
@@ -26,16 +26,31 @@
 <svelte:head>
   <title>{$eventData?.event?.title}</title>
 
-  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
+  <meta
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+    property="og:image"
+  />
   <meta name="description" content={`${$eventData?.event?.seo_description}`} />
-  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
-  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
-  <meta property="twitter:title" content={`${$eventData?.event?.title}`}>
-  <meta property="twitter:description" content={`${$eventData?.event?.seo_description}`}>
+  <meta
+    property="twitter:image"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta
+    property="twitter:card"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta property="twitter:title" content={`${$eventData?.event?.title}`} />
+  <meta
+    property="twitter:description"
+    content={`${$eventData?.event?.seo_description}`}
+  />
 
-  <meta property="og:title" content={`${$eventData?.event?.title}`}>
-  <meta property="og:description" content={`${$eventData?.event?.seo_description}`} />
-  <meta property="og:url" content={`${$page.url.href}`}>
+  <meta property="og:title" content={`${$eventData?.event?.title}`} />
+  <meta
+    property="og:description"
+    content={`${$eventData?.event?.seo_description}`}
+  />
+  <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
 {#if $eventData?.event}
@@ -43,7 +58,7 @@
     <div class="mt-28 flex flex-col md:flex-row px-4 gap-4">
       <figure class="mb-8 xl:mb-0 xl:w-1/3">
         <img
-          class="h-72 xl:h-full object-cover w-full"
+          class="h-72 xl:h-full object-cover w-full rounded-sm"
           loading="lazy"
           src={urlForImage($eventData?.event.poster)
             .width(800)
@@ -98,7 +113,7 @@
                   {hours}:{minutes < 10 ? "0" + minutes : minutes}
                 </time>
                 → Inicio show
-                <span class="italic text-gray-500"
+                <span class="italic text-gray-400"
                   >(apertura 45 minutos antes)</span
                 >
               </li>
@@ -155,63 +170,55 @@
               La Bóveda Secreta se encuentra en el 3er piso de la Galería “Nueva
               Copacabana” ubicada en calle San Antonio #705, Santiago Centro.
               Las estaciones de Metro más cercanas a ella son <span
-                class="text-primary"
-                >Plaza de Armas</span
+                class="text-primary">Plaza de Armas</span
               >,
-              <span
-                class="text-primary"
-                >Bellas Artes</span
-              >
+              <span class="text-primary">Bellas Artes</span>
               y
-              <span
-                class="text-primary"
-                >Puente Cal y Canto</span
-              >.
+              <span class="text-primary">Puente Cal y Canto</span>.
             </p>
           {/if}
+          {#if $eventData?.event.ticket.soldOut && $eventData?.event?.active}
+            <div
+              class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
+            >
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+                  />
+                </svg>
+
+                <span class="uppercase tracking-widest">Adhesión agotadas</span>
+              </div>
+            </div>
+          {:else if !$eventData?.event.ticket.soldOut && $eventData?.event.active && $eventData?.event.ticket.url}
+            <div
+              class="mt-4 gap-4 flex flex-col md:flex-row sm:justify-center lg:justify-start"
+            >
+              <div class="rounded-md w-full">
+                <a
+                  href={$eventData?.event?.ticket?.url}
+                  class="btn btn-primary cursor-pointer w-full"
+                  >Entrada General</a
+                >
+                {#if $eventData?.event.ticket.price}
+                  <p class="mt-2 text-center text-gray-500 italic leading-4">
+                    Precio adhesión: ${$eventData?.event.ticket.price}
+                  </p>
+                {/if}
+              </div>
+            </div>
+          {/if}
         </div>
-
-        {#if $eventData?.event.ticket.soldOut && $eventData?.event?.active}
-          <div
-            class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
-          >
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                />
-              </svg>
-
-              <span class="uppercase tracking-widest">Adhesión agotadas</span>
-            </div>
-          </div>
-        {:else if !$eventData?.event.ticket.soldOut && $eventData?.event.active && $eventData?.event.ticket.url}
-          <div
-            class="mt-4 gap-4 flex flex-col md:flex-row sm:justify-center lg:justify-start"
-          >
-            <div class="rounded-md w-full">
-              <a
-                href={$eventData?.event?.ticket?.url}
-                class="btn btn-primary cursor-pointer w-full"
-                >Entrada General</a
-              >
-              {#if $eventData?.event.ticket.price}
-                <p class="mt-2 text-center text-gray-500 italic leading-4">
-                  Precio adhesión: ${$eventData?.event.ticket.price}
-                </p>
-              {/if}
-            </div>
-          </div>
-        {/if}
       </div>
     </div>
   </div>
