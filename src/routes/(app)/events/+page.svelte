@@ -6,29 +6,53 @@
 
   export let data: PageData;
 
-  $: ({ events, events } = data);
+  $: ({ events } = data);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
 
 <svelte:head>
   <title>Eventos | {$page.data.settings.title}</title>
-  <meta name="description" content='Enterate de los próximos eventos de 5 Luchas Clandestino' />
+  <meta
+    name="description"
+    content="Enterate de los próximos eventos de 5 Luchas Clandestino"
+  />
 
-  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
-  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
-  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
-  <meta property="twitter:title" content={`Futuros eventos de 5 Luchas Clandestino`}>
-  <meta property="twitter:description" content={`Enterate de cuendo será el próximo evento de 5 Luchas Clandestino`}>
+  <meta
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+    property="og:image"
+  />
+  <meta
+    property="twitter:image"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta
+    property="twitter:card"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta
+    property="twitter:title"
+    content={`Futuros eventos de 5 Luchas Clandestino`}
+  />
+  <meta
+    property="twitter:description"
+    content={`Enterate de cuendo será el próximo evento de 5 Luchas Clandestino`}
+  />
 
-  <meta property="og:title" content={`Futuros eventos de 5 Luchas Clandestino`}>
-  <meta property="og:description" content={`Enterate de cuendo será el próximo evento de 5 Luchas Clandestino`} />
-  <meta property="og:url" content={`${$page.url.href}`}>
+  <meta
+    property="og:title"
+    content={`Futuros eventos de 5 Luchas Clandestino`}
+  />
+  <meta
+    property="og:description"
+    content={`Enterate de cuendo será el próximo evento de 5 Luchas Clandestino`}
+  />
+  <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
 <main class="container mx-auto px-4 mt-36 mb-20 space-y-20">
   <div>
-    <h1 class="text-7xl text-primary">Eventos</h1>
+    <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Eventos</h1>
     <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#if events && events.length > 0}
         {#each events as result}
@@ -38,6 +62,8 @@
             >
               <figure class="z-10">
                 <img
+                  width="600"
+                  height="600"
                   loading="lazy"
                   class="object-cover object-top h-72 md:h-96 w-full"
                   src={urlForImage(result.poster)
@@ -63,11 +89,11 @@
                   </time>
                 </p>
 
-                <h3
+                <h2
                   class="text-primary font-ibm italic text-2xl md:text-4xl px-4 pt-0"
                 >
                   {result.title}
-                </h3>
+                </h2>
               </div>
             </div>
           </a>

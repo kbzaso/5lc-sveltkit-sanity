@@ -12,22 +12,48 @@
 
 <svelte:head>
   <title>Resultados | {$page.data.settings.title}</title>
-  <meta name="description" content='Revisa los resultados de los últimos eventos de 5 Luchas Clandestino' />
+  <meta
+    name="description"
+    content="Revisa los resultados de los últimos eventos de 5 Luchas Clandestino"
+  />
 
-  <meta content={`${$page.url.origin}/og?message=${seo_image}`}  property="og:image">
-  <meta property="twitter:image" content={`${$page.url.origin}/og?message=${seo_image}`} >
-  <meta property="twitter:card" content={`${$page.url.origin}/og?message=${seo_image}`}>
-  <meta property="twitter:title" content={`Eventos pasados de 5 Luchas Clandestino`}>
-  <meta property="twitter:description" content={`Revisa los resultados de los últimos eventos de 5 Luchas Clandestino`}>
+  <meta
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+    property="og:image"
+  />
+  <meta
+    property="twitter:image"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta
+    property="twitter:card"
+    content={`${$page.url.origin}/og?message=${seo_image}`}
+  />
+  <meta
+    property="twitter:title"
+    content={`Eventos pasados de 5 Luchas Clandestino`}
+  />
+  <meta
+    property="twitter:description"
+    content={`Revisa los resultados de los últimos eventos de 5 Luchas Clandestino`}
+  />
 
-  <meta property="og:title" content={`Eventos pasados de 5 Luchas Clandestino`}>
-  <meta property="og:description" content={`Revisa los resultados de los últimos eventos de 5 Luchas Clandestino`} />
-  <meta property="og:url" content={`${$page.url.href}`}>
+  <meta
+    property="og:title"
+    content={`Eventos pasados de 5 Luchas Clandestino`}
+  />
+  <meta
+    property="og:description"
+    content={`Revisa los resultados de los últimos eventos de 5 Luchas Clandestino`}
+  />
+  <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
 <main class="container mx-auto px-4 mt-36 mb-20 space-y-20 ">
   <div>
-    <h1 class="max-2xl text-7xl text-primary">Resultados</h1>
+    <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">
+      Resultados
+    </h1>
     <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#if results && results.length > 0}
         {#each results as result}

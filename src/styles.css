@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :body{
+  :body {
     overflow-y: hidden;
   }
   h1 {
@@ -29,4 +29,3 @@
     @apply hover:after:text-primary hover:text-primary hover:decoration-primary decoration-blue-500 decoration-2 underline underline-offset-2 after:content-['_↗'] after:font-black after:text-blue-500;
   }
 }
-

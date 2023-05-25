@@ -11,27 +11,26 @@
   import Footer from "$lib/components/Footer.svelte";
   import { fade } from "svelte/transition";
 
-  import navigationState from '$lib/stores/navigationState';
-  import PageLoader from '$lib/components/PageLoader.svelte';
+  import navigationState from "$lib/stores/navigationState";
+  import PageLoader from "$lib/components/PageLoader.svelte";
   import { afterNavigate, beforeNavigate } from "$app/navigation";
 
   $: ({ settings } = data);
 
   beforeNavigate(() => {
-    navigationState.set('loading');
+    navigationState.set("loading");
   });
   afterNavigate(() => {
-    navigationState.set('loaded');
+    navigationState.set("loaded");
   });
-
 </script>
 
-<svelte:window/>
+<svelte:window />
 
-{#if $navigationState === 'loading'}
-    <div out:fade={{ delay: 500 }}>
-        <PageLoader />
-    </div>
+{#if $navigationState === "loading"}
+  <div out:fade={{ delay: 500 }}>
+    <PageLoader />
+  </div>
 {/if}
 
 <svelte:head>
@@ -52,12 +51,13 @@
   logoBlack={settings.logoBlack}
   bovedin={settings.bovedin}
 />
-  {#key data.url}
-    <div class="selection:bg-fuchsia-300 selection:text-fuchsia-900"
-      in:fade={{ duration:300, delay:300}} 
-      out:fade={{ duration:100, delay:0 }}
-      >
-      <slot />
-    </div>
-  {/key}
+{#key data.url}
+  <div
+    class="selection:bg-fuchsia-300 selection:text-fuchsia-900"
+    in:fade={{ duration: 300, delay: 300 }}
+    out:fade={{ duration: 100, delay: 0 }}
+  >
+    <slot />
+  </div>
+{/key}
 <Footer />
