@@ -18,7 +18,10 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   });
 
   if (!event) {
-    throw error(404, "Events not found");
+    throw error(
+      404,
+      "El resultado que estas buscando no existe o no esta disponible"
+    );
   }
 
   return {

@@ -39,7 +39,6 @@ export default defineType({
       name: "pseudonym",
       title: "Seudonimo",
       type: "string",
-      hidden: ({ document }) => document?.active === false,
     },
     {
       name: "staffImage",
@@ -85,8 +84,8 @@ export default defineType({
         },
       ],
       name: "description",
-      title: "Descripción del Luchador/a",
-      hidden: ({ document }) => document?.active === false,
+      title: "Descripción del personaje",
+      validation: (Rule) => Rule.required(),
     },
     {
       title: "SEO",
@@ -169,17 +168,18 @@ export default defineType({
       name: "data",
       type: "object",
       title: "Información del Luchador/a",
-      hidden: ({ document }) => document?.active === false,
       fields: [
         {
           name: "weight",
           title: "Peso",
           type: "number",
+          hidden: ({ document }) => document?.active === false,
         },
         {
           name: "height",
           title: "Altura",
           type: "number",
+          hidden: ({ document }) => document?.active === false,
         },
         {
           name: "date",

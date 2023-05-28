@@ -27,11 +27,13 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   });
 
   if (!staff) {
-    throw error(404, "Events not found");
+    throw error(404, {
+      message: "El perfil que estas buscando no existe o no esta disponible",
+    });
   }
 
   if (!allStaffSlider) {
-    throw error(500, "staff section not found");
+    throw error(500, { message: "Alguna caga paso y no nos dimos cuenta" });
   }
 
   return {

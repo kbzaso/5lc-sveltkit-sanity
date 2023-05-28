@@ -108,7 +108,7 @@
             <SidebarDropdownItem label="Invoice" />
           </SidebarDropdownWrapper> -->
       </SidebarGroup>
-      <picture class="absolute bottom-0 left-0">
+      <picture class="absolute bottom-0 left-0 landscape:hidden">
         <img class="w-48" src={urlForImage(bovedin).url()} alt="Bovedin" />
       </picture>
     </SidebarWrapper>

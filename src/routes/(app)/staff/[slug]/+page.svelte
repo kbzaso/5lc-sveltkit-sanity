@@ -12,7 +12,6 @@
   import FiTwitter from "svelte-icons-pack/fi/FiTwitter";
   import SiTiktok from "svelte-icons-pack/si/SiTiktok";
   import BiLink from "svelte-icons-pack/bi/BiLink";
-  import { onMount } from "svelte/internal";
   import Gallery from "$lib/components/Gallery.svelte";
   import Splide from "$lib/components/Splide.svelte";
   import { page } from "$app/stores";
