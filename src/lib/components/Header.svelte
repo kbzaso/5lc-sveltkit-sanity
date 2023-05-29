@@ -2,12 +2,10 @@
   import { PortableText } from "@portabletext/svelte";
 
   export let preTitle = "";
-  export let backgroundImage = "";
   export let description = "";
   export let imageTitle = "";
   export let textTitle = "";
 
-  import { onMount } from "svelte";
 </script>
 
 <div

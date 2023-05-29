@@ -41,6 +41,7 @@
 
   let innerWidth = 0;
   $: condition = innerWidth < 768;
+
 </script>
 
 <svelte:window bind:innerWidth />

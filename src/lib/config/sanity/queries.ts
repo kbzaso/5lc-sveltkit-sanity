@@ -2,7 +2,7 @@ import groq from "groq";
 
 const staffFields = groq`
   _id,
-  active,
+  staffType,
   title,
   pseudonym,
   "slug": slug.current,

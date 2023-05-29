@@ -1,7 +1,5 @@
 import { BookIcon } from "@sanity/icons";
-import { defineType } from "sanity";
-
-import eventType from "./event";
+import { defineType, defineField } from "sanity";
 
 /**
  * This file is the schema definition for a post.
@@ -15,6 +13,13 @@ import eventType from "./event";
 
  */
 
+  export const STAFF_TYPE = [
+    {title: 'Luchador/a', value: 'wrestler'},
+    {title: 'Presentador/a', value: 'annonceurs'},
+    {title: 'Arbitro/a', value: 'referee'},
+    {title: 'Producción', value: 'production'},
+  ]
+
 export default defineType({
   name: "staff",
   title: "Staff",
@@ -22,12 +27,14 @@ export default defineType({
   type: "document",
   fields: [
     {
-      title: "¿Es un luchador/a?",
-      name: "active",
-      type: "boolean",
-      description:
-        "Si no lo es, es un staff y los campos de luchador no se muestran",
-      initialValue: true,
+      name: 'staffType',
+      title: 'Tipo de Staff',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: STAFF_TYPE.map(({title, value}) => ({title, value})),
+        layout: 'radio',
+    },
     },
     {
       name: "title",
@@ -86,6 +93,7 @@ export default defineType({
       name: "description",
       title: "Descripción del personaje",
       validation: (Rule) => Rule.required(),
+      hidden: ({ document }) => document?.staffType === 'production',
     },
     {
       title: "SEO",
@@ -94,6 +102,7 @@ export default defineType({
       description:
         "Describe brevemente el miembro del equipo, este texto aparecerá en los resultados de búsqueda de Google (160 caracteres)",
       validation: (Rule) => Rule.required(),
+      hidden: ({ document }) => document?.staffType === 'production',
       options: {
         maxLength: 160,
       },
@@ -102,6 +111,7 @@ export default defineType({
       name: "gallery",
       type: "object",
       title: "Galería de fotos",
+      hidden: ({ document }) => document?.staffType === 'production',
       description:
         "Sube entre 5 y 10 fotos en acción sobre el ring, recuerda que las imagenes no pueden pesar mas de 500kb",
       fields: [
@@ -173,13 +183,13 @@ export default defineType({
           name: "weight",
           title: "Peso",
           type: "number",
-          hidden: ({ document }) => document?.active === false,
+          hidden: ({ document }) => document?.staffType === 'annonceurs' || document?.staffType === 'production' || document?.staffType === 'referee',
         },
         {
           name: "height",
           title: "Altura",
           type: "number",
-          hidden: ({ document }) => document?.active === false,
+          hidden: ({ document }) => document?.staffType === 'annonceurs' || document?.staffType === 'production' || document?.staffType === 'referee',
         },
         {
           name: "date",
