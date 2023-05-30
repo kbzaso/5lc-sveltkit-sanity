@@ -140,9 +140,6 @@ export default defineType({
               name: "image",
               type: "image",
               title: "Image",
-              options: {
-                hotspot: true,
-              },
               fields: [
                 {
                   name: "alt",
@@ -158,12 +155,18 @@ export default defineType({
                   description: "Quien fue el fotografo/a de la imagen",
                   to: [{ type: "author" }],
                 },
+                {
+                  title: "¿La foto es vertical?",
+                  name: "vertical",
+                  type: "boolean",
+                  initialValue: false,
+                  validation: (Rule) => Rule.required(),
+                },
               ],
             },
           ],
           options: {
             layout: "grid",
-            hotspot: true,
           },
         },
       ],
