@@ -35,7 +35,6 @@ const staffFields = groq`
 export const staffSliderFields = groq`
     *[_type == "staff"] {
       _id,
-      active,
       title,
       pseudonym,
       "slug": slug.current,

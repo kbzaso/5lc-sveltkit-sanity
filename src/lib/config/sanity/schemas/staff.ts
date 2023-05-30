@@ -101,11 +101,8 @@ export default defineType({
       type: "text",
       description:
         "Describe brevemente el miembro del equipo, este texto aparecerá en los resultados de búsqueda de Google (160 caracteres)",
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.max(120).warning(`No puede superar los 160 caracteres`),
       hidden: ({ document }) => document?.staffType === 'production',
-      options: {
-        maxLength: 160,
-      },
     },
     {
       name: "gallery",
