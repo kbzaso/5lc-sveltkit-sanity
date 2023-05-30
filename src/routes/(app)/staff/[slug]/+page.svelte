@@ -15,6 +15,7 @@
   import Gallery from "$lib/components/Gallery.svelte";
   import Splide from "$lib/components/Splide.svelte";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
 
   export let data: PageData;
 
@@ -41,6 +42,12 @@
 
   let innerWidth = 0;
   $: condition = innerWidth < 768;
+
+  let hasSocial: [] | string[] = [];
+
+  onMount(() => {
+    hasSocial = Object.keys($staffData.staff.social);
+  });
 
 </script>
 
@@ -184,108 +191,110 @@
           </p>
         {/if}
 
-        <div class="mt-8 space-y-4">
-          <h4 class="text-primary font-ibm italic text-2xl">Redes Sociales</h4>
-
-          <ul class="flex space-x-4">
-            {#if $staffData.staff.social.instagram}
-              <li>
-                <a
-                  title="Perfil en Instagram"
-                  aria-label="Perfil en Instagram"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={$staffData.staff.social.instagram}
-                  ><Icon
-                    src={AiOutlineInstagram}
-                    className="fill-white hover:fill-primary"
-                    size="26"
-                  /></a
-                >
-              </li>
-            {/if}
-            {#if $staffData.staff.social.facebook}
-              <li>
-                <a
-                  title="Perfil en Facebook"
-                  aria-label="Perfil en Facebook"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={$staffData.staff.social.facebook}
-                  ><Icon
-                    src={AiOutlineFacebook}
-                    className="fill-white hover:fill-primary"
-                    size="26"
-                  /></a
-                >
-              </li>
-            {/if}
-            {#if $staffData.staff.social.youtube}
-              <li>
-                <a
-                  title="Perfil en Youtube"
-                  aria-label="Perfil en Youtube"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={$staffData.staff.social.youtube}
-                  ><Icon
-                    src={AiOutlineYoutube}
-                    className="fill-white hover:fill-primary"
-                    size="26"
-                  /></a
-                >
-              </li>
-            {/if}
-            {#if $staffData.staff.social.twitter}
-              <li>
-                <a
-                  title="Perfil en Twitter"
-                  aria-label="Perfil en Twitter"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={$staffData.staff.social.twitter}
-                  ><Icon
-                    src={FiTwitter}
-                    className="fill-white hover:fill-primary"
-                    size="24"
-                  /></a
-                >
-              </li>
-            {/if}
-            {#if $staffData.staff.social.tiktok}
-              <li>
-                <a
-                  title="Perfil en TikTok"
-                  aria-label="Perfil en TikTok"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={$staffData.staff.social.tiktok}
-                  ><Icon
-                    src={SiTiktok}
-                    className="fill-white hover:fill-primary"
-                    size="22"
-                  /></a
-                >
-              </li>
-            {/if}
-            {#if $staffData.staff.social.other}
-              <li>
-                <a
-                  title="Perfil en una web externa"
-                  aria-label="Perfil en una web externa"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={$staffData.staff.social.other}
-                  ><Icon
-                    src={BiLink}
-                    className="fill-white hover:fill-primary"
-                    size="26"
-                  /></a
-                >
-              </li>
-            {/if}
-          </ul>
-        </div>
+        {#if hasSocial.length > 0 }
+          <div class="mt-8 space-y-4">
+            <h4 class="text-primary font-ibm italic text-2xl">Redes Sociales</h4>
+  
+            <ul class="flex space-x-4">
+              {#if $staffData.staff.social.instagram}
+                <li>
+                  <a
+                    title="Perfil en Instagram"
+                    aria-label="Perfil en Instagram"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={$staffData.staff.social.instagram}
+                    ><Icon
+                      src={AiOutlineInstagram}
+                      className="fill-white hover:fill-primary"
+                      size="26"
+                    /></a
+                  >
+                </li>
+              {/if}
+              {#if $staffData.staff.social.facebook}
+                <li>
+                  <a
+                    title="Perfil en Facebook"
+                    aria-label="Perfil en Facebook"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={$staffData.staff.social.facebook}
+                    ><Icon
+                      src={AiOutlineFacebook}
+                      className="fill-white hover:fill-primary"
+                      size="26"
+                    /></a
+                  >
+                </li>
+              {/if}
+              {#if $staffData.staff.social.youtube}
+                <li>
+                  <a
+                    title="Perfil en Youtube"
+                    aria-label="Perfil en Youtube"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={$staffData.staff.social.youtube}
+                    ><Icon
+                      src={AiOutlineYoutube}
+                      className="fill-white hover:fill-primary"
+                      size="26"
+                    /></a
+                  >
+                </li>
+              {/if}
+              {#if $staffData.staff.social.twitter}
+                <li>
+                  <a
+                    title="Perfil en Twitter"
+                    aria-label="Perfil en Twitter"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={$staffData.staff.social.twitter}
+                    ><Icon
+                      src={FiTwitter}
+                      className="fill-white hover:fill-primary"
+                      size="24"
+                    /></a
+                  >
+                </li>
+              {/if}
+              {#if $staffData.staff.social.tiktok}
+                <li>
+                  <a
+                    title="Perfil en TikTok"
+                    aria-label="Perfil en TikTok"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={$staffData.staff.social.tiktok}
+                    ><Icon
+                      src={SiTiktok}
+                      className="fill-white hover:fill-primary"
+                      size="22"
+                    /></a
+                  >
+                </li>
+              {/if}
+              {#if $staffData.staff.social.other}
+                <li>
+                  <a
+                    title="Perfil en una web externa"
+                    aria-label="Perfil en una web externa"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={$staffData.staff.social.other}
+                    ><Icon
+                      src={BiLink}
+                      className="fill-white hover:fill-primary"
+                      size="26"
+                    /></a
+                  >
+                </li>
+              {/if}
+            </ul>
+          </div>
+        {/if}
       </div>
     </div>
   </section>
