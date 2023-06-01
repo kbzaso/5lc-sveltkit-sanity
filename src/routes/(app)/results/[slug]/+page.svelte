@@ -6,6 +6,9 @@
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
+  
+  import Gallery from "$lib/components/Gallery.svelte";
 
   export let data: PageData;
 
@@ -22,6 +25,15 @@
   $: minutes = eventDate.getMinutes();
 
   let seo_image = urlForImage($page.data.initialData.event.poster).url();
+
+  let hasPhotos = [];
+  onMount(() => {
+    if ($eventData?.event?.gallery !== null){
+      hasPhotos = Object.keys($eventData?.event?.gallery);
+    } else {
+      hasPhotos = [];
+    }
+  });
 </script>
 
 <svelte:head>
@@ -66,13 +78,14 @@
             .quality(100)
             .url()}
           alt="Afiiche de {$eventData?.event?.title}"
+          height="800"
         />
       </figure>
 
-      <div class="prose-p:text-lg md:w-2/3">
+      <div class="prose-p:text-lg lg:w-2/3">
         {#if !$eventData?.event?.active}
           <time
-            class="italic text-gray-500"
+            class="italic text-gray-400"
             datetime={eventDateFormatted.charAt(0).toUpperCase() +
               eventDateFormatted.slice(1)}
           >
@@ -81,7 +94,7 @@
           </time>
         {/if}
         <h1
-          class="mt-2 text-3xl font-bold leading-8 tracking-tight text-primary sm:text-4xl"
+          class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl"
         >
           {$eventData?.event?.title}
           {#if $eventData?.event?.active}
@@ -91,7 +104,7 @@
             >
           {/if}
         </h1>
-        <div class="prose prose-indigo mt-5">
+        <div class="prose mt-5 prose-p:text-gray-400">
           <p>
             {#if $eventData?.event?.active && $eventData?.event?.description}
               <PortableText value={$eventData?.event?.description} />
@@ -144,26 +157,30 @@
               {/if}
             </ul>
           {:else if !$eventData?.event.boveda}
-            <p>
-              Este evento se realizo en {$eventData.event.venue?.venueName} -
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={$eventData.event.venue?.venueUrl}
-              >
-                {$eventData.event.venue?.venueAdress}</a
-              >
-            </p>
+            <div class="alert bg-zinc-900 rounded-sm md:gap-4 md:flex md:justify-start">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-10 h-10 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span class="inline text-center md:text-left">Este evento se realizo en {$eventData.event.venue?.venueName} -
+                <a
+                  class="hover:text-primary"
+                  target="_blank"
+                  rel="noreferrer"
+                  href={$eventData.event.venue?.venueUrl}
+                >
+                  {$eventData.event.venue?.venueAdress}</a
+                ></span>
+            </div>
           {:else}
-            <p>
-              Este evento se realizo en Bóveda Secreta - <a
+            <div class="alert bg-zinc-900 rounded-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-10 h-10 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span class="inline text-center md:text-left">Este evento se realizo en Bóveda Secreta - <a
+                class="hover:text-primary"
                 target="_blank"
                 rel="noreferrer"
                 href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
               >
                 San Antonio 705, Santiago, Región Metropolitana</a
-              >
-            </p>
+              ></span>
+            </div>
           {/if}
 
           {#if $eventData?.event.boveda && $eventData?.event?.active}
@@ -230,6 +247,20 @@
         {/if}
       </div>
     </div>
+    {#if hasPhotos.length > 0}
+      <section class="mt-10 md:mt-20">
+        <h2
+          class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
+        >
+          Galería de imagenes
+        </h2>
+        <div
+          class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
+        >
+          <Gallery id={$eventData?.event.slug} images={$eventData?.event.gallery} />
+        </div>
+      </section>
+    {/if}
   </div>
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>

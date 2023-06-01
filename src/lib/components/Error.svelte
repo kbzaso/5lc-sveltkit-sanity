@@ -1,6 +1,7 @@
 <script lang="ts">
-  export let status: Number;
+  export let status: number;
   export let error: any;
+  export let gif: string;
 </script>
 
 <main class="relative isolate min-h-screen flex items-center">
@@ -16,10 +17,13 @@
       >
         Ups! error {status} <span class="not-italic">😬</span>
       </h1>
-      <p class="text-lg prose mt-2 text-white">
+      <p class="text-lg prose mt-2 text-gray-400">
         Alguna caga quedo y esperamos que el espiritu de Bovedin nos ayude a
         solucionar prontamente este error, lamentamos la situación 😥
       </p>
+      <figure class="w-full flex justify-center">
+        <img src={gif} alt="Es un gif de un luchador antiguo">
+      </figure>
       <div class="alert alert-error rounded-none">
         <div>
           <svg
@@ -38,11 +42,7 @@
         </div>
       </div>
       <div class="mt-10 flex justify-center">
-        <a
-          href="/"
-          class="btn btn-primary cursor-pointer text-black no-underline"
-          >Volver al home</a
-        >
+        
       </div>
     </div>
   </div>

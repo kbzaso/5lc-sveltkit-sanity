@@ -52,9 +52,9 @@
 
 <main class="container mx-auto px-4 mt-36 mb-20 space-y-20">
   <div>
+    {#if events && events.length > 0}
     <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Eventos</h1>
     <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {#if events && events.length > 0}
         {#each events as result}
           <a href={`events/${result.slug}`}>
             <div
@@ -98,9 +98,20 @@
             </div>
           </a>
         {/each}
-      {:else}
-        <p>Ups! No tenemos resultado en nuestra base de datos.</p>
-      {/if}
-    </div>
+      </div>
+    {/if}
+
+    {#if events && events.length === 0}
+      <div class="flex flex-col items-center justify-center mt-20">
+        <h2 class="text-3xl font-bold leading-8 text-white sm:text-4xl font-ibm">No tenemos eventos programados</h2>
+        <p class="text-center mt-4 prose mb-4 text-gray-400">
+          Esperamos prontamente anunciar una próxima fecha, mientras tanto puedes revisar nuestros eventos pasados  
+          <a href="/results" class="text-primary hover:text-accent">
+            aquí
+          </a>
+        </p>
+        <img src="https://media2.giphy.com/media/l0HUoARsBRbpGOsXm/giphy.gif?cid=6c09b9529c6a234ab4d136b91c0ca8a7768b8a7db519d931&ep=v1_internal_gifs_gifId&rid=giphy.gif&ct=g" alt="">
+      </div>
+    {/if}
   </div>
 </main>
