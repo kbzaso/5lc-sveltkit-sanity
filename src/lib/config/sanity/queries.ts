@@ -53,11 +53,21 @@ export const eventFields = groq`
     soldOut,
     result,
     active,
-    extract,
     description,
     seo_description,
     poster,
     "slug": slug.current,
+    "gallery": gallery.images[]{
+      alt,
+      active,
+      vertical,
+      crop,
+      hotspot,
+      _type,
+      _key,
+      asset,
+      photographer->
+    }
 `;
 
 export const settingsQuery = groq`*[_type == "settings"][0]`;

@@ -19,8 +19,8 @@
 </script>
 
 <svelte:head>
-  <meta name="description" content={settings.description} />
   <title>{settings.title}</title>
+  <meta name="description" content='Equipo humano que ve el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida de nuestra comunidad.' />
 
   <meta
     content={`${$page.url.origin}/og?message=${seo_image}`}
@@ -37,13 +37,13 @@
   <meta property="twitter:title" content={`${settings.title}`} />
   <meta
     property="twitter:description"
-    content={`Vemos el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida cotidiana de nuestra comunidad.`}
+    content={`Equipo humano que ve el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida de nuestra comunidad.`}
   />
 
   <meta property="og:title" content={`${settings.title}`} />
   <meta
     property="og:description"
-    content={`Vemos el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida cotidiana de nuestra comunidad.`}
+    content={`Equipo humano que ve el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida de nuestra comunidad.`}
   />
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>

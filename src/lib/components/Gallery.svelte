@@ -71,6 +71,7 @@
         data-width={image?.width}
         data-alt={image?.alt}
         data-caption={`Fotografía de ${image?.photographer} (<a class="underline" target="_blank" href=${image?.photographerUrl}>Instagram</a>)`}
+        aria-label={image?.alt}
       >
         <img
           class="mb-2 rounded-sm"

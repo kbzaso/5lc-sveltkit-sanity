@@ -149,9 +149,9 @@
     class="bg-black/25  lg:bg-black/50 lg:h-fit p-8  w-full lg:w-1/2 space-y-2  -mt-16 lg:mt-10 backdrop-blur-xl lg:absolute top-20 right-5 z-30"
   >
     <div class="flex flex-col items-center space-y-1 lg:items-start pb-8">
-      <h2 class="text-sm uppercase tracking-widest text-white text-center">
+      <span class="text-sm uppercase tracking-widest text-white text-center">
         {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ""}
-      </h2>
+      </span>
       <h1
         class="text-6xl md:text-7xl font-black italic text-primary text-center sm:text-left"
       >
@@ -193,7 +193,7 @@
 
         {#if hasSocial.length > 0 }
           <div class="mt-8 space-y-4">
-            <h4 class="text-primary font-ibm italic text-2xl">Redes Sociales</h4>
+            <h2 class="text-primary font-ibm italic text-2xl">Redes Sociales</h2>
   
             <ul class="flex space-x-4">
               {#if $staffData.staff.social.instagram}
@@ -315,11 +315,11 @@
   {/if}
 
   <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
-    <h3
+    <h4
       class="text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
     >
       Otros miembros del equipo
-    </h3>
+    </h4>
     <Splide allStaff={allStaffSlider.sort(compararAleatoriamente)} />
   </div>
 </div>

@@ -36,6 +36,10 @@ export interface Staff {
 }
 
 export interface Event {
+  gallery: {
+    images: SanityImageSource[];
+    author: string[];
+  };
   _id: string;
   name: string;
   title: string;
