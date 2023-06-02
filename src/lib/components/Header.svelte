@@ -3,10 +3,9 @@
   import type { InputValue } from "@portabletext/svelte/ptTypes";
 
   export let preTitle = "";
-  export let description = "";
+  export let description: InputValue = [];
   export let imageTitle = "";
   export let textTitle = "";
-
 </script>
 
 <div
@@ -26,7 +25,12 @@
       {#if !imageTitle}
         <h1>{textTitle}</h1>
       {:else}
-        <img src={imageTitle} alt="Siempre buena onda" />
+        <img
+          src={imageTitle}
+          alt="Siempre buena onda"
+          width="902"
+          height="109"
+        />
       {/if}
     </div>
 

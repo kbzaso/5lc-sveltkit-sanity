@@ -20,7 +20,10 @@
 
 <svelte:head>
   <title>{settings.title}</title>
-  <meta name="description" content='Equipo humano que ve el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida de nuestra comunidad.' />
+  <meta
+    name="description"
+    content="Equipo humano que ve el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida de nuestra comunidad."
+  />
 
   <meta
     content={`${$page.url.origin}/og?message=${seo_image}`}

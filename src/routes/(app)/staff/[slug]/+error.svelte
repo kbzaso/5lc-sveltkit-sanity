@@ -3,7 +3,7 @@
   import Error from "$lib/components/Error.svelte";
 
   let { status, error } = $page;
-  let gif = 'https://i.imgur.com/fSQJO.gif'
+  let gif = "https://i.imgur.com/fSQJO.gif";
 </script>
 
 <svelte:head>

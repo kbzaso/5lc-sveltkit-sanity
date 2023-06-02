@@ -43,12 +43,7 @@
   let innerWidth = 0;
   $: condition = innerWidth < 768;
 
-  let hasSocial: [] | string[] = [];
-
-  onMount(() => {
-    hasSocial = Object.keys($staffData.staff.social);
-  });
-
+  let hasSocial: [] | string[] = [""];
 </script>
 
 <svelte:window bind:innerWidth />
@@ -191,12 +186,14 @@
           </p>
         {/if}
 
-        {#if hasSocial.length > 0 }
+        {#if $staffData.staff?.social}
           <div class="mt-8 space-y-4">
-            <h2 class="text-primary font-ibm italic text-2xl">Redes Sociales</h2>
-  
+            <h2 class="text-primary font-ibm italic text-2xl">
+              Redes Sociales
+            </h2>
+
             <ul class="flex space-x-4">
-              {#if $staffData.staff.social.instagram}
+              {#if $staffData.staff?.social?.instagram}
                 <li>
                   <a
                     title="Perfil en Instagram"
@@ -212,7 +209,7 @@
                   >
                 </li>
               {/if}
-              {#if $staffData.staff.social.facebook}
+              {#if $staffData?.staff?.social?.facebook}
                 <li>
                   <a
                     title="Perfil en Facebook"
@@ -228,7 +225,7 @@
                   >
                 </li>
               {/if}
-              {#if $staffData.staff.social.youtube}
+              {#if $staffData?.staff?.social?.youtube}
                 <li>
                   <a
                     title="Perfil en Youtube"
@@ -244,7 +241,7 @@
                   >
                 </li>
               {/if}
-              {#if $staffData.staff.social.twitter}
+              {#if $staffData?.staff?.social?.twitter}
                 <li>
                   <a
                     title="Perfil en Twitter"
@@ -260,7 +257,7 @@
                   >
                 </li>
               {/if}
-              {#if $staffData.staff.social.tiktok}
+              {#if $staffData?.staff?.social?.tiktok}
                 <li>
                   <a
                     title="Perfil en TikTok"
@@ -276,7 +273,7 @@
                   >
                 </li>
               {/if}
-              {#if $staffData.staff.social.other}
+              {#if $staffData?.staff?.social?.other}
                 <li>
                   <a
                     title="Perfil en una web externa"
@@ -299,7 +296,7 @@
     </div>
   </section>
 
-  {#if $staffData?.staff.gallery !== null}
+  {#if $staffData?.staff?.gallery !== null}
     <section class="md:mt-20 lg:mt-40">
       <h3
         class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
@@ -309,7 +306,10 @@
       <div
         class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
       >
-        <Gallery id={$staffData.staff.slug} images={$staffData.staff.gallery} />
+        <Gallery
+          id={$staffData?.staff?.slug}
+          images={$staffData?.staff?.gallery}
+        />
       </div>
     </section>
   {/if}

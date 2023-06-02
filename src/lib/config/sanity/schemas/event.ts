@@ -1,8 +1,10 @@
 import { defineType } from "sanity";
+import { CalendarIcon } from "@sanity/icons";
 
 export default defineType({
   name: "event",
   title: "Events",
+  icon: CalendarIcon,
   type: "document",
   fields: [
     {
