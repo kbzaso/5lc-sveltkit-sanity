@@ -11,15 +11,15 @@
     <p class="mt-4 text-white/70 sm:mt-6">
       Paso algo en el proceso de pago, por favor intentalo nuevamente.
     </p>
-    <figure class="flex justify-center">  
-    <img src='https://i.imgur.com/fSQJO.gif' alt='Triple H haciendo fuerza'>
+    <figure class="flex justify-center">
+      <img src="https://i.imgur.com/fSQJO.gif" alt="Triple H haciendo fuerza" />
     </figure>
     <div class="mt-10 flex justify-center">
       <a
-          href="/events"
-          class="btn btn-primary cursor-pointer text-black no-underline"
-          >Intentar nuevamente</a
-        >
+        href="/events"
+        class="btn btn-primary cursor-pointer text-black no-underline"
+        >Intentar nuevamente</a
+      >
     </div>
   </div>
 </main>

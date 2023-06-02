@@ -7,7 +7,7 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  
+
   import Gallery from "$lib/components/Gallery.svelte";
 
   export let data: PageData;
@@ -28,7 +28,7 @@
 
   let hasPhotos = [];
   onMount(() => {
-    if ($eventData?.event?.gallery !== null){
+    if ($eventData?.event?.gallery !== null) {
       hasPhotos = Object.keys($eventData?.event?.gallery);
     } else {
       hasPhotos = [];
@@ -93,9 +93,7 @@
               eventDateFormatted.slice(1)}
           </time>
         {/if}
-        <h1
-          class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl"
-        >
+        <h1 class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl">
           {$eventData?.event?.title}
           {#if $eventData?.event?.active}
             <span
@@ -157,9 +155,23 @@
               {/if}
             </ul>
           {:else if !$eventData?.event.boveda}
-            <div class="alert bg-zinc-900 rounded-sm md:gap-4 md:flex md:justify-start">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-10 h-10 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <span class="inline text-center md:text-left">Este evento se realizo en {$eventData.event.venue?.venueName} -
+            <div
+              class="alert bg-zinc-900 rounded-sm md:gap-4 md:flex md:justify-start"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                class="stroke-info shrink-0 w-10 h-10 lg:w-6 lg:h-6"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                /></svg
+              >
+              <span class="inline text-center md:text-left"
+                >Este evento se realizo en {$eventData.event.venue?.venueName} -
                 <a
                   class="hover:text-primary"
                   target="_blank"
@@ -167,19 +179,33 @@
                   href={$eventData.event.venue?.venueUrl}
                 >
                   {$eventData.event.venue?.venueAdress}</a
-                ></span>
+                ></span
+              >
             </div>
           {:else}
             <div class="alert bg-zinc-900 rounded-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-10 h-10 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <span class="inline text-center md:text-left">Este evento se realizo en Bóveda Secreta - <a
-                class="hover:text-primary"
-                target="_blank"
-                rel="noreferrer"
-                href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                class="stroke-info shrink-0 w-10 h-10 lg:w-6 lg:h-6"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                /></svg
               >
-                San Antonio 705, Santiago, Región Metropolitana</a
-              ></span>
+              <span class="inline text-center md:text-left"
+                >Este evento se realizo en Bóveda Secreta - <a
+                  class="hover:text-primary"
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
+                >
+                  San Antonio 705, Santiago, Región Metropolitana</a
+                ></span
+              >
             </div>
           {/if}
 
@@ -257,7 +283,10 @@
         <div
           class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
         >
-          <Gallery id={$eventData?.event.slug} images={$eventData?.event.gallery} />
+          <Gallery
+            id={$eventData?.event.slug}
+            images={$eventData?.event.gallery}
+          />
         </div>
       </section>
     {/if}

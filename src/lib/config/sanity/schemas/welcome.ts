@@ -1,10 +1,10 @@
-import { HomeIcon } from "@sanity/icons";
 import { defineType } from "sanity";
+import { DocumentIcon } from "@sanity/icons";
 
 export default defineType({
   name: "welcome",
   title: "Welcome",
-  icon: HomeIcon,
+  icon: DocumentIcon,
   type: "document",
   fields: [
     {

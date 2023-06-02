@@ -12,8 +12,11 @@
       Ya estas en la lista de ingreso. Solo debes dar tu nombre y el correo con
       el cual hiciste la adhesión.
     </p>
-    <figure class="flex justify-center">  
-      <img src='https://media3.giphy.com/media/nDMyoNRkCesJdZAuuL/giphy.gif' alt='Stone Cold bebiendo unas cervezas'>
+    <figure class="flex justify-center">
+      <img
+        src="https://media3.giphy.com/media/nDMyoNRkCesJdZAuuL/giphy.gif"
+        alt="Stone Cold bebiendo unas cervezas"
+      />
     </figure>
     <p
       class="border border-dashed border-primary p-4 bg-black/25 backdrop-blur-xl w-fit mx-auto mt-4"
@@ -27,10 +30,10 @@
     </p>
     <div class="mt-10 flex justify-center">
       <a
-          href="/events"
-          class="btn btn-primary cursor-pointer text-black no-underline"
-          >Ir al home</a
-        >
+        href="/events"
+        class="btn btn-primary cursor-pointer text-black no-underline"
+        >Ir al home</a
+      >
     </div>
   </div>
 </main>

@@ -47,7 +47,7 @@
 </script>
 
 <div
-  class="container flex w-full justify-between top-0 items-center absolute z-20 py-2 px-2 left-[50%] translate-x-[-50%]"
+  class="container flex w-full absolute justify-between top-0 items-center py-2 px-2 left-[50%] translate-x-[-50%] z-40 pt-2"
 >
   <a href="/">
     <img
@@ -63,16 +63,46 @@
     class="btn btn-primary drawer-button md:hidden">Menu</button
   >
   <div class="flex-none hidden md:flex">
-    <ul class="menu menu-horizontal px-1">
-      {#each siteMap as { index, title }}
-        <li>
-          <a
-            class="text-primary font-ibm font-black text-2xl italic"
-            href={index}>{title}</a
+    <nav class="menu menu-horizontal px-1 gap-6">
+      <a
+        class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
+        href="/">Inicio</a
+      >
+      <a
+        class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
+        href="/staff">Equipo</a
+      >
+
+      <div class="dropdown dropdown-end">
+        <label
+          tabindex="0"
+          class="btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
+          >Eventos</label
+        >
+        <ul
+          tabindex="0"
+          class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
+        >
+          <li
+            class="hover:bg-primary hover:text-black rounded-none normal-case"
           >
-        </li>
-      {/each}
-    </ul>
+            <a href="/events">Próximos eventos</a>
+          </li>
+          <li
+            class="hover:bg-primary hover:text-black rounded-none normal-case"
+          >
+            <a href="/results">Resultados</a>
+          </li>
+        </ul>
+      </div>
+      <button
+        class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
+        data-tally-open="31AeNQ"
+        data-tally-overlay="1"
+        data-tally-emoji-text="👋"
+        data-tally-emoji-animation="wave">Contacto</button
+      >
+    </nav>
   </div>
 </div>
 
@@ -90,26 +120,63 @@
   <Sidebar>
     <SidebarWrapper divClass="overflow-y-auto py-4 px-0 rounded-sm w-full">
       <SidebarGroup>
-        {#each siteMap as { index, title }}
-          <SidebarItem
-            href={index}
-            label={title}
-            {spanClass}
+        <SidebarItem
+          href="/"
+          label="Inicio"
+          on:click={() => (hidden2 = true)}
+        />
+        <SidebarItem
+          data-sveltekit-preload-data="hover"
+          href="/staff"
+          label="Staff"
+          on:click={() => (hidden2 = true)}
+        />
+        <SidebarDropdownWrapper label="Eventos">
+          <!-- <svelte:fragment slot="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
+          </svelte:fragment> -->
+          <SidebarDropdownItem
             data-sveltekit-preload-data="hover"
             on:click={() => (hidden2 = true)}
+            href="/events"
+            label="Próximos eventos"
           />
-        {/each}
-        <!-- <SidebarDropdownWrapper label="E-commerce">
-            <svelte:fragment slot="icon">
+          <SidebarDropdownItem
+            data-sveltekit-preload-data="hover"
+            on:click={() => (hidden2 = true)}
+            href="/results"
+            label="Resultados"
+          />
+        </SidebarDropdownWrapper>
+
+        <SidebarDropdownWrapper label="Redes sociales">
+          <!-- <svelte:fragment slot="icon">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
-            </svelte:fragment>
-            <SidebarDropdownItem label="Products" />
-            <SidebarDropdownItem label="Billing" />
-            <SidebarDropdownItem label="Invoice" />
-          </SidebarDropdownWrapper> -->
+            </svelte:fragment> -->
+          <SidebarDropdownItem
+            href="http://www.instagram.com/5luchas"
+            label="Instagram"
+          />
+          <SidebarDropdownItem
+            href="https://www.youtube.com/@5LuchasClandestino"
+            label="Youtube"
+          />
+          <SidebarDropdownItem
+            href="https://www.facebook.com/5luchas/"
+            label="Facebook"
+          />
+        </SidebarDropdownWrapper>
+        <SidebarItem
+          data-tally-open="31AeNQ"
+          data-tally-overlay="1"
+          data-tally-emoji-text="👋"
+          data-tally-emoji-animation="wave"
+          label="Contacto"
+          on:click={() => (hidden2 = true)}
+        />
       </SidebarGroup>
       <picture class="absolute bottom-0 left-0 landscape:hidden">
-        <img class="w-48" src={urlForImage(bovedin).url()} alt="Bovedin" />
+        <img class="w-40" src={urlForImage(bovedin).url()} alt="Bovedin" />
       </picture>
     </SidebarWrapper>
   </Sidebar>

@@ -79,9 +79,7 @@
               eventDateFormatted.slice(1)}
           </time>
         {/if}
-        <h1
-          class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl"
-        >
+        <h1 class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl">
           {$eventData?.event?.title}
           {#if $eventData?.event?.active}
             <span

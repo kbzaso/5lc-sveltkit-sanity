@@ -22,7 +22,7 @@
         solucionar prontamente este error, lamentamos la situación 😥
       </p>
       <figure class="w-full flex justify-center">
-        <img src={gif} alt="Es un gif de un luchador antiguo">
+        <img src={gif} alt="Es un gif de un luchador antiguo" />
       </figure>
       <div class="alert alert-error rounded-none">
         <div>
@@ -41,9 +41,7 @@
           <span>{error?.message}</span>
         </div>
       </div>
-      <div class="mt-10 flex justify-center">
-        
-      </div>
+      <div class="mt-10 flex justify-center" />
     </div>
   </div>
 </main>
