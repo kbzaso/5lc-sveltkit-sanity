@@ -40,7 +40,14 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
 
     // Set the redirect slug and append the isPreview query
     // param, so that the app knows it's a Sanity preview.
-    redirectSlug = `/staff/${staff.slug}?isPreview=true`;
+    if (staff.staffType === "wrestler") {
+    redirectSlug = `/luchadores/${staff.slug}?isPreview=true`;
+    } else if (staff.staffType === "referee") {
+      redirectSlug = `/arbitros/${staff.slug}?isPreview=true`;
+    } else if (staff.staffType === "annonceurs") {
+      redirectSlug = `/presentadores/${staff.slug}?isPreview=true`;
+    }
+
   }
 
   if (type === "event") {
@@ -56,7 +63,7 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
 
     // Set the redirect slug and append the isPreview query
     // param, so that the app knows it's a Sanity preview.
-    redirectSlug = `/events/${event.slug}?isPreview=true`;
+    redirectSlug = `/eventos/${event.slug}?isPreview=true`;
   }
 
   // Set the preview cookie.

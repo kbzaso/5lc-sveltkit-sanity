@@ -39,6 +39,7 @@ export const staffSliderFields = groq`
       pseudonym,
       "slug": slug.current,
       staffImage,
+      staffType,
     }`;
 
 export const eventFields = groq`
@@ -100,8 +101,39 @@ export const staffQuery = groq`
   }
 }`;
 
+// WRESTLER STUFF
+export const wrestlerQuery = groq`
+{
+  "draft": *[_type == "staff" && staffType == "wrestler" && slug.current == $slug && defined(draft) && draft == true][0]{
+    content,
+    ${staffFields}
+  },
+  "staff": *[_type == "staff" && staffType == "wrestler" && slug.current == $slug] | order(_updatedAt desc) [0] {
+    content,
+    ${staffFields}
+  },
+  "moreStaff": *[_type == "staff" && staffType == "wrestler" && slug.current != $slug] | order(date desc, _updatedAt desc) [0...2] {
+    content,
+    ${staffFields}
+  }
+}`;
+
 export const allStaffQuery = groq`
 *[_type == "staff"] | order(title asc) {
+  ${staffFields}
+}`;
+
+export const allAnnonceursQuery = groq`
+*[_type == "staff" && staffType == "annonceurs"] | order(title asc) {
+  ${staffFields}
+}`;
+export const allWrestlersQuery = groq`
+*[_type == "staff" && staffType == "wrestler"] | order(title asc) {
+  ${staffFields}
+}`;
+
+export const allRefereeQuery = groq`
+*[_type == "staff" && staffType == "referee"] | order(title asc) {
   ${staffFields}
 }`;
 
@@ -111,6 +143,11 @@ export const staffSlugsQuery = groq`
 
 export const staffBySlugQuery = groq`
 *[_type == "staff" && slug.current == $slug][0] {
+  ${staffFields}
+}
+`;
+export const refereeBySlugQuery = groq`
+*[_type == "staff" && staffType == "referee" && slug.current == $slug][0] {
   ${staffFields}
 }
 `;

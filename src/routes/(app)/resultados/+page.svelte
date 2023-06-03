@@ -57,7 +57,7 @@
     <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#if results && results.length > 0}
         {#each results as result}
-          <a href={`results/${result.slug}`}>
+          <a href={`resultados/${result.slug}`}>
             <div
               class="relative overflow-hidden w-full group border-gray-600 border hover:border-primary rounded-none transition-all h-fit md:h-96"
             >

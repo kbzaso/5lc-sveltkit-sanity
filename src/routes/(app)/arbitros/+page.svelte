@@ -5,13 +5,13 @@
   import { page } from "$app/stores";
 
   export let data: PageData;
-  $: ({ allStaff } = data);
+  $: ({ allReferee } = data);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
 
 <svelte:head>
-  <title>Equipo | {$page.data.settings.title}</title>
+  <title>Arbitros | {$page.data.settings.title}</title>
   <meta
     name="description"
     content={`Todos los miembros que hacen posible 5 Luchas Clandestino, luchadores, staff, producción.`}
@@ -48,9 +48,9 @@
   <div
     class="mt-8 grid gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 min-w-[320px]"
   >
-    {#each allStaff as staff}
-      <a class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0" href={`/staff/${staff.slug}`}>
-        <CardStaff {staff} />
+    {#each allReferee as referee}
+      <a class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0" href={`/arbitros/${referee.slug}`}>
+        <CardStaff staff={referee} />
       </a>
     {/each}
   </div>
