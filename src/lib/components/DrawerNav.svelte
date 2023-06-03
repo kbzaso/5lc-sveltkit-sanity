@@ -22,28 +22,10 @@
   };
   import { urlForImage } from "$lib/config/sanity";
 
-  let siteMap = [
-    {
-      index: "/",
-      title: "Inicio",
-    },
-    {
-      index: "/staff",
-      title: "Equipo",
-    },
-    {
-      index: "/events",
-      title: "Eventos",
-    },
-    {
-      index: "/results",
-      title: "Resultados",
-    },
-  ];
-
   export let logo: string;
   export let logoBlack: string;
   export let bovedin: string;
+
 </script>
 
 <div
@@ -63,21 +45,20 @@
     class="btn btn-primary drawer-button md:hidden">Menu</button
   >
   <div class="flex-none hidden md:flex">
-    <nav class="menu menu-horizontal px-1 gap-6">
+    <nav class="menu menu-horizontal px-1 gap-2">
       <a
         class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
         href="/">Inicio</a
       >
-      <a
-        class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
-        href="/staff">Equipo</a
-      >
-
       <div class="dropdown dropdown-end">
         <label
           tabindex="0"
-          class="btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
-          >Eventos</label
+          class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
+          >Equipo 
+          <svg viewBox="0 0 24 20"  width="28px" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path stroke="#fff" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7l6 6 6-6"/>
+          </svg>
+          </label
         >
         <ul
           tabindex="0"
@@ -86,7 +67,37 @@
           <li
             class="hover:bg-primary hover:text-black rounded-none normal-case"
           >
-            <a href="/events">Próximos eventos</a>
+            <a href="/luchadores">Luchadores</a>
+          </li>
+          <li
+            class="hover:bg-primary hover:text-black rounded-none normal-case"
+          >
+            <a href="/arbitros">Arbitros</a>
+          </li>
+          <li
+            class="hover:bg-primary hover:text-black rounded-none normal-case"
+          >
+            <a href="/presentadores">Presentadores</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="dropdown dropdown-end">
+        <label
+          tabindex="0"
+          class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
+          >Eventos <svg viewBox="0 0 24 20"  width="28px" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path stroke="#fff" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7l6 6 6-6"/>
+          </svg></label
+        >
+        <ul
+          tabindex="0"
+          class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
+        >
+          <li
+            class="hover:bg-primary hover:text-black rounded-none normal-case"
+          >
+            <a href="/eventos">Próximos eventos</a>
           </li>
           <li
             class="hover:bg-primary hover:text-black rounded-none normal-case"
@@ -125,12 +136,29 @@
           label="Inicio"
           on:click={() => (hidden2 = true)}
         />
-        <SidebarItem
-          data-sveltekit-preload-data="hover"
-          href="/staff"
-          label="Staff"
-          on:click={() => (hidden2 = true)}
-        />
+        <SidebarDropdownWrapper label="Equipo">
+          <!-- <svelte:fragment slot="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
+          </svelte:fragment> -->
+          <SidebarDropdownItem
+            data-sveltekit-preload-data="hover"
+            on:click={() => (hidden2 = true)}
+            href="/luchadores"
+            label="Luchadores"
+          />
+          <SidebarDropdownItem
+            data-sveltekit-preload-data="hover"
+            on:click={() => (hidden2 = true)}
+            href="/arbitros"
+            label="Arbitros"
+          />
+          <SidebarDropdownItem
+            data-sveltekit-preload-data="hover"
+            on:click={() => (hidden2 = true)}
+            href="/presentadores"
+            label="Presentadores"
+          />
+        </SidebarDropdownWrapper>
         <SidebarDropdownWrapper label="Eventos">
           <!-- <svelte:fragment slot="icon">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
@@ -138,7 +166,7 @@
           <SidebarDropdownItem
             data-sveltekit-preload-data="hover"
             on:click={() => (hidden2 = true)}
-            href="/events"
+            href="/eventos"
             label="Próximos eventos"
           />
           <SidebarDropdownItem

@@ -38,7 +38,7 @@ export default defineType({
     },
     {
       name: "title",
-      title: "Nombre del Luchador/a o Staff",
+      title: "Nombre del Staff",
       type: "string",
       validation: (Rule) => Rule.required(),
     },

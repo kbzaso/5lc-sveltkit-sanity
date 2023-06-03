@@ -2,6 +2,7 @@
   import { Splide, SplideSlide, SplideTrack } from "@splidejs/svelte-splide";
   import CardStaff from "$lib/components/CardStaff.svelte";
   import "@splidejs/svelte-splide/css/skyblue";
+  import { page } from "$app/stores";
 
   import type { Staff } from "$lib/types";
 
@@ -36,9 +37,19 @@
     <SplideTrack>
       {#each allStaff as staff}
         <SplideSlide>
-          <a href={`/staff/${staff.slug}`}>
+          {#if staff.staffType === "wrestler"}
+          <a href={`/luchadores/${staff.slug}`}>
             <CardStaff {staff} />
           </a>
+          {:else if staff.staffType === "referee"}
+          <a href={`/arbitros/${staff.slug}`}>
+            <CardStaff {staff} />
+          </a>
+          {:else if staff.staffType === "annonceurs"}
+          <a href={`/presentadores/${staff.slug}`}>
+            <CardStaff {staff} />
+          </a>
+          {/if}
         </SplideSlide>
       {/each}
     </SplideTrack>
