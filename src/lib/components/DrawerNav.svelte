@@ -102,7 +102,7 @@
           <li
             class="hover:bg-primary hover:text-black rounded-none normal-case"
           >
-            <a href="/results">Resultados</a>
+            <a href="/resultados">Resultados</a>
           </li>
         </ul>
       </div>
@@ -172,7 +172,7 @@
           <SidebarDropdownItem
             data-sveltekit-preload-data="hover"
             on:click={() => (hidden2 = true)}
-            href="/results"
+            href="/resultados"
             label="Resultados"
           />
         </SidebarDropdownWrapper>
