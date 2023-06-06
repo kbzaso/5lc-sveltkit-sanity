@@ -205,7 +205,7 @@
               <div class="rounded-md w-full">
                 <a
                   href={$eventData?.event?.ticket?.url}
-                  class="btn btn-primary cursor-pointer w-full"
+                  class="btn btn-primary cursor-pointer w-full text-black no-underline"
                   >Entrada General</a
                 >
                 {#if $eventData?.event.ticket.price}

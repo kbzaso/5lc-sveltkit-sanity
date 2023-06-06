@@ -179,7 +179,7 @@
                   <div class="rounded-md w-full">
                     <a
                       href={nextEvent.ticket?.url}
-                      class="flex w-full items-center rounded-none hover:bg-cyan-500 hover:text-white justify-center border border-transparent bg-yellow-400 uppercase tracking-widest px-8 py-3 text-base font-medium text-black md:py-4 md:px-10 md:text-lg"
+                      class="flex w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline"
                       >Entrada General</a
                     >
                     {#if nextEvent.ticket.price}
@@ -193,7 +193,7 @@
                 </div>
               {/if}
               <div class="w-full text-center mt-6">
-                <a href="/events" class="link text-primary"
+                <a href="/eventos" class="link text-primary"
                   >Ir a la sección de eventos</a
                 >
               </div>
