@@ -16,8 +16,8 @@
     </figure>
     <div class="mt-10 flex justify-center">
       <a
-        href="/events"
-        class="btn btn-primary cursor-pointer text-black no-underline"
+        href="/eventos"
+        class="btn btn-primary cursor-pointer text-black no-underline w-full md:w-fit"
         >Intentar nuevamente</a
       >
     </div>

@@ -182,13 +182,6 @@
                       class="flex w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline"
                       >Entrada General</a
                     >
-                    {#if nextEvent.ticket.price}
-                      <p
-                        class="mt-2 text-center text-gray-500 italic leading-4"
-                      >
-                        Precio adhesión: ${nextEvent.ticket.price}
-                      </p>
-                    {/if}
                   </div>
                 </div>
               {/if}
@@ -204,9 +197,3 @@
     </div>
   {/if}
 </div>
-
-<!-- 
-  <h2 class="font-semibold leading-6 text-primary uppercase tracking-widest">
-Próximo evento
-</h2> 
--->

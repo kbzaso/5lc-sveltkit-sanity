@@ -1,8 +1,8 @@
-<main class="relative isolate min-h-screen flex items-center">
+<main class="relative isolate min-h-screen flex items-center mt-20">
   <img
     src="https://res.cloudinary.com/dtj5xnlou/image/upload/v1684538515/5LC/boveda.jpg"
     alt="Bóveda Secreta"
-    class=" opacity-20 min-w-[100%] absolute inset-0 -z-10 h-full w-full object-cover object-top"
+    class="opacity-20 min-w-[100%] absolute inset-0 -z-10 h-full w-full object-cover object-top"
   />
   <div class="mx-auto prose text-center items-center container px-4">
     <h1 class="mt-4 text-3xl font-bold text-white sm:text-5xl">
@@ -30,9 +30,9 @@
     </p>
     <div class="mt-10 flex justify-center">
       <a
-        href="/events"
-        class="btn btn-primary cursor-pointer text-black no-underline"
-        >Ir al home</a
+        href="/"
+        class="btn btn-primary cursor-pointer text-black no-underline w-full md:w-fit"
+        >Ir al inicio</a
       >
     </div>
   </div>
