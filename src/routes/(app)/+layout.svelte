@@ -44,6 +44,7 @@
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
     rel="stylesheet"
   />
+  <script async src="https://analytics.umami.is/script.js" data-website-id="86ceac1e-89c3-42ea-abef-dbfac5379da5"></script>
 </svelte:head>
 
 <DrawerNav
