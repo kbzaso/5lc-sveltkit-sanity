@@ -67,17 +67,17 @@
           <li
             class="hover:bg-primary hover:text-black rounded-none normal-case"
           >
-            <a href="/luchadores">Luchadores</a>
+            <a href="/equipo/luchadores">Luchadores</a>
           </li>
           <li
             class="hover:bg-primary hover:text-black rounded-none normal-case"
           >
-            <a href="/arbitros">Arbitros</a>
+            <a href="/equipo/arbitros">Arbitros</a>
           </li>
           <li
             class="hover:bg-primary hover:text-black rounded-none normal-case"
           >
-            <a href="/presentadores">Presentadores</a>
+            <a href="/equipo/presentadores">Presentadores</a>
           </li>
         </ul>
       </div>
@@ -143,19 +143,19 @@
           <SidebarDropdownItem
             data-sveltekit-preload-data="hover"
             on:click={() => (hidden2 = true)}
-            href="/luchadores"
+            href="/equipo/luchadores"
             label="Luchadores"
           />
           <SidebarDropdownItem
             data-sveltekit-preload-data="hover"
             on:click={() => (hidden2 = true)}
-            href="/arbitros"
+            href="/equipo/arbitros"
             label="Arbitros"
           />
           <SidebarDropdownItem
             data-sveltekit-preload-data="hover"
             on:click={() => (hidden2 = true)}
-            href="/presentadores"
+            href="/equipo/presentadores"
             label="Presentadores"
           />
         </SidebarDropdownWrapper>
