@@ -17,17 +17,6 @@ export default defineType({
     {
       type: "image",
       options: {
-        accept: ".png,.jpg",
-        hotspot: true,
-      },
-      name: "backgroundImage",
-      title: "Background image",
-      description: "Agrega una imagen de fondo",
-      validation: (Rule) => [Rule.required()],
-    },
-    {
-      type: "image",
-      options: {
         accept: ".png,.svg",
       },
       name: "imageTitle",

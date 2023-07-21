@@ -5,6 +5,7 @@
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
 
   export let data: PageData;
 

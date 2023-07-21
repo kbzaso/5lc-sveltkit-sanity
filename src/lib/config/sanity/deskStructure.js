@@ -3,11 +3,11 @@ export const myStructure = (S) =>
     .title("Contenido")
     .items([
       S.listItem()
-        .title("Equipo")
+        .title("Team")
         .child(
           /* Create a list of all posts */
           S.list()
-            .title("Equipo")
+            .title("Team")
             .items([
               S.listItem()
                 .title("Luchadores")
@@ -30,13 +30,6 @@ export const myStructure = (S) =>
                     .title("Presentadores")
                     .filter('_type == "staff" && staffType == "annonceurs"')
                 ),
-              S.listItem()
-                .title("Produccion")
-                .child(
-                  S.documentList()
-                    .title("Produccion")
-                    .filter('_type == "staff" && staffType == "production"')
-                ),
             ])
         ),
       ...S.documentTypeListItems().filter(
@@ -48,6 +41,6 @@ export const myStructure = (S) =>
         .title("Settings")
         .child(S.document().schemaType("settings").documentId("settings")),
       S.listItem()
-        .title("Home")
+        .title("Welcome")
         .child(S.document().schemaType("welcome").documentId("welcome")),
     ]);

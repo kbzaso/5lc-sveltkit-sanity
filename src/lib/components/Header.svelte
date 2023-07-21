@@ -2,6 +2,10 @@
   import { PortableText } from "@portabletext/svelte";
   import type { InputValue } from "@portabletext/svelte/ptTypes";
 
+  import { page } from "$app/stores";
+  import { urlForImage } from "$lib/config/sanity";
+  import { onMount } from "svelte";
+
   export let preTitle = "";
   export let description: InputValue = [];
   export let imageTitle = "";
@@ -10,7 +14,7 @@
 
 <div
   id="header"
-  class={`bg-[url('https://cdn.sanity.io/images/izngoptr/production/67836059903820f9cb2e62c1dc4afe078516e61d-1500x1000.jpg?q=80&fit=max&auto=format')] bg-cover bg-center h-screen relative`}
+  class={`bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1689912910/5LC/bg-web-2.jpg')] bg-cover bg-center h-screen relative`}
 >
   <div
     class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full"
