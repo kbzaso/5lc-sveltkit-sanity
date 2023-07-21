@@ -14,6 +14,7 @@
   import navigationState from "$lib/stores/navigationState";
   import PageLoader from "$lib/components/PageLoader.svelte";
   import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import { page } from "$app/stores";
 
   $: ({ settings } = data);
 
@@ -23,6 +24,7 @@
   afterNavigate(() => {
     navigationState.set("loaded");
   });
+
 </script>
 
 <svelte:window />
@@ -52,7 +54,6 @@
   logoBlack={settings.logoBlack}
   bovedin={settings.bovedin}
 />
-{#key data.url}
   <div
     class="selection:bg-fuchsia-300 selection:text-fuchsia-900"
     in:fade={{ duration: 300, delay: 300 }}
@@ -60,5 +61,4 @@
   >
     <slot />
   </div>
-{/key}
 <Footer />

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { PageData } from "../$types";
+  import type { PageData } from "./$types";
   import { urlForImage } from "$lib/config/sanity";
   import CardStaff from "$lib/components/CardStaff.svelte";
   import { page } from "$app/stores";
 
   export let data: PageData;
-  $: ({ allReferee } = data);
+  $: ({ allAnnonceurs } = data);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
@@ -43,15 +43,15 @@
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
-<div class="container mt-36 mx-auto px-4">
-  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Equipo</h1>
+<main class="w-full px-4">
+  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Presentadores</h1>
   <div
-    class="mt-8 grid gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 min-w-[320px]"
+    class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
   >
-    {#each allReferee as referee}
-      <a class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0" href={`/arbitros/${referee.slug}`}>
-        <CardStaff staff={referee} />
+    {#each allAnnonceurs as annonceurs}
+      <a class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0" href={`/equipo/presentadores/${annonceurs.slug}`}>
+        <CardStaff staff={annonceurs} />
       </a>
     {/each}
   </div>
-</div>
+</main>
