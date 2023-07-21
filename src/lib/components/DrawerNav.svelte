@@ -29,7 +29,7 @@
 </script>
 
 <div
-  class="container flex w-full absolute justify-between top-0 items-center py-2 px-2 left-[50%] translate-x-[-50%] z-40 pt-2"
+  class="container flex w-full justify-between top-0 items-center py-2 px-2 left-[50%] translate-x-[-50%] z-40 pt-2 bg-black/75 fixed backdrop-blur-md"
 >
   <a href="/">
     <img
