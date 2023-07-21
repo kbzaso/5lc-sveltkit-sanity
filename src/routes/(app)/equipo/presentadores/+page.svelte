@@ -43,7 +43,7 @@
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
-<main class="w-full px-4">
+<main class="w-full">
   <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Presentadores</h1>
   <div
     class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
