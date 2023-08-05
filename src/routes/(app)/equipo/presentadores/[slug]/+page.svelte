@@ -320,6 +320,9 @@
     >
       Otros miembros del equipo
     </h4>
-    <Splide source={'annonceurs'} allStaff={allStaffSlider.sort(compararAleatoriamente).splice(0,9)} />
+    <Splide
+      source={"annonceurs"}
+      allStaff={allStaffSlider.sort(compararAleatoriamente).splice(0, 9)}
+    />
   </div>
 </div>

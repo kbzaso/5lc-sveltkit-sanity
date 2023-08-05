@@ -25,7 +25,6 @@
   export let logo: string;
   export let logoBlack: string;
   export let bovedin: string;
-
 </script>
 
 <div
@@ -54,30 +53,41 @@
         <label
           tabindex="0"
           class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
-          >Equipo 
-          <svg viewBox="0 0 24 20"  width="28px" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <path stroke="#fff" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7l6 6 6-6"/>
+          >Equipo
+          <svg
+            viewBox="0 0 24 20"
+            width="28px"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+          >
+            <path
+              stroke="#fff"
+              class="stroke-primary"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 7l6 6 6-6"
+            />
           </svg>
-          </label
-        >
+        </label>
         <ul
           tabindex="0"
           class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
         >
           <li
-            class="hover:bg-primary hover:text-black rounded-none normal-case"
+            class="hover:bg-primary rounded-none normal-case"
           >
-            <a href="/equipo/luchadores">Luchadores</a>
+            <a class="hover:text-black" href="/equipo/luchadores">Luchadores</a>
           </li>
           <li
-            class="hover:bg-primary hover:text-black rounded-none normal-case"
+            class="hover:bg-primary rounded-none normal-case"
           >
-            <a href="/equipo/arbitros">Arbitros</a>
+            <a class="hover:text-black" href="/equipo/arbitros">Arbitros</a>
           </li>
           <li
-            class="hover:bg-primary hover:text-black rounded-none normal-case"
+            class="hover:bg-primary rounded-none normal-case"
           >
-            <a href="/equipo/presentadores">Presentadores</a>
+            <a class="hover:text-black" href="/equipo/presentadores">Presentadores</a>
           </li>
         </ul>
       </div>
@@ -86,8 +96,20 @@
         <label
           tabindex="0"
           class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
-          >Eventos <svg viewBox="0 0 24 20"  width="28px" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <path stroke="#fff" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7l6 6 6-6"/>
+          >Eventos <svg
+            viewBox="0 0 24 20"
+            width="28px"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+          >
+            <path
+              stroke="#fff"
+              class="stroke-primary"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 7l6 6 6-6"
+            />
           </svg></label
         >
         <ul
@@ -95,14 +117,14 @@
           class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
         >
           <li
-            class="hover:bg-primary hover:text-black rounded-none normal-case"
+            class="hover:bg-primary rounded-none normal-case"
           >
-            <a href="/eventos">Próximos eventos</a>
+            <a class="hover:text-black" href="/eventos">Próximos eventos</a>
           </li>
           <li
-            class="hover:bg-primary hover:text-black rounded-none normal-case"
+            class="hover:bg-primary rounded-none normal-case"
           >
-            <a href="/resultados">Resultados</a>
+            <a class="hover:text-black" href="/resultados">Resultados</a>
           </li>
         </ul>
       </div>

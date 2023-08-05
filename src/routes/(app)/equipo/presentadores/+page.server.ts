@@ -8,7 +8,9 @@ import type { PageServerLoad } from "./$types";
 
 // export const prerender = 'auto';
 export const load: PageServerLoad = async ({ parent, params }) => {
-  const allAnnonceurs = await getSanityServerClient(false).fetch(allAnnonceursQuery);
+  const allAnnonceurs = await getSanityServerClient(false).fetch(
+    allAnnonceursQuery
+  );
 
   if (!allAnnonceurs) {
     throw error(500, "staff not found");

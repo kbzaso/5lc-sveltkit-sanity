@@ -44,12 +44,17 @@
 </svelte:head>
 
 <main class="w-full">
-  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Presentadores</h1>
+  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">
+    Presentadores
+  </h1>
   <div
     class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
   >
     {#each allAnnonceurs as annonceurs}
-      <a class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0" href={`/equipo/presentadores/${annonceurs.slug}`}>
+      <a
+        class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0"
+        href={`/equipo/presentadores/${annonceurs.slug}`}
+      >
         <CardStaff staff={annonceurs} />
       </a>
     {/each}

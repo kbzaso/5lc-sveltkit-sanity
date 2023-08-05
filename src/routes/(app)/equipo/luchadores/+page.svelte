@@ -44,12 +44,17 @@
 </svelte:head>
 
 <div class="w-full">
-  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Luchadores</h1>
+  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">
+    Luchadores
+  </h1>
   <div
     class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-w-[320px]"
   >
     {#each allWrestlers as wrestler}
-      <a class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0" href={`/equipo/luchadores/${wrestler.slug}`}>
+      <a
+        class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0"
+        href={`/equipo/luchadores/${wrestler.slug}`}
+      >
         <CardStaff staff={wrestler} />
       </a>
     {/each}

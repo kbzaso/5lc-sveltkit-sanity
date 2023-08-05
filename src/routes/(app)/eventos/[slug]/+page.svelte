@@ -88,7 +88,9 @@
             >
           {/if}
         </h1>
-        <div class="prose prose-h3:text-primary prose-h2:font-ibm prose-h3:font-ibm prose-h2:text-primary prose-h1:text-primary prose-indigo mt-5">
+        <div
+          class="prose prose-h3:text-primary prose-h2:font-ibm prose-h3:font-ibm prose-h2:text-primary prose-h1:text-primary prose-indigo mt-5"
+        >
           <p>
             {#if $eventData?.event?.active && $eventData?.event?.description}
               <PortableText value={$eventData?.event?.description} />

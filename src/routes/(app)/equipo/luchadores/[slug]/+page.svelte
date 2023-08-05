@@ -320,6 +320,8 @@
     >
       Otros miembros del equipo
     </h4>
-    <Splide allStaff={allStaffSlider.sort(compararAleatoriamente).slice(0, 9)} />
+    <Splide
+      allStaff={allStaffSlider.sort(compararAleatoriamente).slice(0, 9)}
+    />
   </div>
 </div>

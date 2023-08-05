@@ -6,6 +6,7 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
+  import Modal from "$lib/components/Modal.svelte";
 
   export let data: PageData;
 

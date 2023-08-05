@@ -49,7 +49,10 @@
     class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-w-[320px]"
   >
     {#each allReferee as referee}
-      <a class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0" href={`/equipo/arbitros/${referee.slug}`}>
+      <a
+        class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0"
+        href={`/equipo/arbitros/${referee.slug}`}
+      >
         <CardStaff staff={referee} />
       </a>
     {/each}

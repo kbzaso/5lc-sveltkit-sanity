@@ -78,7 +78,7 @@
               </figure>
 
               <div
-                class="bg-zinc-900/50 h-max grow backdrop-blur-xl absolute bottom-0 z-20 w-full pb-4"
+                class="bg-zinc-900/50 h-max grow backdrop-blur-xl absolute bottom-0 z-10 w-full pb-4"
               >
                 <p
                   class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-4 px-4 pt-0"
@@ -113,7 +113,9 @@
         <p class="text-center mt-4 prose mb-4 text-gray-400">
           Esperamos prontamente anunciar una próxima fecha, mientras tanto
           puedes revisar nuestros eventos pasados
-          <a href="/resultados" class="text-primary hover:text-accent"> aquí </a>
+          <a href="/resultados" class="text-primary hover:text-accent">
+            aquí
+          </a>
         </p>
         <img
           src="https://media2.giphy.com/media/l0HUoARsBRbpGOsXm/giphy.gif?cid=6c09b9529c6a234ab4d136b91c0ca8a7768b8a7db519d931&ep=v1_internal_gifs_gifId&rid=giphy.gif&ct=g"

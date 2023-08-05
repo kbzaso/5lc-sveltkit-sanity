@@ -15,6 +15,7 @@
   import PageLoader from "$lib/components/PageLoader.svelte";
   import { afterNavigate, beforeNavigate } from "$app/navigation";
   import { page } from "$app/stores";
+  import Modal from "$lib/components/Modal.svelte";
 
   $: ({ settings } = data);
 
@@ -24,7 +25,6 @@
   afterNavigate(() => {
     navigationState.set("loaded");
   });
-
 </script>
 
 <svelte:window />
@@ -46,7 +46,11 @@
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
     rel="stylesheet"
   />
-  <script async src="https://analytics.umami.is/script.js" data-website-id="86ceac1e-89c3-42ea-abef-dbfac5379da5"></script>
+  <script
+    async
+    src="https://analytics.umami.is/script.js"
+    data-website-id="86ceac1e-89c3-42ea-abef-dbfac5379da5"
+  ></script>
 </svelte:head>
 
 <DrawerNav
@@ -54,11 +58,13 @@
   logoBlack={settings.logoBlack}
   bovedin={settings.bovedin}
 />
-  <div
-    class="selection:bg-fuchsia-300 selection:text-fuchsia-900"
-    in:fade={{ duration: 300, delay: 300 }}
-    out:fade={{ duration: 100, delay: 0 }}
-  >
-    <slot />
-  </div>
+<div
+  class="selection:bg-fuchsia-300 selection:text-fuchsia-900"
+  in:fade={{ duration: 300, delay: 300 }}
+  out:fade={{ duration: 100, delay: 0 }}
+>
+  <slot />
+  <Modal />
+</div>
+
 <Footer />
