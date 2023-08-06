@@ -7,7 +7,7 @@
 </script>
 
 <button
-  class={`transition-all ease-in-out bg-primary fixed bottom-20 right-4 ml-auto left-4 z-30 overflow-hidden shadow-xl border border-primary ${
+  class={`transition-all ease-in-out z-50 bg-primary fixed bottom-20 right-4 ml-auto left-4 overflow-hidden shadow-xl border border-primary ${
     open ? "h-fit w-auto md:w-72" : "h-36 w-32"
   }`}
 >

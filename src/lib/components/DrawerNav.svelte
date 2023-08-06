@@ -74,20 +74,16 @@
           tabindex="0"
           class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
         >
-          <li
-            class="hover:bg-primary rounded-none normal-case"
-          >
+          <li class="hover:bg-primary rounded-none normal-case">
             <a class="hover:text-black" href="/equipo/luchadores">Luchadores</a>
           </li>
-          <li
-            class="hover:bg-primary rounded-none normal-case"
-          >
+          <li class="hover:bg-primary rounded-none normal-case">
             <a class="hover:text-black" href="/equipo/arbitros">Arbitros</a>
           </li>
-          <li
-            class="hover:bg-primary rounded-none normal-case"
-          >
-            <a class="hover:text-black" href="/equipo/presentadores">Presentadores</a>
+          <li class="hover:bg-primary rounded-none normal-case">
+            <a class="hover:text-black" href="/equipo/presentadores"
+              >Presentadores</a
+            >
           </li>
         </ul>
       </div>
@@ -116,14 +112,10 @@
           tabindex="0"
           class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
         >
-          <li
-            class="hover:bg-primary rounded-none normal-case"
-          >
+          <li class="hover:bg-primary rounded-none normal-case">
             <a class="hover:text-black" href="/eventos">Próximos eventos</a>
           </li>
-          <li
-            class="hover:bg-primary rounded-none normal-case"
-          >
+          <li class="hover:bg-primary rounded-none normal-case">
             <a class="hover:text-black" href="/resultados">Resultados</a>
           </li>
         </ul>
