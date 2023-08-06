@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   const results = await getSanityServerClient(false).fetch(resultsQuery);
 
   if (!results) {
-    throw error(500, "Event not found");
+    throw error(500, "Results not found");
   }
 
   return {

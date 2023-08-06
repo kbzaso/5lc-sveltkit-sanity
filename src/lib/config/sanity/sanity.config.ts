@@ -59,16 +59,17 @@ export default defineConfig({
       if (secret) {
         url.searchParams.set("secret", secret);
       }
-
       try {
         switch (document._type) {
-          case eventType.name:
+          case "event":
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             url.searchParams.set("slug", (document.slug as Slug).current!);
+            url.searchParams.set("type", document._type);
             break;
-          case staffType.name:
+          case "staff":
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             url.searchParams.set("slug", (document.slug as Slug).current!);
+            url.searchParams.set("type", document._type);
             break;
           default:
             return prev;

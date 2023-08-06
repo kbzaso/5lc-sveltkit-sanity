@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   );
 
   if (!allAnnonceurs) {
-    throw error(500, "staff not found");
+    throw error(500, "Annonceurs not found");
   }
 
   return {

@@ -17,7 +17,6 @@ export const STAFF_TYPE = [
   { title: "Luchador/a", value: "wrestler" },
   { title: "Presentador/a", value: "annonceurs" },
   { title: "Arbitro/a", value: "referee" },
-  { title: "Producción", value: "production" },
 ];
 
 export default defineType({

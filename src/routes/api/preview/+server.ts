@@ -41,11 +41,11 @@ export const GET: RequestHandler = async ({ url, cookies, setHeaders }) => {
     // Set the redirect slug and append the isPreview query
     // param, so that the app knows it's a Sanity preview.
     if (staff.staffType === "wrestler") {
-      redirectSlug = `/luchadores/${staff.slug}?isPreview=true`;
+      redirectSlug = `/equipo/luchadores/${staff.slug}?isPreview=true`;
     } else if (staff.staffType === "referee") {
-      redirectSlug = `/arbitros/${staff.slug}?isPreview=true`;
+      redirectSlug = `/equipo/arbitros/${staff.slug}?isPreview=true`;
     } else if (staff.staffType === "annonceurs") {
-      redirectSlug = `/presentadores/${staff.slug}?isPreview=true`;
+      redirectSlug = `/equipo/presentadores/${staff.slug}?isPreview=true`;
     }
   }
 
