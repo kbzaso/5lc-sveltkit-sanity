@@ -94,7 +94,7 @@ export default defineType({
     {
       type: "image",
       options: {
-        accept: ".jpg,.png,.svg,.avif",
+        accept: ".jpg,.png,.svg,.avif,webp",
         hotspot: true,
       },
       name: "poster",

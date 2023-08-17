@@ -14,8 +14,6 @@
   import navigationState from "$lib/stores/navigationState";
   import PageLoader from "$lib/components/PageLoader.svelte";
   import { afterNavigate, beforeNavigate } from "$app/navigation";
-  import { page } from "$app/stores";
-  import Modal from "$lib/components/Modal.svelte";
 
   $: ({ settings } = data);
 
@@ -64,7 +62,6 @@
   out:fade={{ duration: 100, delay: 0 }}
 >
   <slot />
-  <Modal />
 </div>
 
 <Footer />
