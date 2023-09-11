@@ -181,7 +181,6 @@
             <div
               class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
             >
-              <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -198,7 +197,6 @@
                 </svg>
 
                 <span class="uppercase tracking-widest">Adhesión agotadas</span>
-              </div>
             </div>
           {:else if !$eventData?.event.ticket.soldOut && $eventData?.event.active && $eventData?.event.ticket.url}
             <div
