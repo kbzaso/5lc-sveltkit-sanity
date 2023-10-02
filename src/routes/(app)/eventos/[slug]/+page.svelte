@@ -6,6 +6,11 @@
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
+
+  import Gallery from "$lib/components/Gallery.svelte";
+  import Youtube from "$lib/components/Youtube.svelte";
+
   export let data: PageData;
 
   $: ({ initialData, previewMode, slug } = data);
@@ -21,6 +26,15 @@
   $: minutes = eventDate.getMinutes();
 
   let seo_image = urlForImage($page.data.initialData.event.poster).url();
+
+  let hasPhotos = [];
+  onMount(() => {
+    if ($eventData?.event?.gallery !== null) {
+      hasPhotos = Object.keys($eventData?.event?.gallery);
+    } else {
+      hasPhotos = [];
+    }
+  });
 </script>
 
 <svelte:head>
@@ -213,8 +227,33 @@
           {/if}
         </div>
       </div>
+
+
     </div>
+
+    {#if hasPhotos.length > 0}
+    <section class="mt-10 md:mt-20">
+      <h2 class="sub-title px-4">Galería de imagenes</h2>
+      <div
+        class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
+      >
+        <Gallery
+          id={$eventData?.event.slug}
+          images={$eventData?.event.gallery}
+        />
+      </div>
+    </section>
+  {/if}
+
   </div>
+  {#if $eventData?.event.videoUrl}
+    <Youtube
+      link={$eventData?.event.videoUrl}
+      image={$eventData?.event?.gallery
+        ? $eventData?.event?.gallery[0]
+        : data.welcome.backgroundImage}
+    />
+  {/if}
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>
 {/if}

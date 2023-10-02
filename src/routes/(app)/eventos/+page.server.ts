@@ -9,6 +9,7 @@ import type { PageServerLoad } from "./$types";
 // export const prerender = 'auto';
 export const load: PageServerLoad = async ({ parent, params }) => {
   const events = await getSanityServerClient(false).fetch(allEventsQuery);
+  const results = await getSanityServerClient(false).fetch(resultsQuery);
 
   if (!events) {
     throw error(500, "Event not found");
@@ -16,5 +17,6 @@ export const load: PageServerLoad = async ({ parent, params }) => {
 
   return {
     events,
+    results,
   };
 };

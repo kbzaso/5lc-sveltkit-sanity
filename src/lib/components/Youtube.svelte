@@ -4,11 +4,9 @@
   export let link;
 </script>
 
-<div class="container mx-auto">
-  <div class="mx-auto sm:px-6 lg:px-0">
-    <div
-      class="relative isolate overflow-hidden  px-4 py-20 sm:py-24 lg:py-24 xl:px-24"
-    >
+<div class="mx-auto">
+  <div class="mx-auto xl:container">
+    <div class="relative isolate overflow-hidden px-4 py-20 sm:py-24 lg:py-24">
       <div
         class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0"
       >
@@ -25,9 +23,10 @@
         </div>
 
         <a
+          rel="noreferrer"
           href={link}
           target="_blank"
-          class="relative min-w-full max-w-xl rounded-sm ring-1 ring-white/10 lg:row-span-4 hover:scale-105 transition-all hover:rotate-1 hover:ring-primary"
+          class="relative min-w-full max-w-7xl rounded-sm ring-1 lg:ring-white/10 rotate-1 lg:rotate-0 ring-primary lg:row-span-4 hover:scale-105 transition-all hover:rotate-1 hover:ring-primary"
         >
           <img
             src="https://res.cloudinary.com/dtj5xnlou/image/upload/v1696272331/5LC/bg-yt.png"
