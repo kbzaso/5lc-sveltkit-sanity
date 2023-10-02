@@ -9,6 +9,7 @@
   import { onMount } from "svelte";
 
   import Gallery from "$lib/components/Gallery.svelte";
+  import Youtube from "$lib/components/Youtube.svelte";
 
   export let data: PageData;
 
@@ -71,7 +72,7 @@
     <div class="mt-28 flex flex-col lg:flex-row px-4 gap-8">
       <figure class="mb-8 xl:mb-0 lg:w-1/3">
         <img
-          class="h-72 lg:h-full object-cover w-full"
+          class="h-72 lg:h-full object-cover w-full rounded-md"
           loading="lazy"
           src={urlForImage($eventData?.event.poster)
             .height(800)
@@ -275,11 +276,7 @@
     </div>
     {#if hasPhotos.length > 0}
       <section class="mt-10 md:mt-20">
-        <h2
-          class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
-        >
-          Galería de imagenes
-        </h2>
+        <h2 class="sub-title px-4">Galería de imagenes</h2>
         <div
           class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
         >
@@ -291,6 +288,14 @@
       </section>
     {/if}
   </div>
+  {#if $eventData?.event.videoUrl}
+    <Youtube
+      link={$eventData?.event.videoUrl}
+      image={$eventData?.event?.gallery
+        ? $eventData?.event?.gallery[0]
+        : data.welcome.backgroundImage}
+    />
+  {/if}
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>
 {/if}

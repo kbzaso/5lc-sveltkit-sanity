@@ -64,19 +64,16 @@
   {#if nextEvent}
     <div class="container mx-auto -mt-48 h-min">
       <div id="nextEvent" class="relative h-fit mt-28 flex flex-col">
-          <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/2 z-30">
-            <a
-              href={`/eventos/${nextEvent.slug}`}
-              title="Próximo evento"
-            >
-              <img
-                class="h-56 w-full object-cover lg:hover:scale-105 transition-transform lg:absolute lg:h-full md:rounded-sm"
-                loading="lazy"
-                src={urlForImage(nextEvent.poster).url()}
-                alt="Afiche del próximo evento"
-              />
-            </a>
-          </div>
+        <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/2 z-30">
+          <a href={`/eventos/${nextEvent.slug}`} title="Próximo evento">
+            <img
+              class="h-56 w-full object-cover lg:hover:scale-105 transition-transform lg:absolute lg:h-full md:rounded-sm"
+              loading="lazy"
+              src={urlForImage(nextEvent.poster).url()}
+              alt="Afiche del próximo evento"
+            />
+          </a>
+        </div>
         <div
           class="relative px-4 pt-12 pb-16 sm:px-6 sm:pt-16 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:px-8"
         >

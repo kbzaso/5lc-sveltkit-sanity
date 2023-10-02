@@ -28,106 +28,110 @@
 </script>
 
 <div
-  class="container flex w-full justify-between top-0 items-center py-2 px-2 left-[50%] translate-x-[-50%] z-40 pt-2 bg-black/75 fixed backdrop-blur-md"
+  class="w-full py-2 top-0 px-4 z-40 pt-2 bg-black/75 fixed backdrop-blur-md"
 >
-  <a href="/">
-    <img
-      src={urlForImage(logo).url()}
-      class="w-28"
-      width="112"
-      height="63"
-      alt="Logo 5LC"
-    />
-  </a>
-  <button
-    on:click={() => (hidden2 = false)}
-    class="btn btn-primary drawer-button md:hidden">Menu</button
-  >
-  <div class="flex-none hidden md:flex">
-    <nav class="menu menu-horizontal px-1 gap-2">
-      <a
-        class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
-        href="/">Inicio</a
-      >
-      <div class="dropdown dropdown-end">
-        <label
-          tabindex="0"
-          class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
-          >Equipo
-          <svg
-            viewBox="0 0 24 20"
-            width="28px"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-          >
-            <path
-              stroke="#fff"
-              class="stroke-primary"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 7l6 6 6-6"
-            />
-          </svg>
-        </label>
-        <ul
-          tabindex="0"
-          class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
+  <div class="flex w-full justify-between items-center container mx-auto ">
+    <a href="/">
+      <img
+        src={urlForImage(logo).url()}
+        class="w-28"
+        width="112"
+        height="63"
+        alt="Logo 5LC"
+      />
+    </a>
+    <button
+      on:click={() => (hidden2 = false)}
+      class="btn btn-primary drawer-button md:hidden">Menu</button
+    >
+    <div class="flex-none hidden md:flex ">
+      <nav class="menu menu-horizontal px-1 gap-2">
+        <a
+          class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
+          href="/">Inicio</a
         >
-          <li class="hover:bg-primary rounded-none normal-case">
-            <a class="hover:text-black" href="/equipo/luchadores">Luchadores</a>
-          </li>
-          <li class="hover:bg-primary rounded-none normal-case">
-            <a class="hover:text-black" href="/equipo/arbitros">Arbitros</a>
-          </li>
-          <li class="hover:bg-primary rounded-none normal-case">
-            <a class="hover:text-black" href="/equipo/presentadores"
-              >Presentadores</a
+        <div class="dropdown dropdown-end">
+          <label
+            tabindex="0"
+            class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
+            >Equipo
+            <svg
+              viewBox="0 0 24 20"
+              width="28px"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
             >
-          </li>
-        </ul>
-      </div>
-
-      <div class="dropdown dropdown-end">
-        <label
-          tabindex="0"
-          class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
-          >Eventos <svg
-            viewBox="0 0 24 20"
-            width="28px"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+              <path
+                stroke="#fff"
+                class="stroke-primary"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 7l6 6 6-6"
+              />
+            </svg>
+          </label>
+          <ul
+            tabindex="0"
+            class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
           >
-            <path
-              stroke="#fff"
-              class="stroke-primary"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 7l6 6 6-6"
-            />
-          </svg></label
+            <li class="hover:bg-primary rounded-none normal-case">
+              <a class="hover:text-black" href="/equipo/luchadores"
+                >Luchadores</a
+              >
+            </li>
+            <li class="hover:bg-primary rounded-none normal-case">
+              <a class="hover:text-black" href="/equipo/arbitros">Arbitros</a>
+            </li>
+            <li class="hover:bg-primary rounded-none normal-case">
+              <a class="hover:text-black" href="/equipo/presentadores"
+                >Presentadores</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="dropdown dropdown-end">
+          <label
+            tabindex="0"
+            class="flex gap-1 btn btn-ghost focus-within:bg-zinc-900 border-none text-primary font-ibm font-black text-xl italic cursor-pointer normal-case"
+            >Eventos <svg
+              viewBox="0 0 24 20"
+              width="28px"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+            >
+              <path
+                stroke="#fff"
+                class="stroke-primary"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 7l6 6 6-6"
+              />
+            </svg></label
+          >
+          <ul
+            tabindex="0"
+            class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
+          >
+            <li class="hover:bg-primary rounded-none normal-case">
+              <a class="hover:text-black" href="/eventos">Próximos eventos</a>
+            </li>
+            <li class="hover:bg-primary rounded-none normal-case">
+              <a class="hover:text-black" href="/resultados">Resultados</a>
+            </li>
+          </ul>
+        </div>
+        <button
+          class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
+          data-tally-open="31AeNQ"
+          data-tally-overlay="1"
+          data-tally-emoji-text="👋"
+          data-tally-emoji-animation="wave">Contacto</button
         >
-        <ul
-          tabindex="0"
-          class="dropdown-content menu p-2 shadow bg-zinc-900 rounded-none w-52"
-        >
-          <li class="hover:bg-primary rounded-none normal-case">
-            <a class="hover:text-black" href="/eventos">Próximos eventos</a>
-          </li>
-          <li class="hover:bg-primary rounded-none normal-case">
-            <a class="hover:text-black" href="/resultados">Resultados</a>
-          </li>
-        </ul>
-      </div>
-      <button
-        class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
-        data-tally-open="31AeNQ"
-        data-tally-overlay="1"
-        data-tally-emoji-text="👋"
-        data-tally-emoji-animation="wave">Contacto</button
-      >
-    </nav>
+      </nav>
+    </div>
   </div>
 </div>
 

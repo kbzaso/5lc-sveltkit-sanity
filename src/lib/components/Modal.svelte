@@ -8,7 +8,9 @@
 
 <button
   class={`transition-all ease-in-out z-50 bg-primary fixed  right-4 ml-auto left-4 overflow-hidden shadow-xl border border-primary ${
-    open ? "h-auto top-28 md:h-fit w-auto md:w-72 bottom-4" : "h-36 w-32 bottom-20"
+    open
+      ? "h-auto top-28 md:h-fit w-auto md:w-72 bottom-4"
+      : "h-36 w-32 bottom-20"
   }`}
 >
   <button

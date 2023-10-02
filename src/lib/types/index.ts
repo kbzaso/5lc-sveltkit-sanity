@@ -63,6 +63,7 @@ export interface Event {
   extract: string;
   poster: SanityImageSource;
   slug: string;
+  videoUrl: string;
 }
 
 export interface Settings {

@@ -2,10 +2,6 @@
   import { PortableText } from "@portabletext/svelte";
   import type { InputValue } from "@portabletext/svelte/ptTypes";
 
-  import { page } from "$app/stores";
-  import { urlForImage } from "$lib/config/sanity";
-  import { onMount } from "svelte";
-
   export let preTitle = "";
   export let description: InputValue = [];
   export let imageTitle = "";

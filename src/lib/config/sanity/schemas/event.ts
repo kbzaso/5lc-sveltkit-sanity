@@ -189,6 +189,11 @@ export default defineType({
       },
     },
     {
+      name: "videoUrl",
+      type: "url",
+      title: "URL de la grabación del evento",
+    },
+    {
       title: "Asitencia al evento",
       name: "assistance",
       type: "number",

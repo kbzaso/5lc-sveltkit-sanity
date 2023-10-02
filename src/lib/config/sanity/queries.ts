@@ -57,6 +57,7 @@ export const eventFields = groq`
     description,
     seo_description,
     poster,
+    videoUrl,
     "slug": slug.current,
     "gallery": gallery.images[]{
       alt,
