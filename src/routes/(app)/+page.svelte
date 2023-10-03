@@ -62,24 +62,29 @@
   />
 
   {#if nextEvent}
-    <div class="container mx-auto -mt-48 h-min">
-      <div id="nextEvent" class="relative h-fit mt-28 flex flex-col">
-        <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/2 z-30">
+    <div class="xl:container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 md:-mt-48 h-min">
+      <div id="nextEvent" class="relative h-fit mt-28 flex flex-col md:flex-row md:gap-4 lg:gap-0">
+        <div class="lg:relative lg:inset-y-0 lg:left-0 lg:w-1/3 z-30">
           <a href={`/eventos/${nextEvent.slug}`} title="Próximo evento">
             <img
-              class="h-56 w-full object-cover lg:hover:scale-105 transition-transform lg:absolute lg:h-full md:rounded-sm"
+              class="object-contain lg:hover:rotate-2 lg:hover:scale-105 transition-transform md:rounded-sm"
               loading="lazy"
-              src={urlForImage(nextEvent.poster).url()}
+              width="600"
+              height="750"
+              src={urlForImage(nextEvent.poster)
+                .width(600)
+                .height(750)
+                .url()}
               alt="Afiche del próximo evento"
             />
           </a>
         </div>
         <div
-          class="relative px-4 pt-12 pb-16 sm:px-6 sm:pt-16 lg:mx-auto lg:grid lg:max-w-7xl lg:grid-cols-2 lg:px-8"
+          class="relative pb-16 "
         >
-          <div class="lg:col-start-2 lg:pl-8">
+          <div class="lg:pl-8 mt-4 lg:mt-0">
             <div
-              class="mx-auto max-w-prose text-base lg:ml-auto lg:mr-0 lg:max-w-lg"
+              class="mx-auto text-base lg:ml-auto lg:mr-0"
             >
               <h2
                 class="font-semibold leading-6 text-primary uppercase tracking-widest"

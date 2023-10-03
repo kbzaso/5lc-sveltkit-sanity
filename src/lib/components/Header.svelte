@@ -13,10 +13,10 @@
   class={`bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1689912910/5LC/bg-web-2.jpg')] bg-cover bg-center h-screen relative`}
 >
   <div
-    class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/60 to-transparent h-96 w-full"
+    class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/100 to-transparent h-96 w-full"
   />
   <div
-    class="container relative mx-auto flex flex-col justify-end h-screen pb-28 px-4"
+    class="container relative mx-auto flex flex-col justify-end h-screen pb-10 md:pb-32 px-4"
   >
     <h1 class="text-xl uppercase tracking-widest lg:-mb-4 text-white">
       ¡{preTitle}!
@@ -34,7 +34,7 @@
       {/if}
     </div>
 
-    <p class="text-sm md:text-lg lg:max-w-4xl prose">
+    <p class="text-md md:text-lg lg:max-w-4xl prose ">
       <PortableText value={description} />
     </p>
   </div>

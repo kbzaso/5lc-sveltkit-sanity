@@ -70,13 +70,16 @@
 {#if $eventData?.event}
   <div class="xl:container xl:mx-auto min-w-[350px]">
     <div class="mt-28 flex flex-col md:flex-row px-4 gap-4">
-      <figure class="mb-8 xl:mb-0 xl:w-1/3">
+      <figure class="mb-8 xl:mb-0">
         <img
-          class="h-72 xl:h-full object-cover w-full rounded-sm"
+          class="h-full md:h-96 lg:h-full object-cover md:object-contain w-full rounded-sm"
           loading="lazy"
+          height="600"
+          width="750"
           src={urlForImage($eventData?.event.poster)
-            .width(800)
-            .quality(90)
+            .width(600)
+            .height(750)
+            .quality(80)
             .url()}
           alt="Afiiche de {$eventData?.event?.title}"
         />
@@ -227,24 +230,21 @@
           {/if}
         </div>
       </div>
-
-
     </div>
 
     {#if hasPhotos.length > 0}
-    <section class="mt-10 md:mt-20">
-      <h2 class="sub-title px-4">Galería de imagenes</h2>
-      <div
-        class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
-      >
-        <Gallery
-          id={$eventData?.event.slug}
-          images={$eventData?.event.gallery}
-        />
-      </div>
-    </section>
-  {/if}
-
+      <section class="mt-10 md:mt-20">
+        <h2 class="sub-title px-4">Galería de imagenes</h2>
+        <div
+          class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
+        >
+          <Gallery
+            id={$eventData?.event.slug}
+            images={$eventData?.event.gallery}
+          />
+        </div>
+      </section>
+    {/if}
   </div>
   {#if $eventData?.event.videoUrl}
     <Youtube
