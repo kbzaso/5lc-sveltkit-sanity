@@ -7,6 +7,7 @@
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import Modal from "$lib/components/Modal.svelte";
+  import { enhance } from "$app/forms";
 
   export let data: PageData;
 
@@ -18,6 +19,8 @@
   $: minutes = eventDate.getMinutes();
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
+
+  let selectedOption: string;
 </script>
 
 <svelte:head>
@@ -62,8 +65,13 @@
   />
 
   {#if nextEvent}
-    <div class="xl:container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 md:-mt-48 h-min">
-      <div id="nextEvent" class="relative h-fit mt-28 flex flex-col md:flex-row md:gap-4 lg:gap-0">
+    <div
+      class="xl:container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 md:-mt-48 h-min"
+    >
+      <div
+        id="nextEvent"
+        class="relative h-fit mt-28 flex flex-col md:flex-row md:gap-4 lg:gap-0"
+      >
         <div class="lg:relative lg:inset-y-0 lg:left-0 lg:w-1/3 z-30">
           <a href={`/eventos/${nextEvent.slug}`} title="Próximo evento">
             <img
@@ -71,21 +79,14 @@
               loading="lazy"
               width="600"
               height="750"
-              src={urlForImage(nextEvent.poster)
-                .width(600)
-                .height(750)
-                .url()}
+              src={urlForImage(nextEvent.poster).width(600).height(750).url()}
               alt="Afiche del próximo evento"
             />
           </a>
         </div>
-        <div
-          class="relative pb-16 "
-        >
+        <div class="relative pb-16 ">
           <div class="lg:pl-8 mt-4 lg:mt-0">
-            <div
-              class="mx-auto text-base lg:ml-auto lg:mr-0"
-            >
+            <div class="mx-auto text-base lg:ml-auto lg:mr-0">
               <h2
                 class="font-semibold leading-6 text-primary uppercase tracking-widest"
               >
@@ -147,6 +148,79 @@
                   {/if}
                 </ul>
               </div>
+              <div class="mt-6 flex gap-2">
+                <svg
+                  class="mt-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  ><path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7a2 2 0 0 1 2-2"
+                  /></svg
+                >
+                <h3 class="text-white font-ibm font-black text-2xl italic">Adhesión al evento</h3>
+              </div>
+              <form
+                action="?/pay"
+                method="POST"
+                use:enhance
+                class="grid gap-y-4 grid-cols-1 md:grid-cols-2 mt-4"
+              >
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  id="name"
+                  name="name"
+                  required
+                  class="input input-bordered input-primary w-full max-w-xs"
+                />
+                <input
+                  type="text"
+                  placeholder="RUT"
+                  id="rut"
+                  name="rut"
+                  required
+                  class="input input-bordered input-primary w-full max-w-xs"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  id="email"
+                  name="email"
+                  required
+                  class="input input-bordered input-primary w-full max-w-xs"
+                />
+
+                <select
+                  id="tickets"
+                  name="tickets"
+                  required
+                  class="select select-warning w-full max-w-xs outline-none ring-0"
+                >
+                  <option disabled selected>Numero de entradas</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+                <button
+                  type="submit"
+                  class="flex grow items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
+                  >Comprar</button
+                >
+              </form>
 
               {#if nextEvent.ticket.soldOut && nextEvent.active}
                 <div
