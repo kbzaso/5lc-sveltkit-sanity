@@ -18,6 +18,7 @@ import {
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
 } from "$env/static/private";
+import { client } from "$lib/server/prisma";
 
 // export const prerender = 'auto';
 export const load: PageServerLoad = async () => {
@@ -85,12 +86,33 @@ export const actions: Actions = {
           method: "POST",
           headers: new Headers({
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "[*]",
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
           }),
           body: JSON.stringify(request_data),
           redirect: "follow",
         }
       )
+      
       resp = await data.json();
+      console.log(resp, 'resp');
+
+      const newPayment = await client.payment.create({
+        data: {
+          name: name,
+          rut: rut,
+          email: email,
+          ticketAmount: tickets,
+          price: price,
+          priceTotal: priceTotal,
+          session_token: resp.token,
+          signature_token: resp.signature_token,
+          product: nextEvent.title,
+        }
+      })
+
+      console.log(newPayment.session_token, 'newPayment.session_token');
       
     } catch (error) {
       console.log(error);
