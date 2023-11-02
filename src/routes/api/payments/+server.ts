@@ -17,10 +17,11 @@ export const POST: RequestHandler = async (event) => {
         try {
             const payment = await client.payment.update({
                 where: {
-                    session_token: payload.session_token,
+                    id: payload.session_token,
                 },
                 data: {
                     payment_status: payload.payment_status,
+                    payment_token: payload.payment_token,
                 }
             });
             console.log(payment ? 'payment found' : 'payment not found');

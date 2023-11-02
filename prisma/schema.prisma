@@ -9,16 +9,17 @@ datasource db {
 }
 
 model Payment {
-  id              Int      @id @default(autoincrement())
-  name            String
-  rut             String
-  email           String
+  id              String   @id @unique
+  customer_name   String
+  customer_email  String
+  rut             String?
+  customer_phone  String?
   price           Float
   ticketAmount    Int
   date            DateTime @default(now())
-  session_token   String
   signature_token String
-  priceTotal      Float
   product         String
+  product_id      String
   payment_status  String?
+  payment_token   String?
 }

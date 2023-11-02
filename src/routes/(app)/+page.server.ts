@@ -38,6 +38,45 @@ export const load: PageServerLoad = async () => {
   }
   if (!nextEvent) {
     nextEvent = false;
+  } else {
+    const ticketsSold = await client.payment.aggregate({
+      where: {
+        payment_status: 'success',
+      },
+      _sum: {
+        ticketAmount: true,
+      },
+    });
+
+    let ticketsSoldCount = ticketsSold._sum?.ticketAmount || 0;
+
+    const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
+    const ticketSystem = {
+      "firsts_tickets": { "amount": nextEvent.ticket.firsts_tickets.amount, "price": nextEvent.ticket.firsts_tickets.price },
+      "seconds_tickets": { "amount": nextEvent.ticket.seconds_tickets.amount, "price": nextEvent.ticket.seconds_tickets.amount },
+      "thirds_tickets": { "amount": nextEvent.ticket.thirds_tickets.amount, "price": nextEvent.ticket.thirds_tickets.amount }
+    };
+
+    let remainingTickets = {};
+    let currentPart = null;
+
+    for (let part of partsOrder) {
+      if (ticketsSoldCount >= ticketSystem[part].amount) {
+        ticketsSoldCount -= ticketSystem[part].amount;
+        ticketSystem[part].amount = 0;
+      } else {
+        ticketSystem[part].amount -= ticketsSoldCount;
+        ticketsSoldCount = 0;
+      }
+      remainingTickets[part] = ticketSystem[part].amount;
+
+      if (ticketSystem[part].amount > 0 && !currentPart) {
+        currentPart = part;
+      }
+    }
+
+    nextEvent = {...nextEvent, tickets_sold: ticketsSold._sum?.ticketAmount || 0, remaining_tickets: remainingTickets, current_part: currentPart};
+    console.log(nextEvent)
   }
 
   return {
@@ -50,17 +89,44 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
   pay: async (event) => {
+
     let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
 
     const form = await event.request.formData();
-    const name = form.get("name");
-    const rut = form.get("rut");
-    const email = form.get("email");
+    const name = form.get("name")?.toString();
+    const email = form.get("email")?.toString();
+    const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
-    const price = nextEvent.ticket.price;
-    const priceTotal = price * tickets;
+    
     let resp;
 
+    function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
+      let totalCost = 0;
+      let remainingTickets = ticketsToBuy;
+      const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
+    
+      // Calculate total cost
+      for (let part of partsOrder) {
+        if (remainingTickets <= ticketSystem[part].amount) {
+          totalCost += remainingTickets * ticketSystem[part].price;
+          ticketSystem[part].amount -= remainingTickets;
+          remainingTickets = 0;
+          break;
+        } else {
+          totalCost += ticketSystem[part].amount * ticketSystem[part].price;
+          remainingTickets -= ticketSystem[part].amount;
+          ticketSystem[part].amount = 0;
+        }
+      }
+    
+      return totalCost;
+    }
+
+    const priceTotal = calculatePrice(tickets, nextEvent.ticket);
+
+    console.log(priceTotal, 'priceTotal');
+
+    // Data que se envia a ET_PAY
     let request_data = {
       merchant_code: MERCHANT_CODE,
       merchant_api_token: MERCHANT_API_TOKEN,
@@ -96,26 +162,25 @@ export const actions: Actions = {
       )
       
       resp = await data.json();
-      console.log(resp, 'resp');
 
       const newPayment = await client.payment.create({
         data: {
-          name: name,
-          rut: rut,
-          email: email,
+          customer_name: name as string,
+          customer_email: email as string,
+          customer_phone: phone as string,
           ticketAmount: tickets,
-          price: price,
-          priceTotal: priceTotal,
-          session_token: resp.token,
+          price: priceTotal,
+          id: resp.token,
           signature_token: resp.signature_token,
           product: nextEvent.title,
+          product_id: nextEvent._id,
         }
       })
 
-      console.log(newPayment.session_token, 'newPayment.session_token');
+      console.log(newPayment);
       
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
     throw redirect(302, `${PMT_URL}/session/${resp.token}`)
   },
