@@ -2,6 +2,7 @@ import { defineConfig, type Slug } from "sanity";
 import { DataPreview } from "./components/DataPreview";
 import app from "../app";
 import { myStructure } from "./deskStructure";
+import {media} from 'sanity-plugin-media'
 
 /*-------------- PLUGINS --------------*/
 import { visionTool } from "@sanity/vision";
@@ -51,6 +52,7 @@ export default defineConfig({
     visionTool({
       defaultApiVersion: "2022-08-08",
     }),
+    media(),
   ],
   document: {
     productionUrl: async (prev, { document }) => {
