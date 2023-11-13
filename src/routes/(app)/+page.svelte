@@ -152,39 +152,39 @@
                 </ul>
               </div>
               <div class="flex gap-4 my-8">
-                <div class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-3">
+                <div class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4">
                   <span
                     class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
                     >Tanda Nº1</span
                   >
                   <div class="text-sm">
                     <p>
-                      Quedan: {nextEvent.remaining_tickets.firsts_tickets}
+                      Quedan: {nextEvent.remaining_tickets.firsts_tickets.amount}
                     </p>
                     <p
                       >Precio: ${nextEvent.ticket?.firsts_tickets.price}</p
                     >
                   </div>
                 </div>
-                <div class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-3">
+                <div class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4">
                   <span
                     class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
                     >Tanda Nº2</span
                   >
                   <div class="text-sm">
-                    <p>Quedan: {nextEvent.remaining_tickets.seconds_tickets}</p>
+                    <p>Quedan: {nextEvent.remaining_tickets.seconds_tickets.amount}</p>
                     <span
                       >Precio: ${nextEvent.ticket?.seconds_tickets.price}</span
                     >
                   </div>
                 </div>
-                <div class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-3">
+                <div class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4">
                   <span
                     class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
                     >Tanda Nº3</span
                   >
                   <div class="text-sm">
-                    <p>Quedan: {nextEvent.remaining_tickets.thirds_tickets}</p>
+                    <p>Quedan: {nextEvent.remaining_tickets.thirds_tickets.amount}</p>
                     <span
                       >Precio: ${nextEvent.ticket?.thirds_tickets.price}</span
                     >

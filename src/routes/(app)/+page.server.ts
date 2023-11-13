@@ -20,6 +20,8 @@ import {
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 
+let totalTickets;
+
 // export const prerender = 'auto';
 export const load: PageServerLoad = async () => {
   const events = await getSanityServerClient(false).fetch(allEventsQuery);
@@ -57,6 +59,7 @@ export const load: PageServerLoad = async () => {
       "thirds_tickets": { "amount": nextEvent.ticket.thirds_tickets.amount, "price": nextEvent.ticket.thirds_tickets.amount }
     };
 
+    totalTickets = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount;
     let remainingTickets = {};
     let currentPart = null;
 
@@ -68,7 +71,7 @@ export const load: PageServerLoad = async () => {
         ticketSystem[part].amount -= ticketsSoldCount;
         ticketsSoldCount = 0;
       }
-      remainingTickets[part] = ticketSystem[part].amount;
+      remainingTickets[part] = { "amount": ticketSystem[part].amount, "price": ticketSystem[part].price};
 
       if (ticketSystem[part].amount > 0 && !currentPart) {
         currentPart = part;
@@ -180,7 +183,7 @@ export const actions: Actions = {
       console.log(newPayment);
       
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
     throw redirect(302, `${PMT_URL}/session/${resp.token}`)
   },
