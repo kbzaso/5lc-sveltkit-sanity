@@ -2,6 +2,7 @@ import type { RequestHandler } from "./$types";
 import { client } from "$lib/server/prisma";
 import { Buffer } from "buffer";
 import jwt from "jsonwebtoken";
+import { error } from "@sveltejs/kit";
 
 export const POST: RequestHandler = async (event) => {
   const body = await event.request.json();
@@ -12,22 +13,20 @@ export const POST: RequestHandler = async (event) => {
   const payloadJson = Buffer.from(payloadBase64, "base64").toString();
   const payload = JSON.parse(payloadJson);
 
+  const prePayment = await client.payment.findUnique({
+    where: {
+      id: payload.session_token,
+    },
+  });
+
+  if (!prePayment) {
+    throw error(500, "El pago no fue encontrado");
+  }
 
   try {
-    const prePayment = await client.payment.findUnique({
-        where: {
-          id: payload.session_token,
-    }})
-
-    if (!prePayment) {
-        throw new Error("Payment not found");
-    }
-
     const payloadDecoded = jwt.verify(token, prePayment.signature_token);
-    console.log(payloadDecoded, "payload decoded");
   } catch (e) {
-    console.log("error decoding token", e);
-    throw new Error(String(e));
+    throw error(500, "JWT no valido");
   }
 
   try {
@@ -42,8 +41,7 @@ export const POST: RequestHandler = async (event) => {
       },
     });
   } catch (e) {
-    console.log("payment not found");
-    throw new Error(String(e));
+    throw error(500, "El pago no pudo ser actualizado");
   }
 
   return new Response("ok");

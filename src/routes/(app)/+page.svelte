@@ -20,10 +20,17 @@
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 
-  $: totalTickets =
-    nextEvent.ticket?.firsts_tickets.amount +
-    nextEvent.ticket?.seconds_tickets.amount +
-    nextEvent.ticket?.thirds_tickets.amount;
+  // SHOW THE REMAINING TICKETS AVAILABLE IN THE SELECT TAG
+
+  let selectedTickets: any;
+  let remainingTickets: number;
+  let optionsCount: number;
+
+  onMount(() => {
+    selectedTickets = "";
+    remainingTickets = nextEvent.total_tickets - nextEvent.tickets_sold;
+    optionsCount = Math.min(remainingTickets, 10);
+  });
 </script>
 
 <svelte:head>
@@ -152,39 +159,50 @@
                 </ul>
               </div>
               <div class="flex gap-4 my-8">
-                <div class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4">
+                <div
+                  class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
+                >
                   <span
                     class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
                     >Tanda Nº1</span
                   >
                   <div class="text-sm">
                     <p>
-                      Quedan: {nextEvent.remaining_tickets.firsts_tickets.amount}
+                      Quedan: {nextEvent.remaining_tickets.firsts_tickets
+                        .amount}
                     </p>
-                    <p
-                      >Precio: ${nextEvent.ticket?.firsts_tickets.price}</p
-                    >
+                    <p>Precio: ${nextEvent.ticket?.firsts_tickets.price}</p>
                   </div>
                 </div>
-                <div class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4">
+                <div
+                  class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
+                >
                   <span
                     class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
                     >Tanda Nº2</span
                   >
                   <div class="text-sm">
-                    <p>Quedan: {nextEvent.remaining_tickets.seconds_tickets.amount}</p>
+                    <p>
+                      Quedan: {nextEvent.remaining_tickets.seconds_tickets
+                        .amount}
+                    </p>
                     <span
                       >Precio: ${nextEvent.ticket?.seconds_tickets.price}</span
                     >
                   </div>
                 </div>
-                <div class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4">
+                <div
+                  class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4"
+                >
                   <span
                     class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
                     >Tanda Nº3</span
                   >
                   <div class="text-sm">
-                    <p>Quedan: {nextEvent.remaining_tickets.thirds_tickets.amount}</p>
+                    <p>
+                      Quedan: {nextEvent.remaining_tickets.thirds_tickets
+                        .amount}
+                    </p>
                     <span
                       >Precio: ${nextEvent.ticket?.thirds_tickets.price}</span
                     >
@@ -192,16 +210,26 @@
                 </div>
               </div>
               <div>
-                <p>Total de entradas disponibles {totalTickets}</p>
-                <p>Entradas vendidas {nextEvent.tickets_sold}</p>
+                <!-- <p>Total de entradas disponibles {nextEvent.total_tickets}</p> -->
+                <!-- <p>Entradas vendidas {nextEvent.tickets_sold}</p> -->
+                <div class="flex justify-between">
+                  <span class="text-gray-400">🎟️ Progreso de venta de tickets</span>
+                  <span>🔥</span>
+                </div>
                 <progress
-                  class="progress progress-error w-full"
+                  class={`progress w-full ${
+                    nextEvent.current_part === "firsts_tickets"
+                      ? "progress-success"
+                      : nextEvent.current_part === "seconds_tickets"
+                      ? "progress-info"
+                      : "progress-error"
+                  }`}
                   value={nextEvent.tickets_sold}
-                  max={totalTickets}
+                  max={nextEvent.total_tickets}
                 />
               </div>
 
-              {#if nextEvent.tickets_sold === totalTickets && nextEvent.active}
+              {#if nextEvent.tickets_sold === nextEvent.total_tickets && nextEvent.active}
                 <div
                   class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
                 >
@@ -224,7 +252,7 @@
                     >Adhesión agotadas</span
                   >
                 </div>
-              {:else if nextEvent.tickets_sold !== totalTickets && nextEvent.active}
+              {:else}
                 <div class="mt-4">
                   <div class="mt-6 flex gap-2">
                     <svg
@@ -275,24 +303,21 @@
                       name="phone"
                       class="input input-bordered input-primary w-full max-w-xs"
                     />
-
                     <select
-                      id="tickets"
+                      bind:value={selectedTickets}
                       name="tickets"
+                      id="tickets"
                       required
                       class="select select-warning w-full max-w-xs outline-none ring-0"
                     >
-                      <option disabled selected>Numero de entradas</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
+                      <option disabled selected value=""
+                        >Número de tickets</option
+                      >
+                      {#each Array(optionsCount)
+                        .fill()
+                        .map((_, i) => i + 1) as ticket}
+                        <option value={ticket}>{ticket}</option>
+                      {/each}
                     </select>
                     <button
                       type="submit"

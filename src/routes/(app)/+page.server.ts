@@ -8,7 +8,7 @@ import {
   welcomeQuery,
   nextEventQuery,
 } from "$lib/config/sanity/queries";
-import { error, redirect } from "@sveltejs/kit";
+import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import {
   PMT_URL,
@@ -44,6 +44,11 @@ export const load: PageServerLoad = async () => {
     const ticketsSold = await client.payment.aggregate({
       where: {
         payment_status: 'success',
+        AND: [
+          {
+            product_id: nextEvent._id,
+          },
+        ],
       },
       _sum: {
         ticketAmount: true,
@@ -77,8 +82,7 @@ export const load: PageServerLoad = async () => {
         currentPart = part;
       }
     }
-
-    nextEvent = {...nextEvent, tickets_sold: ticketsSold._sum?.ticketAmount || 0, remaining_tickets: remainingTickets, current_part: currentPart};
+    nextEvent = {...nextEvent, tickets_sold: ticketsSold._sum?.ticketAmount || 0, remaining_tickets: remainingTickets, current_part: currentPart, total_tickets: totalTickets};
     console.log(nextEvent)
   }
 
@@ -100,7 +104,7 @@ export const actions: Actions = {
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
-    
+
     let resp;
 
     function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
@@ -124,7 +128,8 @@ export const actions: Actions = {
     
       return totalCost;
     }
-
+    
+    // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
     const priceTotal = calculatePrice(tickets, nextEvent.ticket);
 
     console.log(priceTotal, 'priceTotal');
