@@ -22,6 +22,28 @@ import { client } from "$lib/server/prisma";
 
 let totalTickets;
 
+function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
+  let totalCost = 0;
+  let remainingTickets = ticketsToBuy;
+  const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
+
+  // Calculate total cost
+  for (let part of partsOrder) {
+    if (remainingTickets <= ticketSystem[part].amount) {
+      totalCost += remainingTickets * ticketSystem[part].price;
+      ticketSystem[part].amount -= remainingTickets;
+      remainingTickets = 0;
+      break;
+    } else {
+      totalCost += ticketSystem[part].amount * ticketSystem[part].price;
+      remainingTickets -= ticketSystem[part].amount;
+      ticketSystem[part].amount = 0;
+    }
+  }
+
+  return totalCost;
+}
+
 // export const prerender = 'auto';
 export const load: PageServerLoad = async () => {
   const events = await getSanityServerClient(false).fetch(allEventsQuery);
@@ -60,11 +82,12 @@ export const load: PageServerLoad = async () => {
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
     const ticketSystem = {
       "firsts_tickets": { "amount": nextEvent.ticket.firsts_tickets.amount, "price": nextEvent.ticket.firsts_tickets.price },
-      "seconds_tickets": { "amount": nextEvent.ticket.seconds_tickets.amount, "price": nextEvent.ticket.seconds_tickets.amount },
-      "thirds_tickets": { "amount": nextEvent.ticket.thirds_tickets.amount, "price": nextEvent.ticket.thirds_tickets.amount }
+      "seconds_tickets": { "amount": nextEvent.ticket.seconds_tickets.amount, "price": nextEvent.ticket.seconds_tickets.price },
+      "thirds_tickets": { "amount": nextEvent.ticket.thirds_tickets.amount, "price": nextEvent.ticket.thirds_tickets.price }
     };
 
     totalTickets = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount;
+
     let remainingTickets = {};
     let currentPart = null;
 
@@ -101,36 +124,15 @@ export const actions: Actions = {
 
     const form = await event.request.formData();
     const name = form.get("name")?.toString();
+    const remaining_tickets = JSON.parse(form.get("remaining_tickets")?.toString() || '{}');
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
-
+    console.log(remaining_tickets, 'remaining_tickets')
     let resp;
-
-    function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
-      let totalCost = 0;
-      let remainingTickets = ticketsToBuy;
-      const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
-    
-      // Calculate total cost
-      for (let part of partsOrder) {
-        if (remainingTickets <= ticketSystem[part].amount) {
-          totalCost += remainingTickets * ticketSystem[part].price;
-          ticketSystem[part].amount -= remainingTickets;
-          remainingTickets = 0;
-          break;
-        } else {
-          totalCost += ticketSystem[part].amount * ticketSystem[part].price;
-          remainingTickets -= ticketSystem[part].amount;
-          ticketSystem[part].amount = 0;
-        }
-      }
-    
-      return totalCost;
-    }
     
     // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
-    const priceTotal = calculatePrice(tickets, nextEvent.ticket);
+    const priceTotal = calculatePrice(tickets, remaining_tickets);
 
     console.log(priceTotal, 'priceTotal');
 
@@ -185,7 +187,7 @@ export const actions: Actions = {
         }
       })
 
-      console.log(newPayment);
+      console.log(newPayment, 'newPayment');
       
     } catch (error) {
       console.log(error);

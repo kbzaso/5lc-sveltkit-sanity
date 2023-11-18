@@ -83,16 +83,14 @@
         class="relative h-fit mt-28 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
       >
         <div class="lg:relative lg:inset-y-0 lg:left-0 lg:w-1/3 z-30">
-          <a href={`/eventos/${nextEvent.slug}`} title="Próximo evento">
-            <img
-              class="object-contain lg:hover:rotate-2 lg:hover:scale-105 transition-transform md:rounded-sm"
-              loading="lazy"
-              width="600"
-              height="750"
-              src={urlForImage(nextEvent.poster).width(600).height(750).url()}
-              alt="Afiche del próximo evento"
-            />
-          </a>
+          <img
+            class="object-contain -rotate-2 md:rounded-sm"
+            loading="lazy"
+            width="600"
+            height="750"
+            src={urlForImage(nextEvent.poster).width(600).height(750).url()}
+            alt="Afiche del próximo evento"
+          />
         </div>
         <div class="relative pb-16 ">
           <div class="lg:pl-8 mt-4 lg:mt-0">
@@ -158,77 +156,88 @@
                   {/if}
                 </ul>
               </div>
-              <div class="flex gap-4 my-8">
-                <div
-                  class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
-                >
-                  <span
-                    class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
-                    >Tanda Nº1</span
-                  >
-                  <div class="text-sm">
-                    <p>
-                      Quedan: {nextEvent.remaining_tickets.firsts_tickets
-                        .amount}
-                    </p>
-                    <p>Precio: ${nextEvent.ticket?.firsts_tickets.price}</p>
-                  </div>
-                </div>
-                <div
-                  class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
-                >
-                  <span
-                    class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
-                    >Tanda Nº2</span
-                  >
-                  <div class="text-sm">
-                    <p>
-                      Quedan: {nextEvent.remaining_tickets.seconds_tickets
-                        .amount}
-                    </p>
-                    <span
-                      >Precio: ${nextEvent.ticket?.seconds_tickets.price}</span
-                    >
-                  </div>
-                </div>
-                <div
-                  class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4"
-                >
-                  <span
-                    class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
-                    >Tanda Nº3</span
-                  >
-                  <div class="text-sm">
-                    <p>
-                      Quedan: {nextEvent.remaining_tickets.thirds_tickets
-                        .amount}
-                    </p>
-                    <span
-                      >Precio: ${nextEvent.ticket?.thirds_tickets.price}</span
-                    >
-                  </div>
-                </div>
-              </div>
-              <div>
-                <!-- <p>Total de entradas disponibles {nextEvent.total_tickets}</p> -->
-                <!-- <p>Entradas vendidas {nextEvent.tickets_sold}</p> -->
-                <div class="flex justify-between">
-                  <span class="text-gray-400">🎟️ Progreso de venta de tickets</span>
-                  <span>🔥</span>
-                </div>
-                <progress
-                  class={`progress w-full ${
-                    nextEvent.current_part === "firsts_tickets"
-                      ? "progress-success"
-                      : nextEvent.current_part === "seconds_tickets"
-                      ? "progress-info"
-                      : "progress-error"
-                  }`}
-                  value={nextEvent.tickets_sold}
-                  max={nextEvent.total_tickets}
-                />
-              </div>
 
+              {#if nextEvent.tickets_sold !== nextEvent.total_tickets && nextEvent.active}
+                <!-- TANDAS -->
+                <div class="flex gap-4 my-8">
+                  <div
+                    class:opacity-50={nextEvent.current_part !==
+                      "firsts_tickets"}
+                    class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
+                  >
+                    <span
+                      class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
+                      >Tanda Nº1</span
+                    >
+                    <div class="text-sm">
+                      <p>
+                        Quedan: {nextEvent.remaining_tickets.firsts_tickets
+                          .amount}
+                      </p>
+                      <p>Precio: ${nextEvent.remaining_tickets?.firsts_tickets.price}</p>
+                    </div>
+                  </div>
+                  <div
+                    class:opacity-50={nextEvent.current_part !==
+                      "seconds_tickets"}
+                    class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
+                  >
+                    <span
+                      class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
+                      >Tanda Nº2</span
+                    >
+                    <div class="text-sm">
+                      <p>
+                        Quedan: {nextEvent.remaining_tickets.seconds_tickets
+                          .amount}
+                      </p>
+                      <span
+                        >Precio: ${nextEvent.remaining_tickets?.seconds_tickets
+                          .price}</span
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class:opacity-50={nextEvent.current_part !==
+                      "thirds_tickets"}
+                    class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
+                  >
+                    <span
+                      class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
+                      >Tanda Nº3</span
+                    >
+                    <div class="text-sm">
+                      <p>
+                        Quedan: {nextEvent.remaining_tickets.thirds_tickets
+                          .amount}
+                      </p>
+                      <span
+                        >Precio: ${nextEvent.remaining_tickets?.thirds_tickets.price}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-400"
+                      >🎟️ {nextEvent.current_part === 'thirds_tickets' ? '¡Últimas entradas!, no te quedes fuera.' : 'Progreso de venta de tickets'}</span
+                    >
+                    <span>🔥</span>
+                  </div>
+                  <progress
+                    class={`progress w-full ${
+                      nextEvent.current_part === "firsts_tickets"
+                        ? "progress-success"
+                        : nextEvent.current_part === "seconds_tickets"
+                        ? "progress-info"
+                        : "progress-error"
+                    }`}
+                    value={nextEvent.tickets_sold}
+                    max={nextEvent.total_tickets}
+                  />
+                </div>
+              {/if}
               {#if nextEvent.tickets_sold === nextEvent.total_tickets && nextEvent.active}
                 <div
                   class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
@@ -248,8 +257,7 @@
                     />
                   </svg>
 
-                  <span class="uppercase tracking-widest"
-                    >Adhesión agotadas</span
+                  <span class="uppercase tracking-widest">Adhesión agotada</span
                   >
                 </div>
               {:else}
@@ -303,6 +311,11 @@
                       name="phone"
                       class="input input-bordered input-primary w-full max-w-xs"
                     />
+                    <input
+                      type="hidden"
+                      name="remaining_tickets"
+                      value={JSON.stringify(nextEvent.remaining_tickets)}
+                    />
                     <select
                       bind:value={selectedTickets}
                       name="tickets"
@@ -327,11 +340,6 @@
                   </form>
                 </div>
               {/if}
-              <div class="w-full text-center mt-6">
-                <a href="/eventos" class="link text-primary"
-                  >Ir a la sección de eventos</a
-                >
-              </div>
             </div>
           </div>
         </div>
