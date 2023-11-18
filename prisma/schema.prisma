@@ -18,8 +18,14 @@ model Payment {
   ticketAmount    Int
   date            DateTime @default(now())
   signature_token String
-  product         String
-  product_id      String
   payment_status  String?
   payment_token   String?
+  product         Product  @relation(fields: [productId], references: [id])
+  productId       String
+}
+
+model Product {
+  id       String    @id @unique
+  name     String
+  payments Payment[]
 }

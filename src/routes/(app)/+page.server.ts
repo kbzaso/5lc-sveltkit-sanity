@@ -17,10 +17,11 @@ import {
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
+  VITE_SANITY_PROJECT_ID as projectId,
+  VITE_SANITY_DATASET as datasetName,
+  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
-
-let totalTickets;
 
 function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
   let totalCost = 0;
@@ -65,10 +66,10 @@ export const load: PageServerLoad = async () => {
   } else {
     const ticketsSold = await client.payment.aggregate({
       where: {
-        payment_status: 'success',
+        payment_status: "success",
         AND: [
           {
-            product_id: nextEvent._id,
+            productId: nextEvent._id,
           },
         ],
       },
@@ -81,12 +82,24 @@ export const load: PageServerLoad = async () => {
 
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
     const ticketSystem = {
-      "firsts_tickets": { "amount": nextEvent.ticket.firsts_tickets.amount, "price": nextEvent.ticket.firsts_tickets.price },
-      "seconds_tickets": { "amount": nextEvent.ticket.seconds_tickets.amount, "price": nextEvent.ticket.seconds_tickets.price },
-      "thirds_tickets": { "amount": nextEvent.ticket.thirds_tickets.amount, "price": nextEvent.ticket.thirds_tickets.price }
+      firsts_tickets: {
+        amount: nextEvent.ticket.firsts_tickets.amount,
+        price: nextEvent.ticket.firsts_tickets.price,
+      },
+      seconds_tickets: {
+        amount: nextEvent.ticket.seconds_tickets.amount,
+        price: nextEvent.ticket.seconds_tickets.price,
+      },
+      thirds_tickets: {
+        amount: nextEvent.ticket.thirds_tickets.amount,
+        price: nextEvent.ticket.thirds_tickets.price,
+      },
     };
 
-    totalTickets = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount;
+    let totalTickets =
+      nextEvent.ticket.firsts_tickets.amount +
+      nextEvent.ticket.seconds_tickets.amount +
+      nextEvent.ticket.thirds_tickets.amount;
 
     let remainingTickets = {};
     let currentPart = null;
@@ -99,14 +112,63 @@ export const load: PageServerLoad = async () => {
         ticketSystem[part].amount -= ticketsSoldCount;
         ticketsSoldCount = 0;
       }
-      remainingTickets[part] = { "amount": ticketSystem[part].amount, "price": ticketSystem[part].price};
+      remainingTickets[part] = {
+        amount: ticketSystem[part].amount,
+        price: ticketSystem[part].price,
+      };
 
       if (ticketSystem[part].amount > 0 && !currentPart) {
         currentPart = part;
       }
     }
-    nextEvent = {...nextEvent, tickets_sold: ticketsSold._sum?.ticketAmount || 0, remaining_tickets: remainingTickets, current_part: currentPart, total_tickets: totalTickets};
-    console.log(nextEvent)
+    nextEvent = {
+      ...nextEvent,
+      tickets_sold: ticketsSold._sum?.ticketAmount || 0,
+      remaining_tickets: remainingTickets,
+      current_part: currentPart,
+      total_tickets: totalTickets,
+    };
+    console.log(nextEvent);
+
+    // const mutations = [
+    //   {
+    //     patch: {
+    //       id: nextEvent._id, // The ID of the document to update
+    //       set: {
+    //         ticket: {
+    //           firsts_tickets: {
+    //             amount: remainingTickets.firsts_tickets.amount,
+    //             price: remainingTickets.firsts_tickets.price,
+    //           },
+    //           seconds_tickets: {
+    //             amount: remainingTickets.seconds_tickets.amount,
+    //             price: remainingTickets.seconds_tickets.price,
+    //           },
+    //           thirds_tickets: {
+    //             amount: remainingTickets.thirds_tickets.amount,
+    //             price: remainingTickets.thirds_tickets.price,
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // ];
+
+    // // Send the mutation
+    // fetch(
+    //   `https://${projectId}.api.sanity.io/v2021-06-07/data/mutate/${datasetName}`,
+    //   {
+    //     method: "post",
+    //     headers: {
+    //       "Content-type": "application/json",
+    //       Authorization: `Bearer ${tokenWithWriteAccess}`,
+    //     },
+    //     body: JSON.stringify({ mutations }),
+    //   }
+    // )
+    //   .then((response) => response.json())
+    //   .then((result) => console.log(result))
+    //   .catch((error) => console.error(error));
   }
 
   return {
@@ -119,22 +181,23 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
   pay: async (event) => {
-
     let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
 
     const form = await event.request.formData();
     const name = form.get("name")?.toString();
-    const remaining_tickets = JSON.parse(form.get("remaining_tickets")?.toString() || '{}');
+    const remaining_tickets = JSON.parse(
+      form.get("remaining_tickets")?.toString() || "{}"
+    );
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
-    console.log(remaining_tickets, 'remaining_tickets')
+    console.log(remaining_tickets, "remaining_tickets");
     let resp;
-    
+
     // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
     const priceTotal = calculatePrice(tickets, remaining_tickets);
 
-    console.log(priceTotal, 'priceTotal');
+    console.log(priceTotal, "priceTotal");
 
     // Data que se envia a ET_PAY
     let request_data = {
@@ -149,7 +212,9 @@ export const actions: Actions = {
       metadata: [
         {
           name: `${tickets} entradas`,
-          value: `${nextEvent.title} - ${nextEvent.boveda ? "Bóveda Secreta" : nextEvent.venue.venueName}`,
+          value: `${nextEvent.title} - ${
+            nextEvent.boveda ? "Bóveda Secreta" : nextEvent.venue.venueName
+          }`,
           show: true,
         },
       ],
@@ -169,29 +234,45 @@ export const actions: Actions = {
           body: JSON.stringify(request_data),
           redirect: "follow",
         }
-      )
-      
+      );
+
       resp = await data.json();
+
+      const product = await client.product.upsert({
+        where: {
+          id: nextEvent._id,
+        },
+        update: {
+          name: nextEvent.title,
+        },
+        create: {
+          id: nextEvent._id,
+          name: nextEvent.title,
+        },
+      });
 
       const newPayment = await client.payment.create({
         data: {
+          id: resp.token,
           customer_name: name as string,
           customer_email: email as string,
           customer_phone: phone as string,
           ticketAmount: tickets,
           price: priceTotal,
-          id: resp.token,
           signature_token: resp.signature_token,
-          product: nextEvent.title,
-          product_id: nextEvent._id,
-        }
-      })
-
-      console.log(newPayment, 'newPayment');
-      
+          product: {
+            connect: {
+              id: nextEvent._id,
+            },
+          },
+          // productId: nextEvent._id,
+        },
+      });
+      console.log(newPayment, "newPayment");
+      console.log(product, "newProduct");  
     } catch (error) {
       console.log(error);
     }
-    throw redirect(302, `${PMT_URL}/session/${resp.token}`)
+    throw redirect(302, `${PMT_URL}/session/${resp.token}`);
   },
 };
