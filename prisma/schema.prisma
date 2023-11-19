@@ -25,7 +25,7 @@ model Payment {
 }
 
 model Product {
-  id       String    @id @unique
-  name     String
-  payments Payment[]
+  id            String    @id @unique
+  name          String
+  payments      Payment[]
 }

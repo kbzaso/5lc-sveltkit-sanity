@@ -40,6 +40,7 @@ export const POST: RequestHandler = async (event) => {
         rut: payload.user_rut,
       },
     });
+
   } catch (e) {
     throw error(500, "El pago no pudo ser actualizado");
   }

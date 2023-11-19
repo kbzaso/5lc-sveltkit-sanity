@@ -44,6 +44,7 @@ export const staffSliderFields = groq`
 
 export const eventFields = groq`
     _id,
+    _createdAt,
     name,
     title,
     date,
@@ -51,7 +52,7 @@ export const eventFields = groq`
     slug,
     venue,
     ticket,
-    soldOut,
+    total_tickets,
     result,
     active,
     description,

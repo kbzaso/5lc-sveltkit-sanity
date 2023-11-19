@@ -80,6 +80,8 @@ export const load: PageServerLoad = async () => {
 
     let ticketsSoldCount = ticketsSold._sum?.ticketAmount || 0;
 
+    let totalTickets = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount;
+
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
     const ticketSystem = {
       firsts_tickets: {
@@ -95,11 +97,6 @@ export const load: PageServerLoad = async () => {
         price: nextEvent.ticket.thirds_tickets.price,
       },
     };
-
-    let totalTickets =
-      nextEvent.ticket.firsts_tickets.amount +
-      nextEvent.ticket.seconds_tickets.amount +
-      nextEvent.ticket.thirds_tickets.amount;
 
     let remainingTickets = {};
     let currentPart = null;
@@ -124,51 +121,11 @@ export const load: PageServerLoad = async () => {
     nextEvent = {
       ...nextEvent,
       tickets_sold: ticketsSold._sum?.ticketAmount || 0,
-      remaining_tickets: remainingTickets,
       current_part: currentPart,
+      remaining_tickets: remainingTickets,
       total_tickets: totalTickets,
     };
     console.log(nextEvent);
-
-    // const mutations = [
-    //   {
-    //     patch: {
-    //       id: nextEvent._id, // The ID of the document to update
-    //       set: {
-    //         ticket: {
-    //           firsts_tickets: {
-    //             amount: remainingTickets.firsts_tickets.amount,
-    //             price: remainingTickets.firsts_tickets.price,
-    //           },
-    //           seconds_tickets: {
-    //             amount: remainingTickets.seconds_tickets.amount,
-    //             price: remainingTickets.seconds_tickets.price,
-    //           },
-    //           thirds_tickets: {
-    //             amount: remainingTickets.thirds_tickets.amount,
-    //             price: remainingTickets.thirds_tickets.price,
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    // ];
-
-    // // Send the mutation
-    // fetch(
-    //   `https://${projectId}.api.sanity.io/v2021-06-07/data/mutate/${datasetName}`,
-    //   {
-    //     method: "post",
-    //     headers: {
-    //       "Content-type": "application/json",
-    //       Authorization: `Bearer ${tokenWithWriteAccess}`,
-    //     },
-    //     body: JSON.stringify({ mutations }),
-    //   }
-    // )
-    //   .then((response) => response.json())
-    //   .then((result) => console.log(result))
-    //   .catch((error) => console.error(error));
   }
 
   return {
@@ -191,7 +148,7 @@ export const actions: Actions = {
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
-    console.log(remaining_tickets, "remaining_tickets");
+
     let resp;
 
     // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
@@ -203,7 +160,7 @@ export const actions: Actions = {
     let request_data = {
       merchant_code: MERCHANT_CODE,
       merchant_api_token: MERCHANT_API_TOKEN,
-      merchant_order_id: "order-1992",
+      merchant_order_id: nextEvent._id,
       order_amount: priceTotal,
       customer_email: email,
       payment_completed_url: PAYMENT_COMPLETED_URL,
@@ -265,7 +222,6 @@ export const actions: Actions = {
               id: nextEvent._id,
             },
           },
-          // productId: nextEvent._id,
         },
       });
       console.log(newPayment, "newPayment");

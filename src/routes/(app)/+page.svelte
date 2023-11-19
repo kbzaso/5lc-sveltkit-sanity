@@ -171,7 +171,7 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.remaining_tickets.firsts_tickets
+                        Quedan: {nextEvent.remaining_tickets?.firsts_tickets
                           .amount}
                       </p>
                       <p>Precio: ${nextEvent.remaining_tickets?.firsts_tickets.price}</p>
@@ -188,7 +188,7 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.remaining_tickets.seconds_tickets
+                        Quedan: {nextEvent.remaining_tickets?.seconds_tickets
                           .amount}
                       </p>
                       <span
@@ -208,7 +208,7 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.remaining_tickets.thirds_tickets
+                        Quedan: {nextEvent.remaining_tickets?.thirds_tickets
                           .amount}
                       </p>
                       <span
