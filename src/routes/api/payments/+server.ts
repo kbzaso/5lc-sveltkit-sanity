@@ -6,19 +6,16 @@ import { error } from "@sveltejs/kit";
 import {
   VITE_SANITY_PROJECT_ID as projectId,
   VITE_SANITY_DATASET as datasetName,
-  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
-  RESEND_API_KEY,
+  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess
 } from "$env/static/private";
-import {
-  nextEventQuery,
-} from "$lib/config/sanity/queries";
+import { nextEventQuery } from "$lib/config/sanity/queries";
 import {
   getSanityServerClient,
   overlayDrafts,
 } from "$lib/config/sanity/client";
 
-import { Resend } from 'resend';
-const resend = new Resend(RESEND_API_KEY);
+import { Resend } from "resend";
+const resend = new Resend(process.env['VITE_SANITY_DATASET']);
 
 function subtractObjects(obj1, obj2) {
   let ticket = { ...obj1 }; // Copy obj1 to avoid modifying the original object
@@ -77,46 +74,49 @@ export const POST: RequestHandler = async (event) => {
 
     // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
     if (paymentWithProduct.product && payload.payment_status === "success") {
-      const mutations = [{
-        patch: {
-          id: nextEvent._id, // replace with your document ID
-          set: {
-            ticket: ticket,
+      const mutations = [
+        {
+          patch: {
+            id: nextEvent._id, // replace with your document ID
+            set: {
+              ticket: ticket,
+            },
           },
         },
-      }];
-      
-      fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${tokenWithWriteAccess}`
-        },
-        body: JSON.stringify({mutations})
-      })
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(error => console.error(error))
+      ];
 
+      fetch(
+        `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${tokenWithWriteAccess}`,
+          },
+          body: JSON.stringify({ mutations }),
+        }
+      )
+        .then((response) => response.json())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error))(
         // ENVIO DE CONFIRMACION DE COMPRA
-        (async function () {
+        async function () {
           try {
             const data = await resend.emails.send({
-              from: 'Acme <hola@5luchas.cl>',
+              from: "Acme <hola@5luchas.cl>",
               to: paymentWithProduct.customer_email,
-              subject: 'Nos vemos en la Bóveda Secreta',
-              html: '<strong>It works!</strong>',
+              subject: "Nos vemos en la Bóveda Secreta",
+              html: "<strong>It works!</strong>",
             });
-        
+
             console.log(data);
           } catch (error) {
             console.error(error);
           }
-        })();
-
-      }
+        }
+      )();
     }
- catch (e) {
+  } catch (e) {
     throw error(500, "El pago no pudo ser actualizado");
   }
 
