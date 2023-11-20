@@ -13,6 +13,7 @@ import {
   VITE_SANITY_PROJECT_ID as projectId,
   VITE_SANITY_DATASET as datasetName,
   SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
+  RESEND_API_KEY
 } from "$env/static/private";
 import {
   allEventsQuery,
@@ -24,6 +25,9 @@ import {
   getSanityServerClient,
   overlayDrafts,
 } from "$lib/config/sanity/client";
+
+import { Resend } from 'resend';
+const resend = new Resend(RESEND_API_KEY);
 
 function subtractObjects(obj1, obj2) {
   let ticket = { ...obj1 }; // Copy obj1 to avoid modifying the original object
@@ -80,8 +84,6 @@ export const POST: RequestHandler = async (event) => {
 
     let ticket = subtractObjects(nextEvent.ticket, paymentWithProduct.buys);
 
-    console.log(ticket, 'new tickets after mutation');
-
     // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
     if (paymentWithProduct.product && payload.payment_status === "success") {
       const mutations = [{
@@ -104,6 +106,23 @@ export const POST: RequestHandler = async (event) => {
         .then(response => response.json())
         .then(result => console.log(result))
         .catch(error => console.error(error))
+
+        // ENVIO DE CONFIRMACION DE COMPRA
+        (async function () {
+          try {
+            const data = await resend.emails.send({
+              from: 'Acme <hola@5luchas.cl>',
+              to: paymentWithProduct.customer_email,
+              subject: 'Nos vemos en la Bóveda Secreta',
+              html: '<strong>It works!</strong>',
+            });
+        
+            console.log(data);
+          } catch (error) {
+            console.error(error);
+          }
+        })();
+
       }
     }
  catch (e) {
