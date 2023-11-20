@@ -47,14 +47,10 @@ function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
 
 // export const prerender = 'auto';
 export const load: PageServerLoad = async () => {
-  const events = await getSanityServerClient(false).fetch(allEventsQuery);
   const settings = await getSanityServerClient(false).fetch(settingsQuery);
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
   let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
 
-  if (!events) {
-    throw error(500, "Event not found");
-  }
   if (!settings) {
     throw error(500, "Settings not found");
   }
@@ -64,6 +60,7 @@ export const load: PageServerLoad = async () => {
   if (!nextEvent) {
     nextEvent = false;
   } else {
+    // Cuantos tickets se han vendido de un evento en especifico
     const ticketsSold = await client.payment.aggregate({
       where: {
         payment_status: "success",
@@ -78,9 +75,60 @@ export const load: PageServerLoad = async () => {
       },
     });
 
+    const productStock = await client.product.findUnique({
+      where: {
+        id: nextEvent._id,
+      },
+      select: {
+        stock: true,
+      },
+    });
+
+    // Suma de tickets que quedan en el Studio
+    const totalTicketsLeftStudio = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount
+
+    console.log(productStock, "product");
+
     let ticketsSoldCount = ticketsSold._sum?.ticketAmount || 0;
 
-    let totalTickets = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount;
+    console.log(totalTicketsLeftStudio !== productStock?.stock, "totalTicketsLeftStudio !== productStock?.stock")
+    if(totalTicketsLeftStudio !== productStock?.stock && productStock?.stock !== 0){
+      console.log("entro")
+    const mutations = [{
+      patch: {
+        id: nextEvent._id, // replace with your document ID
+        set: {
+          ticket: {
+            firsts_tickets: {
+              amount: remainingTickets.firsts_tickets.amount,
+              price: remainingTickets.firsts_tickets.price,
+            },
+            seconds_tickets: {
+              amount: remainingTickets.seconds_tickets.amount,
+              price: remainingTickets.seconds_tickets.price,
+            },
+            thirds_tickets: {
+              amount: remainingTickets.thirds_tickets.amount,
+              price: remainingTickets.thirds_tickets.price,
+            },
+          },
+        },
+      },
+    }];
+    
+    fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${tokenWithWriteAccess}`
+      },
+      body: JSON.stringify({mutations})
+    })
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.error(error))
+    }
+    // ================================
 
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
     const ticketSystem = {
@@ -98,10 +146,16 @@ export const load: PageServerLoad = async () => {
       },
     };
 
-    let remainingTickets = {};
-    let currentPart = null;
+    
+    // Suma de tickets que quedan en el Studio + los que se han vendido
+    const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
 
-    for (let part of partsOrder) {
+    let remainingTickets = {};
+
+    // Recalculate the ticket object
+    for (let i = 0; i < partsOrder.length; i++) {
+      let part = partsOrder[i];
+    
       if (ticketsSoldCount >= ticketSystem[part].amount) {
         ticketsSoldCount -= ticketSystem[part].amount;
         ticketSystem[part].amount = 0;
@@ -109,27 +163,22 @@ export const load: PageServerLoad = async () => {
         ticketSystem[part].amount -= ticketsSoldCount;
         ticketsSoldCount = 0;
       }
+    
       remainingTickets[part] = {
         amount: ticketSystem[part].amount,
         price: ticketSystem[part].price,
       };
-
-      if (ticketSystem[part].amount > 0 && !currentPart) {
-        currentPart = part;
-      }
     }
+
     nextEvent = {
       ...nextEvent,
       tickets_sold: ticketsSold._sum?.ticketAmount || 0,
-      current_part: currentPart,
-      remaining_tickets: remainingTickets,
-      total_tickets: totalTickets,
+      total_tickets: totalTickets
     };
     console.log(nextEvent);
   }
 
   return {
-    events,
     settings,
     welcome,
     nextEvent,
@@ -138,13 +187,14 @@ export const load: PageServerLoad = async () => {
 
 export const actions: Actions = {
   pay: async (event) => {
-    let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
+    const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
+    const total_tickets = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount
 
     const form = await event.request.formData();
     const name = form.get("name")?.toString();
-    const remaining_tickets = JSON.parse(
-      form.get("remaining_tickets")?.toString() || "{}"
-    );
+    // const remaining_tickets = JSON.parse(
+    //   form.get("remaining_tickets")?.toString() || "{}"
+    // );
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
@@ -152,9 +202,7 @@ export const actions: Actions = {
     let resp;
 
     // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
-    const priceTotal = calculatePrice(tickets, remaining_tickets);
-
-    console.log(priceTotal, "priceTotal");
+    const priceTotal = calculatePrice(tickets, nextEvent.ticket);
 
     // Data que se envia a ET_PAY
     let request_data = {
@@ -201,10 +249,12 @@ export const actions: Actions = {
         },
         update: {
           name: nextEvent.title,
+          stock: total_tickets,
         },
         create: {
           id: nextEvent._id,
           name: nextEvent.title,
+          stock: total_tickets,
         },
       });
 
@@ -223,9 +273,7 @@ export const actions: Actions = {
             },
           },
         },
-      });
-      console.log(newPayment, "newPayment");
-      console.log(product, "newProduct");  
+      }); 
     } catch (error) {
       console.log(error);
     }

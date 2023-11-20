@@ -28,4 +28,5 @@ model Product {
   id            String    @id @unique
   name          String
   payments      Payment[]
+  stock         Int?
 }

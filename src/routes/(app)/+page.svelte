@@ -161,8 +161,7 @@
                 <!-- TANDAS -->
                 <div class="flex gap-4 my-8">
                   <div
-                    class:opacity-50={nextEvent.current_part !==
-                      "firsts_tickets"}
+                    class:opacity-50={nextEvent.ticket.firsts_tickets.amount === 0}
                     class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
                   >
                     <span
@@ -171,15 +170,14 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.remaining_tickets?.firsts_tickets
+                        Quedan: {nextEvent.ticket?.firsts_tickets
                           .amount}
                       </p>
-                      <p>Precio: ${nextEvent.remaining_tickets?.firsts_tickets.price}</p>
+                      <p>Precio: ${nextEvent.ticket?.firsts_tickets.price}</p>
                     </div>
                   </div>
                   <div
-                    class:opacity-50={nextEvent.current_part !==
-                      "seconds_tickets"}
+                    class:opacity-50={nextEvent.ticket.seconds_tickets.amount === 0}
                     class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
                   >
                     <span
@@ -188,18 +186,17 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.remaining_tickets?.seconds_tickets
+                        Quedan: {nextEvent.ticket?.seconds_tickets
                           .amount}
                       </p>
                       <span
-                        >Precio: ${nextEvent.remaining_tickets?.seconds_tickets
+                        >Precio: ${nextEvent.ticket?.seconds_tickets
                           .price}</span
                       >
                     </div>
                   </div>
                   <div
-                    class:opacity-50={nextEvent.current_part !==
-                      "thirds_tickets"}
+                    class:opacity-50={nextEvent.ticket.thirds_tickets.amount === 0}
                     class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
                   >
                     <span
@@ -208,11 +205,11 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.remaining_tickets?.thirds_tickets
+                        Quedan: {nextEvent.ticket?.thirds_tickets
                           .amount}
                       </p>
                       <span
-                        >Precio: ${nextEvent.remaining_tickets?.thirds_tickets.price}</span
+                        >Precio: ${nextEvent.ticket?.thirds_tickets.price}</span
                       >
                     </div>
                   </div>

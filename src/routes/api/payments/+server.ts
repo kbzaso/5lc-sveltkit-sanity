@@ -30,7 +30,7 @@ export const POST: RequestHandler = async (event) => {
   }
 
   try {
-    await client.payment.update({
+    const paymentWithProduct = await client.payment.update({
       where: {
         id: payload.session_token,
       },
@@ -39,7 +39,22 @@ export const POST: RequestHandler = async (event) => {
         payment_token: payload.payment_token,
         rut: payload.user_rut,
       },
+      include: {
+        product: true, // Include the related product
+      },
     });
+
+    if (paymentWithProduct.product && payload.payment_status === "success") {
+      const updatedProduct = await client.product.update({
+        where: {
+          id: paymentWithProduct.product.id,
+        },
+        data: {
+          stock: paymentWithProduct.product.stock - paymentWithProduct.ticketAmount,
+        },
+      });
+      console.log(updatedProduct, "updatedProduct");
+    }
 
   } catch (e) {
     throw error(500, "El pago no pudo ser actualizado");
