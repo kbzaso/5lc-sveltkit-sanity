@@ -3,8 +3,42 @@ import { client } from "$lib/server/prisma";
 import { Buffer } from "buffer";
 import jwt from "jsonwebtoken";
 import { error } from "@sveltejs/kit";
+import {
+  PMT_URL,
+  MERCHANT_CODE,
+  MERCHANT_API_TOKEN,
+  PAYMENT_COMPLETED_URL,
+  PAYMENT_CANCELLATION_URL,
+  PAYMENT_WEBHOOK_URL,
+  VITE_SANITY_PROJECT_ID as projectId,
+  VITE_SANITY_DATASET as datasetName,
+  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
+} from "$env/static/private";
+import {
+  allEventsQuery,
+  settingsQuery,
+  welcomeQuery,
+  nextEventQuery,
+} from "$lib/config/sanity/queries";
+import {
+  getSanityServerClient,
+  overlayDrafts,
+} from "$lib/config/sanity/client";
+
+function subtractObjects(obj1, obj2) {
+  let ticket = { ...obj1 }; // Copy obj1 to avoid modifying the original object
+
+  for (let key in obj2) {
+    if (ticket[key]) {
+      ticket[key].amount -= obj2[key].amount;
+    }
+  }
+
+  return ticket;
+}
 
 export const POST: RequestHandler = async (event) => {
+  const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
   const body = await event.request.json();
   const token = body.payment;
 
@@ -44,19 +78,35 @@ export const POST: RequestHandler = async (event) => {
       },
     });
 
-    if (paymentWithProduct.product && payload.payment_status === "success") {
-      const updatedProduct = await client.product.update({
-        where: {
-          id: paymentWithProduct.product.id,
-        },
-        data: {
-          stock: paymentWithProduct.product.stock - paymentWithProduct.ticketAmount,
-        },
-      });
-      console.log(updatedProduct, "updatedProduct");
-    }
+    let ticket = subtractObjects(nextEvent.ticket, paymentWithProduct.buys);
 
-  } catch (e) {
+    console.log(ticket, 'new tickets after mutation');
+
+    // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
+    if (paymentWithProduct.product && payload.payment_status === "success") {
+      const mutations = [{
+        patch: {
+          id: nextEvent._id, // replace with your document ID
+          set: {
+            ticket: ticket,
+          },
+        },
+      }];
+      
+      fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${tokenWithWriteAccess}`
+        },
+        body: JSON.stringify({mutations})
+      })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.error(error))
+      }
+    }
+ catch (e) {
     throw error(500, "El pago no pudo ser actualizado");
   }
 

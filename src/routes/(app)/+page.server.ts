@@ -27,22 +27,29 @@ function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
   let totalCost = 0;
   let remainingTickets = ticketsToBuy;
   const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
+  let ticket = {
+    firsts_tickets: { amount: 0 },
+    seconds_tickets: { amount: 0 },
+    thirds_tickets: { amount: 0 },
+  };
 
   // Calculate total cost
   for (let part of partsOrder) {
     if (remainingTickets <= ticketSystem[part].amount) {
       totalCost += remainingTickets * ticketSystem[part].price;
+      ticket[part].amount = remainingTickets;
       ticketSystem[part].amount -= remainingTickets;
       remainingTickets = 0;
       break;
     } else {
       totalCost += ticketSystem[part].amount * ticketSystem[part].price;
+      ticket[part].amount = ticketSystem[part].amount;
       remainingTickets -= ticketSystem[part].amount;
       ticketSystem[part].amount = 0;
     }
   }
 
-  return totalCost;
+  return { totalCost, ticket };
 }
 
 // export const prerender = 'auto';
@@ -75,59 +82,7 @@ export const load: PageServerLoad = async () => {
       },
     });
 
-    const productStock = await client.product.findUnique({
-      where: {
-        id: nextEvent._id,
-      },
-      select: {
-        stock: true,
-      },
-    });
-
-    // Suma de tickets que quedan en el Studio
-    const totalTicketsLeftStudio = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount
-
-    console.log(productStock, "product");
-
     let ticketsSoldCount = ticketsSold._sum?.ticketAmount || 0;
-
-    console.log(totalTicketsLeftStudio !== productStock?.stock, "totalTicketsLeftStudio !== productStock?.stock")
-    if(totalTicketsLeftStudio !== productStock?.stock && productStock?.stock !== 0){
-      console.log("entro")
-    const mutations = [{
-      patch: {
-        id: nextEvent._id, // replace with your document ID
-        set: {
-          ticket: {
-            firsts_tickets: {
-              amount: remainingTickets.firsts_tickets.amount,
-              price: remainingTickets.firsts_tickets.price,
-            },
-            seconds_tickets: {
-              amount: remainingTickets.seconds_tickets.amount,
-              price: remainingTickets.seconds_tickets.price,
-            },
-            thirds_tickets: {
-              amount: remainingTickets.thirds_tickets.amount,
-              price: remainingTickets.thirds_tickets.price,
-            },
-          },
-        },
-      },
-    }];
-    
-    fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${tokenWithWriteAccess}`
-      },
-      body: JSON.stringify({mutations})
-    })
-      .then(response => response.json())
-      .then(result => console.log(result))
-      .catch(error => console.error(error))
-    }
     // ================================
 
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
@@ -146,7 +101,8 @@ export const load: PageServerLoad = async () => {
       },
     };
 
-    
+    // Suma de tickets que quedan en el Studio
+    const totalTicketsLeftStudio = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount
     // Suma de tickets que quedan en el Studio + los que se han vendido
     const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
 
@@ -203,13 +159,13 @@ export const actions: Actions = {
 
     // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
     const priceTotal = calculatePrice(tickets, nextEvent.ticket);
-
+    console.log(priceTotal);
     // Data que se envia a ET_PAY
     let request_data = {
       merchant_code: MERCHANT_CODE,
       merchant_api_token: MERCHANT_API_TOKEN,
       merchant_order_id: nextEvent._id,
-      order_amount: priceTotal,
+      order_amount: priceTotal.totalCost,
       customer_email: email,
       payment_completed_url: PAYMENT_COMPLETED_URL,
       payment_cancellation_url: PAYMENT_CANCELLATION_URL,
@@ -249,7 +205,6 @@ export const actions: Actions = {
         },
         update: {
           name: nextEvent.title,
-          stock: total_tickets,
         },
         create: {
           id: nextEvent._id,
@@ -265,7 +220,8 @@ export const actions: Actions = {
           customer_email: email as string,
           customer_phone: phone as string,
           ticketAmount: tickets,
-          price: priceTotal,
+          price: priceTotal.totalCost,
+          buys: priceTotal.ticket,
           signature_token: resp.signature_token,
           product: {
             connect: {

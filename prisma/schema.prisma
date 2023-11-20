@@ -22,11 +22,12 @@ model Payment {
   payment_token   String?
   product         Product  @relation(fields: [productId], references: [id])
   productId       String
+  buys            Json
 }
 
 model Product {
-  id            String    @id @unique
-  name          String
-  payments      Payment[]
-  stock         Int?
+  id       String    @id @unique
+  name     String
+  payments Payment[]
+  stock    Int?
 }
