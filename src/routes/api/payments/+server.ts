@@ -4,21 +4,12 @@ import { Buffer } from "buffer";
 import jwt from "jsonwebtoken";
 import { error } from "@sveltejs/kit";
 import {
-  PMT_URL,
-  MERCHANT_CODE,
-  MERCHANT_API_TOKEN,
-  PAYMENT_COMPLETED_URL,
-  PAYMENT_CANCELLATION_URL,
-  PAYMENT_WEBHOOK_URL,
   VITE_SANITY_PROJECT_ID as projectId,
   VITE_SANITY_DATASET as datasetName,
   SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
-  RESEND_API_KEY
+  RESEND_API_KEY,
 } from "$env/static/private";
 import {
-  allEventsQuery,
-  settingsQuery,
-  welcomeQuery,
   nextEventQuery,
 } from "$lib/config/sanity/queries";
 import {
