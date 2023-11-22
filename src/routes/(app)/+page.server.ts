@@ -131,7 +131,6 @@ export const load: PageServerLoad = async () => {
       tickets_sold: ticketsSold._sum?.ticketAmount || 0,
       total_tickets: totalTickets
     };
-    console.log(nextEvent);
   }
 
   return {
@@ -148,9 +147,6 @@ export const actions: Actions = {
 
     const form = await event.request.formData();
     const name = form.get("name")?.toString();
-    // const remaining_tickets = JSON.parse(
-    //   form.get("remaining_tickets")?.toString() || "{}"
-    // );
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));

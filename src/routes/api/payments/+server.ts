@@ -92,11 +92,11 @@ export const POST: RequestHandler = async (event) => {
       (async function () {
         try {
           const data = await resend.emails.send({
-            from: 'Bovedin <delivered@resend.dev>',
+            from: '5 Luchas Clandestino <hola@5luchas.cl>',
             to: paymentWithProduct.customer_email,
             // to: 'alejandro.saez@rendalomaq.com',
             subject: 'Nos vemos en la Bóveda Secreta',
-            html: `Hola ${paymentWithProduct.customer_name}, </br> Tu adhesión fue existosa, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre y rut a los chiquillos de la puerta. </br></br> <strong>Siempre Buena Onda!</strong> `,
+            html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
             tags: [
               {
                 name: 'category',
@@ -104,8 +104,6 @@ export const POST: RequestHandler = async (event) => {
               },
             ],
           });
-      
-          console.log(data);
         } catch (error) {
           console.error(error);
         }
@@ -122,9 +120,6 @@ export const POST: RequestHandler = async (event) => {
         .then(response => response.json())
         .then(result => console.log(result))
         .catch(error => console.error(error))
-
-        
-        
       }
     }
  catch (e) {
