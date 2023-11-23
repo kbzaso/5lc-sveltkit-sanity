@@ -3,7 +3,6 @@ import {
   overlayDrafts,
 } from "$lib/config/sanity/client";
 import {
-  allEventsQuery,
   settingsQuery,
   welcomeQuery,
   nextEventQuery,
