@@ -4,9 +4,6 @@ import { Buffer } from "buffer";
 import jwt from "jsonwebtoken";
 import { error } from "@sveltejs/kit";
 import {
-  VITE_SANITY_PROJECT_ID as projectId,
-  VITE_SANITY_DATASET as datasetName,
-  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
   RESEND_API_KEY,
 } from "$env/static/private";
 import {
@@ -109,11 +106,11 @@ export const POST: RequestHandler = async (event) => {
         }
       })();
       
-      fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
+      fetch(`https://${import.meta.env.VITE_SANITY_PROJECT_ID}.api.sanity.io/v2022-08-08/data/mutate/${import.meta.env.VITE_SANITY_DATASET}`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
-          Authorization: `Bearer ${tokenWithWriteAccess}`
+          Authorization: `Bearer ${import.meta.env.SANITY_API_WRITE_TOKEN}`
         },
         body: JSON.stringify({mutations})
       })
