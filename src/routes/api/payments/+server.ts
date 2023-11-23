@@ -114,6 +114,9 @@ export const POST: RequestHandler = async (event) => {
         headers: {
           'Content-type': 'application/json',
           Authorization: `Bearer ${tokenWithWriteAccess}`,
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST',
+          'Access-Control-Allow-Headers': 'Content-Type',
         },
         body: JSON.stringify({mutations})
       })
