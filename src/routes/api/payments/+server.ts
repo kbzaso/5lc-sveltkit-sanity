@@ -4,9 +4,6 @@ import { Buffer } from "buffer";
 import jwt from "jsonwebtoken";
 import { error } from "@sveltejs/kit";
 import {
-  VITE_SANITY_PROJECT_ID as projectId,
-  VITE_SANITY_DATASET as datasetName,
-  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
   RESEND_API_KEY,
 } from "$env/static/private";
 import {
@@ -17,6 +14,10 @@ import {
   overlayDrafts,
 } from "$lib/config/sanity/client";
 import { Resend } from 'resend';
+
+const projectId = process.env.PROJECT_ID;
+const datasetName = process.env.DATASET_NAME;
+const tokenWithWriteAccess = process.env.TOKEN_WITH_WRITE_ACCESS;
 
 const resend = new Resend(RESEND_API_KEY);
 
