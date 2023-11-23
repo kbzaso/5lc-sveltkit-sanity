@@ -17,9 +17,6 @@ import {
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
-  VITE_SANITY_PROJECT_ID as projectId,
-  VITE_SANITY_DATASET as datasetName,
-  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 
