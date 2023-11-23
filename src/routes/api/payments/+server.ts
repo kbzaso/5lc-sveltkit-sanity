@@ -117,7 +117,12 @@ export const POST: RequestHandler = async (event) => {
         },
         body: JSON.stringify({mutations})
       })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(result => console.log(result))
         .catch(error => console.error(error))
       }
