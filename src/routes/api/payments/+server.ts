@@ -77,7 +77,29 @@ export const POST: RequestHandler = async (event) => {
     let ticket = subtractObjects(nextEvent.ticket, paymentWithProduct.buys);
 
     // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
-    if (paymentWithProduct.product && payload.payment_status === "success") {
+    if (payload.payment_status === "success") {
+      
+        // Enviamos email de confirmación
+        (async function () {
+          try {
+            const data = await resend.emails.send({
+              from: '5 Luchas Clandestino <hola@5luchas.cl>',
+              to: paymentWithProduct.customer_email,
+              // to: 'alejandro.saez@rendalomaq.com',
+              subject: 'Nos vemos en la Bóveda Secreta',
+              html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
+              tags: [
+                {
+                  name: 'category',
+                  value: 'confirm_email',
+                },
+              ],
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        })();
+      
       const mutations = [{
         patch: {
           id: nextEvent._id, // replace with your document ID
@@ -87,11 +109,11 @@ export const POST: RequestHandler = async (event) => {
         },
       }];
 
-      fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
+      await fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
-          Authorization: `Bearer ${tokenWithWriteAccess}`
+          Authorization: `Bearer ${tokenWithWriteAccess}`,
         },
         body: JSON.stringify({mutations})
       })
@@ -100,26 +122,6 @@ export const POST: RequestHandler = async (event) => {
         .catch(error => console.error(error))
       }
 
-      // Enviamos email de confirmación
-      (async function () {
-        try {
-          const data = await resend.emails.send({
-            from: '5 Luchas Clandestino <hola@5luchas.cl>',
-            to: paymentWithProduct.customer_email,
-            // to: 'alejandro.saez@rendalomaq.com',
-            subject: 'Nos vemos en la Bóveda Secreta',
-            html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
-            tags: [
-              {
-                name: 'category',
-                value: 'confirm_email',
-              },
-            ],
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      })();
     }
  catch (e) {
     throw error(500, "El pago no pudo ser actualizado");

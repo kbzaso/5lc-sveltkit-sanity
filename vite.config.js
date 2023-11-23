@@ -7,6 +7,9 @@ const config = {
   optimizeDeps: {
     include: ["sanity"],
   },
+  build:{
+    sourcemap: true // Config vite to generate sourcemap when bundling.
+  },
 };
 
 function rawFonts(ext) {
