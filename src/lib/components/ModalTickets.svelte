@@ -122,7 +122,6 @@
       </div>
 
       <button
-        on:click={toggleCheckbox}
         disabled={!canSubmitForm}
         type="submit"
         class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
