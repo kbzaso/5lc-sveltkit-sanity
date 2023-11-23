@@ -4,6 +4,7 @@ import { Buffer } from "buffer";
 import jwt from "jsonwebtoken";
 import { error } from "@sveltejs/kit";
 import {
+  VITE_SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
   RESEND_API_KEY,
 } from "$env/static/private";
 import {
@@ -17,7 +18,7 @@ import { Resend } from 'resend';
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const datasetName = import.meta.env.VITE_SANITY_DATASET;
-const tokenWithWriteAccess = import.meta.env.SANITY_API_WRITE_TOKEN;
+// const tokenWithWriteAccess = import.meta.env.VITE_SANITY_API_WRITE_TOKEN;
 
 const resend = new Resend(RESEND_API_KEY);
 
