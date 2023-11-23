@@ -140,7 +140,21 @@ export const load: PageServerLoad = async () => {
 export const actions: Actions = {
   pay: async (event) => {
     const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
-    const total_tickets = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount
+    const totalTicketsLeftStudio = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount
+    const ticketsSold = await client.payment.aggregate({
+      where: {
+        payment_status: "success",
+        AND: [
+          {
+            productId: nextEvent._id,
+          },
+        ],
+      },
+      _sum: {
+        ticketAmount: true,
+      },
+    });
+    const total_tickets = totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
 
     const form = await event.request.formData();
     const name = form.get("name")?.toString();
@@ -198,6 +212,7 @@ export const actions: Actions = {
         },
         update: {
           name: nextEvent.title,
+          stock: total_tickets,
         },
         create: {
           id: nextEvent._id,

@@ -75,8 +75,6 @@ export const POST: RequestHandler = async (event) => {
 
     let ticket = subtractObjects(nextEvent.ticket, paymentWithProduct.buys);
 
-    console.log(ticket, 'new tickets after mutation');
-
     // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
     if (paymentWithProduct.product && payload.payment_status === "success") {
       const mutations = [{
