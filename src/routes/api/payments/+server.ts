@@ -15,9 +15,9 @@ import {
 } from "$lib/config/sanity/client";
 import { Resend } from 'resend';
 
-const projectId = process.env.PROJECT_ID;
-const datasetName = process.env.DATASET_NAME;
-const tokenWithWriteAccess = process.env.TOKEN_WITH_WRITE_ACCESS;
+const projectId = process.env.VITE_SANITY_PROJECT_ID;
+const datasetName = process.env.VITE_SANITY_DATASET;
+const tokenWithWriteAccess = process.env.SANITY_API_WRITE_TOKEN;
 
 const resend = new Resend(RESEND_API_KEY);
 
