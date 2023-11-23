@@ -10,6 +10,7 @@ import {
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import {
+  API_URL,
   PMT_URL,
   MERCHANT_CODE,
   MERCHANT_API_TOKEN,
@@ -151,7 +152,7 @@ export const actions: Actions = {
 
     // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
     const priceTotal = calculatePrice(tickets, nextEvent.ticket);
-    console.log(priceTotal);
+
     // Data que se envia a ET_PAY
     let request_data = {
       merchant_code: MERCHANT_CODE,
@@ -175,7 +176,7 @@ export const actions: Actions = {
 
     try {
       const data = await fetch(
-        "https://api-sandbox.etpayment.com/session/initialize",
+        `${API_URL}/session/initialize`,
         {
           method: "POST",
           headers: new Headers({
