@@ -86,6 +86,19 @@ export const POST: RequestHandler = async (event) => {
         },
       }];
 
+      fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${tokenWithWriteAccess}`
+        },
+        body: JSON.stringify({mutations})
+      })
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.error(error))
+      }
+
       // Enviamos email de confirmación
       (async function () {
         try {
@@ -106,19 +119,6 @@ export const POST: RequestHandler = async (event) => {
           console.error(error);
         }
       })();
-      
-      fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${tokenWithWriteAccess}`
-        },
-        body: JSON.stringify({mutations})
-      })
-        .then(response => response.json())
-        .then(result => console.log(result))
-        .catch(error => console.error(error))
-      }
     }
  catch (e) {
     throw error(500, "El pago no pudo ser actualizado");
