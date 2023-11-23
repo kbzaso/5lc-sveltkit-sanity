@@ -6,8 +6,8 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import Modal from "$lib/components/Modal.svelte";
-  import { enhance } from "$app/forms";
+  import ModalTickets from "$lib/components/ModalTickets.svelte";
+
 
   export let data: PageData;
 
@@ -22,15 +22,7 @@
 
   // SHOW THE REMAINING TICKETS AVAILABLE IN THE SELECT TAG
 
-  let selectedTickets: any;
-  let remainingTickets: number;
-  let optionsCount: number;
-
-  onMount(() => {
-    selectedTickets = "";
-    remainingTickets = nextEvent.total_tickets - nextEvent.tickets_sold;
-    optionsCount = Math.min(remainingTickets, 10);
-  });
+  
 </script>
 
 <svelte:head>
@@ -173,7 +165,7 @@
                       <p>
                         Quedan: {nextEvent.ticket?.firsts_tickets.amount}
                       </p>
-                      <p>Precio: ${nextEvent.ticket?.firsts_tickets.price}</p>
+                      <p>${nextEvent.ticket?.firsts_tickets.price}</p>
                     </div>
                   </div>
                   <div
@@ -190,7 +182,7 @@
                         Quedan: {nextEvent.ticket?.seconds_tickets.amount}
                       </p>
                       <span
-                        >Precio: ${nextEvent.ticket?.seconds_tickets
+                        >${nextEvent.ticket?.seconds_tickets
                           .price}</span
                       >
                     </div>
@@ -209,7 +201,7 @@
                         Quedan: {nextEvent.ticket?.thirds_tickets.amount}
                       </p>
                       <span
-                        >Precio: ${nextEvent.ticket?.thirds_tickets.price}</span
+                        >${nextEvent.ticket?.thirds_tickets.price}</span
                       >
                     </div>
                   </div>
@@ -261,82 +253,7 @@
                 </div>
               {:else}
                 <div class="mt-4">
-                  <div class="mt-6 flex gap-2">
-                    <svg
-                      class="mt-1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      ><path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7a2 2 0 0 1 2-2"
-                      /></svg
-                    >
-                    <h3 class="text-white font-ibm font-black text-2xl italic">
-                      Adhesión al evento
-                    </h3>
-                  </div>
-                  <form
-                    action="?/pay"
-                    method="POST"
-                    use:enhance
-                    class="grid gap-4 grid-cols-1 md:grid-cols-2 mt-4"
-                  >
-                    <input
-                      type="text"
-                      placeholder="Nombre"
-                      id="name"
-                      name="name"
-                      required
-                      class="input input-bordered input-primary w-full max-w-xs"
-                    />
-                    <input
-                      type="email"
-                      placeholder="Email"
-                      id="email"
-                      name="email"
-                      required
-                      class="input input-bordered input-primary w-full max-w-xs"
-                    />
-                    <input
-                      type="tel"
-                      placeholder="+56 9 1234 5678"
-                      id="phone"
-                      name="phone"
-                      class="input input-bordered input-primary w-full max-w-xs"
-                    />
-                    <input
-                      type="hidden"
-                      name="remaining_tickets"
-                      value={JSON.stringify(nextEvent.remaining_tickets)}
-                    />
-                    <select
-                      bind:value={selectedTickets}
-                      name="tickets"
-                      id="tickets"
-                      required
-                      class="select select-warning w-full max-w-xs outline-none ring-0"
-                    >
-                      <option disabled selected value=""
-                        >Número de tickets</option
-                      >
-                      {#each Array(optionsCount)
-                        .fill()
-                        .map((_, i) => i + 1) as ticket}
-                        <option value={ticket}>{ticket}</option>
-                      {/each}
-                    </select>
-                    <button
-                      type="submit"
-                      class="flex grow items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
-                      >Comprar</button
-                    >
-                  </form>
+                  <ModalTickets nextEvent={nextEvent} eventDate={eventDateFormatted} eventTitle={nextEvent.title}/>             
                 </div>
               {/if}
             </div>

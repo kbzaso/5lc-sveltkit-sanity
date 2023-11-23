@@ -4,26 +4,21 @@ import { Buffer } from "buffer";
 import jwt from "jsonwebtoken";
 import { error } from "@sveltejs/kit";
 import {
-  PMT_URL,
-  MERCHANT_CODE,
-  MERCHANT_API_TOKEN,
-  PAYMENT_COMPLETED_URL,
-  PAYMENT_CANCELLATION_URL,
-  PAYMENT_WEBHOOK_URL,
   VITE_SANITY_PROJECT_ID as projectId,
   VITE_SANITY_DATASET as datasetName,
   SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
+  RESEND_API_KEY,
 } from "$env/static/private";
 import {
-  allEventsQuery,
-  settingsQuery,
-  welcomeQuery,
   nextEventQuery,
 } from "$lib/config/sanity/queries";
 import {
   getSanityServerClient,
   overlayDrafts,
 } from "$lib/config/sanity/client";
+import { Resend } from 'resend';
+
+const resend = new Resend(RESEND_API_KEY);
 
 function subtractObjects(obj1, obj2) {
   let ticket = { ...obj1 }; // Copy obj1 to avoid modifying the original object
@@ -92,6 +87,27 @@ export const POST: RequestHandler = async (event) => {
           },
         },
       }];
+
+      // Enviamos email de confirmación
+      (async function () {
+        try {
+          const data = await resend.emails.send({
+            from: '5 Luchas Clandestino <hola@5luchas.cl>',
+            to: paymentWithProduct.customer_email,
+            // to: 'alejandro.saez@rendalomaq.com',
+            subject: 'Nos vemos en la Bóveda Secreta',
+            html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
+            tags: [
+              {
+                name: 'category',
+                value: 'confirm_email',
+              },
+            ],
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      })();
       
       fetch(`https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`, {
         method: 'POST',

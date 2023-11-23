@@ -3,7 +3,6 @@ import {
   overlayDrafts,
 } from "$lib/config/sanity/client";
 import {
-  allEventsQuery,
   settingsQuery,
   welcomeQuery,
   nextEventQuery,
@@ -11,15 +10,13 @@ import {
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import {
+  API_URL,
   PMT_URL,
   MERCHANT_CODE,
   MERCHANT_API_TOKEN,
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
-  VITE_SANITY_PROJECT_ID as projectId,
-  VITE_SANITY_DATASET as datasetName,
-  SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 
@@ -131,7 +128,6 @@ export const load: PageServerLoad = async () => {
       tickets_sold: ticketsSold._sum?.ticketAmount || 0,
       total_tickets: totalTickets
     };
-    console.log(nextEvent);
   }
 
   return {
@@ -148,9 +144,6 @@ export const actions: Actions = {
 
     const form = await event.request.formData();
     const name = form.get("name")?.toString();
-    // const remaining_tickets = JSON.parse(
-    //   form.get("remaining_tickets")?.toString() || "{}"
-    // );
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
@@ -159,7 +152,7 @@ export const actions: Actions = {
 
     // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
     const priceTotal = calculatePrice(tickets, nextEvent.ticket);
-    console.log(priceTotal);
+
     // Data que se envia a ET_PAY
     let request_data = {
       merchant_code: MERCHANT_CODE,
@@ -183,7 +176,7 @@ export const actions: Actions = {
 
     try {
       const data = await fetch(
-        "https://api-sandbox.etpayment.com/session/initialize",
+        `${API_URL}/session/initialize`,
         {
           method: "POST",
           headers: new Headers({
