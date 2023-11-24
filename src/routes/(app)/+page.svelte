@@ -6,7 +6,7 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import Modal from "$lib/components/Modal.svelte";
+  import ModalTickets from "$lib/components/ModalTickets.svelte";
 
   export let data: PageData;
 
@@ -62,30 +62,26 @@
   />
 
   {#if nextEvent}
-    <div class="xl:container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 md:-mt-48 h-min">
-      <div id="nextEvent" class="relative h-fit mt-28 flex flex-col md:flex-row md:gap-4 lg:gap-0">
+    <div
+      class="container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 md:-mt-48 h-min"
+    >
+      <div
+        id="nextEvent"
+        class="relative h-fit mt-28 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
+      >
         <div class="lg:relative lg:inset-y-0 lg:left-0 lg:w-1/3 z-30">
-          <a href={`/eventos/${nextEvent.slug}`} title="Próximo evento">
-            <img
-              class="object-contain lg:hover:rotate-2 lg:hover:scale-105 transition-transform md:rounded-sm"
-              loading="lazy"
-              width="600"
-              height="750"
-              src={urlForImage(nextEvent.poster)
-                .width(600)
-                .height(750)
-                .url()}
-              alt="Afiche del próximo evento"
-            />
-          </a>
+          <img
+            class="object-contain -rotate-2 md:rounded-sm"
+            loading="lazy"
+            width="600"
+            height="750"
+            src={urlForImage(nextEvent.poster).width(600).height(750).url()}
+            alt="Afiche del próximo evento"
+          />
         </div>
-        <div
-          class="relative pb-16 "
-        >
+        <div class="relative pb-16 ">
           <div class="lg:pl-8 mt-4 lg:mt-0">
-            <div
-              class="mx-auto text-base lg:ml-auto lg:mr-0"
-            >
+            <div class="mx-auto text-base lg:ml-auto lg:mr-0">
               <h2
                 class="font-semibold leading-6 text-primary uppercase tracking-widest"
               >
@@ -148,7 +144,82 @@
                 </ul>
               </div>
 
-              {#if nextEvent.ticket.soldOut && nextEvent.active}
+              {#if nextEvent.tickets_sold !== nextEvent.total_tickets && nextEvent.active}
+                <!-- TANDAS -->
+                <div class="flex gap-4 my-8">
+                  <div
+                    class:opacity-50={nextEvent.ticket.firsts_tickets.amount ===
+                      0}
+                    class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
+                  >
+                    <span
+                      class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
+                      >Tanda Nº1</span
+                    >
+                    <div class="text-sm">
+                      <p>
+                        Quedan: {nextEvent.ticket?.firsts_tickets.amount}
+                      </p>
+                      <p>${nextEvent.ticket?.firsts_tickets.price}</p>
+                    </div>
+                  </div>
+                  <div
+                    class:opacity-50={nextEvent.ticket.seconds_tickets
+                      .amount === 0}
+                    class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
+                  >
+                    <span
+                      class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
+                      >Tanda Nº2</span
+                    >
+                    <div class="text-sm">
+                      <p>
+                        Quedan: {nextEvent.ticket?.seconds_tickets.amount}
+                      </p>
+                      <span>${nextEvent.ticket?.seconds_tickets.price}</span>
+                    </div>
+                  </div>
+                  <div
+                    class:opacity-50={nextEvent.ticket.thirds_tickets.amount ===
+                      0}
+                    class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
+                  >
+                    <span
+                      class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
+                      >Tanda Nº3</span
+                    >
+                    <div class="text-sm">
+                      <p>
+                        Quedan: {nextEvent.ticket?.thirds_tickets.amount}
+                      </p>
+                      <span>${nextEvent.ticket?.thirds_tickets.price}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- PROGRESS -->
+                <div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-400"
+                      >🎟️ {nextEvent.ticket.thirds_tickets.amount <= 30
+                        ? "¡Últimas entradas!, no te quedes fuera."
+                        : "Progreso de venta de tickets"}</span
+                    >
+                    <span>🔥</span>
+                  </div>
+                  <progress
+                    class={`progress w-full ${
+                      nextEvent.ticket.firsts_tickets.amount !== 0
+                        ? "progress-success"
+                        : nextEvent.ticket.seconds_tickets.amount !== 0
+                        ? "progress-info"
+                        : "progress-error"
+                    }`}
+                    value={nextEvent.tickets_sold}
+                    max={nextEvent.total_tickets}
+                  />
+                </div>
+              {/if}
+              {#if nextEvent.tickets_sold === nextEvent.total_tickets && nextEvent.active}
                 <div
                   class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
                 >
@@ -167,28 +238,16 @@
                     />
                   </svg>
 
-                  <span class="uppercase tracking-widest"
-                    >Adhesión agotadas</span
+                  <span class="uppercase tracking-widest">Adhesión agotada</span
                   >
                 </div>
-              {:else if !nextEvent.ticket.soldOut && nextEvent.active && nextEvent.ticket.url}
-                <div
-                  class="mt-4 gap-4 flex flex-col md:flex-row sm:justify-center lg:justify-start"
-                >
-                  <div class="rounded-md w-full">
-                    <a
-                      href={nextEvent.ticket?.url}
-                      class="flex w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline"
-                      >Entrada General</a
-                    >
-                  </div>
+              {:else}
+                <div class="mt-4">
+                  <ModalTickets
+                    {nextEvent}
+                  />
                 </div>
               {/if}
-              <div class="w-full text-center mt-6">
-                <a href="/eventos" class="link text-primary"
-                  >Ir a la sección de eventos</a
-                >
-              </div>
             </div>
           </div>
         </div>

@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Payment {
+  id              String   @id @unique
+  customer_name   String
+  customer_email  String
+  rut             String?
+  customer_phone  String?
+  price           Float
+  ticketAmount    Int
+  date            DateTime @default(now())
+  signature_token String
+  payment_status  String?
+  payment_token   String?
+  product         Product  @relation(fields: [productId], references: [id])
+  productId       String
+  buys            Json
+}
+
+model Product {
+  id       String    @id @unique
+  name     String
+  payments Payment[]
+  stock    Int?
+}

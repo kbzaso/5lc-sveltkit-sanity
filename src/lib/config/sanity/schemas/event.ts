@@ -79,6 +79,7 @@ export default defineType({
       name: "description",
       title: "Descripción del evento",
       hidden: ({ document }) => document?.active === false,
+      validation: (Rule) => [Rule.required()],
     },
     {
       type: "array",
@@ -106,23 +107,60 @@ export default defineType({
       name: "ticket",
       type: "object",
       title: "Adhesión al evento",
+      description: "Precios y cantidades de entradas disponibles en cada tanda",
       hidden: ({ document }) => document?.active === false,
       fields: [
         {
-          title: "Precio de la entrada",
-          name: "price",
-          type: "number",
+          title: "Primera tanda",
+          type: "object",
+          name: "firsts_tickets",
+          fields: [
+            {
+              title: "Precio",
+              name: "price",
+              type: "number",
+            },
+            {
+              title: "Cantidad",
+              name: "amount",
+              type: "number",
+            },
+          ],
         },
         {
-          name: "url",
-          type: "url",
-          title: "Link de pago",
+          title: "Segunda tanda",
+          type: "object",
+          name: "seconds_tickets",
+          fields: [
+            {
+              title: "Precio",
+              name: "price",
+              type: "number",
+            },
+            {
+              title: "Cantidad",
+              name: "amount",
+              type: "number",
+              description: "Este campo no será editable una vez se publique el evento",
+            },
+          ],
         },
         {
-          title: "¿Agotado?",
-          name: "soldOut",
-          type: "boolean",
-          initialValue: false,
+          title: "Tercera tanda",
+          type: "object",
+          name: "thirds_tickets",
+          fields: [
+            {
+              title: "Precio",
+              name: "price",
+              type: "number",
+            },
+            {
+              title: "Cantidad",
+              name: "amount",
+              type: "number",
+            },
+          ],
         },
       ],
     },
@@ -192,6 +230,7 @@ export default defineType({
       name: "videoUrl",
       type: "url",
       title: "URL de la grabación del evento",
+      hidden: ({ document }) => document?.active === true,
     },
     {
       title: "Asitencia al evento",

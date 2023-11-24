@@ -77,3 +77,11 @@ export interface Welcome {
   textTitle: string;
   description: InputValue;
 }
+
+export interface Event {
+  id: number;
+  title: string;
+  date: string;
+  total_tickets: number;
+  tickets_sold: number;
+}
