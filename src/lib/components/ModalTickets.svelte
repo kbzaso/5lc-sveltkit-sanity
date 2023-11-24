@@ -1,9 +1,9 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import { onMount } from "svelte";
-  import type { Event } from "$lib/dto/events";
+  import type { Event } from "$lib/types";
+  import { calculatePrice } from "$lib/utils/eventUtils";
 
-  export let eventDate: Event["date"];
   export let nextEvent: Event;
 
   let isCheckboxChecked = false;
@@ -23,6 +23,12 @@
     remainingTickets = nextEvent.total_tickets - nextEvent.tickets_sold;
     optionsCount = Math.min(remainingTickets, 10);
   });
+
+  let selectedTicketsTotalPrice = 0;
+  const hangleChange = () => {
+    let obj = calculatePrice(selectedTickets, nextEvent.ticket);
+    selectedTicketsTotalPrice = obj.totalCost;
+  };
 </script>
 
 <!-- Open the modal using ID.showModal() method -->
@@ -40,15 +46,14 @@
         >✕</button
       >
     </form>
-    <h3 class="font-bold text-lg text-primary">
+    <!-- <h3 class="font-bold text-lg text-primary">
       Adhesión para el evento {nextEvent.title}
-    </h3>
-    <p class="py-4 text-gray-400 text-sm ">
+    </h3> -->
+    <!-- <p class="py-4 text-gray-400 text-sm ">
       Estamos felices que quieras asistir este {eventDate}, pero primero,
       necesitamos que leas y estes de acuerdo a nuestro
       <a class="anchor" href="/conducta">código de conducta</a>.
-    </p>
-
+    </p> -->
     <form action="?/pay" method="POST" use:enhance class="space-y-4">
       <div class="form-control w-full">
         <label class="label" for="name">
@@ -90,11 +95,12 @@
           <!-- <span class="label-text-alt">Top Right label</span> -->
         </label>
         <select
-          bind:value={selectedTickets}
+        bind:value={selectedTickets}
           name="tickets"
           id="tickets"
           required
           class="select select-bordered w-full outline-none ring-0"
+          on:change={() => hangleChange()}
         >
           {#each Array(optionsCount)
             .fill()
@@ -102,10 +108,6 @@
             <option value={ticket}>{ticket}</option>
           {/each}
         </select>
-        <!-- <label class="label">
-                        <span class="label-text-alt">Bottom Left label</span>
-                        <span class="label-text-alt">Bottom Right label</span>
-                      </label> -->
       </div>
       <div class="form-control">
         <label class="cursor-pointer label flex gap-4 justify-start" for="code">
@@ -116,7 +118,7 @@
             class="checkbox checkbox-warning"
           />
           <span class="label-text"
-            >Estoy de acuerdo con el código de conducta</span
+            >Estoy de acuerdo con el <a class="anchor" href="/conducta">código de conducta</a></span
           >
         </label>
       </div>
@@ -125,7 +127,7 @@
         disabled={!canSubmitForm}
         type="submit"
         class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
-        >Finalizar adhesión</button
+        >${selectedTicketsTotalPrice} - Comprar</button
       >
       {#if canSubmitForm}
         <div class="text-sm text-gray-400 text-center flex h-fit w-full justify-center gap-4 items-center">

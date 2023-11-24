@@ -19,35 +19,7 @@ import {
   PAYMENT_WEBHOOK_URL,
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
-
-function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
-  let totalCost = 0;
-  let remainingTickets = ticketsToBuy;
-  const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
-  let ticket = {
-    firsts_tickets: { amount: 0 },
-    seconds_tickets: { amount: 0 },
-    thirds_tickets: { amount: 0 },
-  };
-
-  // Calculate total cost
-  for (let part of partsOrder) {
-    if (remainingTickets <= ticketSystem[part].amount) {
-      totalCost += remainingTickets * ticketSystem[part].price;
-      ticket[part].amount = remainingTickets;
-      ticketSystem[part].amount -= remainingTickets;
-      remainingTickets = 0;
-      break;
-    } else {
-      totalCost += ticketSystem[part].amount * ticketSystem[part].price;
-      ticket[part].amount = ticketSystem[part].amount;
-      remainingTickets -= ticketSystem[part].amount;
-      ticketSystem[part].amount = 0;
-    }
-  }
-
-  return { totalCost, ticket };
-}
+import { calculatePrice } from "$lib/utils/eventUtils";
 
 // export const prerender = 'auto';
 export const load: PageServerLoad = async () => {

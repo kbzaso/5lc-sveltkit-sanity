@@ -87,7 +87,7 @@ export const POST: RequestHandler = async (event) => {
               from: '5 Luchas Clandestino <hola@5luchas.cl>',
               to: paymentWithProduct.customer_email,
               // to: 'alejandro.saez@rendalomaq.com',
-              subject: 'Nos vemos en la Bóveda Secreta',
+              subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
               html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
               tags: [
                 {

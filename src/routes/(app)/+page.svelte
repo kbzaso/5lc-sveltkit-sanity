@@ -8,7 +8,6 @@
   import { onMount } from "svelte";
   import ModalTickets from "$lib/components/ModalTickets.svelte";
 
-
   export let data: PageData;
 
   $: ({ settings, welcome, nextEvent } = data);
@@ -19,10 +18,6 @@
   $: minutes = eventDate.getMinutes();
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
-
-  // SHOW THE REMAINING TICKETS AVAILABLE IN THE SELECT TAG
-
-  
 </script>
 
 <svelte:head>
@@ -181,10 +176,7 @@
                       <p>
                         Quedan: {nextEvent.ticket?.seconds_tickets.amount}
                       </p>
-                      <span
-                        >${nextEvent.ticket?.seconds_tickets
-                          .price}</span
-                      >
+                      <span>${nextEvent.ticket?.seconds_tickets.price}</span>
                     </div>
                   </div>
                   <div
@@ -200,9 +192,7 @@
                       <p>
                         Quedan: {nextEvent.ticket?.thirds_tickets.amount}
                       </p>
-                      <span
-                        >${nextEvent.ticket?.thirds_tickets.price}</span
-                      >
+                      <span>${nextEvent.ticket?.thirds_tickets.price}</span>
                     </div>
                   </div>
                 </div>
@@ -253,7 +243,9 @@
                 </div>
               {:else}
                 <div class="mt-4">
-                  <ModalTickets nextEvent={nextEvent} eventDate={eventDateFormatted} eventTitle={nextEvent.title}/>             
+                  <ModalTickets
+                    {nextEvent}
+                  />
                 </div>
               {/if}
             </div>
