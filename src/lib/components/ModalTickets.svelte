@@ -118,7 +118,7 @@
             class="checkbox checkbox-warning"
           />
           <span class="label-text"
-            >Estoy de acuerdo con el <a class="anchor" href="/conducta">código de conducta</a></span
+            >Acepto con el <a class="anchor" href="/conducta">código de conducta</a></span
           >
         </label>
       </div>

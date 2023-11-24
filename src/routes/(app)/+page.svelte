@@ -158,14 +158,14 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.ticket?.firsts_tickets.amount}
+                        Quedan: {nextEvent.ticket?.firsts_tickets?.amount || 0}
                       </p>
-                      <p>${nextEvent.ticket?.firsts_tickets.price}</p>
+                      <p>${nextEvent.ticket?.firsts_tickets?.price || 0}</p>
                     </div>
                   </div>
                   <div
-                    class:opacity-50={nextEvent.ticket.seconds_tickets
-                      .amount === 0}
+                    class:opacity-50={nextEvent.ticket?.seconds_tickets
+                      ?.amount === 0}
                     class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
                   >
                     <span
@@ -174,13 +174,13 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.ticket?.seconds_tickets.amount}
+                        Quedan: {nextEvent.ticket?.seconds_tickets?.amount || 0}
                       </p>
-                      <span>${nextEvent.ticket?.seconds_tickets.price}</span>
+                      <span>${nextEvent.ticket?.seconds_tickets?.price || 0}</span>
                     </div>
                   </div>
                   <div
-                    class:opacity-50={nextEvent.ticket.thirds_tickets.amount ===
+                    class:opacity-50={nextEvent.ticket?.thirds_tickets?.amount ===
                       0}
                     class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
                   >
@@ -190,9 +190,9 @@
                     >
                     <div class="text-sm">
                       <p>
-                        Quedan: {nextEvent.ticket?.thirds_tickets.amount}
+                        Quedan: {nextEvent.ticket?.thirds_tickets?.amount || 0}
                       </p>
-                      <span>${nextEvent.ticket?.thirds_tickets.price}</span>
+                      <span>${nextEvent.ticket?.thirds_tickets?.price || 0}</span>
                     </div>
                   </div>
                 </div>
@@ -200,7 +200,7 @@
                 <div>
                   <div class="flex justify-between">
                     <span class="text-gray-400"
-                      >🎟️ {nextEvent.ticket.thirds_tickets.amount <= 30
+                      >🎟️ {nextEvent.ticket?.thirds_tickets?.amount <= 30
                         ? "¡Últimas entradas!, no te quedes fuera."
                         : "Progreso de venta de tickets"}</span
                     >
@@ -208,14 +208,14 @@
                   </div>
                   <progress
                     class={`progress w-full ${
-                      nextEvent.ticket.firsts_tickets.amount !== 0
+                      nextEvent.ticket?.firsts_tickets?.amount !== 0
                         ? "progress-success"
-                        : nextEvent.ticket.seconds_tickets.amount !== 0
+                        : nextEvent.ticket?.seconds_tickets?.amount !== 0
                         ? "progress-info"
                         : "progress-error"
                     }`}
-                    value={nextEvent.tickets_sold}
-                    max={nextEvent.total_tickets}
+                    value={nextEvent?.tickets_sold}
+                    max={nextEvent?.total_tickets}
                   />
                 </div>
               {/if}
@@ -243,9 +243,7 @@
                 </div>
               {:else}
                 <div class="mt-4">
-                  <ModalTickets
-                    {nextEvent}
-                  />
+                  <ModalTickets {nextEvent} />
                 </div>
               {/if}
             </div>
