@@ -59,7 +59,7 @@
       </h1>
       <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {#each events as event}
-          <a href={`eventos/${event.slug}`}>
+          <a href={`/#nextEvent`}>
             <div
               class="relative overflow-hidden w-full group border-gray-600 border hover:border-primary rounded-none transition-all h-fit md:h-96"
             >

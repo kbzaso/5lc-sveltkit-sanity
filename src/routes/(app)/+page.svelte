@@ -200,7 +200,7 @@
                 <div>
                   <div class="flex justify-between">
                     <span class="text-gray-400"
-                      >🎟️ {nextEvent.ticket?.thirds_tickets?.amount <= 30
+                      >🎟️ {nextEvent.ticket?.seconds_tickets?.amount <= 10
                         ? "¡Últimas entradas!, no te quedes fuera."
                         : "Progreso de venta de tickets"}</span
                     >
