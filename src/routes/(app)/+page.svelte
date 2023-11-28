@@ -206,7 +206,6 @@
                       >Tanda Nº3</span
                     >
                     <div class="text-sm">
-                      {#if nextEvent.ticket.thirds_tickets.amount !== 0}
                         {#if nextEvent.ticket?.thirds_tickets?.amount <= 10}
                           <p>
                             Quedan {nextEvent.ticket?.thirds_tickets?.amount ||
@@ -216,9 +215,6 @@
                         <span
                           >${nextEvent.ticket?.thirds_tickets?.price || 0}</span
                         >
-                      {:else}
-                        <p>Agotada</p>
-                      {/if}
                     </div>
                   </div>
                 </div>
