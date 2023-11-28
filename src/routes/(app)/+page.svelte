@@ -157,9 +157,12 @@
                       >Tanda Nº1</span
                     >
                     <div class="text-sm">
-                      <p>
-                        Quedan: {nextEvent.ticket?.firsts_tickets?.amount || 0}
-                      </p>
+                      {#if nextEvent.ticket?.firsts_tickets?.amount <= 10}
+                        <p>
+                          Quedan {nextEvent.ticket?.firsts_tickets?.amount ||
+                            0}
+                        </p>
+                      {/if}
                       <p>${nextEvent.ticket?.firsts_tickets?.price || 0}</p>
                     </div>
                   </div>
@@ -173,15 +176,20 @@
                       >Tanda Nº2</span
                     >
                     <div class="text-sm">
-                      <p>
-                        Quedan: {nextEvent.ticket?.seconds_tickets?.amount || 0}
-                      </p>
-                      <span>${nextEvent.ticket?.seconds_tickets?.price || 0}</span>
+                      {#if nextEvent.ticket?.seconds_tickets?.amount <= 10}
+                        <p>
+                          Quedan {nextEvent.ticket?.seconds_tickets?.amount ||
+                            0}
+                        </p>
+                      {/if}
+                      <span
+                        >${nextEvent.ticket?.seconds_tickets?.price || 0}</span
+                      >
                     </div>
                   </div>
                   <div
-                    class:opacity-50={nextEvent.ticket?.thirds_tickets?.amount ===
-                      0}
+                    class:opacity-50={nextEvent.ticket?.thirds_tickets
+                      ?.amount === 0}
                     class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
                   >
                     <span
@@ -189,10 +197,14 @@
                       >Tanda Nº3</span
                     >
                     <div class="text-sm">
+                      {#if nextEvent.ticket?.thirds_tickets?.amount <= 10}
                       <p>
-                        Quedan: {nextEvent.ticket?.thirds_tickets?.amount || 0}
+                        Quedan {nextEvent.ticket?.thirds_tickets?.amount || 0}
                       </p>
-                      <span>${nextEvent.ticket?.thirds_tickets?.price || 0}</span>
+                      {/if}
+                      <span
+                        >${nextEvent.ticket?.thirds_tickets?.price || 0}</span
+                      >
                     </div>
                   </div>
                 </div>
