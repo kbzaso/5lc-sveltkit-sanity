@@ -18,6 +18,19 @@
   $: minutes = eventDate.getMinutes();
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
+  
+  let formattedFirstsPrice: string;
+  let formattedSecondsPrice: string;
+  let formattedThirthsPrice: string;
+  onMount(() => {
+    let firstTicketPrice = nextEvent.ticket?.firsts_tickets?.price;
+    let secondsTicketPrice = nextEvent.ticket?.seconds_tickets?.price;
+    let thirdsTicketPrice = nextEvent.ticket?.thirds_tickets?.price;
+    
+    formattedFirstsPrice = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(firstTicketPrice);
+    formattedSecondsPrice = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(secondsTicketPrice);
+    formattedThirthsPrice = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(thirdsTicketPrice);
+  });
 </script>
 
 <svelte:head>
@@ -67,9 +80,10 @@
     >
       <div
         id="nextEvent"
-        class="relative h-fit mt-28 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
+        class="h-fit mt-28 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
       >
-        <div class="lg:relative lg:inset-y-0 lg:left-0 lg:w-1/3 z-30">
+        <div class="relative">
+          <div class="absolute w-[1000px] h-72 lg:w-72 lg:h-full md:-rotate-2 z-10 -bottom-5 md:top-[480px] lg:-top-2  lg:left-[200px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"></div>
           <img
             class="object-contain -rotate-2 md:rounded-sm"
             loading="lazy"
@@ -79,8 +93,8 @@
             alt="Afiche del próximo evento"
           />
         </div>
-        <div class="relative pb-16 ">
-          <div class="lg:pl-8 mt-4 lg:mt-0">
+        <div class="z-10 pb-16 relative -top-20 lg:top-0 xl:top-20 lg:-left-12">
+          <div class="mt-4 lg:mt-0">
             <div class="mx-auto text-base lg:ml-auto lg:mr-0">
               <h2
                 class="font-semibold leading-6 text-primary uppercase tracking-widest"
@@ -164,7 +178,7 @@
                               0}
                           </p>
                         {/if}
-                        <p>${nextEvent.ticket?.firsts_tickets?.price || 0}</p>
+                        <p>{formattedFirstsPrice || 0}</p>
                       {:else}
                         <p>Agotada</p>
                       {/if}
@@ -188,7 +202,7 @@
                           </p>
                         {/if}
                         <span
-                          >${nextEvent.ticket?.seconds_tickets?.price ||
+                          >{formattedSecondsPrice ||
                             0}</span
                         >
                       {:else}
@@ -213,7 +227,7 @@
                           </p>
                         {/if}
                         <span
-                          >${nextEvent.ticket?.thirds_tickets?.price || 0}</span
+                          >{formattedThirthsPrice || 0}</span
                         >
                     </div>
                   </div>

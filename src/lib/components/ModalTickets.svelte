@@ -25,6 +25,7 @@
   });
 
   let selectedTicketsTotalPrice = 0;
+  $: formattedFinalPrice = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(selectedTicketsTotalPrice)
   const hangleChange = () => {
     let obj = calculatePrice(selectedTickets, nextEvent.ticket);
     selectedTicketsTotalPrice = obj.totalCost;
@@ -127,7 +128,7 @@
         disabled={!canSubmitForm}
         type="submit"
         class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
-        >${selectedTicketsTotalPrice} - Comprar</button
+        >{formattedFinalPrice} - Comprar</button
       >
       {#if canSubmitForm}
         <div class="text-sm text-gray-400 text-center flex h-fit w-full justify-center gap-4 items-center">
