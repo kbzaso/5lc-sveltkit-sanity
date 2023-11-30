@@ -82,7 +82,7 @@
         id="nextEvent"
         class="h-fit mt-28 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
       >
-        <div class="relative">
+        <div class="relative overflow-hidden">
           <div class="absolute w-[1000px] h-72 lg:w-72 lg:h-full md:-rotate-2 z-10 -bottom-5 md:top-[480px] lg:-top-2  lg:left-[200px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"></div>
           <img
             class="object-contain -rotate-2 md:rounded-sm"
