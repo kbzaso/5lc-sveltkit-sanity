@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2023-10-29
+
+### Fix
+
 - fix overflow bug on index
 
 ## [0.0.1] - 2023-10-29
@@ -15,5 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/rendalomaq/rendalomaq_suppliers/compare/0.0.1...HEAD
-[0.0.1]: https://github.com/rendalomaq/rendalomaq_suppliers/releases/tag/0.0.1
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.2...HEAD
+[0.0.2]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.1...0.0.2
+[0.0.1]: https://github.com/kbzaso/5lc-sveltkit-sanity/releases/tag/0.0.1
