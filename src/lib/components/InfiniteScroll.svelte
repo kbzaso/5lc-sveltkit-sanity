@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
 </script>
 
-<div class="container mt-20 bg-black text-primary py-2">
+<div class="mt-20 bg-black text-primary py-2 w-full overflow-hidden">
   <div class="horizontal-scrolling-items">
     <div class="horizontal-scrolling-items__item uppercase font-ibm font-semibold"> 
       {$page.data.welcome.horizontalLine} {$page.data.welcome.horizontalLine} {$page.data.welcome.horizontalLine}
@@ -22,11 +22,6 @@
     to {
       transform: translateX(-50%);
     }
-  }
-  .container {
-    width: 100%;
-    overflow-x: hidden;
-    
   }
   .horizontal-scrolling-items {
     display: flex;
