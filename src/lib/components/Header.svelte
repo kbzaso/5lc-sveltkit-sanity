@@ -38,7 +38,7 @@
         <PortableText value={description} />
       </p>
     </div>
-    <img src={urlForImage($page.data.welcome.heroImage).url()} alt="Portada" class="object-contain lg:object-cover absolute w-full h-full">
+    <img src={`${$page.data.welcome.heroImage ? urlForImage($page.data.welcome.heroImage).url() : 'https://res.cloudinary.com/dtj5xnlou/image/upload/v1701462962/bg-web.jpg' }`} alt="Portada" class="object-contain lg:object-cover absolute w-full h-full">
     <div
       class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/90 lg:via-black/40 to-transparent h-96 md:h-[300px] w-full"
     />
