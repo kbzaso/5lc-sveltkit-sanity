@@ -7,6 +7,7 @@
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import ModalTickets from "$lib/components/ModalTickets.svelte";
+  import InfiniteScroll from "$lib/components/InfiniteScroll.svelte";
 
   export let data: PageData;
 
@@ -66,7 +67,10 @@
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
-<div class="">
+<div>
+  {#if $page.data.welcome.horizontalLine}
+    <InfiniteScroll />
+  {/if}
   <Header
     imageTitle={urlForImage(welcome.imageTitle).crop("focalpoint").url()}
     preTitle={welcome.preTitle}
@@ -80,7 +84,7 @@
     >
       <div
         id="nextEvent"
-        class="h-fit mt-28 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
+        class="h-fit mt-40 sm:mt-52 lg:mt-56 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
       >
         <div class="relative overflow-hidden">
           <div class="absolute w-[1000px] h-72 lg:w-72 lg:h-full md:-rotate-2 z-10 -bottom-5 md:top-[480px] lg:-top-2  lg:left-[200px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"></div>

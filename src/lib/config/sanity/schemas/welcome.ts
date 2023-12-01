@@ -38,6 +38,15 @@ export default defineType({
       description: "Agrega el mensaje que quieres que aparezca en movimiento en el home",
     },
     {
+      type: "image",
+      options: {
+        accept: ".png,.svg,.jpg,.jpeg",
+      },
+      name: "heroImage",
+      title: "Imagen central del home",
+      description: "Esta imagen se usara en el centro del home",
+    },
+    {
       type: "array",
       of: [
         {
