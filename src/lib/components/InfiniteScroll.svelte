@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
 </script>
 
-<div class="mt-20 bg-black text-primary py-2 w-full overflow-hidden">
+<div class=" bg-black/50 text-primary py-2 w-full overflow-hidden absolute top-20 z-20 backdrop-blur-sm">
   <div class="horizontal-scrolling-items">
     <div class="horizontal-scrolling-items__item uppercase font-ibm font-semibold"> 
       {$page.data.welcome.horizontalLine} {$page.data.welcome.horizontalLine} {$page.data.welcome.horizontalLine}
