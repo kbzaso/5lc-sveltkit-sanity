@@ -1,6 +1,8 @@
 <script lang="ts">
   import { PortableText } from "@portabletext/svelte";
   import type { InputValue } from "@portabletext/svelte/ptTypes";
+  import InfiniteScroll from "$lib/components/InfiniteScroll.svelte";
+  import { page } from "$app/stores";
 
   export let preTitle = "";
   export let description: InputValue = [];
@@ -12,6 +14,9 @@
   id="header"
   class={`bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/v1689912910/5LC/bg-web-2.jpg')] bg-cover bg-center h-screen relative`}
 >
+  {#if $page.data.welcome.horizontalLine}
+    <InfiniteScroll />
+  {/if}
   <div
     class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/100 to-transparent h-96 w-full"
   />
