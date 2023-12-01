@@ -32,6 +32,12 @@ export default defineType({
       validation: (Rule) => [Rule.required()],
     },
     {
+      type: "string",
+      name: "horizontalLine",
+      title: "Barra horizontal",
+      description: "Agrega el mensaje que quieres que aparezca en movimiento en el home",
+    },
+    {
       type: "array",
       of: [
         {
