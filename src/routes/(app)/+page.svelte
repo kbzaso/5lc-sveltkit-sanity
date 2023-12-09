@@ -244,7 +244,7 @@
                         ? "¡Últimas entradas!, no te quedes fuera."
                         : "Progreso de venta de tickets"}</span
                     >
-                    <span>🔥</span>
+                    <span class="animate-bounce">🔥</span>
                   </div>
                   <progress
                     class={`progress w-full ${
