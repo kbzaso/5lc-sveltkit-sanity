@@ -53,6 +53,7 @@ export const eventFields = groq`
     venue,
     ticket,
     total_tickets,
+    sell,
     result,
     active,
     description,
