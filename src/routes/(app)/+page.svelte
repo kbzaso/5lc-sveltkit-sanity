@@ -162,7 +162,7 @@
                 </ul>
               </div>
 
-              {#if nextEvent.tickets_sold !== nextEvent.total_tickets && nextEvent.active}
+              {#if nextEvent.tickets_sold !== nextEvent.total_tickets && nextEvent.active && nextEvent.sell}
                 <!-- TANDAS -->
                 <div class="flex gap-4 my-8">
                   <div
@@ -259,7 +259,7 @@
                   />
                 </div>
               {/if}
-              {#if nextEvent.tickets_sold === nextEvent.total_tickets && nextEvent.active}
+              {#if nextEvent.tickets_sold === nextEvent.total_tickets && nextEvent.active || !nextEvent.sell}
                 <div
                   class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
                 >

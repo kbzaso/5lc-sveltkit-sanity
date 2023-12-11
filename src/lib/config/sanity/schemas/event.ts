@@ -13,7 +13,7 @@ export default defineType({
       type: "boolean",
       description:
         "Si no lo es, es un evento pasado y debes agregar los resultados de las luchas",
-      initialValue: false,
+      initialValue: true,
     },
     {
       type: "string",
@@ -104,6 +104,15 @@ export default defineType({
       validation: (Rule) => [Rule.required()],
     },
     {
+      title: "Venta de entradas",
+      name: "sell",
+      type: "boolean",
+      description:
+        "¿La venta de entradas esta activa? Si no lo esta, no se mostrará el botón de compra",
+      initialValue: true,
+      hidden: ({ document }) => document?.active === false,
+    },
+    {
       name: "ticket",
       type: "object",
       title: "Adhesión al evento",
@@ -114,6 +123,7 @@ export default defineType({
           title: "Primera tanda",
           type: "object",
           name: "firsts_tickets",
+          hidden: ({ document }) => document?.sell === false,
           fields: [
             {
               title: "Precio",
@@ -133,6 +143,7 @@ export default defineType({
           title: "Segunda tanda",
           type: "object",
           name: "seconds_tickets",
+          hidden: ({ document }) => document?.sell === false,
           fields: [
             {
               title: "Precio",
@@ -152,6 +163,7 @@ export default defineType({
           title: "Tercera tanda",
           type: "object",
           name: "thirds_tickets",
+          hidden: ({ document }) => document?.sell === false,
           fields: [
             {
               title: "Precio",
