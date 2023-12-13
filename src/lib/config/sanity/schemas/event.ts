@@ -274,10 +274,7 @@ export default defineType({
       type: "text",
       description:
         "Describe brevemente el evento, este texto aparecerá en los resultados de búsqueda de Google (160 caracteres)",
-      validation: (Rule) => Rule.required(),
-      options: {
-        maxLength: 160,
-      },
+      validation: Rule => Rule.max(160).warning('No puede exceder los 160 caracteres'),
     },
   ],
 });

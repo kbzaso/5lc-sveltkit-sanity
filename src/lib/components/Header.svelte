@@ -13,7 +13,7 @@
 <section>
   <div
     id="header"
-    class={`container mx-auto h-[600px] lg:h-[800px] relative -mt-20`}
+    class={`container mx-auto h-[600px] lg:h-[800px] 2xl:h-[1000px] relative -mt-20`}
   >
     <div
       class="container mx-auto flex flex-col justify-end px-4 absolute bottom-4 lg:bottom-0 z-10 h-full"
