@@ -119,7 +119,7 @@
             class="checkbox checkbox-warning"
           />
           <span class="label-text"
-            >Acepto con el <a class="anchor" href="/conducta">código de conducta</a></span
+            >Acepto con el <a class="anchor" href="/conducta">código de conducta y descargo de responsabilidad DEATHMATCH 2024</a></span
           >
         </label>
       </div>
