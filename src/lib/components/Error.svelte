@@ -25,7 +25,7 @@
         <img src={gif} alt="Es un gif de un luchador antiguo" />
       </figure>
       <div class="alert alert-error rounded-none">
-        <div>
+        <div class="flex md:flex-row flex-col gap-2 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="stroke-current flex-shrink-0 h-6 w-6"
