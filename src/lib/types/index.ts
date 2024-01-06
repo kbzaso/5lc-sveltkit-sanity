@@ -74,6 +74,7 @@ export interface Event {
   slug: string;
   videoUrl: string;
   disclaimers: [];
+  sell: boolean;
 }
 
 export interface Settings {

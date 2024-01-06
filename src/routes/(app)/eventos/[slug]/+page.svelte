@@ -15,23 +15,22 @@
 
   export let data: PageData;
 
-  
   $: ({ initialData, previewMode, slug } = data);
   $: ({ data: eventData } = previewSubscription(eventQuery, {
     params: { slug },
     initialData,
     enabled: previewMode && !!slug,
   }));
-  
+
   $: eventDate = new Date($eventData?.event?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
-  
+
   let seo_image = urlForImage($page.data.initialData.event.poster).url();
-  
+
   let hasPhotos = [];
-  
+
   let formattedFirstsPrice: string;
   let formattedSecondsPrice: string;
   let formattedThirthsPrice: string;
@@ -39,7 +38,7 @@
     let firstTicketPrice = $eventData?.event.ticket?.firsts_tickets?.price;
     let secondsTicketPrice = $eventData?.event.ticket?.seconds_tickets?.price;
     let thirdsTicketPrice = $eventData?.event.ticket?.thirds_tickets?.price;
-    
+
     formattedFirstsPrice = new Intl.NumberFormat("es-CL", {
       style: "currency",
       currency: "CLP",
@@ -52,14 +51,14 @@
       style: "currency",
       currency: "CLP",
     }).format(thirdsTicketPrice);
-    
+
     if ($eventData?.event?.gallery !== null) {
       hasPhotos = Object.keys($eventData?.event?.gallery);
     } else {
       hasPhotos = [];
     }
   });
-  
+
   let disclaimerEvent = writable([]);
 </script>
 
@@ -95,10 +94,10 @@
 
 {#if $eventData?.event}
   <div class="xl:container xl:mx-auto min-w-[350px]">
-    <div class="container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 h-min">
+    <div class="container xl:mx-auto min-w-[350px] mx-auto px-4 mt-20 h-min">
       <div
         id="$eventData?.event"
-        class="h-fit mt-40 sm:mt-52 lg:mt-56 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
+        class="h-fit flex flex-col lg:flex-row md:gap-4 lg:gap-0"
       >
         <div class="relative overflow-hidden">
           <div
@@ -195,7 +194,7 @@
                     >
                     <div class="text-sm">
                       {#if $eventData?.event.ticket.firsts_tickets.amount !== 0}
-                        {#if $eventData?.event.ticket?.firsts_tickets?.amount <= 10}
+                        {#if $eventData?.event.ticket?.firsts_tickets?.amount <= 15}
                           <p>
                             Quedan {$eventData?.event.ticket?.firsts_tickets
                               ?.amount || 0}
@@ -218,7 +217,7 @@
                     >
                     <div class="text-sm">
                       {#if $eventData?.event.ticket.seconds_tickets.amount !== 0}
-                        {#if $eventData?.event.ticket?.seconds_tickets?.amount <= 10}
+                        {#if $eventData?.event.ticket?.seconds_tickets?.amount <= 15}
                           <p>
                             Quedan {$eventData?.event.ticket?.seconds_tickets
                               ?.amount || 0}
@@ -240,7 +239,7 @@
                       >Tanda Nº3</span
                     >
                     <div class="text-sm">
-                      {#if $eventData?.event.ticket?.thirds_tickets?.amount <= 10}
+                      {#if $eventData?.event.ticket?.thirds_tickets?.amount <= 15}
                         <p>
                           Quedan {$eventData?.event.ticket?.thirds_tickets
                             ?.amount || 0}
@@ -299,8 +298,16 @@
                 </div>
               {:else}
                 <div class="mt-4">
-                  <DisclaimerModal disclaimers={$eventData?.event.disclaimers} {disclaimerEvent} />
-                  <ModalTickets nextEvent={$eventData?.event} {disclaimerEvent} />
+                  {#if $eventData?.event?.disclaimers}
+                    <DisclaimerModal
+                      disclaimers={$eventData?.event.disclaimers}
+                      {disclaimerEvent}
+                    />
+                    <ModalTickets
+                      nextEvent={$eventData?.event}
+                      {disclaimerEvent}
+                    />
+                  {/if}
                 </div>
               {/if}
             </div>
