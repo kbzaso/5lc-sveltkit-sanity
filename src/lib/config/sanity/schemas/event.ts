@@ -269,6 +269,18 @@ export default defineType({
       ],
     },
     {
+      name: "disclaimer",
+      title: "Disclaimer",
+      type: "array",
+      hidden: ({ document }) => document?.active === false,
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "disclaimer" }],
+        },
+      ],
+    },
+    {
       title: "SEO",
       name: "seo_description",
       type: "text",

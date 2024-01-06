@@ -56,6 +56,10 @@ export const eventFields = groq`
     sell,
     result,
     active,
+    "disclaimers": disclaimer[] -> {
+    title,
+    disclaimer,
+  },
     description,
     seo_description,
     poster,

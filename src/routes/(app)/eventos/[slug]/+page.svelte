@@ -10,25 +10,28 @@
   import ModalTickets from "$lib/components/ModalTickets.svelte";
   import Gallery from "$lib/components/Gallery.svelte";
   import Youtube from "$lib/components/Youtube.svelte";
+  import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
+  import { writable } from "svelte/store";
 
   export let data: PageData;
 
+  
   $: ({ initialData, previewMode, slug } = data);
   $: ({ data: eventData } = previewSubscription(eventQuery, {
     params: { slug },
     initialData,
     enabled: previewMode && !!slug,
   }));
-
+  
   $: eventDate = new Date($eventData?.event?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
-
+  
   let seo_image = urlForImage($page.data.initialData.event.poster).url();
-
+  
   let hasPhotos = [];
-
+  
   let formattedFirstsPrice: string;
   let formattedSecondsPrice: string;
   let formattedThirthsPrice: string;
@@ -36,7 +39,7 @@
     let firstTicketPrice = $eventData?.event.ticket?.firsts_tickets?.price;
     let secondsTicketPrice = $eventData?.event.ticket?.seconds_tickets?.price;
     let thirdsTicketPrice = $eventData?.event.ticket?.thirds_tickets?.price;
-
+    
     formattedFirstsPrice = new Intl.NumberFormat("es-CL", {
       style: "currency",
       currency: "CLP",
@@ -49,13 +52,15 @@
       style: "currency",
       currency: "CLP",
     }).format(thirdsTicketPrice);
-
+    
     if ($eventData?.event?.gallery !== null) {
       hasPhotos = Object.keys($eventData?.event?.gallery);
     } else {
       hasPhotos = [];
     }
   });
+  
+  let disclaimerEvent = writable([]);
 </script>
 
 <svelte:head>
@@ -90,21 +95,24 @@
 
 {#if $eventData?.event}
   <div class="xl:container xl:mx-auto min-w-[350px]">
-    <div
-      class="container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 h-min"
-    >
+    <div class="container xl:mx-auto min-w-[350px] mx-auto px-4 -mt-32 h-min">
       <div
         id="$eventData?.event"
         class="h-fit mt-40 sm:mt-52 lg:mt-56 flex flex-col lg:flex-row md:gap-4 lg:gap-0"
       >
         <div class="relative overflow-hidden">
-          <div class="absolute w-[640px] h-72 -bottom-5 lg:w-72 lg:h-full z-10  md:top-[480px] lg:top-0 lg:left-[280px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"></div>
+          <div
+            class="absolute w-[640px] h-72 -bottom-5 lg:w-72 lg:h-full z-10  md:top-[480px] lg:top-0 lg:left-[280px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"
+          />
           <img
             class="object-contain md:rounded-sm"
             loading="lazy"
             width="600"
             height="750"
-            src={urlForImage($eventData?.event.poster).width(600).height(750).url()}
+            src={urlForImage($eventData?.event.poster)
+              .width(600)
+              .height(750)
+              .url()}
             alt="Afiche del próximo evento"
           />
         </div>
@@ -177,8 +185,8 @@
                 <!-- TANDAS -->
                 <div class="flex gap-4 my-8">
                   <div
-                    class:opacity-50={$eventData?.event.ticket.firsts_tickets.amount ===
-                      0}
+                    class:opacity-50={$eventData?.event.ticket.firsts_tickets
+                      .amount === 0}
                     class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
                   >
                     <span
@@ -189,8 +197,8 @@
                       {#if $eventData?.event.ticket.firsts_tickets.amount !== 0}
                         {#if $eventData?.event.ticket?.firsts_tickets?.amount <= 10}
                           <p>
-                            Quedan {$eventData?.event.ticket?.firsts_tickets?.amount ||
-                              0}
+                            Quedan {$eventData?.event.ticket?.firsts_tickets
+                              ?.amount || 0}
                           </p>
                         {/if}
                         <p>{formattedFirstsPrice || 0}</p>
@@ -212,14 +220,11 @@
                       {#if $eventData?.event.ticket.seconds_tickets.amount !== 0}
                         {#if $eventData?.event.ticket?.seconds_tickets?.amount <= 10}
                           <p>
-                            Quedan {$eventData?.event.ticket?.seconds_tickets?.amount ||
-                              0}
+                            Quedan {$eventData?.event.ticket?.seconds_tickets
+                              ?.amount || 0}
                           </p>
                         {/if}
-                        <span
-                          >{formattedSecondsPrice ||
-                            0}</span
-                        >
+                        <span>{formattedSecondsPrice || 0}</span>
                       {:else}
                         <p>Agotada</p>
                       {/if}
@@ -235,15 +240,13 @@
                       >Tanda Nº3</span
                     >
                     <div class="text-sm">
-                        {#if $eventData?.event.ticket?.thirds_tickets?.amount <= 10}
-                          <p>
-                            Quedan {$eventData?.event.ticket?.thirds_tickets?.amount ||
-                              0}
-                          </p>
-                        {/if}
-                        <span
-                          >{formattedThirthsPrice || 0}</span
-                        >
+                      {#if $eventData?.event.ticket?.thirds_tickets?.amount <= 10}
+                        <p>
+                          Quedan {$eventData?.event.ticket?.thirds_tickets
+                            ?.amount || 0}
+                        </p>
+                      {/if}
+                      <span>{formattedThirthsPrice || 0}</span>
                     </div>
                   </div>
                 </div>
@@ -251,7 +254,8 @@
                 <div>
                   <div class="flex justify-between">
                     <span class="text-gray-400"
-                      >🎟️ {$eventData?.event.ticket?.seconds_tickets?.amount <= 10
+                      >🎟️ {$eventData?.event.ticket?.seconds_tickets?.amount <=
+                      10
                         ? "¡Últimas entradas!, no te quedes fuera."
                         : "Progreso de venta de tickets"}</span
                     >
@@ -261,7 +265,8 @@
                     class={`progress w-full ${
                       $eventData?.event.ticket?.firsts_tickets?.amount !== 0
                         ? "progress-success"
-                        : $eventData?.event.ticket?.seconds_tickets?.amount !== 0
+                        : $eventData?.event.ticket?.seconds_tickets?.amount !==
+                          0
                         ? "progress-info"
                         : "progress-error"
                     }`}
@@ -270,7 +275,7 @@
                   />
                 </div>
               {/if}
-              {#if $eventData?.event.tickets_sold === $eventData?.event.total_tickets && $eventData?.event.active || !$eventData?.event.sell}
+              {#if ($eventData?.event.tickets_sold === $eventData?.event.total_tickets && $eventData?.event.active) || !$eventData?.event.sell}
                 <div
                   class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
                 >
@@ -294,7 +299,8 @@
                 </div>
               {:else}
                 <div class="mt-4">
-                  <ModalTickets nextEvent={$eventData?.event} />
+                  <DisclaimerModal disclaimers={$eventData?.event.disclaimers} {disclaimerEvent} />
+                  <ModalTickets nextEvent={$eventData?.event} {disclaimerEvent} />
                 </div>
               {/if}
             </div>
