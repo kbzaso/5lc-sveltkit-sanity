@@ -53,76 +53,8 @@
 
 <main class="container mx-auto px-4 mt-36 mb-20 space-y-20">
   <div>
-    {#if events && events.length > 0}
-      <h1 class="text-3xl sub-title text-white sm:text-4xl">
-        Próximos eventos
-      </h1>
-      <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {#each events as event}
-          <a href={`/eventos/${event.slug}`}>
-            <div
-              class="relative overflow-hidden w-full group border-gray-600 border hover:border-primary rounded-none transition-all h-fit md:h-96"
-            >
-              <figure class="z-10">
-                <img
-                  width="600"
-                  height="600"
-                  loading="lazy"
-                  class="object-cover object-top h-72 md:h-96 w-full"
-                  src={urlForImage(event.poster)
-                    .height(600)
-                    .width(600)
-                    .quality(80)
-                    .url()}
-                  alt={event.title}
-                />
-              </figure>
-
-              <div
-                class="bg-zinc-900/50 h-max grow backdrop-blur-xl absolute bottom-0 z-10 w-full pb-4"
-              >
-                <p
-                  class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-4 px-4 pt-0"
-                >
-                  <time datetime={event.date.toString()}>
-                    {new Date(event.date).toLocaleDateString(
-                      "es-CL",
-                      LocaleConfig
-                    )}
-                  </time>
-                </p>
-
-                <h2
-                  class="text-primary font-ibm italic text-2xl md:text-4xl px-4 pt-0"
-                >
-                  {event.title}
-                </h2>
-              </div>
-            </div>
-          </a>
-        {/each}
-      </div>
-    {/if}
-
-    {#if events && events.length === 0}
-      <div class="flex flex-col items-center justify-center mt-20">
-        <h2
-          class="text-3xl font-bold leading-8 text-white sm:text-4xl font-ibm text-center"
-        >
-          No tenemos eventos programados
-        </h2>
-        <p class="text-center mt-4 prose mb-4 text-gray-400">
-          Esperamos prontamente anunciar una próxima fecha.
-        </p>
-        <img
-          src="https://media2.giphy.com/media/l0HUoARsBRbpGOsXm/giphy.gif?cid=6c09b9529c6a234ab4d136b91c0ca8a7768b8a7db519d931&ep=v1_internal_gifs_gifId&rid=giphy.gif&ct=g"
-          alt=""
-        />
-      </div>
-    {/if}
-
     <h2 class="text-3xl sub-title text-white sm:text-4xl mt-6">
-      Resultados
+      Eventos pasados
     </h2>
     <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#each results as result}

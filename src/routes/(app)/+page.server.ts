@@ -6,6 +6,7 @@ import {
   settingsQuery,
   welcomeQuery,
   nextEventQuery,
+  ActiveEventsQuery
 } from "$lib/config/sanity/queries";
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
@@ -26,6 +27,8 @@ export const load: PageServerLoad = async () => {
   const settings = await getSanityServerClient(false).fetch(settingsQuery);
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
   let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
+  let events = await getSanityServerClient(false).fetch(ActiveEventsQuery);
+  
 
   if (!settings) {
     throw error(500, "Settings not found");
@@ -33,76 +36,9 @@ export const load: PageServerLoad = async () => {
   if (!welcome) {
     throw error(500, "Settings not found");
   }
-  if (!nextEvent) {
-    nextEvent = false;
-  } else {
-    // Cuantos tickets se han vendido de un evento en especifico
-    const ticketsSold = await client.payment.aggregate({
-      where: {
-        payment_status: "success",
-        AND: [
-          {
-            productId: nextEvent._id,
-          },
-        ],
-      },
-      _sum: {
-        ticketAmount: true,
-      },
-    });
-
-    let ticketsSoldCount = ticketsSold._sum?.ticketAmount || 0;
-    // ================================
-
-    const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
-    const ticketSystem = {
-      firsts_tickets: {
-        amount: nextEvent.ticket.firsts_tickets.amount,
-        price: nextEvent.ticket.firsts_tickets.price,
-      },
-      seconds_tickets: {
-        amount: nextEvent.ticket.seconds_tickets.amount,
-        price: nextEvent.ticket.seconds_tickets.price,
-      },
-      thirds_tickets: {
-        amount: nextEvent.ticket.thirds_tickets.amount,
-        price: nextEvent.ticket.thirds_tickets.price,
-      },
-    };
-
-    // Suma de tickets que quedan en el Studio
-    const totalTicketsLeftStudio = nextEvent.ticket.firsts_tickets.amount + nextEvent.ticket.seconds_tickets.amount + nextEvent.ticket.thirds_tickets.amount
-    // Suma de tickets que quedan en el Studio + los que se han vendido
-    const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
-
-    let remainingTickets = {};
-
-    // Recalculate the ticket object
-    for (let i = 0; i < partsOrder.length; i++) {
-      let part = partsOrder[i];
-    
-      if (ticketsSoldCount >= ticketSystem[part].amount) {
-        ticketsSoldCount -= ticketSystem[part].amount;
-        ticketSystem[part].amount = 0;
-      } else {
-        ticketSystem[part].amount -= ticketsSoldCount;
-        ticketsSoldCount = 0;
-      }
-    
-      remainingTickets[part] = {
-        amount: ticketSystem[part].amount,
-        price: ticketSystem[part].price,
-      };
-    }
-
-    nextEvent = {
-      ...nextEvent,
-      tickets_sold: ticketsSold._sum?.ticketAmount || 0,
-      total_tickets: totalTickets
-    };
-  }
 
   return {
+    events,
     settings,
     welcome,
     nextEvent,

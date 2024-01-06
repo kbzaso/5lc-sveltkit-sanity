@@ -176,7 +176,7 @@ export const eventQuery = groq`
   }
 }`;
 
-export const allEventsQuery = groq`
+export const ActiveEventsQuery = groq`
 *[_type == "event" && active == true] | order(date desc, _updatedAt desc) {
   ${eventFields}
 }`;
