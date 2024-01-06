@@ -57,6 +57,7 @@
     } else {
       hasPhotos = [];
     }
+    console.log($eventData);
   });
 
   let disclaimerEvent = writable([]);
@@ -115,200 +116,273 @@
             alt="Afiche del próximo evento"
           />
         </div>
-        <div class="z-10 pb-16 relative -top-20 lg:top-0 xl:top-20 lg:-left-12">
+        <div class="z-10 relative -top-20 lg:top-0 xl:top-20 lg:-left-12">
           <div class="mt-4 lg:mt-0">
             <div class="mx-auto text-base lg:ml-auto lg:mr-0">
-              <h2
-                class="font-semibold leading-6 text-primary uppercase tracking-widest"
-              >
-                Próximo evento
-              </h2>
-              <h1
-                class="mt-2 text-3xl font-bold leading-8 text-white sm:text-4xl"
-              >
-                {$eventData?.event.title}
-                <span
-                  class="font-semibold leading-6 text-primary uppercase tracking-widest text-lg"
-                  >(+18)</span
+              
+              <!-- EVENTO PASADO -->
+              {#if !$eventData?.event?.active}
+                <time
+                  class="italic text-gray-500"
+                  datetime={eventDateFormatted.charAt(0).toUpperCase() +
+                    eventDateFormatted.slice(1)}
                 >
-              </h1>
-              <div class="prose prose-indigo mt-5">
-                <p>
-                  <PortableText value={$eventData?.event.description} />
-                </p>
-
-                <ul>
-                  <li>
-                    <time datetime={eventDateFormatted}>
-                      {eventDateFormatted.charAt(0).toUpperCase() +
-                        eventDateFormatted.slice(1)}
-                    </time>
-                  </li>
-                  <li>
-                    <time datetime={eventDateFormatted}>
-                      {hours}:{minutes < 10 ? "0" + minutes : minutes}
-                    </time>
-                    → Inicio show
-                    <span class="italic text-gray-400"
-                      >(apertura 45 minutos antes)</span
-                    >
-                  </li>
-                  {#if $eventData?.event.boveda}
-                    <li>
-                      Bóveda Secreta - <a
-                        class="text-primary"
+                  {eventDateFormatted.charAt(0).toUpperCase() +
+                    eventDateFormatted.slice(1)}
+                </time>
+                <h1
+                  class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl"
+                >
+                  {$eventData?.event?.title}
+                  <span
+                    class="font-semibold leading-6 text-primary uppercase tracking-widest text-lg"
+                    >(+18)</span
+                  >
+                </h1>
+                <p
+                  class="prose prose-h3:text-primary prose-h2:font-ibm prose-h3:font-ibm prose-h2:text-primary prose-h1:text-primary prose-indigo mt-5"
+                >
+                  {#if $eventData?.event?.result}
+                    <p>Estos fueron los resultados:</p>
+                    <PortableText value={$eventData?.event?.result} />
+                  {/if}
+                  {#if !$eventData?.event.boveda}
+                    <p>
+                      Este evento se realizo en {$eventData.event.venue
+                        ?.venueName} -
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={$eventData.event.venue?.venueUrl}
+                      >
+                        {$eventData.event.venue?.venueAdress}</a
+                      >
+                    </p>
+                  {:else}
+                    <p>
+                      Este evento se realizo en Bóveda Secreta - <a
                         target="_blank"
                         rel="noreferrer"
                         href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
                       >
                         San Antonio 705, Santiago, Región Metropolitana</a
                       >
-                    </li>
-                  {:else}
-                    <li>
-                      {$eventData?.event.venue?.venueName} -
-                      <a
-                        class="text-primary"
-                        target="_blank"
-                        rel="noreferrer"
-                        href={$eventData?.event.venue?.venueUrl}
-                      >
-                        {$eventData?.event.venue?.venueAdress}</a
-                      >
-                    </li>
+                    </p>
                   {/if}
-                </ul>
-              </div>
+                </p>
 
-              {#if $eventData?.event.tickets_sold !== $eventData?.event.total_tickets && $eventData?.event.active && $eventData?.event.sell}
-                <!-- TANDAS -->
-                <div class="flex gap-4 my-8">
-                  <div
-                    class:opacity-50={$eventData?.event.ticket.firsts_tickets
-                      .amount === 0}
-                    class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
-                  >
-                    <span
-                      class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
-                      >Tanda Nº1</span
-                    >
-                    <div class="text-sm">
-                      {#if $eventData?.event.ticket.firsts_tickets.amount !== 0}
-                        {#if $eventData?.event.ticket?.firsts_tickets?.amount <= 15}
-                          <p>
-                            Quedan {$eventData?.event.ticket?.firsts_tickets
-                              ?.amount || 0}
-                          </p>
-                        {/if}
-                        <p>{formattedFirstsPrice || 0}</p>
-                      {:else}
-                        <p>Agotada</p>
-                      {/if}
-                    </div>
-                  </div>
-                  <div
-                    class:opacity-50={$eventData?.event.ticket?.seconds_tickets
-                      ?.amount === 0}
-                    class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
-                  >
-                    <span
-                      class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
-                      >Tanda Nº2</span
-                    >
-                    <div class="text-sm">
-                      {#if $eventData?.event.ticket.seconds_tickets.amount !== 0}
-                        {#if $eventData?.event.ticket?.seconds_tickets?.amount <= 15}
-                          <p>
-                            Quedan {$eventData?.event.ticket?.seconds_tickets
-                              ?.amount || 0}
-                          </p>
-                        {/if}
-                        <span>{formattedSecondsPrice || 0}</span>
-                      {:else}
-                        <p>Agotada</p>
-                      {/if}
-                    </div>
-                  </div>
-                  <div
-                    class:opacity-50={$eventData?.event.ticket?.thirds_tickets
-                      ?.amount === 0}
-                    class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
-                  >
-                    <span
-                      class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
-                      >Tanda Nº3</span
-                    >
-                    <div class="text-sm">
-                      {#if $eventData?.event.ticket?.thirds_tickets?.amount <= 15}
-                        <p>
-                          Quedan {$eventData?.event.ticket?.thirds_tickets
-                            ?.amount || 0}
-                        </p>
-                      {/if}
-                      <span>{formattedThirthsPrice || 0}</span>
-                    </div>
-                  </div>
-                </div>
-                <!-- PROGRESS -->
-                <div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-400"
-                      >🎟️ {$eventData?.event.ticket?.seconds_tickets?.amount <=
-                      10
-                        ? "¡Últimas entradas!, no te quedes fuera."
-                        : "Progreso de venta de tickets"}</span
-                    >
-                    <span class="animate-bounce">🔥</span>
-                  </div>
-                  <progress
-                    class={`progress w-full ${
-                      $eventData?.event.ticket?.firsts_tickets?.amount !== 0
-                        ? "progress-success"
-                        : $eventData?.event.ticket?.seconds_tickets?.amount !==
-                          0
-                        ? "progress-info"
-                        : "progress-error"
-                    }`}
-                    value={$eventData?.event?.tickets_sold}
-                    max={$eventData?.event?.total_tickets}
-                  />
-                </div>
               {/if}
-              {#if ($eventData?.event.tickets_sold === $eventData?.event.total_tickets && $eventData?.event.active) || !$eventData?.event.sell}
-                <div
-                  class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                    />
-                  </svg>
 
-                  <span class="uppercase tracking-widest">Adhesión agotada</span
+              <!-- EVENTO ACTIVO -->
+
+              {#if $eventData?.event?.active}
+                <h2
+                  class="font-semibold leading-6 text-primary uppercase tracking-widest"
+                >
+                  Próximo evento
+                </h2>
+                <h1
+                  class="mt-2 text-3xl font-bold leading-8 text-white sm:text-4xl"
+                >
+                  {$eventData?.event.title}
+                  <span
+                    class="font-semibold leading-6 text-primary uppercase tracking-widest text-lg"
+                    >(+18)</span
                   >
-                </div>
-              {:else}
-                <div class="mt-4">
-                  {#if $eventData?.event?.disclaimers}
-                    <DisclaimerModal
-                      disclaimers={$eventData?.event.disclaimers}
-                      {disclaimerEvent}
-                    />
-                    <ModalTickets
-                      nextEvent={$eventData?.event}
-                      {disclaimerEvent}
-                    />
+                </h1>
+                <div class="prose prose-indigo mt-5">
+                  <p>
+                    <PortableText value={$eventData?.event?.description} />
+                  </p>
+
+                  <ul>
+                    <li>
+                      <time datetime={eventDateFormatted}>
+                        {eventDateFormatted.charAt(0).toUpperCase() +
+                          eventDateFormatted.slice(1)}
+                      </time>
+                    </li>
+                    <li>
+                      <time datetime={eventDateFormatted}>
+                        {hours}:{minutes < 10 ? "0" + minutes : minutes}
+                      </time>
+                      → Inicio show
+                      <span class="italic text-gray-400"
+                        >(apertura 45 minutos antes)</span
+                      >
+                    </li>
+                    {#if $eventData?.event.boveda}
+                      <li>
+                        Bóveda Secreta - <a
+                          class="text-primary"
+                          target="_blank"
+                          rel="noreferrer"
+                          href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
+                        >
+                          San Antonio 705, Santiago, Región Metropolitana</a
+                        >
+                      </li>
+                    {:else}
+                      <li>
+                        {$eventData?.event.venue?.venueName} -
+                        <a
+                          class="text-primary"
+                          target="_blank"
+                          rel="noreferrer"
+                          href={$eventData?.event.venue?.venueUrl}
+                        >
+                          {$eventData?.event.venue?.venueAdress}</a
+                        >
+                      </li>
+                    {/if}
+                  </ul>
+
+                  {#if $eventData?.event.boveda}
+                    <p class="border border-dashed border-primary p-4 text-sm">
+                      La Bóveda Secreta se encuentra en el 3er piso de la
+                      Galería “Nueva Copacabana” ubicada en calle San Antonio
+                      #705, Santiago Centro. Las estaciones de Metro más
+                      cercanas a ella son <span class="text-primary"
+                        >Plaza de Armas</span
+                      >,
+                      <span class="text-primary">Bellas Artes</span>
+                      y
+                      <span class="text-primary">Puente Cal y Canto</span>.
+                    </p>
                   {/if}
                 </div>
+
+                {#if $eventData?.event.tickets_sold !== $eventData?.event.total_tickets && $eventData?.event.active && $eventData?.event.sell}
+                  <!-- TANDAS -->
+                  <div class="flex gap-4 my-8">
+                    <div
+                      class:opacity-50={$eventData?.event.ticket.firsts_tickets
+                        .amount === 0}
+                      class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
+                    >
+                      <span
+                        class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
+                        >Tanda Nº1</span
+                      >
+                      <div class="text-sm">
+                        {#if $eventData?.event.ticket.firsts_tickets.amount !== 0}
+                          {#if $eventData?.event.ticket?.firsts_tickets?.amount <= 15}
+                            <p>
+                              Quedan {$eventData?.event.ticket?.firsts_tickets
+                                ?.amount || 0}
+                            </p>
+                          {/if}
+                          <p>{formattedFirstsPrice || 0}</p>
+                        {:else}
+                          <p>Agotada</p>
+                        {/if}
+                      </div>
+                    </div>
+                    <div
+                      class:opacity-50={$eventData?.event.ticket
+                        ?.seconds_tickets?.amount === 0}
+                      class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
+                    >
+                      <span
+                        class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
+                        >Tanda Nº2</span
+                      >
+                      <div class="text-sm">
+                        {#if $eventData?.event.ticket.seconds_tickets.amount !== 0}
+                          {#if $eventData?.event.ticket?.seconds_tickets?.amount <= 15}
+                            <p>
+                              Quedan {$eventData?.event.ticket?.seconds_tickets
+                                ?.amount || 0}
+                            </p>
+                          {/if}
+                          <span>{formattedSecondsPrice || 0}</span>
+                        {:else}
+                          <p>Agotada</p>
+                        {/if}
+                      </div>
+                    </div>
+                    <div
+                      class:opacity-50={$eventData?.event.ticket?.thirds_tickets
+                        ?.amount === 0}
+                      class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
+                    >
+                      <span
+                        class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
+                        >Tanda Nº3</span
+                      >
+                      <div class="text-sm">
+                        {#if $eventData?.event.ticket?.thirds_tickets?.amount <= 15}
+                          <p>
+                            Quedan {$eventData?.event.ticket?.thirds_tickets
+                              ?.amount || 0}
+                          </p>
+                        {/if}
+                        <span>{formattedThirthsPrice || 0}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- PROGRESS -->
+                  <div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-400"
+                        >🎟️ {$eventData?.event.ticket?.seconds_tickets
+                          ?.amount <= 10
+                          ? "¡Últimas entradas!, no te quedes fuera."
+                          : "Progreso de venta de tickets"}</span
+                      >
+                      <span class="animate-bounce">🔥</span>
+                    </div>
+                    <progress
+                      class={`progress w-full ${
+                        $eventData?.event.ticket?.firsts_tickets?.amount !== 0
+                          ? "progress-success"
+                          : $eventData?.event.ticket?.seconds_tickets
+                              ?.amount !== 0
+                          ? "progress-info"
+                          : "progress-error"
+                      }`}
+                      value={$eventData?.event?.tickets_sold}
+                      max={$eventData?.event?.total_tickets}
+                    />
+                  </div>
+                {/if}
+                {#if ($eventData?.event.tickets_sold === $eventData?.event.total_tickets && $eventData?.event.active) || !$eventData?.event.sell}
+                  <div
+                    class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+                      />
+                    </svg>
+
+                    <span class="uppercase tracking-widest"
+                      >Adhesión agotada</span
+                    >
+                  </div>
+                {:else}
+                  <div class="mt-4">
+                    {#if $eventData?.event?.disclaimers}
+                      <DisclaimerModal
+                        disclaimers={$eventData?.event.disclaimers}
+                        {disclaimerEvent}
+                      />
+                      <ModalTickets
+                        nextEvent={$eventData?.event}
+                        {disclaimerEvent}
+                      />
+                    {/if}
+                  </div>
+                {/if}
               {/if}
             </div>
           </div>
@@ -317,7 +391,7 @@
     </div>
 
     {#if hasPhotos.length > 0}
-      <section class="mt-10 md:mt-20">
+      <section class="md:mt-20">
         <h2 class="sub-title px-4">Galería de imagenes</h2>
         <div
           class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
