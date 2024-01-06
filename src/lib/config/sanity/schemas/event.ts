@@ -269,6 +269,19 @@ export default defineType({
       ],
     },
     {
+      name: "disclaimer",
+      title: "Disclaimer",
+      type: "array",
+      hidden: ({ document }) => document?.active === false,
+      description: "Debes seleccionar el disclaimer del evento, si no hay uno seleccionado, no se mostrara el botón de compra.",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "disclaimer" }],
+        },
+      ],
+    },
+    {
       title: "SEO",
       name: "seo_description",
       type: "text",

@@ -53,9 +53,18 @@ export interface Event {
     venueAdress: string;
   };
   ticket: {
-    url: string;
-    price: number;
-    soldOut: boolean;
+    firsts_tickets: {
+      price: number;
+      amount: number;
+    };
+    seconds_tickets: {
+      price: number;
+      amount: number;
+    };
+    thirds_tickets: {
+      price: number;
+      amount: number;
+    };
   };
   description: InputValue;
   result: InputValue;
@@ -64,6 +73,8 @@ export interface Event {
   poster: SanityImageSource;
   slug: string;
   videoUrl: string;
+  disclaimers: [];
+  sell: boolean;
 }
 
 export interface Settings {
