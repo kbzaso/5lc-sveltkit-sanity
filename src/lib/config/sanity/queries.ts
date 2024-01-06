@@ -56,6 +56,10 @@ export const eventFields = groq`
     sell,
     result,
     active,
+    "disclaimers": disclaimer[] -> {
+    title,
+    disclaimer,
+  },
     description,
     seo_description,
     poster,
@@ -172,7 +176,7 @@ export const eventQuery = groq`
   }
 }`;
 
-export const allEventsQuery = groq`
+export const ActiveEventsQuery = groq`
 *[_type == "event" && active == true] | order(date desc, _updatedAt desc) {
   ${eventFields}
 }`;

@@ -93,7 +93,7 @@
 
         <a
           class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
-          href="/eventos">Eventos</a
+          href="/eventos">Eventos pasados</a
         >
 
 
@@ -154,7 +154,7 @@
 
         <SidebarItem
           href="/eventos"
-          label="Eventos"
+          label="Eventos pasados"
           data-sveltekit-preload-data="hover"
           on:click={() => (hidden2 = true)}
         />
