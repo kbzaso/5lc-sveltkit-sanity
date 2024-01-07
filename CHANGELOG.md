@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.11] - 2024-01-07
+
 ### Fixed
 
 - Fix webhook to update the DB
@@ -65,7 +67,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.10...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.11...HEAD
+[0.0.10]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.1'...0.0.11
 [0.0.9]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.9...0.0.10
 [0.0.9]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.8...0.0.9
 [0.0.8]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.7...0.0.8
