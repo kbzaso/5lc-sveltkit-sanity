@@ -198,13 +198,13 @@ export const actions: Actions = {
         update: {
           name: event.title,
           stock: total_tickets,
-          date: event.date.toISOString(),
+          date: event.date,
         },
         create: {
           id: event._id,
           name: event.title,
           stock: total_tickets,
-          date: event.date.toISOString(),
+          date: event.date,
         },
       });
 

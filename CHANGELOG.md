@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix webhook to update the DB
+
 ## [0.0.10] - 2024-01-06
 
 ### Fixed
