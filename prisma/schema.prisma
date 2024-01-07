@@ -10,24 +10,52 @@ datasource db {
 
 model Payment {
   id              String   @id @unique
-  customer_name   String
-  customer_email  String
   rut             String?
-  customer_phone  String?
   price           Float
   ticketAmount    Int
   date            DateTime @default(now())
   signature_token String
   payment_status  String?
   payment_token   String?
-  product         Product  @relation(fields: [productId], references: [id])
+  customer_email  String
+  customer_name   String
+  customer_phone  String?
   productId       String
   buys            Json
+  product         Product  @relation(fields: [productId], references: [id])
 }
 
 model Product {
   id       String    @id @unique
   name     String
-  payments Payment[]
   stock    Int?
+  date     DateTime? @db.Timestamptz(6)
+  payments Payment[]
+}
+
+model Key {
+  id              String  @id @unique
+  hashed_password String?
+  user_id         String
+  User            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model Session {
+  id             String @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  User           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model User {
+  id       String    @id @unique
+  name     String?
+  username String    @unique
+  Key      Key[]
+  Session  Session[]
 }
