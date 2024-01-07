@@ -124,9 +124,6 @@ export const actions: Actions = {
       slug: params.slug,
     });
 
-
-    console.log(event)
-
     const totalTicketsLeftStudio = event.ticket.firsts_tickets.amount + event.ticket.seconds_tickets.amount + event.ticket.thirds_tickets.amount
     const ticketsSold = await client.payment.aggregate({
       where: {
@@ -141,6 +138,7 @@ export const actions: Actions = {
         ticketAmount: true,
       },
     });
+
     const total_tickets = totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
 
     const form = await request.formData();
@@ -200,6 +198,7 @@ export const actions: Actions = {
         update: {
           name: event.title,
           stock: total_tickets,
+          date: event.date,
         },
         create: {
           id: event._id,
