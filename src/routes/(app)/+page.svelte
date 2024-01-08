@@ -86,7 +86,7 @@
     textTitle={welcome.textTitle}
     description={welcome.description}
   />
-  <main class="container px-4 mt-10">
+  <main class="container px-4 mt-10 mx-auto">
     {#if events && events.length > 0}
       <h1 class="text-3xl sub-title text-white sm:text-4xl">
         Próximos eventos

@@ -55,21 +55,21 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
     const ticketSystem = {
       firsts_tickets: {
-        amount: event.ticket.firsts_tickets.amount,
-        price: event.ticket.firsts_tickets.price,
+        amount: event?.ticket?.firsts_tickets?.amount,
+        price: event?.ticket?.firsts_tickets?.price,
       },
       seconds_tickets: {
-        amount: event.ticket.seconds_tickets.amount,
-        price: event.ticket.seconds_tickets.price,
+        amount: event?.ticket?.seconds_tickets?.amount,
+        price: event?.ticket?.seconds_tickets?.price,
       },
       thirds_tickets: {
-        amount: event.ticket.thirds_tickets.amount,
-        price: event.ticket.thirds_tickets.price,
+        amount: event?.ticket?.thirds_tickets?.amount,
+        price: event?.ticket?.thirds_tickets?.price,
       },
     };
 
     // Suma de tickets que quedan en el Studio
-    const totalTicketsLeftStudio = event.ticket.firsts_tickets.amount + event.ticket.seconds_tickets.amount + event.ticket.thirds_tickets.amount
+    const totalTicketsLeftStudio = event?.ticket?.firsts_tickets?.amount + event?.ticket?.seconds_tickets?.amount + event?.ticket?.thirds_tickets?.amount
     // Suma de tickets que quedan en el Studio + los que se han vendido
     const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
 
