@@ -57,7 +57,6 @@
     } else {
       hasPhotos = [];
     }
-    console.log($eventData);
   });
 
   let disclaimerEvent = writable([]);
@@ -256,7 +255,7 @@
                   <!-- TANDAS -->
                   <div class="flex gap-4 my-8">
                     <div
-                      class:opacity-50={$eventData?.event.ticket.firsts_tickets
+                      class:opacity-50={$eventData?.event?.ticket?.firsts_tickets
                         .amount === 0}
                       class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
                     >
@@ -265,10 +264,10 @@
                         >Tanda Nº1</span
                       >
                       <div class="text-sm">
-                        {#if $eventData?.event.ticket.firsts_tickets.amount !== 0}
-                          {#if $eventData?.event.ticket?.firsts_tickets?.amount <= 15}
+                        {#if $eventData?.event?.ticket?.firsts_tickets?.amount !== 0}
+                          {#if $eventData?.event?.ticket?.firsts_tickets?.amount <= 15}
                             <p>
-                              Quedan {$eventData?.event.ticket?.firsts_tickets
+                              Quedan {$eventData?.event?.ticket?.firsts_tickets
                                 ?.amount || 0}
                             </p>
                           {/if}
@@ -288,10 +287,10 @@
                         >Tanda Nº2</span
                       >
                       <div class="text-sm">
-                        {#if $eventData?.event.ticket.seconds_tickets.amount !== 0}
-                          {#if $eventData?.event.ticket?.seconds_tickets?.amount <= 15}
+                        {#if $eventData?.event?.ticket?.seconds_tickets?.amount !== 0}
+                          {#if $eventData?.event?.ticket?.seconds_tickets?.amount <= 15}
                             <p>
-                              Quedan {$eventData?.event.ticket?.seconds_tickets
+                              Quedan {$eventData?.event?.ticket?.seconds_tickets
                                 ?.amount || 0}
                             </p>
                           {/if}
@@ -302,7 +301,7 @@
                       </div>
                     </div>
                     <div
-                      class:opacity-50={$eventData?.event.ticket?.thirds_tickets
+                      class:opacity-50={$eventData?.event?.ticket?.thirds_tickets
                         ?.amount === 0}
                       class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
                     >
@@ -311,9 +310,9 @@
                         >Tanda Nº3</span
                       >
                       <div class="text-sm">
-                        {#if $eventData?.event.ticket?.thirds_tickets?.amount <= 15}
+                        {#if $eventData?.event?.ticket?.thirds_tickets?.amount <= 15}
                           <p>
-                            Quedan {$eventData?.event.ticket?.thirds_tickets
+                            Quedan {$eventData?.event?.ticket?.thirds_tickets
                               ?.amount || 0}
                           </p>
                         {/if}
@@ -325,7 +324,7 @@
                   <div>
                     <div class="flex justify-between">
                       <span class="text-gray-400"
-                        >🎟️ {$eventData?.event.ticket?.seconds_tickets
+                        >🎟️ {$eventData?.event?.ticket?.seconds_tickets
                           ?.amount <= 10
                           ? "¡Últimas entradas!, no te quedes fuera."
                           : "Progreso de venta de tickets"}</span
@@ -334,9 +333,9 @@
                     </div>
                     <progress
                       class={`progress w-full ${
-                        $eventData?.event.ticket?.firsts_tickets?.amount !== 0
+                        $eventData?.event?.ticket?.firsts_tickets?.amount !== 0
                           ? "progress-success"
-                          : $eventData?.event.ticket?.seconds_tickets
+                          : $eventData?.event?.ticket?.seconds_tickets
                               ?.amount !== 0
                           ? "progress-info"
                           : "progress-error"
@@ -346,7 +345,7 @@
                     />
                   </div>
                 {/if}
-                {#if ($eventData?.event.tickets_sold === $eventData?.event.total_tickets && $eventData?.event.active) || !$eventData?.event.sell}
+                {#if ($eventData?.event?.tickets_sold === $eventData?.event?.total_tickets && $eventData?.event?.active) || !$eventData?.event?.sell}
                   <div
                     class="alert alert-error shadow-lg flex justify-center rounded-none mt-4"
                   >
@@ -373,7 +372,7 @@
                   <div class="mt-4">
                     {#if $eventData?.event?.disclaimers}
                       <DisclaimerModal
-                        disclaimers={$eventData?.event.disclaimers}
+                        disclaimers={$eventData?.event?.disclaimers}
                         {disclaimerEvent}
                       />
                       <ModalTickets
@@ -409,7 +408,7 @@
       link={$eventData?.event.videoUrl}
       image={$eventData?.event?.gallery
         ? $eventData?.event?.gallery[0]
-        : data.welcome.backgroundImage}
+        : $page.data.welcome.heroImage}
     />
   {/if}
 {:else}
