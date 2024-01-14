@@ -62,6 +62,8 @@
   });
 
   let disclaimerEvent = writable([]);
+
+  console.log($eventData?.event?.playlist);
 </script>
 
 <svelte:head>
@@ -170,11 +172,12 @@
                     </p>
                   {/if}
                 </p>
-
-                <AttendanceStat
-                  assistance={$eventData.event.assistance}
-                  event={$eventData.event.title}
-                />
+                {#if $eventData?.event?.assistance && !$eventData?.event?.active}
+                  <AttendanceStat
+                    assistance={$eventData.event.assistance}
+                    event={$eventData.event.title}
+                  />
+                {/if}
               {/if}
 
               <!-- EVENTO ACTIVO -->
@@ -417,7 +420,7 @@
     />
   {/if}
   {#if $eventData?.event.playlist && !$eventData?.event.active}
-  <Spotify src={$eventData.event.playlist} />
+    <Spotify src={$eventData.event.playlist} />
   {/if}
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>
