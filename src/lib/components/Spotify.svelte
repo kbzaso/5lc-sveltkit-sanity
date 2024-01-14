@@ -4,7 +4,7 @@
 
 <div class="mx-auto container flex flex-col lg:flex-row justify-between  px-4 mt-10 gap-4 lg:gap-20">
   <iframe
-  class="md:order-1 order-2 w-full h-[400px] lg:w-3/5"
+  class="lg:order-1 order-2 w-full h-[400px] lg:w-3/5"
     title="Spotify Playlist"
     style="border-radius:12px"
     src={src}
@@ -14,7 +14,7 @@
     loading="lazy"
   />
 
-  <div class=" lg:w-2/5 self-center text-pretty md:order-2 order-1">
+  <div class="lg:w-2/5 self-center text-pretty lg:order-2 order-1">
     <h2
       class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl font-ibm"
     >
