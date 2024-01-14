@@ -95,4 +95,6 @@ export interface Event {
   date: string;
   total_tickets: number;
   tickets_sold: number;
+  assistance: number;
+  playlist: string;
 }

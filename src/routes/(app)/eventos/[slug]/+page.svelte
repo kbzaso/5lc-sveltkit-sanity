@@ -12,6 +12,8 @@
   import Youtube from "$lib/components/Youtube.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
   import { writable } from "svelte/store";
+  import AttendanceStat from "$lib/components/AttendanceStat.svelte";
+  import Spotify from "$lib/components/Spotify.svelte";
 
   export let data: PageData;
 
@@ -60,6 +62,8 @@
   });
 
   let disclaimerEvent = writable([]);
+
+  console.log($eventData?.event?.playlist);
 </script>
 
 <svelte:head>
@@ -118,7 +122,6 @@
         <div class="z-10 relative -top-20 lg:top-0 xl:top-20 lg:-left-12">
           <div class="mt-4 lg:mt-0">
             <div class="mx-auto text-base lg:ml-auto lg:mr-0">
-              
               <!-- EVENTO PASADO -->
               {#if !$eventData?.event?.active}
                 <time
@@ -169,7 +172,12 @@
                     </p>
                   {/if}
                 </p>
-
+                {#if $eventData?.event?.assistance && !$eventData?.event?.active}
+                  <AttendanceStat
+                    assistance={$eventData.event.assistance}
+                    event={$eventData.event.title}
+                  />
+                {/if}
               {/if}
 
               <!-- EVENTO ACTIVO -->
@@ -255,8 +263,8 @@
                   <!-- TANDAS -->
                   <div class="flex gap-4 my-8">
                     <div
-                      class:opacity-50={$eventData?.event?.ticket?.firsts_tickets
-                        .amount === 0}
+                      class:opacity-50={$eventData?.event?.ticket
+                        ?.firsts_tickets.amount === 0}
                       class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
                     >
                       <span
@@ -301,8 +309,8 @@
                       </div>
                     </div>
                     <div
-                      class:opacity-50={$eventData?.event?.ticket?.thirds_tickets
-                        ?.amount === 0}
+                      class:opacity-50={$eventData?.event?.ticket
+                        ?.thirds_tickets?.amount === 0}
                       class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
                     >
                       <span
@@ -403,13 +411,16 @@
       </section>
     {/if}
   </div>
-  {#if $eventData?.event.videoUrl}
+  {#if $eventData?.event.videoUrl && !$eventData?.event.active}
     <Youtube
       link={$eventData?.event.videoUrl}
       image={$eventData?.event?.gallery
         ? $eventData?.event?.gallery[0]
         : $page.data.welcome.heroImage}
     />
+  {/if}
+  {#if $eventData?.event.playlist && !$eventData?.event.active}
+    <Spotify src={$eventData.event.playlist} />
   {/if}
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>

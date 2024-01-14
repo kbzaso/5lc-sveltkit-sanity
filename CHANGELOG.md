@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.12] - 2024-01-13
+
+### Added
+
+- Attendence and Spotify new components
+
 ## [0.0.12] - 2024-01-07
 
 ### Fixed
@@ -74,9 +80,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.12...HEAD
-[0.0.11]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.11'...0.0.12
-[0.0.10]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.10'...0.0.11
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.13...HEAD
+[0.0.12]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.12...0.0.13
+[0.0.11]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.11...0.0.12
+[0.0.10]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.10...0.0.11
 [0.0.9]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.9...0.0.10
 [0.0.9]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.8...0.0.9
 [0.0.8]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.7...0.0.8
