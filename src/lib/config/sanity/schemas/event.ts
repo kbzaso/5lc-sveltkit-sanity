@@ -256,6 +256,13 @@ export default defineType({
       hidden: ({ document }) => document?.active === true,
     },
     {
+      type: "text",
+      name: "playlist",
+      title: "Playlist de Spotify",
+      description: "Solo debes agregar el atributo 'src' del iframe de Spotify",
+      hidden: ({ document }) => document?.active === true,
+    },
+    {
       name: "referenceStaff",
       title: "Staff",
       type: "array",
