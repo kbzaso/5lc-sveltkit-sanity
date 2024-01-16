@@ -9,12 +9,12 @@ datasource db {
 }
 
 model Payment {
-  id              String   @id @unique
+  id              String   @id @unique @default(uuid())
   rut             String?
   price           Float
   ticketAmount    Int
   date            DateTime @default(now())
-  signature_token String
+  signature_token String?
   payment_status  String?
   payment_token   String?
   customer_email  String
@@ -23,6 +23,7 @@ model Payment {
   productId       String
   buys            Json
   product         Product  @relation(fields: [productId], references: [id])
+  payment_method   String @default("--")
 }
 
 model Product {

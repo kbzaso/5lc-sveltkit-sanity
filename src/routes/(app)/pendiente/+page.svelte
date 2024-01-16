@@ -9,7 +9,7 @@
       ¡Ups! <span class="not-italic">😬</span>
     </h1>
     <p class="mt-4 text-white/70 sm:mt-6">
-      Paso algo en el proceso de pago, por favor intentalo nuevamente.
+      Tu pago esta pendiente de confirmación, por favor espera unos minutos, de no tener respuesta por favor comunicate con nostros a través del formulario de contacto o a través de nuestras redes sociales.
     </p>
     <figure class="flex justify-center">
       <img src="https://i.imgur.com/fSQJO.gif" alt="Triple H haciendo fuerza" />
@@ -18,7 +18,7 @@
       <a
         href="/"
         class="btn btn-primary cursor-pointer text-black no-underline w-full md:w-fit"
-        >Intentar nuevamente</a
+        >Volver al Home</a
       >
     </div>
   </div>
