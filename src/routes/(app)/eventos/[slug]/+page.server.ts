@@ -14,8 +14,9 @@ import {
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
+  PAYMENT_WEBHOOK_URL_MP,
   ACCESS_TOKEN_MP,
-  PAYMENT_PENDING_URL
+  PAYMENT_PENDING_URL,
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
@@ -219,8 +220,7 @@ export const actions: Actions = {
             description: `${id}`,
           },
         ],
-        notification_url:
-          "https://9bba-2800-150-10e-326-2070-f2-59d1-149a.ngrok-free.app/api/payments_mp",
+        notification_url: PAYMENT_WEBHOOK_URL_MP,
         back_urls: {
           success: PAYMENT_COMPLETED_URL,
           failure: PAYMENT_CANCELLATION_URL,
