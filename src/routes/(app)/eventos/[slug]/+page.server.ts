@@ -230,7 +230,7 @@ export const actions: Actions = {
       },
     });
 
-    throw redirect(302, preference.sandbox_init_point!);
+    throw redirect(302, preference.init_point!);
   },
   pay: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{
