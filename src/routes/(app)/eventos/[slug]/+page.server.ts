@@ -19,6 +19,7 @@ import {
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
 import { MercadoPagoConfig, Preference } from 'mercadopago';
+import { v4 as uuidv4 } from 'uuid';
 
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
@@ -135,12 +136,15 @@ export const actions: Actions = {
     const payment_method = form.get("mercadopago");
     const tickets = Number(form.get("tickets"));
 
+    // Creamos un id para el pago, el cual pasaremos en 'description' a MP para identinicar el pago en el webhook
+    const id = uuidv4();
+
     console.log(payment_method, 'payment_method')
 
 
     if (!payment_method) {
       error(404, {
-        message: 'Not found'
+        message: 'Debes seleccionar un método de pago'
       });
     }
 
@@ -187,6 +191,7 @@ export const actions: Actions = {
 
     const newPayment = await client.payment.create({
       data: {
+        id: id,
         customer_name: name as string,
         customer_email: email as string,
         customer_phone: phone as string,
@@ -210,10 +215,11 @@ export const actions: Actions = {
       body: {
         items: [
           {
-            id: 'ticket',
+            id: `${event._id}`,
             title: `${tickets} entradas para ${event.title}`,
             quantity: 1,
-            unit_price: priceTotal.totalCost
+            unit_price: priceTotal.totalCost,
+            description: `${id}`,
           }
         ],
         notification_url: 'https://9bba-2800-150-10e-326-2070-f2-59d1-149a.ngrok-free.app/api/payments_mp'
@@ -257,6 +263,12 @@ export const actions: Actions = {
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
     const payment_method = form.get("etpay")?.toString();
+
+    if (!payment_method) {
+      error(404, {
+        message: 'Debes seleccionar un método de pago'
+      });
+    }
 
     let resp;
 
@@ -326,7 +338,7 @@ export const actions: Actions = {
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
           signature_token: resp.signature_token,
-          payment_method: 'etpay',
+          payment_method: payment_method,
           product: {
             connect: {
               id: event._id,
