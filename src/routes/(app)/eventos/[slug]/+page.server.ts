@@ -15,11 +15,12 @@ import {
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
   ACCESS_TOKEN_MP,
+  PAYMENT_PENDING_URL
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
-import { MercadoPagoConfig, Preference } from 'mercadopago';
-import { v4 as uuidv4 } from 'uuid';
+import { MercadoPagoConfig, Preference } from "mercadopago";
+import { v4 as uuidv4 } from "uuid";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
@@ -139,12 +140,9 @@ export const actions: Actions = {
     // Creamos un id para el pago, el cual pasaremos en 'description' a MP para identinicar el pago en el webhook
     const id = uuidv4();
 
-    console.log(payment_method, 'payment_method')
-
-
     if (!payment_method) {
       error(404, {
-        message: 'Debes seleccionar un método de pago'
+        message: "Debes seleccionar un método de pago",
       });
     }
 
@@ -168,7 +166,6 @@ export const actions: Actions = {
 
     const total_tickets =
       totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
-
 
     const priceTotal = calculatePrice(tickets, event.ticket);
 
@@ -206,7 +203,7 @@ export const actions: Actions = {
         },
       },
     });
-    
+
     const client_mp = new MercadoPagoConfig({
       accessToken: ACCESS_TOKEN_MP,
     });
@@ -220,14 +217,20 @@ export const actions: Actions = {
             quantity: 1,
             unit_price: priceTotal.totalCost,
             description: `${id}`,
-          }
+          },
         ],
-        notification_url: 'https://9bba-2800-150-10e-326-2070-f2-59d1-149a.ngrok-free.app/api/payments_mp'
-      }
-    })
+        notification_url:
+          "https://9bba-2800-150-10e-326-2070-f2-59d1-149a.ngrok-free.app/api/payments_mp",
+        back_urls: {
+          success: PAYMENT_COMPLETED_URL,
+          failure: PAYMENT_CANCELLATION_URL,
+          pending: PAYMENT_PENDING_URL,
+        },
+        auto_return: "approved",
+      },
+    });
 
-  throw redirect(302, preference.sandbox_init_point!);
-
+    throw redirect(302, preference.sandbox_init_point!);
   },
   pay: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{
@@ -266,7 +269,7 @@ export const actions: Actions = {
 
     if (!payment_method) {
       error(404, {
-        message: 'Debes seleccionar un método de pago'
+        message: "Debes seleccionar un método de pago",
       });
     }
 
