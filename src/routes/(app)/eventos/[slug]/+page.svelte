@@ -94,7 +94,7 @@
     content={`${$eventData?.event?.seo_description}`}
   />
   <meta property="og:url" content={`${$page.url.href}`} />
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script src="https://www.mercadopago.com/v2/security.js" ></script>
 </svelte:head>
 
 {#if $eventData?.event}

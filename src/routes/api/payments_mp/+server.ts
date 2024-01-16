@@ -44,6 +44,8 @@ export const POST: RequestHandler = async ({ request }) => {
 
   const payment = await new Payment(client_mp).get({ id: body.data.id });
 
+  console.log(payment)
+
   const Query = groq`
   *[_type == "event" && _id == $merchantOrderId && active == true]{
     _id,
