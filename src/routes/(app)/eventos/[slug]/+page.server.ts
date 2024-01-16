@@ -14,9 +14,11 @@ import {
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
+  ACCESS_TOKEN_MP,
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
+import { MercadoPagoConfig, Preference } from 'mercadopago';
 
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
@@ -69,16 +71,19 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     };
 
     // Suma de tickets que quedan en el Studio
-    const totalTicketsLeftStudio = event?.ticket?.firsts_tickets?.amount + event?.ticket?.seconds_tickets?.amount + event?.ticket?.thirds_tickets?.amount
+    const totalTicketsLeftStudio =
+      event?.ticket?.firsts_tickets?.amount +
+      event?.ticket?.seconds_tickets?.amount +
+      event?.ticket?.thirds_tickets?.amount;
     // Suma de tickets que quedan en el Studio + los que se han vendido
-    const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
+    const totalTickets = totalTicketsLeftStudio + ticketsSoldCount;
 
     let remainingTickets = {};
 
     // Recalculate the ticket object
     for (let i = 0; i < partsOrder.length; i++) {
       let part = partsOrder[i];
-    
+
       if (ticketsSoldCount >= ticketSystem[part].amount) {
         ticketsSoldCount -= ticketSystem[part].amount;
         ticketSystem[part].amount = 0;
@@ -86,7 +91,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
         ticketSystem[part].amount -= ticketsSoldCount;
         ticketsSoldCount = 0;
       }
-    
+
       remainingTickets[part] = {
         amount: ticketSystem[part].amount,
         price: ticketSystem[part].price,
@@ -96,7 +101,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     event = {
       ...event,
       tickets_sold: ticketsSold._sum?.ticketAmount || 0,
-      total_tickets: totalTickets
+      total_tickets: totalTickets,
     };
   }
 
@@ -115,16 +120,34 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   };
 };
 
-
 export const actions: Actions = {
-  pay: async ({ params, request }) => {
+  pay_mp: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
       slug: params.slug,
     });
 
-    const totalTicketsLeftStudio = event.ticket.firsts_tickets.amount + event.ticket.seconds_tickets.amount + event.ticket.thirds_tickets.amount
+    const form = await request.formData();
+    const name = form.get("name")?.toString();
+    const email = form.get("email")?.toString();
+    const phone = form.get("phone")?.toString();
+    const payment_method = form.get("mercadopago");
+    const tickets = Number(form.get("tickets"));
+
+    console.log(payment_method, 'payment_method')
+
+
+    if (!payment_method) {
+      error(404, {
+        message: 'Not found'
+      });
+    }
+
+    const totalTicketsLeftStudio =
+      event.ticket.firsts_tickets.amount +
+      event.ticket.seconds_tickets.amount +
+      event.ticket.thirds_tickets.amount;
     const ticketsSold = await client.payment.aggregate({
       where: {
         payment_status: "success",
@@ -139,13 +162,101 @@ export const actions: Actions = {
       },
     });
 
-    const total_tickets = totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
+    const total_tickets =
+      totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
+
+
+    const priceTotal = calculatePrice(tickets, event.ticket);
+
+    const product = await client.product.upsert({
+      where: {
+        id: event._id,
+      },
+      update: {
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+      create: {
+        id: event._id,
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+    });
+
+    const newPayment = await client.payment.create({
+      data: {
+        customer_name: name as string,
+        customer_email: email as string,
+        customer_phone: phone as string,
+        ticketAmount: tickets,
+        price: priceTotal.totalCost,
+        buys: priceTotal.ticket,
+        payment_method: payment_method,
+        product: {
+          connect: {
+            id: event._id,
+          },
+        },
+      },
+    });
+    
+    const client_mp = new MercadoPagoConfig({
+      accessToken: ACCESS_TOKEN_MP,
+    });
+
+    const preference = await new Preference(client_mp).create({
+      body: {
+        items: [
+          {
+            id: 'ticket',
+            title: `${tickets} entradas para ${event.title}`,
+            quantity: 1,
+            unit_price: priceTotal.totalCost
+          }
+        ],
+        notification_url: 'https://9bba-2800-150-10e-326-2070-f2-59d1-149a.ngrok-free.app/api/payments_mp'
+      }
+    })
+
+  throw redirect(302, preference.sandbox_init_point!);
+
+  },
+  pay: async ({ params, request }) => {
+    let { event } = await getSanityServerClient(false).fetch<{
+      event: Event;
+    }>(eventQuery, {
+      slug: params.slug,
+    });
+
+    const totalTicketsLeftStudio =
+      event.ticket.firsts_tickets.amount +
+      event.ticket.seconds_tickets.amount +
+      event.ticket.thirds_tickets.amount;
+    const ticketsSold = await client.payment.aggregate({
+      where: {
+        payment_status: "success",
+        AND: [
+          {
+            productId: event._id,
+          },
+        ],
+      },
+      _sum: {
+        ticketAmount: true,
+      },
+    });
+
+    const total_tickets =
+      totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
 
     const form = await request.formData();
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
+    const payment_method = form.get("etpay")?.toString();
 
     let resp;
 
@@ -174,20 +285,17 @@ export const actions: Actions = {
     };
 
     try {
-      const data = await fetch(
-        `${API_URL}/session/initialize`,
-        {
-          method: "POST",
-          headers: new Headers({
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "[*]",
-            "Access-Control-Allow-Methods": "POST",
-            "Access-Control-Allow-Headers": "Content-Type",
-          }),
-          body: JSON.stringify(request_data),
-          redirect: "follow",
-        }
-      );
+      const data = await fetch(`${API_URL}/session/initialize`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "[*]",
+          "Access-Control-Allow-Methods": "POST",
+          "Access-Control-Allow-Headers": "Content-Type",
+        }),
+        body: JSON.stringify(request_data),
+        redirect: "follow",
+      });
 
       resp = await data.json();
 
@@ -218,13 +326,14 @@ export const actions: Actions = {
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
           signature_token: resp.signature_token,
+          payment_method: 'etpay',
           product: {
             connect: {
               id: event._id,
             },
           },
         },
-      }); 
+      });
     } catch (error) {
       console.log(error);
     }
