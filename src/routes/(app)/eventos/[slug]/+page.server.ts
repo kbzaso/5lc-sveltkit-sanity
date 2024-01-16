@@ -220,6 +220,13 @@ export const actions: Actions = {
             description: `${id}`,
           },
         ],
+        payer: {
+          name: name,
+          email: email,
+          phone: "56950000000",
+          identification: "12345678",
+          adress: "Calle 123",
+        },
         notification_url: PAYMENT_WEBHOOK_URL_MP,
         back_urls: {
           success: PAYMENT_COMPLETED_URL,
@@ -227,6 +234,7 @@ export const actions: Actions = {
           pending: PAYMENT_PENDING_URL,
         },
         auto_return: "approved",
+        external_reference: `5lc2024`,
       },
     });
 
