@@ -135,11 +135,11 @@ export const actions: Actions = {
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    const payment_method = form.get("mercadopago");
+    const payment_method = form.get("mercadopago")?.toString();
     const tickets = Number(form.get("tickets"));
 
     // Creamos un id para el pago, el cual pasaremos en 'description' a MP para identinicar el pago en el webhook
-    const id = uuidv4();
+    const paymentId = uuidv4();
 
     if (!payment_method) {
       error(404, {
@@ -166,7 +166,7 @@ export const actions: Actions = {
     });
 
     const total_tickets =
-      totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
+      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
 
     const priceTotal = calculatePrice(tickets, event.ticket);
 
@@ -189,7 +189,7 @@ export const actions: Actions = {
 
     const newPayment = await client.payment.create({
       data: {
-        id: id,
+        id: paymentId,
         customer_name: name as string,
         customer_email: email as string,
         customer_phone: phone as string,
@@ -217,16 +217,11 @@ export const actions: Actions = {
             title: `${tickets} entradas para ${event.title}`,
             quantity: 1,
             unit_price: priceTotal.totalCost,
-            description: `${id}`,
+            currency_id: "CLP",
+            category_id: "tickets",
+            description: `${paymentId}`,
           },
         ],
-        payer: {
-          name: name,
-          email: email,
-          phone: "56950000000",
-          identification: "12345678",
-          adress: "Calle 123",
-        },
         notification_url: PAYMENT_WEBHOOK_URL_MP,
         back_urls: {
           success: PAYMENT_COMPLETED_URL,
@@ -237,6 +232,7 @@ export const actions: Actions = {
         external_reference: `5lc2024`,
       },
     });
+    console.log(preference, "preference")
 
     throw redirect(302, preference.init_point!);
   },
@@ -266,7 +262,7 @@ export const actions: Actions = {
     });
 
     const total_tickets =
-      totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
+      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
 
     const form = await request.formData();
     const name = form.get("name")?.toString();

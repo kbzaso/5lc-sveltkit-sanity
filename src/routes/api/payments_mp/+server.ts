@@ -42,9 +42,11 @@ export const POST: RequestHandler = async ({ request }) => {
     accessToken: ACCESS_TOKEN_MP,
   });
 
-  const payment = await new Payment(client_mp).get({ id: body.data.id });
-
-  console.log(payment)
+  let payment;
+  if (body.type === "payment") {
+    payment = await new Payment(client_mp).get({ id: body.data.id });
+    console.log(body, "data");
+  }
 
   const Query = groq`
   *[_type == "event" && _id == $merchantOrderId && active == true]{
@@ -54,97 +56,110 @@ export const POST: RequestHandler = async ({ request }) => {
     total_tickets,
   }
 `;
+  if (payment?.additional_info?.items?.[0]?.id) {
+    const nextEvent = await getSanityServerClient(false).fetch(Query, {
+      merchantOrderId: payment.additional_info.items[0].id,
+    });
 
-  const nextEvent = await getSanityServerClient(false).fetch(Query, {
-    merchantOrderId: payment?.additional_info?.items[0]?.id,
-  });
-
-  const prePayment = await client.payment.findUnique({
-    where: {
-      id: payment?.additional_info?.items[0]?.description,
-    },
-  });
-
-  if (!prePayment) {
-    throw error(500, "El pago no fue encontrado");
-  }
-
-  try {
-    const paymentWithProduct = await client.payment.update({
+    const prePayment = await client.payment.findUnique({
       where: {
-        id: payment?.additional_info?.items[0]?.description,
-      },
-      data: {
-        payment_status: payment?.status,
-        rut: payment?.payer?.identification?.number,
-      },
-      include: {
-        product: true, // Include the related product
+        id: payment.additional_info.items[0].description,
       },
     });
 
-    let ticket = subtractObjects(nextEvent[0].ticket, paymentWithProduct.buys);
+    if (!prePayment) {
+      throw error(500, "El pago no fue encontrado");
+    }
 
-    // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
-    if (payment?.status === "approved") {
-      // Enviamos email de confirmación
-      (async function () {
-        try {
-          const data = await resend.emails.send({
-            from: "5 Luchas Clandestino <hola@5luchas.cl>",
-            to: paymentWithProduct.customer_email,
-            // to: 'alejandro.saez@rendalomaq.com',
-            subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
-            html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
-            tags: [
-              {
-                name: "category",
-                value: "confirm_email",
+    try {
+      const paymentWithProduct = await client.payment.update({
+        where: {
+          id: payment?.additional_info?.items[0]?.description,
+        },
+        data: {
+          payment_status: payment?.status,
+          rut: payment?.card?.cardholder?.identification?.number,
+        },
+        include: {
+          product: true, // Include the related product
+        },
+      });
+
+      let ticket = subtractObjects(
+        nextEvent[0].ticket,
+        paymentWithProduct.buys
+      );
+      console.log(
+        paymentWithProduct,
+        "paymentWithProduct - antes de la mutación"
+      );
+      // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
+      if (payment?.status === "approved") {
+        // Enviamos email de confirmación
+        (async function () {
+          try {
+            const data = await resend.emails.send({
+              from: "5 Luchas Clandestino <hola@5luchas.cl>",
+              to: paymentWithProduct.customer_email,
+              // to: 'alejandro.saez@rendalomaq.com',
+              subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
+              html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
+              tags: [
+                {
+                  name: "category",
+                  value: "confirm_email",
+                },
+              ],
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        })();
+
+        const mutations = [
+          {
+            patch: {
+              id: nextEvent[0]._id, // replace with your document ID
+              set: {
+                ticket: ticket,
               },
-            ],
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      })();
-
-      const mutations = [
-        {
-          patch: {
-            id: nextEvent[0]._id, // replace with your document ID
-            set: {
-              ticket: ticket,
             },
           },
-        },
-      ];
+        ];
 
-      await fetch(
-        `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${tokenWithWriteAccess}`,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST",
-            "Access-Control-Allow-Headers": "Content-Type",
-          },
-          body: JSON.stringify({ mutations }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        await fetch(
+          `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${tokenWithWriteAccess}`,
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "POST",
+              "Access-Control-Allow-Headers": "Content-Type",
+            },
+            body: JSON.stringify({ mutations }),
           }
-          return response.json();
-        })
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            console.log('studio actualizado')
+            return response.json();
+          })
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+      } else {
+        console.log("El pago no fue aprobado");
+      }
+    } catch (e) {
+      console.log(e);
+      throw error(500, "El pago no pudo ser actualizado");
     }
-  } catch (e) {
-    throw error(500, "El pago no pudo ser actualizado");
   }
 
-  return new Response("ok");
+  return new Response(JSON.stringify({success: true}), {
+    status: 200,
+  })
 };
