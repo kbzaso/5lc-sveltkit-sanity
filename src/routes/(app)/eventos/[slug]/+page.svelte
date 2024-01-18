@@ -14,6 +14,7 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
+  import { enhance } from "$app/forms";
 
   export let data: PageData;
 
@@ -63,7 +64,6 @@
 
   let disclaimerEvent = writable([]);
 
-  console.log($eventData?.event?.playlist);
 </script>
 
 <svelte:head>
@@ -94,6 +94,7 @@
     content={`${$eventData?.event?.seo_description}`}
   />
   <meta property="og:url" content={`${$page.url.href}`} />
+  <script src="https://www.mercadopago.com/v2/security.js" ></script>
 </svelte:head>
 
 {#if $eventData?.event}
@@ -378,6 +379,7 @@
                   </div>
                 {:else}
                   <div class="mt-4">
+
                     {#if $eventData?.event?.disclaimers}
                       <DisclaimerModal
                         disclaimers={$eventData?.event?.disclaimers}
@@ -425,3 +427,4 @@
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>
 {/if}
+<div id="wallet_container"></div>
