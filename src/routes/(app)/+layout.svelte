@@ -51,15 +51,15 @@
   ></script>
 </svelte:head>
 
-<DrawerNav
-  logo={settings.logo}
-  logoBlack={settings.logoBlack}
-  bovedin={settings.bovedin}
-/>
-<div
-  class="selection:bg-fuchsia-300 selection:text-fuchsia-900 h-full"
->
-  <slot />
-</div>
+<div class="flex flex-col min-h-screen">
+  <DrawerNav
+    logo={settings.logo}
+    logoBlack={settings.logoBlack}
+    bovedin={settings.bovedin}
+  />
+  <section class="grow selection:bg-fuchsia-300 selection:text-fuchsia-900 h-full">
+    <slot />
+  </section>
 
-<Footer />
+  <Footer />
+</div>

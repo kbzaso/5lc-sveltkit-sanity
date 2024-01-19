@@ -14,14 +14,12 @@ import {
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
-  PAYMENT_WEBHOOK_URL_MP,
-  ACCESS_TOKEN_MP,
-  PAYMENT_PENDING_URL,
+  API_KEY_DL,
+  SECRET_KEY_DL,
+  URL_DL,
 } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
-import { MercadoPagoConfig, Preference } from "mercadopago";
-import { v4 as uuidv4 } from "uuid";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
@@ -124,7 +122,8 @@ export const load: PageServerLoad = async ({ parent, params }) => {
 };
 
 export const actions: Actions = {
-  pay_mp: async ({ params, request }) => {
+  pay_dlocalgo: async ({ params, request }) => {
+    console.log("pay_dlocalgo");
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
@@ -135,11 +134,8 @@ export const actions: Actions = {
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    const payment_method = form.get("mercadopago")?.toString();
+    const payment_method = form.get("dlocalgo")?.toString();
     const tickets = Number(form.get("tickets"));
-
-    // Creamos un id para el pago, el cual pasaremos en 'description' a MP para identinicar el pago en el webhook
-    const paymentId = uuidv4();
 
     if (!payment_method) {
       error(404, {
@@ -187,54 +183,65 @@ export const actions: Actions = {
       },
     });
 
-    const newPayment = await client.payment.create({
-      data: {
-        id: paymentId,
-        customer_name: name as string,
-        customer_email: email as string,
-        customer_phone: phone as string,
-        ticketAmount: tickets,
-        price: priceTotal.totalCost,
-        buys: priceTotal.ticket,
-        payment_method: payment_method,
-        product: {
-          connect: {
-            id: event._id,
+    // Define the headers
+    let headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${API_KEY_DL}:${SECRET_KEY_DL}`,
+    };
+
+    // Define the payload
+    let payload = {
+      amount: priceTotal.totalCost,
+      currency: "CLP",
+      country: "CL",
+      success_url:
+        "https://dd73-2800-150-10e-326-3c01-673e-6c5d-1f93.ngrok-free.app/exito",
+      back_url:
+        "https://dd73-2800-150-10e-326-3c01-673e-6c5d-1f93.ngrok-free.app",
+      notification_url:
+        "https://dd73-2800-150-10e-326-3c01-673e-6c5d-1f93.ngrok-free.app/api/payments_dlocalgo",
+      expiration_type: "HOURS",
+      expiration_value: "1",
+      description: `${tickets} entradas para ${event.title}`,
+      // Add other required fields here
+    };
+
+    let dataUrlRedirect = "";
+
+    // Make the POST request
+    const data = await fetch(URL_DL, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // Crea un pago
+        dataUrlRedirect = data.redirect_url;
+        const newPayment = async () => await client.payment.create({
+          data: {
+            customer_name: name as string,
+            customer_email: email as string,
+            customer_phone: phone as string,
+            payment_status: data.status,
+            ticketAmount: tickets,
+            price: priceTotal.totalCost,
+            buys: priceTotal.ticket,
+            payment_method: payment_method,
+            payment_id_dlocalgo: data.id,
+            product: {
+              connect: {
+                id: event._id,
+              },
+            },
           },
-        },
-      },
-    });
+        });
+        newPayment();
+      })
+      .catch((error) => console.error("Error:", error));
 
-    const client_mp = new MercadoPagoConfig({
-      accessToken: ACCESS_TOKEN_MP,
-    });
-
-    const preference = await new Preference(client_mp).create({
-      body: {
-        items: [
-          {
-            id: `${event._id}`,
-            title: `${tickets} entradas para ${event.title}`,
-            quantity: 1,
-            unit_price: priceTotal.totalCost,
-            currency_id: "CLP",
-            category_id: "tickets",
-            description: `${paymentId}`,
-          },
-        ],
-        notification_url: PAYMENT_WEBHOOK_URL_MP,
-        back_urls: {
-          success: PAYMENT_COMPLETED_URL,
-          failure: PAYMENT_CANCELLATION_URL,
-          pending: PAYMENT_PENDING_URL,
-        },
-        auto_return: "approved",
-        external_reference: `5lc2024`,
-      },
-    });
-    console.log(preference, "preference")
-
-    throw redirect(302, preference.init_point!);
+      throw redirect(302, dataUrlRedirect);
   },
   pay: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{

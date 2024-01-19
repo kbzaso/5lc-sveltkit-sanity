@@ -10,7 +10,7 @@
 
   $: selectedPaymentMethod = "etpay";
 
-  $: formAction = selectedPaymentMethod === "etpay" ? "?/pay" : "?/pay_mp";
+  $: formAction = selectedPaymentMethod === "etpay" ? "?/pay" : "?/pay_dlocalgo";
 
   let selectedTickets: any;
   let remainingTickets: number;
@@ -108,19 +108,6 @@
           {/each}
         </select>
       </div>
-      <!-- <div class="form-control">
-        <label class="cursor-pointer label flex gap-4 justify-start" for="code">
-          <input
-            type="checkbox"
-            bind:checked={isCheckboxChecked}
-            id="code"
-            class="checkbox checkbox-warning"
-          />
-          <span class="label-text"
-            >Acepto con el <a class="anchor" href="/conducta">código de conducta y descargo de responsabilidad DEATHMATCH 2024</a></span
-          >
-        </label>
-      </div> -->
       <div>
         <span class="label-text">Método de pago</span>
         <div class="flex flex-col lg:flex-row justify-center">
@@ -205,23 +192,24 @@
               </label
             >
           </div>
-          <div class={`form-control border  w-full  px-4 py-1 ${selectedPaymentMethod === "mercadopago" ? "border-primary" : "border-zinc-700"} tooltip tooltip-primary`} data-tip="Tarjetas de debito y crédito">
-            <label class="label cursor-pointer flex justify-start gap-4" for="mercadopago">
+          <div class={`form-control border  w-full  px-4 py-1 ${selectedPaymentMethod === "dlocalgo" ? "border-primary" : "border-zinc-700"} tooltip tooltip-primary`} data-tip="Tarjetas de debito y crédito">
+            <label class="label cursor-pointer flex justify-start gap-4" for="dlocalgo">
               <input
                 type="radio"
-                id="mercadopago"
-                name="mercadopago"
-                value="mercadopago"
+                id="dlocalgo"
+                name="dlocalgo"
+                value="dlocalgo"
                 class="radio radio-primary"
-                checked={selectedPaymentMethod === "mercadopago"}
-                on:click={() => (selectedPaymentMethod = "mercadopago")}
+                checked={selectedPaymentMethod === "dlocalgo"}
+                on:click={() => (selectedPaymentMethod = "dlocalgo")}
               />
               <span class="label-text"
                 ><img
-                  src="/mercadopago_badge.png"
+                class="rounded-sm"
+                  src="/dlocalgo.jpg"
                   height="38"
                   style="height: 38px;"
-                  alt="Mercado Pago logo"
+                  alt="D Local go logo"
                 />
               </span>
             </label>

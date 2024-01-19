@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Mercadopago payment flow
+- dlocalgo payment flow
 
 ## [0.0.12] - 2024-01-13
 
