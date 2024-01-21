@@ -10,7 +10,7 @@
 
   $: selectedPaymentMethod = "etpay";
 
-  $: formAction = selectedPaymentMethod === "etpay" ? "?/pay" : "?/pay_dlocalgo";
+  $: formAction = selectedPaymentMethod === "etpay" ? "?/etpay" : "?/payku";
 
   let selectedTickets: any;
   let remainingTickets: number;
@@ -192,21 +192,21 @@
               </label
             >
           </div>
-          <div class={`form-control border  w-full  px-4 py-1 ${selectedPaymentMethod === "dlocalgo" ? "border-primary" : "border-zinc-700"} tooltip tooltip-primary`} data-tip="Tarjetas de debito y crédito">
-            <label class="label cursor-pointer flex justify-start gap-4" for="dlocalgo">
+          <div class={`form-control border  w-full  px-4 py-1 ${selectedPaymentMethod === "payku" ? "border-primary" : "border-zinc-700"} tooltip tooltip-primary`} data-tip="Tarjetas de debito y crédito">
+            <label class="label cursor-pointer flex justify-start gap-4" for="payku">
               <input
                 type="radio"
-                id="dlocalgo"
-                name="dlocalgo"
-                value="dlocalgo"
+                id="payku"
+                name="payku"
+                value="payku"
                 class="radio radio-primary"
-                checked={selectedPaymentMethod === "dlocalgo"}
-                on:click={() => (selectedPaymentMethod = "dlocalgo")}
+                checked={selectedPaymentMethod === "payku"}
+                on:click={() => (selectedPaymentMethod = "payku")}
               />
               <span class="label-text"
                 ><img
                 class="rounded-sm"
-                  src="/dlocalgo.jpg"
+                  src="https://centrodeayuda.kastorsoftware.cl/wp-content/uploads/2022/04/%C2%BFCo%CC%81mo-activar-el-servicio-de-pago-Webpay_-1024x272.png"
                   height="38"
                   style="height: 38px;"
                   alt="D Local go logo"

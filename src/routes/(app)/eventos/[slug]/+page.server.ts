@@ -14,10 +14,10 @@ import {
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
-  API_KEY_DL,
-  SECRET_KEY_DL,
-  URL_DL,
+  PRIVATE_TOKEN_PAYKU,
+  PAYMENT_WEBHOOK_URL_PAYKU,
 } from "$env/static/private";
+import { PUBLIC_TOKEN_PAYKU } from "$env/static/public";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
 
@@ -122,8 +122,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
 };
 
 export const actions: Actions = {
-  pay_dlocalgo: async ({ params, request }) => {
-    console.log("pay_dlocalgo");
+  payku: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
@@ -134,7 +133,7 @@ export const actions: Actions = {
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    const payment_method = form.get("dlocalgo")?.toString();
+    const payment_method = form.get("payku")?.toString();
     const tickets = Number(form.get("tickets"));
 
     if (!payment_method) {
@@ -183,67 +182,62 @@ export const actions: Actions = {
       },
     });
 
-    // Define the headers
-    let headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY_DL}:${SECRET_KEY_DL}`,
-    };
+    const requestPath = encodeURIComponent("/api/transaction");
 
-    // Define the payload
-    let payload = {
+    const payload = {
+      email: email,
       amount: priceTotal.totalCost,
-      currency: "CLP",
-      country: "CL",
-      success_url:
-        "https://dd73-2800-150-10e-326-3c01-673e-6c5d-1f93.ngrok-free.app/exito",
-      back_url:
-        "https://dd73-2800-150-10e-326-3c01-673e-6c5d-1f93.ngrok-free.app",
-      notification_url:
-        "https://dd73-2800-150-10e-326-3c01-673e-6c5d-1f93.ngrok-free.app/api/payments_dlocalgo",
-      expiration_type: "HOURS",
-      expiration_value: "1",
-      description: `${tickets} entradas para ${event.title}`,
-      // Add other required fields here
+      order: Math.floor(Math.random() * 1000000000),
+      subject: `${tickets} entradas para ${event.title}`,
+      name: name,
+      country: "Chile",
+      urlreturn: PAYMENT_COMPLETED_URL,
+      urlnotify: PAYMENT_WEBHOOK_URL_PAYKU,
+      additional_parameters: {
+       event_id: event._id,
+      }
     };
 
     let dataUrlRedirect = "";
 
-    // Make the POST request
-    const data = await fetch(URL_DL, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(payload),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        // Crea un pago
-        dataUrlRedirect = data.redirect_url;
-        const newPayment = async () => await client.payment.create({
-          data: {
-            customer_name: name as string,
-            customer_email: email as string,
-            customer_phone: phone as string,
-            payment_status: data.status,
-            ticketAmount: tickets,
-            price: priceTotal.totalCost,
-            buys: priceTotal.ticket,
-            payment_method: payment_method,
-            payment_id_dlocalgo: data.id,
-            product: {
-              connect: {
-                id: event._id,
-              },
+    try {
+      const response = await fetch("https://app.payku.cl/api/transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      console.log(result);
+
+      await client.payment.create({
+        data: {
+          customer_name: name as string,
+          customer_email: email as string,
+          customer_phone: phone as string,
+          payment_status: result.status,
+          ticketAmount: tickets,
+          price: priceTotal.totalCost,
+          buys: priceTotal.ticket,
+          payment_method: payment_method,
+          payment_id_service: result.id,
+          product: {
+            connect: {
+              id: event._id,
             },
           },
-        });
-        newPayment();
-      })
-      .catch((error) => console.error("Error:", error));
+        },
+      });
+      dataUrlRedirect = result.url;
+    } catch (error) {
+      console.log(error);
+    }
 
-      throw redirect(302, dataUrlRedirect);
+    throw redirect(302, dataUrlRedirect);
   },
-  pay: async ({ params, request }) => {
+  etpay: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
