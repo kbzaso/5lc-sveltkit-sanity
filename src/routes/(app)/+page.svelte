@@ -99,10 +99,11 @@
             >
               {#if event.ticket.firsts_tickets.amount === 0 && event.ticket.seconds_tickets.amount === 0 && event.ticket.thirds_tickets.amount === 0}
                 <div
-                  class="badge badge-error rounded-sm badge-lg absolute top-2 right-2 uppercase tracking-widest"
+                  class="badge bg-zinc-900 border-none rounded-sm absolute top-2 right-2 uppercase tracking-widest"
                 >
-                  Adhesión agotada
+                Adhesión agotada
                 </div>
+
               {/if}
               <figure class="z-10">
                 <img
