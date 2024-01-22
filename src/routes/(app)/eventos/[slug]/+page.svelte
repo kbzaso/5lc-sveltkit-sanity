@@ -14,6 +14,7 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
+  import { enhance } from "$app/forms";
 
   export let data: PageData;
 
@@ -63,7 +64,6 @@
 
   let disclaimerEvent = writable([]);
 
-  console.log($eventData?.event?.playlist);
 </script>
 
 <svelte:head>
@@ -98,7 +98,7 @@
 
 {#if $eventData?.event}
   <div class="xl:container xl:mx-auto min-w-[350px]">
-    <div class="container xl:mx-auto min-w-[350px] mx-auto px-4 mt-20 h-min">
+    <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
       <div
         id="$eventData?.event"
         class="h-fit flex flex-col lg:flex-row md:gap-4 lg:gap-0"
@@ -119,7 +119,7 @@
             alt="Afiche del próximo evento"
           />
         </div>
-        <div class="z-10 relative -top-20 lg:top-0 xl:top-20 lg:-left-12">
+        <div class="z-10 relative -top-20 lg:top-0 lg:-left-12 px-4 lg:px-0">
           <div class="mt-4 lg:mt-0">
             <div class="mx-auto text-base lg:ml-auto lg:mr-0">
               <!-- EVENTO PASADO -->
@@ -365,6 +365,7 @@
                   </div>
                 {:else}
                   <div class="mt-4">
+
                     {#if $eventData?.event?.disclaimers}
                       <DisclaimerModal
                         disclaimers={$eventData?.event?.disclaimers}

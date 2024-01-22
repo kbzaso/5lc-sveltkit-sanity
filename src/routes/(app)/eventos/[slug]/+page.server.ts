@@ -14,7 +14,10 @@ import {
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
+  PRIVATE_TOKEN_PAYKU,
+  PAYMENT_WEBHOOK_URL_PAYKU,
 } from "$env/static/private";
+import { PUBLIC_TOKEN_PAYKU } from "$env/static/public";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
 
@@ -69,16 +72,20 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     };
 
     // Suma de tickets que quedan en el Studio
-    const totalTicketsLeftStudio = event?.ticket?.firsts_tickets?.amount + event?.ticket?.seconds_tickets?.amount + event?.ticket?.thirds_tickets?.amount
+    const totalTicketsLeftStudio =
+      event?.ticket?.firsts_tickets?.amount +
+      event?.ticket?.seconds_tickets?.amount +
+      event?.ticket?.thirds_tickets?.amount;
     // Suma de tickets que quedan en el Studio + los que se han vendido
+
     const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
-    
+
     let remainingTickets: { [key: string]: { amount: number, price: number } } = {};
 
     // Recalculate the ticket object
     for (let i = 0; i < partsOrder.length; i++) {
       let part = partsOrder[i] as keyof typeof ticketSystem;
-    
+
       if (ticketsSoldCount >= ticketSystem[part].amount) {
         ticketsSoldCount -= ticketSystem[part].amount;
         ticketSystem[part].amount = 0;
@@ -86,7 +93,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
         ticketSystem[part].amount -= ticketsSoldCount;
         ticketsSoldCount = 0;
       }
-    
+
       remainingTickets[part] = {
         amount: ticketSystem[part].amount,
         price: ticketSystem[part].price,
@@ -96,7 +103,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     event = {
       ...event,
       tickets_sold: ticketsSold._sum?.ticketAmount || 0,
-      total_tickets: totalTickets
+      total_tickets: totalTickets,
     };
   }
 
@@ -115,16 +122,31 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   };
 };
 
-
 export const actions: Actions = {
-  pay: async ({ params, request }) => {
+  payku: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
       slug: params.slug,
     });
 
-    const totalTicketsLeftStudio = event.ticket.firsts_tickets.amount + event.ticket.seconds_tickets.amount + event.ticket.thirds_tickets.amount
+    const form = await request.formData();
+    const name = form.get("name")?.toString();
+    const email = form.get("email")?.toString();
+    const phone = form.get("phone")?.toString();
+    const payment_method = form.get("payku")?.toString();
+    const tickets = Number(form.get("tickets"));
+
+    if (!payment_method) {
+      error(404, {
+        message: "Debes seleccionar un método de pago",
+      });
+    }
+
+    const totalTicketsLeftStudio =
+      event.ticket.firsts_tickets.amount +
+      event.ticket.seconds_tickets.amount +
+      event.ticket.thirds_tickets.amount;
     const ticketsSold = await client.payment.aggregate({
       where: {
         payment_status: "success",
@@ -139,13 +161,123 @@ export const actions: Actions = {
       },
     });
 
-    const total_tickets = totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
+    const total_tickets =
+      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
+
+    const priceTotal = calculatePrice(tickets, event.ticket);
+
+    const product = await client.product.upsert({
+      where: {
+        id: event._id,
+      },
+      update: {
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+      create: {
+        id: event._id,
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+    });
+
+    const requestPath = encodeURIComponent("/api/transaction");
+
+    const payload = {
+      email: email,
+      amount: priceTotal.totalCost,
+      order: Math.floor(Math.random() * 1000000000),
+      subject: `${tickets} entradas para ${event.title}`,
+      name: name,
+      country: "Chile",
+      urlreturn: PAYMENT_COMPLETED_URL,
+      urlnotify: PAYMENT_WEBHOOK_URL_PAYKU,
+      additional_parameters: {
+       event_id: event._id,
+      }
+    };
+
+    let dataUrlRedirect = "";
+
+    try {
+      const response = await fetch("https://app.payku.cl/api/transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      console.log(result);
+
+      await client.payment.create({
+        data: {
+          customer_name: name as string,
+          customer_email: email as string,
+          customer_phone: phone as string,
+          payment_status: result.status,
+          ticketAmount: tickets,
+          price: priceTotal.totalCost,
+          buys: priceTotal.ticket,
+          payment_method: payment_method,
+          payment_id_service: result.id,
+          product: {
+            connect: {
+              id: event._id,
+            },
+          },
+        },
+      });
+      dataUrlRedirect = result.url;
+    } catch (error) {
+      console.log(error);
+    }
+
+    throw redirect(302, dataUrlRedirect);
+  },
+  etpay: async ({ params, request }) => {
+    let { event } = await getSanityServerClient(false).fetch<{
+      event: Event;
+    }>(eventQuery, {
+      slug: params.slug,
+    });
+
+    const totalTicketsLeftStudio =
+      event.ticket.firsts_tickets.amount +
+      event.ticket.seconds_tickets.amount +
+      event.ticket.thirds_tickets.amount;
+    const ticketsSold = await client.payment.aggregate({
+      where: {
+        payment_status: "success",
+        AND: [
+          {
+            productId: event._id,
+          },
+        ],
+      },
+      _sum: {
+        ticketAmount: true,
+      },
+    });
+
+    const total_tickets =
+      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
 
     const form = await request.formData();
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
+    const payment_method = form.get("etpay")?.toString();
+
+    if (!payment_method) {
+      error(404, {
+        message: "Debes seleccionar un método de pago",
+      });
+    }
 
     let resp;
 
@@ -174,20 +306,17 @@ export const actions: Actions = {
     };
 
     try {
-      const data = await fetch(
-        `${API_URL}/session/initialize`,
-        {
-          method: "POST",
-          headers: new Headers({
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "[*]",
-            "Access-Control-Allow-Methods": "POST",
-            "Access-Control-Allow-Headers": "Content-Type",
-          }),
-          body: JSON.stringify(request_data),
-          redirect: "follow",
-        }
-      );
+      const data = await fetch(`${API_URL}/session/initialize`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "[*]",
+          "Access-Control-Allow-Methods": "POST",
+          "Access-Control-Allow-Headers": "Content-Type",
+        }),
+        body: JSON.stringify(request_data),
+        redirect: "follow",
+      });
 
       resp = await data.json();
 
@@ -218,13 +347,14 @@ export const actions: Actions = {
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
           signature_token: resp.signature_token,
+          payment_method: payment_method,
           product: {
             connect: {
               id: event._id,
             },
           },
         },
-      }); 
+      });
     } catch (error) {
       console.log(error);
     }
