@@ -72,12 +72,12 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     const totalTicketsLeftStudio = event?.ticket?.firsts_tickets?.amount + event?.ticket?.seconds_tickets?.amount + event?.ticket?.thirds_tickets?.amount
     // Suma de tickets que quedan en el Studio + los que se han vendido
     const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
-
-    let remainingTickets = {};
+    
+    let remainingTickets: { [key: string]: { amount: number, price: number } } = {};
 
     // Recalculate the ticket object
     for (let i = 0; i < partsOrder.length; i++) {
-      let part = partsOrder[i];
+      let part = partsOrder[i] as keyof typeof ticketSystem;
     
       if (ticketsSoldCount >= ticketSystem[part].amount) {
         ticketsSoldCount -= ticketSystem[part].amount;
