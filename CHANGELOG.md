@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+- Add Payku integration
 
-- dlocalgo payment flow
+## [0.0.14] - 2024-01-22
 
-## [0.0.12] - 2024-01-13
+- Add badge to event card on index when is sold out
+
+## [0.0.13] - 2024-01-13
 
 ### Added
 
@@ -84,7 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.13...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.14...HEAD
+[0.0.13]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.13...0.0.14
 [0.0.12]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.12...0.0.13
 [0.0.11]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.11...0.0.12
 [0.0.10]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.10...0.0.11
