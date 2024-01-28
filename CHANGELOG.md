@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add search to events
+
 ## [0.0.15] - 2024-01-22
 
 - Add Payku integration

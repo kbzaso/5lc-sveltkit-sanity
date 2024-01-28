@@ -3,11 +3,28 @@
   import type { PageData } from "../$types";
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
+  import { createSearchStore, searchHandler } from "$lib/stores/search";
+  import type { Event } from "$lib/types";
 
   export let data: PageData;
 
-  $: ({ events, results } = data);
+  // $: ({ results } = data);
+
+    const searchEvents: Event[] = data.results.map((result: Event) => ({
+      ...result,
+      searchTerms: `${result.title}`
+    }))
+  
+    const searchEventsStore = createSearchStore(searchEvents)
+  
+    const unsubscribe = searchEventsStore.subscribe((value) => {
+      searchHandler(value)
+    })
+  
+    onDestroy(() => {
+      unsubscribe()
+    })
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
@@ -56,8 +73,15 @@
     <h2 class="text-3xl sub-title text-white sm:text-4xl mt-6">
       Eventos pasados
     </h2>
+    <label class="form-control w-full lg:max-w-xs">
+      <div class="label">
+        <span class="label-text">Buscador</span>
+      </div>
+      <input type="text" placeholder="Bovedinmanía..." class="input input-bordered w-full lg:max-w-xs" bind:value={$searchEventsStore.search} />
+    </label>
+
     <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {#each results as result}
+      {#each $searchEventsStore.filtered as result}
         <a href={`eventos/${result.slug}`}>
           <div
             class="relative overflow-hidden w-full group border-gray-600 border hover:border-primary rounded-none transition-all h-fit md:h-96"
