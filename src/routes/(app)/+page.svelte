@@ -13,11 +13,6 @@
 
   $: ({ settings, welcome, nextEvent, events } = data);
 
-  $: eventDate = new Date(nextEvent.date);
-  $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
-  $: hours = eventDate.getHours();
-  $: minutes = eventDate.getMinutes();
-
   let seo_image = urlForImage($page.data.settings?.logo).url();
 
   let formattedFirstsPrice: string;
