@@ -28,8 +28,23 @@ export const load: PageServerLoad = async () => {
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
   let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
   let events = await getSanityServerClient(false).fetch(ActiveEventsQuery);
-  
 
+  const ticketsSold = await client.payment.aggregate({
+    where: {
+      payment_status: "success",
+      AND: [
+        {
+          productId: nextEvent._id,
+        },
+      ],
+    },
+    _sum: {
+      ticketAmount: true,
+    },
+  });
+
+  let ticketsSoldCount = ticketsSold._sum?.ticketAmount || 0;
+  
   if (!settings) {
     throw error(500, "Settings not found");
   }
@@ -37,11 +52,13 @@ export const load: PageServerLoad = async () => {
     throw error(500, "Settings not found");
   }
 
+
   return {
     events,
     settings,
     welcome,
     nextEvent,
+    ticketsSoldCount,
   };
 };
 

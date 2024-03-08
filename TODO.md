@@ -1,0 +1,1 @@
+- [ ] Ajusta la información que se pasa el componente SingleEvent, agregar tickets_sold al objeto

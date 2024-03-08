@@ -14,7 +14,6 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
-  import { enhance } from "$app/forms";
 
   export let data: PageData;
 
