@@ -7,12 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.18] - 2024-03-11
+
+- Add event payment process in home when only one event is active
+
 ## [0.0.17] - 2024-02-19
 
 ### Fixed
 
 - Eliminate unuse date format code
-- Add event payment process in home when only one event is active
 
 ## [0.0.16] - 2024-01-27
 
@@ -101,7 +104,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.17...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.18...HEAD
+[0.0.18]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.17...0.0.18
 [0.0.17]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.16...0.0.17
 [0.0.16]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.15...0.0.16
 [0.0.15]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.14...0.0.15
