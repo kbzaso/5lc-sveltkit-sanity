@@ -66,7 +66,6 @@
     "groq": "^2.33.2",
     "jsonwebtoken": "^9.0.2",
     "masonry-layout": "^4.2.2",
-    "mercadopago": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "resend": "^2.0.0",
