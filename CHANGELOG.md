@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Eliminate unuse date format code
+- Add event payment process in home when only one event is active
 
 ## [0.0.16] - 2024-01-27
 
