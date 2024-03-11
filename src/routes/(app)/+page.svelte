@@ -14,7 +14,7 @@
 
   export let data: PageData;
 
-  $: ({ settings, welcome, nextEvent, events, ticketsSoldCount } = data);
+  $: ({ settings, welcome, nextEvent, events } = data);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 
@@ -96,7 +96,7 @@
         {/each}
       </div>
       {:else}
-        <SingleEvent event={nextEvent} tickets_sold={ticketsSoldCount} />
+        <SingleEvent event={nextEvent}/>
       {/if}
     {/if}
   </main>

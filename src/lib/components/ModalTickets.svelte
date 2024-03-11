@@ -107,7 +107,6 @@
       <div class="form-control w-full">
         <label class="label" for="tickets">
           <span class="label-text">¿Cuántas entradas?</span>
-          <!-- <span class="label-text-alt">Top Right label</span> -->
         </label>
         <select
           bind:value={selectedTickets}

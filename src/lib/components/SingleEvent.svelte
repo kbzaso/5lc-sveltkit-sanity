@@ -8,7 +8,6 @@
   import { writable } from "svelte/store";
   import { onMount } from "svelte";
   export let event: Event;
-  export let tickets_sold: number;
 
   $: eventDate = new Date(event?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
@@ -37,11 +36,6 @@
     style: "currency",
     currency: "CLP",
   }).format(thirdsTicketPrice);
-  console.log(
-    formattedFirstsPrice,
-    formattedSecondsPrice,
-    formattedThirthsPrice
-  );
   
 </script>
 
@@ -225,7 +219,7 @@
                       ? "progress-info"
                       : "progress-error"
                   }`}
-                  value={tickets_sold}
+                  value={event.tickets_sold}
                   max={event?.total_tickets}
                 />
               </div>
