@@ -35,12 +35,14 @@ export default defineType({
       type: "string",
       name: "horizontalLine",
       title: "Barra horizontal",
-      description: "Agrega el mensaje que quieres que aparezca en movimiento en el home",
+      description:
+        "Agrega el mensaje que quieres que aparezca en movimiento en el home",
     },
     {
       type: "image",
       options: {
-        accept: ".png,.svg,.jpg,.jpeg",
+        accept: ".png,.svg,.jpg,.jpeg,.webp,.tiff",
+        hotspot: true,
       },
       name: "heroImage",
       title: "Imagen central del home",
