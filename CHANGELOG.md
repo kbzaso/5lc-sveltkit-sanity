@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add .webp format to hero image on schema
+
 ## [0.0.18] - 2024-03-11
 
 - Add event payment process in home when only one event is active

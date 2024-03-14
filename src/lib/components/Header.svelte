@@ -13,10 +13,10 @@
 <section>
   <div
     id="header"
-    class={`container mx-auto h-[600px] lg:h-[800px] 2xl:h-[1000px] relative -mt-20`}
+    class={`container mx-auto h-[600px] lg:h-[800px] 2xl:h-[1000px] relative -mt-20 md:mt-0`}
   >
     <div
-      class="container mx-auto flex flex-col justify-end px-4 absolute bottom-4 lg:bottom-0 z-10 h-full"
+      class="container mx-auto flex flex-col justify-end px-4 absolute bottom-4 lg:bottom-36 z-10 h-full"
     >
       <h1 class="text-xl uppercase tracking-widest lg:-mb-4 text-white">
         ¡{preTitle}!
@@ -34,13 +34,13 @@
         {/if}
       </div>
 
-      <p class="text-md md:text-lg lg:max-w-4xl prose">
+      <p class="text-md md:text-lg lg:max-w-4xl prose text-white">
         <PortableText value={description} />
       </p>
     </div>
     <img src={`${$page.data.welcome.heroImage ? urlForImage($page.data.welcome.heroImage).url() : 'https://res.cloudinary.com/dtj5xnlou/image/upload/v1701462962/bg-web.jpg' }`} alt="Portada" class="object-contain lg:object-cover absolute w-full h-full">
     <div
-      class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/90 lg:via-black/40 to-transparent h-96 md:h-[300px] w-full"
+      class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/90 lg:via-black/40 to-transparent h-96 md:h-[300px] lg:h-[600px] w-full"
     />
   </div>
 </section>
