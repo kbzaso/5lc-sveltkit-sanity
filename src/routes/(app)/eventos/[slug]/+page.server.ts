@@ -281,7 +281,6 @@ export const actions: Actions = {
 
     let resp;
 
-    // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
     const priceTotal = calculatePrice(tickets, event.ticket);
 
     // Data que se envia a ET_PAY

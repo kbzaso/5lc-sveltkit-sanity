@@ -96,8 +96,6 @@ export const actions: Actions = {
       });
     }
 
-    // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
-    const priceTotal = calculatePrice(tickets, nextEvent.ticket);
     const totalTicketsLeftStudio =
       nextEvent.ticket.firsts_tickets.amount +
       nextEvent.ticket.seconds_tickets.amount +
@@ -118,6 +116,8 @@ export const actions: Actions = {
 
     const total_tickets =
       totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
+
+    const priceTotal = calculatePrice(tickets, nextEvent.ticket);
 
     const product = await client.product.upsert({
       where: {
@@ -145,7 +145,7 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${nextEvent.title}`,
       name: name,
       country: "Chile",
-      urlreturn: PAYMENT_CANCELLATION_URL,
+      urlreturn: PAYMENT_COMPLETED_URL,
       urlnotify: PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
         event_id: nextEvent._id,
@@ -229,7 +229,6 @@ export const actions: Actions = {
 
     let resp;
 
-    // ESTA TOMANDO EL VALOR ORIGINAL DEL EVENTO, SE NECESITA EL VALOR ACTUALIZADO
     const priceTotal = calculatePrice(tickets, nextEvent.ticket);
 
     // Data que se envia a ET_PAY
