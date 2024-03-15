@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix returnUrl of Payku payment process
+
 ## [0.0.19] - 2024-03-14
 
 - Add .webp format to hero image on schema
