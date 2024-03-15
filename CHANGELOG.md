@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.20] - 2024-03-15
+
 - Fix returnUrl of Payku payment process
 
 ## [0.0.19] - 2024-03-14
@@ -110,7 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.19...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.20...HEAD
+[0.0.20]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.19...0.0.20
 [0.0.19]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.18...0.0.19
 [0.0.18]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.17...0.0.18
 [0.0.17]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.16...0.0.17
