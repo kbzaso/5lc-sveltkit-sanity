@@ -14,6 +14,8 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
+  import TandasTicketsSell from "$lib/components/events/TandasTicketsSell.svelte";
+  import { calculateTandas } from "$lib/utils/eventUtils";
 
   export let data: PageData;
 
@@ -33,26 +35,18 @@
 
   let hasPhotos = [];
 
-  let formattedFirstsPrice: string;
-  let formattedSecondsPrice: string;
-  let formattedThirthsPrice: string;
-  onMount(() => {
-    let firstTicketPrice = $eventData?.event.ticket?.firsts_tickets?.price;
-    let secondsTicketPrice = $eventData?.event.ticket?.seconds_tickets?.price;
-    let thirdsTicketPrice = $eventData?.event.ticket?.thirds_tickets?.price;
+  interface Tandas {
+    index: number;
+    amount: number;
+    price: number;
+    type: string;
+  }
 
-    formattedFirstsPrice = new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(firstTicketPrice);
-    formattedSecondsPrice = new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(secondsTicketPrice);
-    formattedThirthsPrice = new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(thirdsTicketPrice);
+  let tandas: Tandas[] = [];
+
+  onMount(() => {
+    // Necesito pasar el objeto de tandas a un array para poder ordenarlas
+    tandas = calculateTandas($eventData.event?.ticket);
 
     if ($eventData?.event?.gallery !== null) {
       hasPhotos = Object.keys($eventData?.event?.gallery);
@@ -62,7 +56,6 @@
   });
 
   let disclaimerEvent = writable([]);
-
 </script>
 
 <svelte:head>
@@ -261,71 +254,11 @@
                 {#if $eventData?.event.tickets_sold !== $eventData?.event.total_tickets && $eventData?.event.active && $eventData?.event.sell}
                   <!-- TANDAS -->
                   <div class="flex gap-4 my-8">
-                    <div
-                      class:opacity-50={$eventData?.event?.ticket
-                        ?.firsts_tickets.amount === 0}
-                      class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
-                    >
-                      <span
-                        class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
-                        >Tanda Nº1</span
-                      >
-                      <div class="text-sm">
-                        {#if $eventData?.event?.ticket?.firsts_tickets?.amount !== 0}
-                          {#if $eventData?.event?.ticket?.firsts_tickets?.amount <= 15}
-                            <p>
-                              Quedan {$eventData?.event?.ticket?.firsts_tickets
-                                ?.amount || 0}
-                            </p>
-                          {/if}
-                          <p>{formattedFirstsPrice || 0}</p>
-                        {:else}
-                          <p>Agotada</p>
-                        {/if}
-                      </div>
-                    </div>
-                    <div
-                      class:opacity-50={$eventData?.event.ticket
-                        ?.seconds_tickets?.amount === 0}
-                      class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
-                    >
-                      <span
-                        class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
-                        >Tanda Nº2</span
-                      >
-                      <div class="text-sm">
-                        {#if $eventData?.event?.ticket?.seconds_tickets?.amount !== 0}
-                          {#if $eventData?.event?.ticket?.seconds_tickets?.amount <= 15}
-                            <p>
-                              Quedan {$eventData?.event?.ticket?.seconds_tickets
-                                ?.amount || 0}
-                            </p>
-                          {/if}
-                          <span>{formattedSecondsPrice || 0}</span>
-                        {:else}
-                          <p>Agotada</p>
-                        {/if}
-                      </div>
-                    </div>
-                    <div
-                      class:opacity-50={$eventData?.event?.ticket
-                        ?.thirds_tickets?.amount === 0}
-                      class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
-                    >
-                      <span
-                        class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
-                        >Tanda Nº3</span
-                      >
-                      <div class="text-sm">
-                        {#if $eventData?.event?.ticket?.thirds_tickets?.amount <= 15}
-                          <p>
-                            Quedan {$eventData?.event?.ticket?.thirds_tickets
-                              ?.amount || 0}
-                          </p>
-                        {/if}
-                        <span>{formattedThirthsPrice || 0}</span>
-                      </div>
-                    </div>
+                    {#if tandas}
+                      {#each tandas as tanda}
+                        <TandasTicketsSell ticket={tanda} />
+                      {/each}
+                    {/if}
                   </div>
                   <!-- PROGRESS -->
                   <div>
@@ -356,7 +289,16 @@
                   <div
                     class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
                   >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21v-3.904q-.917-.386-1.655-1.012q-.737-.626-1.26-1.43q-.522-.804-.803-1.733Q3 11.992 3 11q0-3.527 2.52-5.763Q8.04 3 11.998 3t6.48 2.237Q21 7.473 21 11q0 .992-.282 1.921t-.804 1.733q-.522.804-1.26 1.43q-.737.626-1.654 1.016V21zm1-1h1.423v1h1.539v-1h2.076v1h1.539v-1H16v-3.55q.912-.283 1.65-.817q.737-.535 1.262-1.251q.525-.716.806-1.581Q20 11.937 20 11q0-3.125-2.212-5.062T12 4Q8.425 4 6.212 5.938T4 11q0 .937.282 1.801q.281.864.806 1.58q.525.717 1.266 1.252q.74.534 1.646.817zm2.692-4.827h2.616L12 12.558zm-2.189-2.558q.668 0 1.14-.475q.472-.476.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.475q-.472.476-.472 1.143t.475 1.14q.476.472 1.143.472m7 0q.668 0 1.14-.475q.472-.476.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.475q-.472.476-.472 1.143t.475 1.14q.476.472 1.143.472M8 20v-3.55q-.906-.283-1.646-.817q-.74-.535-1.266-1.251q-.525-.716-.806-1.581Q4 11.937 4 11q0-3.125 2.213-5.062T12 4q3.575 0 5.788 1.938T20 11q0 .937-.282 1.801q-.281.864-.806 1.58q-.525.717-1.263 1.252q-.737.534-1.649.817V20h-1.423v-.923h-1.539V20h-2.076v-.923H9.423V20z"/></svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      ><path
+                        fill="currentColor"
+                        d="M7 21v-3.904q-.917-.386-1.655-1.012q-.737-.626-1.26-1.43q-.522-.804-.803-1.733Q3 11.992 3 11q0-3.527 2.52-5.763Q8.04 3 11.998 3t6.48 2.237Q21 7.473 21 11q0 .992-.282 1.921t-.804 1.733q-.522.804-1.26 1.43q-.737.626-1.654 1.016V21zm1-1h1.423v1h1.539v-1h2.076v1h1.539v-1H16v-3.55q.912-.283 1.65-.817q.737-.535 1.262-1.251q.525-.716.806-1.581Q20 11.937 20 11q0-3.125-2.212-5.062T12 4Q8.425 4 6.212 5.938T4 11q0 .937.282 1.801q.281.864.806 1.58q.525.717 1.266 1.252q.74.534 1.646.817zm2.692-4.827h2.616L12 12.558zm-2.189-2.558q.668 0 1.14-.475q.472-.476.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.475q-.472.476-.472 1.143t.475 1.14q.476.472 1.143.472m7 0q.668 0 1.14-.475q.472-.476.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.475q-.472.476-.472 1.143t.475 1.14q.476.472 1.143.472M8 20v-3.55q-.906-.283-1.646-.817q-.74-.535-1.266-1.251q-.525-.716-.806-1.581Q4 11.937 4 11q0-3.125 2.213-5.062T12 4q3.575 0 5.788 1.938T20 11q0 .937-.282 1.801q-.281.864-.806 1.58q-.525.717-1.263 1.252q-.737.534-1.649.817V20h-1.423v-.923h-1.539V20h-2.076v-.923H9.423V20z"
+                      /></svg
+                    >
 
                     <span class="uppercase tracking-widest"
                       >Adhesión agotada</span
@@ -364,7 +306,6 @@
                   </div>
                 {:else}
                   <div class="mt-4">
-
                     {#if $eventData?.event?.disclaimers}
                       <DisclaimerModal
                         disclaimers={$eventData?.event?.disclaimers}
