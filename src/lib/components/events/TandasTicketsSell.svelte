@@ -18,7 +18,7 @@
 
 <div
   class:opacity-25={ticket.amount === 0}
-  class={`w-full border p-2 indicator flex flex-col justify-center items-center pt-3 max-w-xs min-h-16 ${
+  class={`w-full border p-2 indicator flex flex-col justify-center items-center pt-2 max-w-xs min-h-16 ${
     ticket.type === "firsts_tickets"
       ? "border-success"
       : ticket?.type === "seconds_tickets"
@@ -51,7 +51,7 @@
         class="indicator-item indicator-bottom indicator-center badge badge-success rounded-none tracking-widest uppercase"
         >Agotada</span
       >
-      <p>{formatedPrice || 0}</p>
+      <p class="text-lg">{formatedPrice || 0}</p>
     {/if}
   </div>
 </div>
