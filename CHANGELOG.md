@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.21] - 2024-03-16
+
 ### Added
 
 - Metro svg icon
@@ -120,7 +122,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.20...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.21...HEAD
+[0.0.21]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.20...0.0.21
 [0.0.20]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.19...0.0.20
 [0.0.19]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.18...0.0.19
 [0.0.18]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.17...0.0.18
