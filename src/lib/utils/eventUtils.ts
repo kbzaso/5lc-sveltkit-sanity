@@ -29,3 +29,21 @@ export function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
 
   return { totalCost, ticket };
 }
+
+
+
+export function calculateTandas(tickets) {
+  // Necesito pasar el objeto de tandas a un array para poder ordenarlas
+  const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
+
+  let tandas = Object.entries(tickets).map(([key, value]) => ({
+    type: key,
+    ...value,
+    index: partsOrder.indexOf(key),
+}));
+
+  tandas.sort(
+    (a, b) => partsOrder.indexOf(a.type) - partsOrder.indexOf(b.type)
+  );
+  return tandas;
+}

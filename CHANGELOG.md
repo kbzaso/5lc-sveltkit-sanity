@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Metro svg icon
+
+### Fixed
+
+- Improve code of Tandas component
+
 ## [0.0.20] - 2024-03-15
 
 - Fix returnUrl of Payku payment process

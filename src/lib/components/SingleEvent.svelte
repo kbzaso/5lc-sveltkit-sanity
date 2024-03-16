@@ -7,6 +7,10 @@
   import ModalTickets from "./ModalTickets.svelte";
   import { writable } from "svelte/store";
   import { onMount } from "svelte";
+  import PlaceDisclaimerBoveda from "./events/PlaceDisclaimerBoveda.svelte";
+  import TandasTicketsSell from "./events/TandasTicketsSell.svelte";
+  import { each } from "svelte/internal";
+  import { calculateTandas } from "$lib/utils/eventUtils";
   export let event: Event;
 
   $: eventDate = new Date(event?.date);
@@ -16,27 +20,9 @@
 
   let disclaimerEvent = writable([]);
 
-  let formattedFirstsPrice: string;
-  let formattedSecondsPrice: string;
-  let formattedThirthsPrice: string;
-  
-  let firstTicketPrice = event.ticket?.firsts_tickets?.price;
-  let secondsTicketPrice = event.ticket?.seconds_tickets?.price;
-  let thirdsTicketPrice = event.ticket?.thirds_tickets?.price;
+  // Necesito pasar el objeto de tandas a un array para poder ordenarlas
+  let tandas = calculateTandas(event.ticket)
 
-  formattedFirstsPrice = new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-  }).format(firstTicketPrice);
-  formattedSecondsPrice = new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-  }).format(secondsTicketPrice);
-  formattedThirthsPrice = new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-  }).format(thirdsTicketPrice);
-  
 </script>
 
 <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
@@ -125,81 +111,16 @@
               </ul>
 
               {#if event.boveda}
-                <p class="border border-dashed border-primary p-4 text-sm">
-                  La Bóveda Secreta se encuentra en el 3er piso de la Galería
-                  “Nueva Copacabana” ubicada en calle San Antonio #705, Santiago
-                  Centro. Las estaciones de Metro más cercanas a ella son <span
-                    class="text-primary">Plaza de Armas</span
-                  >,
-                  <span class="text-primary">Bellas Artes</span>
-                  y
-                  <span class="text-primary">Puente Cal y Canto</span>.
-                </p>
+                <PlaceDisclaimerBoveda />
               {/if}
             </div>
 
             {#if event.tickets_sold !== event.total_tickets && event.active && event.sell}
               <!-- TANDAS -->
               <div class="flex gap-4 my-8">
-                <div
-                  class:opacity-50={event?.ticket?.firsts_tickets.amount === 0}
-                  class="w-full border border-success p-2 indicator flex flex-col justify-center items-center pt-4"
-                >
-                  <span
-                    class="indicator-item indicator-center badge badge-success tracking-widest uppercase"
-                    >Tanda Nº1</span
-                  >
-                  <div class="text-sm">
-                    {#if event?.ticket?.firsts_tickets?.amount !== 0}
-                      {#if event?.ticket?.firsts_tickets?.amount <= 15}
-                        <p>
-                          Quedan {event?.ticket?.firsts_tickets?.amount || 0}
-                        </p>
-                      {/if}
-                      <p>{formattedFirstsPrice || 0}</p>
-                    {:else}
-                      <p>Agotada</p>
-                    {/if}
-                  </div>
-                </div>
-                <div
-                  class:opacity-50={event.ticket?.seconds_tickets?.amount === 0}
-                  class="w-full border border-info p-2 indicator flex flex-col justify-center items-center pt-4"
-                >
-                  <span
-                    class="indicator-item indicator-center badge badge-info tracking-widest uppercase"
-                    >Tanda Nº2</span
-                  >
-                  <div class="text-sm">
-                    {#if event?.ticket?.seconds_tickets?.amount !== 0}
-                      {#if event?.ticket?.seconds_tickets?.amount <= 15}
-                        <p>
-                          Quedan {event?.ticket?.seconds_tickets?.amount || 0}
-                        </p>
-                      {/if}
-                      <span>{formattedSecondsPrice || 0}</span>
-                    {:else}
-                      <p>Agotada</p>
-                    {/if}
-                  </div>
-                </div>
-                <div
-                  class:opacity-50={event?.ticket?.thirds_tickets?.amount === 0}
-                  class="w-full border border-error p-2 indicator flex flex-col justify-center items-center pt-4 h-20"
-                >
-                  <span
-                    class="indicator-item indicator-center badge badge-error tracking-widest uppercase"
-                    >Tanda Nº3</span
-                  >
-                  <div class="text-sm">
-                    {#if event?.ticket?.thirds_tickets?.amount <= 15}
-                      <p>
-                        Quedan {event?.ticket?.thirds_tickets?.amount || 0}
-                      </p>
-                    {/if}
-                    <span>{formattedThirthsPrice || 0}</span>
-                  </div>
-                </div>
+                {#each tandas as tanda}
+                  <TandasTicketsSell ticket={tanda} />
+                {/each}
               </div>
               <!-- PROGRESS -->
               <div>
