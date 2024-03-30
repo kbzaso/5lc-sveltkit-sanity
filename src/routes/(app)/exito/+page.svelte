@@ -1,39 +1,71 @@
-<main class="relative isolate min-h-screen flex items-center mt-20">
-  <img
-    src="https://res.cloudinary.com/dtj5xnlou/image/upload/v1684538515/5LC/boveda.jpg"
-    alt="Bóveda Secreta"
-    class="opacity-20 min-w-[100%] absolute inset-0 -z-10 h-full w-full object-cover object-top"
-  />
-  <div class="mx-auto prose text-center items-center container px-4">
-    <h1 class="mt-4 text-3xl font-bold text-white sm:text-5xl">
-      ¡Nos vemos en la Bóveda Secreta! <span class="not-italic">😬</span>
+<script lang="ts">
+  import { urlForImage } from "$lib/config/sanity";
+  import type { PageData } from "./$types";
+
+  export let data: PageData;
+
+  $: ({ customer_email, customer_name, ticket_amount, ticket_price, event } =
+    data);
+</script>
+
+<main class="min-h-screen relative">
+  <figure class="z-10 absolute">
+    <img
+      id="poster"
+      class="md:rounded-sm"
+      loading="eager"
+      width="600"
+      height="750"
+      src={urlForImage(event.poster).width(600).height(750).url()}
+      alt="Afiche del evento"
+    />
+  </figure>
+  <div
+    class="mx-auto prose items-center container px-4 content-center z-10 absolute bottom-10"
+  >
+    <div class="badge badge-accent">Adhesión exitosa</div>
+    <h1 class="mt-4 text-3xl font-bold text-white sm:text-4xl mb-4">
+      ¡{customer_name} nos vemos en {event.venue.venueName}!
     </h1>
-    <p class="mt-4 text-white sm:mt-6">
-      Ya estas en la lista de ingreso. Solo debes dar tu nombre y el correo con
-      el cual hiciste la adhesión.
+
+    <p class="text-white mt-3">
+      En unos minutos recibirás un correo a <span class="text-primary"
+        >{customer_email}</span
+      > con los detalles de tu adhesión.
     </p>
-    <figure class="flex justify-center">
-      <img
-        src="https://media3.giphy.com/media/nDMyoNRkCesJdZAuuL/giphy.gif"
-        alt="Stone Cold bebiendo unas cervezas"
-      />
-    </figure>
-    <p
-      class="border border-dashed border-primary p-4 bg-black/25 backdrop-blur-xl w-fit mx-auto mt-4"
-    >
-      Antes de asistir al evento te pedimos favor leer nuestro <a
-        href="/conducta"
-        target="_self"
-        rel="noreferrer"
-        class="anchor">código de conducta</a
-      >.
-    </p>
-    <div class="mt-10 flex justify-center">
-      <a
-        href="/"
-        class="btn btn-primary cursor-pointer text-black no-underline w-full md:w-fit"
-        >Ir al inicio</a
-      >
+
+    <div class="p-2 border border-gray-700 border-dashed rounded-sm">
+      {#if ticket_amount}
+        <div class="flex flex-col text-white">
+          <span
+            >Cantidad: {ticket_amount}
+            {ticket_amount > 1 ? "adhesiones" : "adhesión"} para "{event.title}"</span
+          >
+          <span>Total: ${ticket_price} CLP</span>
+          <span
+            >Lugar: <a
+              class="text-primary"
+              rel="noreferrer"
+              target="_blank"
+              href={event.venue.venueUrl}>{event.venue.venueAdress}</a
+            ></span
+          >
+        </div>
+      {/if}
     </div>
+
+      <div class="mt-10 flex justify-center">
+        <a
+          href="/"
+          class="btn btn-primary cursor-pointer text-black no-underline w-full md:w-fit"
+          >Volver al inicio</a
+        >
+      </div>
   </div>
 </main>
+
+<style>
+  #poster {
+    mask-image: linear-gradient(black 10%, transparent 90%);
+  }
+</style>
