@@ -165,7 +165,7 @@ export const actions: Actions = {
       });
       const result = await response.json();
 
-      await client.payment.create({
+      const payment = await client.payment.create({
         data: {
           customer_name: name as string,
           customer_email: email as string,
@@ -183,6 +183,24 @@ export const actions: Actions = {
           },
         },
       });
+
+      console.log(payment)
+      if (payment.payment_id_service) {
+        event.cookies.set('payment_id_service', payment?.payment_id_service, {
+          // send cookie for every page
+          path: '/exito',
+          // server side only cookie so you can't use `document.cookie`
+          httpOnly: true,
+          // only requests from same site can send cookies
+          // https://developer.mozilla.org/en-US/docs/Glossary/CSRF
+          sameSite: 'strict',
+          // only sent over HTTPS in production
+          secure: process.env.NODE_ENV === 'production',
+          // set cookie to expire after a month
+          maxAge: 5 * 60 * 60,
+        })
+      }
+
       dataUrlRedirect = result.url;
     } catch (error) {
       console.log(error);
