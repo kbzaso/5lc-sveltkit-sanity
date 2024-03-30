@@ -8,20 +8,20 @@
     data);
 </script>
 
-<main class="min-h-screen relative">
-  <figure class="z-10 absolute">
+<main class="min-h-screen relative mx-auto md:flex md:content-center">
+  <figure class="z-10 absolute md:opacity-20 lg:opacity-100 lg:relative">
     <img
       id="poster"
       class="md:rounded-sm"
       loading="eager"
-      width="600"
+      width="1000"
       height="750"
       src={urlForImage(event.poster).width(600).height(750).url()}
       alt="Afiche del evento"
     />
   </figure>
   <div
-    class="mx-auto prose items-center container px-4 content-center z-10 absolute bottom-10"
+    class="mx-auto prose items-center container px-4 content-center z-10 absolute md:relative md:mt-20 bottom-10"
   >
     <div class="badge badge-accent">Adhesión exitosa</div>
     <h1 class="mt-4 text-3xl font-bold text-white sm:text-4xl mb-4">
