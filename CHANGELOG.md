@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Ubication Payment Flow
+
 ## [0.0.21] - 2024-03-16
 
 ### Added
