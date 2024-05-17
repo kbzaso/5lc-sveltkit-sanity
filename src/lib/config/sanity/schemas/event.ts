@@ -1,6 +1,11 @@
 import { defineType } from "sanity";
 import { CalendarIcon } from "@sanity/icons";
 
+export const SELL_TYPE = [
+  { title: "Tandas", value: "batch" },
+  { title: "Ubicación", value: "ubication" },
+];
+
 export default defineType({
   name: "event",
   title: "Events",
@@ -113,69 +118,138 @@ export default defineType({
       hidden: ({ document }) => document?.active === false,
     },
     {
+      name: "sell_type",
+      title: "Metodo de venta",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+      hidden: ({ document }) =>
+            document?.active === false || document?.sell === false,
+      options: {
+        list: SELL_TYPE.map(({ title, value }) => ({ title, value })),
+        layout: "radio",
+      },
+    },
+    {
       name: "ticket",
       type: "object",
       title: "Adhesión al evento",
       description: "Precios y cantidades de entradas disponibles en cada tanda",
-      hidden: ({ document }) => document?.active === false,
+      hidden: ({ document }) =>
+        document?.active === false || document.sell === false,
       fields: [
         {
-          title: "Primera tanda",
+          name: "ubication",
+          title: "Ubicación",
           type: "object",
-          name: "firsts_tickets",
-          hidden: ({ document }) => document?.sell === false,
+          hidden: ({ document }) =>
+          document?.active === false || document?.sell === false || document.sell_type !== "ubication",
           fields: [
             {
-              title: "Precio",
-              name: "price",
-              type: "number",
-              initialValue: 0,
+              title: "Ringside",
+              type: "object",
+              name: "ringside_tickets",
+              fields: [
+                {
+                  title: "Precio",
+                  name: "price",
+                  type: "number",
+                  initialValue: 0,
+                },
+                {
+                  title: "Cantidad",
+                  name: "amount",
+                  type: "number",
+                  initialValue: 0,
+                },
+              ],
             },
             {
-              title: "Cantidad",
-              name: "amount",
-              type: "number",
-              initialValue: 0,
+              title: "General",
+              type: "object",
+              name: "general_tickets",
+
+              fields: [
+                {
+                  title: "Precio",
+                  name: "price",
+                  type: "number",
+                  initialValue: 0,
+                },
+                {
+                  title: "Cantidad",
+                  name: "amount",
+                  type: "number",
+                  initialValue: 0,
+                },
+              ],
             },
           ],
         },
         {
-          title: "Segunda tanda",
+          name: "batch",
           type: "object",
-          name: "seconds_tickets",
-          hidden: ({ document }) => document?.sell === false,
+          title: "Tandas",
+          hidden: ({ document }) =>
+            document?.active === false || document?.sell === false || document.sell_type !== "batch",
           fields: [
             {
-              title: "Precio",
-              name: "price",
-              type: "number",
-              initialValue: 0,
+              title: "Primera tanda",
+              type: "object",
+              name: "firsts_tickets",
+              fields: [
+                {
+                  title: "Precio",
+                  name: "price",
+                  type: "number",
+                  initialValue: 0,
+                },
+                {
+                  title: "Cantidad",
+                  name: "amount",
+                  type: "number",
+                  initialValue: 0,
+                },
+              ],
             },
             {
-              title: "Cantidad",
-              name: "amount",
-              type: "number",
-              initialValue: 0,
+              title: "Segunda tanda",
+              type: "object",
+              name: "seconds_tickets",
+
+              fields: [
+                {
+                  title: "Precio",
+                  name: "price",
+                  type: "number",
+                  initialValue: 0,
+                },
+                {
+                  title: "Cantidad",
+                  name: "amount",
+                  type: "number",
+                  initialValue: 0,
+                },
+              ],
             },
-          ],
-        },
-        {
-          title: "Tercera tanda",
-          type: "object",
-          name: "thirds_tickets",
-          hidden: ({ document }) => document?.sell === false,
-          fields: [
             {
-              title: "Precio",
-              name: "price",
-              type: "number",
-              initialValue: 0,
-            },
-            {
-              title: "Cantidad",
-              name: "amount",
-              type: "number",
-              initialValue: 0,
+              title: "Tercera tanda",
+              type: "object",
+              name: "thirds_tickets",
+
+              fields: [
+                {
+                  title: "Precio",
+                  name: "price",
+                  type: "number",
+                  initialValue: 0,
+                },
+                {
+                  title: "Cantidad",
+                  name: "amount",
+                  type: "number",
+                  initialValue: 0,
+                },
+              ],
             },
           ],
         },
@@ -280,7 +354,8 @@ export default defineType({
       title: "Disclaimer",
       type: "array",
       hidden: ({ document }) => document?.active === false,
-      description: "Debes seleccionar el disclaimer del evento, si no hay uno seleccionado, no se mostrara el botón de compra.",
+      description:
+        "Debes seleccionar el disclaimer del evento, si no hay uno seleccionado, no se mostrara el botón de compra.",
       of: [
         {
           type: "reference",
@@ -294,7 +369,8 @@ export default defineType({
       type: "text",
       description:
         "Describe brevemente el evento, este texto aparecerá en los resultados de búsqueda de Google (160 caracteres)",
-      validation: Rule => Rule.max(160).warning('No puede exceder los 160 caracteres'),
+      validation: (Rule) =>
+        Rule.max(160).warning("No puede exceder los 160 caracteres"),
     },
   ],
 });

@@ -98,7 +98,9 @@ export const POST: RequestHandler = async (event) => {
             to: paymentWithProduct.customer_email,
             // to: 'alejandro.saez@rendalomaq.com',
             subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
-            html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> `,
+            html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!, ${paymentWithProduct.ticketAmount} entradas para ${paymentWithProduct.product.name}. </br>Solo debes mecionar tu nombre, rut o email a los chiquillos de la puerta. </br></br>Nos vemos en la Bóveda Secreta - <strong>Siempre Buena Onda!</strong> </br></br>
+            Tú numero de orden es ${paymentWithProduct.payment_id_service} (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
+            `,
             tags: [
               {
                 name: "category",
@@ -116,7 +118,7 @@ export const POST: RequestHandler = async (event) => {
           patch: {
             id: nextEvent[0]._id, // replace with your document ID
             set: {
-              ticket: ticket,
+              ubication: ticket,
             },
           },
         },

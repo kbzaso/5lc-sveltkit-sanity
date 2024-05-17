@@ -2,6 +2,10 @@
 
 ## Agregar información en pagina de exito y error
 
+### Create
+    - [ ] Change payment type (ringside and general)
+    - [ ] Create status page
+
 ### Add
     - [ ] Order number
     - [ ] Date
@@ -15,9 +19,6 @@
     - [ ] QR
     - [ ] Politica de reembolso y cancelación
     - [ ] Información de contacto
-
-### Create
-    - [ ] Create status page
 ### Fix
     - [ ] Agregar información en pagina de exito payku
     - [ ] Agregar información en pagina de error

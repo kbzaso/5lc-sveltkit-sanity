@@ -10,7 +10,9 @@
   import PlaceDisclaimerBoveda from "./events/PlaceDisclaimerBoveda.svelte";
   import TandasTicketsSell from "./events/TandasTicketsSell.svelte";
   import { each } from "svelte/internal";
-  import { calculateTandas } from "$lib/utils/eventUtils";
+  import { calculateTandas, calculateUbications } from "$lib/utils/eventUtils";
+  import UbicationTicketsSell from "./events/UbicationTicketsSell.svelte";
+  import UbicationModalTickets from "./events/UbicationModalTickets.svelte";
   export let event: Event;
 
   $: eventDate = new Date(event?.date);
@@ -21,8 +23,10 @@
   let disclaimerEvent = writable([]);
 
   // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-  let tandas = calculateTandas(event.ticket)
+  let tandas = calculateTandas(event.ticket.batch);
+  let ubications = calculateUbications(event.ticket.ubication);
 
+  console.log(event.ticket.ubication);
 </script>
 
 <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
@@ -115,38 +119,43 @@
               {/if}
             </div>
 
-            {#if event.tickets_sold !== event.total_tickets && event.active && event.sell}
-              <!-- TANDAS -->
-              <div class="flex gap-4 my-8">
-                {#each tandas as tanda}
-                  <TandasTicketsSell ticket={tanda} />
-                {/each}
-              </div>
-              <!-- PROGRESS -->
-              <div>
-                <div class="flex justify-between">
-                  <span class="text-gray-400"
-                    >🎟️ {event?.ticket?.seconds_tickets?.amount <= 10
-                      ? "¡Últimas entradas!, no te quedes fuera."
-                      : "Progreso de venta de tickets"}</span
-                  >
-                  <span class="animate-bounce">🔥</span>
+            <!-- BATCH -->
+            {#if event.sell_type === "batch"}
+              {#if event.active && event.sell}
+                <!-- TANDAS -->
+                <div class="flex gap-4 my-8">
+                  {#each tandas as tanda}
+                    <TandasTicketsSell ticket={tanda} />
+                  {/each}
                 </div>
-                <progress
-                  class={`progress w-full ${
-                    event?.ticket?.firsts_tickets?.amount !== 0
-                      ? "progress-success"
-                      : event?.ticket?.seconds_tickets?.amount !== 0
-                      ? "progress-info"
-                      : "progress-error"
-                  }`}
-                  value={event.tickets_sold}
-                  max={event?.total_tickets}
-                />
-              </div>
+                <!-- PROGRESS -->
+                <!-- <div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-400"
+                      >🎟️ {event?.ticket?.seconds_tickets?.amount <= 10
+                        ? "¡Últimas entradas!, no te quedes fuera."
+                        : "Progreso de venta de tickets"}</span
+                    >
+                    <span class="animate-bounce">🔥</span>
+                  </div>
+                  <progress
+                    class={`progress w-full ${
+                      event?.ticket?.firsts_tickets?.amount !== 0
+                        ? "progress-success"
+                        : event?.ticket?.seconds_tickets?.amount !== 0
+                        ? "progress-info"
+                        : "progress-error"
+                    }`}
+                    value={event.tickets_sold}
+                    max={event?.total_tickets}
+                  />
+                </div> -->
+              {/if}
             {/if}
-            {#if (event?.tickets_sold === event?.total_tickets && event?.active) || !event?.sell}
-              <div
+
+
+            
+              <!-- <div
                 class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
               >
                 <svg
@@ -161,19 +170,32 @@
                 >
 
                 <span class="uppercase tracking-widest">Adhesión agotada</span>
+              </div> -->
+{#if event.sell_type === "ubication"}
+              <div class="flex gap-4 my-8">
+                {#each ubications as ubication}
+                  <UbicationTicketsSell ticket={ubication} />
+                {/each}
               </div>
-            {:else}
+
               <div class="mt-4">
                 {#if event?.disclaimers}
                   <DisclaimerModal
                     disclaimers={event?.disclaimers}
                     {disclaimerEvent}
                   />
-                  <ModalTickets nextEvent={event} {disclaimerEvent} />
+                  <UbicationModalTickets ticket={event.ticket.ubication} {disclaimerEvent} />
                 {/if}
               </div>
-            {/if}
+        {/if}
+
           {/if}
+          
+          <!-- BATCH -->
+
+          <!-- UBICATION -->
+
+          <!-- UBICATION -->
         </div>
       </div>
     </div>

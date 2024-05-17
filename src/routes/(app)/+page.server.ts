@@ -79,7 +79,163 @@ export const load: PageServerLoad = async () => {
   };
 };
 
+interface TicketType {
+  amount: number;
+}
+
+interface BuysObject {
+  ringside_tickets: TicketType;
+  general_tickets: TicketType;
+  [key: string]: TicketType; // This line allows for additional ticket types
+}
+
 export const actions: Actions = {
+  ubication: async (event) => {
+    const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
+
+    const form = await event.request.formData();
+    const name = form.get("name")?.toString();
+    const rut = form.get("rut")?.toString();
+    const email = form.get("email")?.toString();
+    const phone = form.get("phone")?.toString();
+    const tickets = Number(form.get("tickets"));
+    const ticketsType = form.get("ticketsType")?.toString();
+    const totalPrice = form.get("totalPrice")?.toString();
+    console.log(ticketsType)
+    let buyObject;
+
+    if (ticketsType === "ringside_tickets") {
+      buyObject = {
+        ringside_tickets: {
+          amount: tickets,
+        },
+        general_tickets: {
+          amount: 0,
+        },
+      };
+    } else {
+      buyObject = {
+        ringside_tickets: {
+          amount: 0,
+        },
+        general_tickets: {
+          amount: tickets,
+        },
+      };
+    }
+
+    const totalTicketsLeftStudio =
+      nextEvent.ticket.ubication.ringside_tickets.amount +
+      nextEvent.ticket.ubication.general_tickets.amount;
+
+    const ticketsSold = await client.payment.aggregate({
+      where: {
+        payment_status: "success",
+        AND: [
+          {
+            productId: nextEvent._id,
+          },
+        ],
+      },
+      _sum: {
+        ticketAmount: true,
+      },
+    });
+
+    const total_tickets =
+      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
+
+    const product = await client.product.upsert({
+      where: {
+        id: nextEvent._id,
+      },
+      update: {
+        name: nextEvent.title,
+        stock: total_tickets,
+        date: nextEvent.date,
+      },
+      create: {
+        id: nextEvent._id,
+        name: nextEvent.title,
+        stock: total_tickets,
+        date: nextEvent.date,
+      },
+    });
+
+    const payload = {
+      email: email,
+      amount: Number(totalPrice),
+      order: Math.floor(Math.random() * 1000000000),
+      subject: `${tickets} entradas para ${nextEvent.title}`,
+      name: name,
+      country: "Chile",
+      urlreturn: PAYMENT_COMPLETED_URL,
+      urlnotify: PAYMENT_WEBHOOK_URL_PAYKU,
+      payment: 99,
+      additional_parameters: {
+        event_id: nextEvent._id,
+      },
+    };
+
+    let dataUrlRedirect = "";
+
+    try {
+      const response = await fetch("https://app.payku.cl/api/transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      console.log(result)
+
+      const payment = await client.payment.create({
+        data: {
+          customer_name: name as string,
+          customer_email: email as string,
+          customer_phone: phone as string,
+          rut: rut as string,
+          payment_status: result.status,
+          ticketAmount: tickets,
+          price: Number(totalPrice),
+          buys: buyObject,
+          payment_id_service: result.id,
+          product: {
+            connect: {
+              id: nextEvent._id,
+            },
+          },
+        },
+      });
+
+      console.log(payment);
+      if (payment.payment_id_service) {
+        event.cookies.set("payment_id_service", payment?.payment_id_service, {
+          // send cookie for every page
+          path: "/exito",
+          // server side only cookie so you can't use `document.cookie`
+          httpOnly: true,
+          // only requests from same site can send cookies
+          // https://developer.mozilla.org/en-US/docs/Glossary/CSRF
+          sameSite: "strict",
+          // only sent over HTTPS in production
+          secure: process.env.NODE_ENV === "production",
+          // set cookie to expire after a month
+          maxAge: 5 * 60 * 60,
+        });
+      }
+
+      dataUrlRedirect = result.url;
+      console.log(dataUrlRedirect)
+    } catch (error) {
+      console.log(error);
+    }
+
+    throw redirect(302, dataUrlRedirect);
+
+  },
   payku: async (event) => {
     const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
 
@@ -89,12 +245,6 @@ export const actions: Actions = {
     const phone = form.get("phone")?.toString();
     const payment_method = form.get("payku")?.toString();
     const tickets = Number(form.get("tickets"));
-
-    if (!payment_method) {
-      error(404, {
-        message: "Debes seleccionar un método de pago",
-      });
-    }
 
     const totalTicketsLeftStudio =
       nextEvent.ticket.firsts_tickets.amount +
@@ -184,21 +334,21 @@ export const actions: Actions = {
         },
       });
 
-      console.log(payment)
+      console.log(payment);
       if (payment.payment_id_service) {
-        event.cookies.set('payment_id_service', payment?.payment_id_service, {
+        event.cookies.set("payment_id_service", payment?.payment_id_service, {
           // send cookie for every page
-          path: '/exito',
+          path: "/exito",
           // server side only cookie so you can't use `document.cookie`
           httpOnly: true,
           // only requests from same site can send cookies
           // https://developer.mozilla.org/en-US/docs/Glossary/CSRF
-          sameSite: 'strict',
+          sameSite: "strict",
           // only sent over HTTPS in production
-          secure: process.env.NODE_ENV === 'production',
+          secure: process.env.NODE_ENV === "production",
           // set cookie to expire after a month
           maxAge: 5 * 60 * 60,
-        })
+        });
       }
 
       dataUrlRedirect = result.url;
@@ -207,122 +357,5 @@ export const actions: Actions = {
     }
 
     throw redirect(302, dataUrlRedirect);
-  },
-  etpay: async ({ params, request }) => {
-    const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
-
-    const totalTicketsLeftStudio =
-      nextEvent.ticket.firsts_tickets.amount +
-      nextEvent.ticket.seconds_tickets.amount +
-      nextEvent.ticket.thirds_tickets.amount;
-    const ticketsSold = await client.payment.aggregate({
-      where: {
-        payment_status: "success",
-        AND: [
-          {
-            productId: nextEvent._id,
-          },
-        ],
-      },
-      _sum: {
-        ticketAmount: true,
-      },
-    });
-
-    const total_tickets =
-      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
-
-    const form = await request.formData();
-    const name = form.get("name")?.toString();
-    const email = form.get("email")?.toString();
-    const phone = form.get("phone")?.toString();
-    const tickets = Number(form.get("tickets"));
-    const payment_method = form.get("etpay")?.toString();
-
-    if (!payment_method) {
-      error(404, {
-        message: "Debes seleccionar un método de pago",
-      });
-    }
-
-    let resp;
-
-    const priceTotal = calculatePrice(tickets, nextEvent.ticket);
-
-    // Data que se envia a ET_PAY
-    let request_data = {
-      merchant_code: MERCHANT_CODE,
-      merchant_api_token: MERCHANT_API_TOKEN,
-      merchant_order_id: nextEvent._id,
-      order_amount: priceTotal.totalCost,
-      customer_email: email,
-      payment_completed_url: PAYMENT_COMPLETED_URL,
-      payment_cancellation_url: PAYMENT_CANCELLATION_URL,
-      payment_webhook_url: PAYMENT_WEBHOOK_URL,
-      metadata: [
-        {
-          name: `${tickets} entradas`,
-          value: `${nextEvent.title} - ${
-            nextEvent.boveda ? "Bóveda Secreta" : nextEvent.venue.venueName
-          }`,
-          show: true,
-        },
-      ],
-    };
-
-    try {
-      const data = await fetch(`${API_URL}/session/initialize`, {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "[*]",
-          "Access-Control-Allow-Methods": "POST",
-          "Access-Control-Allow-Headers": "Content-Type",
-        }),
-        body: JSON.stringify(request_data),
-        redirect: "follow",
-      });
-
-      resp = await data.json();
-
-      const product = await client.product.upsert({
-        where: {
-          id: nextEvent._id,
-        },
-        update: {
-          name: nextEvent.title,
-          stock: total_tickets,
-          date: nextEvent.date,
-        },
-        create: {
-          id: nextEvent._id,
-          name: nextEvent.title,
-          stock: total_tickets,
-          date: nextEvent.date,
-        },
-      });
-
-      const newPayment = await client.payment.create({
-        data: {
-          id: resp.token,
-          customer_name: name as string,
-          customer_email: email as string,
-          customer_phone: phone as string,
-          ticketAmount: tickets,
-          price: priceTotal.totalCost,
-          buys: priceTotal.ticket,
-          signature_token: resp.signature_token,
-          payment_method: payment_method,
-          product: {
-            connect: {
-              id: nextEvent._id,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    throw redirect(302, `${PMT_URL}/session/${resp.token}`);
   },
 };

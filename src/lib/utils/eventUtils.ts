@@ -32,18 +32,60 @@ export function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
 
 
 
-export function calculateTandas(tickets) {
-  // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-  const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
+type TicketType = 'firsts_tickets' | 'seconds_tickets' | 'thirds_tickets';
+type Tickets = Record<TicketType, { amount: number }>;
+
+export function calculateTandas(tickets: Tickets) {
+  const partsOrder: TicketType[] = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
 
   let tandas = Object.entries(tickets).map(([key, value]) => ({
-    type: key,
+    type: key as TicketType,
     ...value,
-    index: partsOrder.indexOf(key),
-}));
+    index: partsOrder.indexOf(key as TicketType),
+  }));
 
   tandas.sort(
     (a, b) => partsOrder.indexOf(a.type) - partsOrder.indexOf(b.type)
   );
   return tandas;
+}
+
+type UbicationType = 'ringside_tickets' | 'general_tickets';
+type Ubication = Record<UbicationType, { amount: number }>;
+
+export function calculateUbications(tickets: Ubication) {
+  const partsOrder: UbicationType[] = ["ringside_tickets", "general_tickets"];
+
+  let ubication = Object.entries(tickets).map(([key, value]) => {
+    let name;
+    if (key === 'ringside_tickets') {
+      name = 'Ringside';
+    } else if (key === 'general_tickets') {
+      name = 'General';
+    }
+
+    return {
+      type: key as UbicationType,
+      name,
+      ...value,
+      index: partsOrder.indexOf(key as UbicationType),
+    };
+  });
+
+  ubication.sort(
+    (a, b) => partsOrder.indexOf(a.type) - partsOrder.indexOf(b.type)
+  );
+  return ubication;
+}
+
+
+export function calculateUbicationPrice(ubications: Ubication, amount: number) {
+  let total = 0;
+
+  for (let ubicationType in ubications) {
+    let ubication = ubications[ubicationType as UbicationType];
+    total += amount * ubication.price;
+  }
+
+  return total;
 }
