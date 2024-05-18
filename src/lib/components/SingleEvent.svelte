@@ -10,7 +10,7 @@
   import PlaceDisclaimerBoveda from "./events/PlaceDisclaimerBoveda.svelte";
   import TandasTicketsSell from "./events/TandasTicketsSell.svelte";
   import { each } from "svelte/internal";
-  import { calculateTandas, calculateUbications } from "$lib/utils/eventUtils";
+  import { calculateUbications } from "$lib/utils/eventUtils";
   import UbicationTicketsSell from "./events/UbicationTicketsSell.svelte";
   import UbicationModalTickets from "./events/UbicationModalTickets.svelte";
   export let event: Event;
@@ -23,10 +23,7 @@
   let disclaimerEvent = writable([]);
 
   // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-  let tandas = calculateTandas(event.ticket.batch);
   let ubications = calculateUbications(event.ticket.ubication);
-
-  console.log(event.ticket.ubication);
 </script>
 
 <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
@@ -120,14 +117,14 @@
             </div>
 
             <!-- BATCH -->
-            {#if event.sell_type === "batch"}
-              {#if event.active && event.sell}
+            <!-- {#if event.sell_type === "batch"} -->
+              <!-- {#if event.active && event.sell} -->
                 <!-- TANDAS -->
-                <div class="flex gap-4 my-8">
+                <!-- <div class="flex gap-4 my-8">
                   {#each tandas as tanda}
                     <TandasTicketsSell ticket={tanda} />
                   {/each}
-                </div>
+                </div> -->
                 <!-- PROGRESS -->
                 <!-- <div>
                   <div class="flex justify-between">
@@ -150,8 +147,8 @@
                     max={event?.total_tickets}
                   />
                 </div> -->
-              {/if}
-            {/if}
+              <!-- {/if} -->
+            <!-- {/if} -->
 
 
             

@@ -47,6 +47,7 @@ export interface Event {
   seo_description: string;
   date: string;
   boveda: boolean;
+  sell_type: string;
   venue: {
     venueName: string;
     venueUrl: string;
