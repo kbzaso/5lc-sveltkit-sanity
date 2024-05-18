@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.22] - 2024-05-17
+
 ### Added
 
 - Ubication Payment Flow
@@ -126,7 +128,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.21...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.22...HEAD
+[0.0.22]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.21...0.0.22
 [0.0.21]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.20...0.0.21
 [0.0.20]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.19...0.0.20
 [0.0.19]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.18...0.0.19
