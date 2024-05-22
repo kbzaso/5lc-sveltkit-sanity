@@ -11,17 +11,19 @@ import {
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import {
-  API_URL,
-  PMT_URL,
-  MERCHANT_CODE,
-  MERCHANT_API_TOKEN,
   PAYMENT_COMPLETED_URL,
   PAYMENT_CANCELLATION_URL,
   PAYMENT_WEBHOOK_URL,
   PRIVATE_TOKEN_PAYKU,
   PAYMENT_WEBHOOK_URL_PAYKU,
+  PRIVATE_TOKEN_PAYKU_SANDBOX,
 } from "$env/static/private";
-import { PUBLIC_TOKEN_PAYKU } from "$env/static/public";
+import {
+  PUBLIC_TOKEN_PAYKU,
+  PUBLIC_PAYKU_API_URL_SANDBOX,
+  PUBLIC_PAYKU_API_URL,
+  PUBLIC_TOKEN_PAYKU_SANDBOX,
+} from "$env/static/public";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
 
@@ -89,6 +91,15 @@ interface BuysObject {
   [key: string]: TicketType; // This line allows for additional ticket types
 }
 
+// Hace la traduccoion de los tipos de tickets para guardarlo en DB
+let ubicatonTicketType = (type: string) => {
+  if (type === "ringside_tickets") {
+    return "Ringside";
+  } else if (type === "general_tickets") {
+    return "General";
+  }
+};
+
 export const actions: Actions = {
   ubication: async (event) => {
     const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
@@ -101,7 +112,7 @@ export const actions: Actions = {
     const tickets = Number(form.get("tickets"));
     const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
-    console.log(ticketsType)
+
     let buyObject;
 
     if (ticketsType === "ringside_tickets") {
@@ -180,16 +191,18 @@ export const actions: Actions = {
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch("https://app.payku.cl/api/transaction", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `${PUBLIC_PAYKU_API_URL_SANDBOX}/transaction`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU_SANDBOX}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
       const result = await response.json();
-      console.log(result)
 
       const payment = await client.payment.create({
         data: {
@@ -199,6 +212,7 @@ export const actions: Actions = {
           rut: rut as string,
           payment_status: result.status,
           ticketAmount: tickets,
+          ticketsType: ubicatonTicketType(ticketsType || ""),
           price: Number(totalPrice),
           buys: buyObject,
           payment_id_service: result.id,
@@ -214,12 +228,12 @@ export const actions: Actions = {
       if (payment.payment_id_service) {
         event.cookies.set("payment_id_service", payment?.payment_id_service, {
           // send cookie for every page
-          path: "/exito",
+          // path: "/exito",
           // server side only cookie so you can't use `document.cookie`
-          httpOnly: true,
+          // httpOnly: true,
           // only requests from same site can send cookies
           // https://developer.mozilla.org/en-US/docs/Glossary/CSRF
-          sameSite: "strict",
+          sameSite: "lax",
           // only sent over HTTPS in production
           secure: process.env.NODE_ENV === "production",
           // set cookie to expire after a month
@@ -228,13 +242,11 @@ export const actions: Actions = {
       }
 
       dataUrlRedirect = result.url;
-      console.log(dataUrlRedirect)
     } catch (error) {
       console.log(error);
     }
 
     throw redirect(302, dataUrlRedirect);
-
   },
   payku: async (event) => {
     const nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);

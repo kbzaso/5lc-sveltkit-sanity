@@ -2,24 +2,36 @@
 
 ## Agregar información en pagina de exito y error
 
-### Create
-    - [ ] Change payment type (ringside and general)
-    - [ ] Create status page
+### Add to DB
+    - [ ] ¿hizo ingreso?
+    - [x] Tipo de entrada (ringside_ticket, firsts_tickets)
 
-### Add
-    - [ ] Order number
-    - [ ] Date
-    - [ ] Nombre del evento
-    - [ ] Fecha
-    - [ ] Hora
-    - [ ] Ubicación
-    - [ ] Tipo de ticket (Ej. Entrada General)
-    - [ ] Información del comprador (Nombre, rut, email)
+### Add to email confirmation
+    - [ ] QR
+    - [x] Nombre del evento
+    - [x] Nombre del comprador
+    - [x] Fecha de la compra
+    - [x] Cantidad de entradas
+    - [x] Lugar (Nombre del venue y dirección)
+
+### Create
+    - [ ] Create status page
+    - [x] Change payment type (ringside and general)
+
+### Add to success page
     - [ ] Instrucciones para el acceso al evento
     - [ ] QR
     - [ ] Politica de reembolso y cancelación
     - [ ] Información de contacto
+    - [x] Order number
+    - [x] Date
+    - [x] Nombre del evento
+    - [x] Fecha
+    - [x] Ubicación
+    - [x] Tipo de ticket (Ej. Entrada General)
+    - [x] Información del comprador (Nombre, email)
+
 ### Fix
-    - [ ] Agregar información en pagina de exito payku
-    - [ ] Agregar información en pagina de error
-    - [ ] Revisar calculo de cobro
+    - [ ] Batch ticket type
+    - [x] Agregar información en pagina de exito payku
+    - [x] Send confrmaton email

@@ -89,6 +89,7 @@
           <input
             id="rut"
             name="rut"
+            required
             class="input input-bordered w-full"
           />
       </div>
