@@ -14,7 +14,9 @@
 
   export let data: PageData;
 
-  $: ({ settings, welcome, nextEvent, events } = data);
+  $: ({ settings, welcome, nextEvent, events, payment_id_service } = data);
+
+  console.log(payment_id_service);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 

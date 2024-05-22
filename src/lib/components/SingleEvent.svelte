@@ -9,10 +9,10 @@
   import { onMount } from "svelte";
   import PlaceDisclaimerBoveda from "./events/PlaceDisclaimerBoveda.svelte";
   import TandasTicketsSell from "./events/TandasTicketsSell.svelte";
-  import { each } from "svelte/internal";
   import { calculateUbications } from "$lib/utils/eventUtils";
   import UbicationTicketsSell from "./events/UbicationTicketsSell.svelte";
   import UbicationModalTickets from "./events/UbicationModalTickets.svelte";
+  import type { PageData } from "./$types";
   export let event: Event;
 
   $: eventDate = new Date(event?.date);
