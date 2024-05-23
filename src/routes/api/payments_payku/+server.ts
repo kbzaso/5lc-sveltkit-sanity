@@ -36,16 +36,6 @@ export const POST: RequestHandler = async (event) => {
 
   const payment_id = body.payment_key;
 
-  const Query = groq`
-  *[_type == "event" && _id == $merchantOrderId && active == true]{
-    _id,
-    slug,
-    ticket,
-    total_tickets,
-    venue,
-  }
-`;
-
   const prePayment = await client.payment.findUnique({
     where: {
       payment_id_service: payment_id,
@@ -81,88 +71,105 @@ export const POST: RequestHandler = async (event) => {
       },
     });
 
-    const nextEvent = await getSanityServerClient(false).fetch(Query, {
-      merchantOrderId: result.payment.additional_parameters.event_id,
-    });
+    const Query = groq`
+  *[_type == "event" && _id == $merchantOrderId && active == true]{
+    _id,
+    slug,
+    ticket,
+    total_tickets,
+    venue,
+  }
+`;
 
-    let ticket = subtractObjects(
-      nextEvent[0].ticket.ubication,
-      paymentWithProduct.buys
-    );
+    const eventId = result.payment.additional_parameters.event_id;
+    if (eventId) {
+      const nextEvent = await getSanityServerClient(false).fetch(Query, {
+        merchantOrderId: eventId,
+      });
 
-    // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
-    if (result.status === "success") {
-      // Enviamos email de confirmación
-      let email = (async function () {
-        try {
-          const data = await resend.emails.send({
-            from: "5 Luchas Clandestino <hola@5luchas.cl>",
-            to: paymentWithProduct.customer_email,
-            // to: 'alejandro.saez@rendalomaq.com',
-            subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
-            html: `Hola ${
-              paymentWithProduct.customer_name
-            }, </br> ¡Tu adhesión fue existosa!</br></br> ${
-              paymentWithProduct.ticketAmount
-            } ${
-              paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
-            } '${paymentWithProduct.ticketsType}' para ${
-              paymentWithProduct.product.name
-            }.</br></br>Nos vemos en ${
-              nextEvent[0].venue.venueName
-            } | ${nextEvent[0].venue.venueAdress} </br></br>
-            Tú numero de orden es <strong>${
-              paymentWithProduct.payment_id_service
-            }</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
-            `,
-            tags: [
-              {
-                name: "category",
-                value: "confirm_email",
-              },
-            ],
-          });
-        } catch (e) {
-          console.error(e);
-          throw error(500, "El email no pudo ser enviado");
-        }
-      })();
+      console.log(eventId, 'eventId');
+      
+      let ticket = subtractObjects(
+        nextEvent[0].ticket.ubication,
+        paymentWithProduct.buys
+      );
 
-      const mutations = [
-        {
-          patch: {
-            id: nextEvent[0]._id, // replace with your document ID
-            set: {
-              ticket: {
-                ubication: ticket,
+      // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
+      if (result.status === "success") {
+        // Enviamos email de confirmación
+        let email = (async function () {
+          try {
+            const data = await resend.emails.send({
+              from: "5 Luchas Clandestino <hola@5luchas.cl>",
+              to: paymentWithProduct.customer_email,
+              // to: 'alejandro.saez@rendalomaq.com',
+              subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
+              html: `Hola ${
+                paymentWithProduct.customer_name
+              }, </br> ¡Tu adhesión fue existosa!</br></br> ${
+                paymentWithProduct.ticketAmount
+              } ${
+                paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
+              } '${paymentWithProduct.ticketsType}' para ${
+                paymentWithProduct.product.name
+              }.</br></br>Nos vemos en ${nextEvent[0].venue.venueName} | ${
+                nextEvent[0].venue.venueAdress
+              } </br></br>
+              Tú numero de orden es <strong>${
+                paymentWithProduct.payment_id_service
+              }</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
+              `,
+              tags: [
+                {
+                  name: "category",
+                  value: "confirm_email",
+                },
+              ],
+            });
+          } catch (e) {
+            console.error(e);
+            throw error(500, "El email no pudo ser enviado");
+          }
+        })();
+
+        const mutations = [
+          {
+            patch: {
+              id: nextEvent[0]._id, // replace with your document ID
+              set: {
+                ticket: {
+                  ubication: ticket,
+                },
               },
             },
           },
-        },
-      ];
+        ];
 
-      await fetch(
-        `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${tokenWithWriteAccess}`,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST",
-            "Access-Control-Allow-Headers": "Content-Type",
-          },
-          body: JSON.stringify({ mutations }),
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        await fetch(
+          `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${tokenWithWriteAccess}`,
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "POST",
+              "Access-Control-Allow-Headers": "Content-Type",
+            },
+            body: JSON.stringify({ mutations }),
           }
-          return response.json();
-        })
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+      }
+    } else if (!eventId) {
+      throw new Error("Event ID is undefined");
     }
   } catch (e) {
     console.error(e);
