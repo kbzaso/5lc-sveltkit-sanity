@@ -71,24 +71,23 @@ export const POST: RequestHandler = async (event) => {
       },
     });
 
-    const Query = groq`
-  *[_type == "event" && _id == $merchantOrderId && active == true]{
-    _id,
-    slug,
-    ticket,
-    total_tickets,
-    venue,
-  }
-`;
-
     const eventId = result.payment.additional_parameters.event_id;
     if (eventId) {
+      const Query = groq`
+        *[_type == "event" && _id == $merchantOrderId && active == true]{
+          _id,
+          slug,
+          ticket,
+          total_tickets,
+          venue,
+        }
+      `;
       const nextEvent = await getSanityServerClient(false).fetch(Query, {
         merchantOrderId: eventId,
       });
 
-      console.log(eventId, 'eventId');
-      
+      console.log(eventId, "eventId");
+
       let ticket = subtractObjects(
         nextEvent[0].ticket.ubication,
         paymentWithProduct.buys
@@ -97,7 +96,7 @@ export const POST: RequestHandler = async (event) => {
       // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
       if (result.status === "success") {
         // Enviamos email de confirmación
-        let email = (async function () {
+        (async function () {
           try {
             const data = await resend.emails.send({
               from: "5 Luchas Clandestino <hola@5luchas.cl>",
