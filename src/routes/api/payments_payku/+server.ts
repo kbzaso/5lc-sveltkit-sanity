@@ -71,9 +71,8 @@ export const POST: RequestHandler = async (event) => {
       },
     });
 
-    const eventId = result.payment.additional_parameters.event_id;
-    if (eventId) {
-      const Query = groq`
+    const eventId = result?.payment?.additional_parameters.event_id;
+    const Query = groq`
         *[_type == "event" && _id == $merchantOrderId && active == true]{
           _id,
           slug,
@@ -82,93 +81,90 @@ export const POST: RequestHandler = async (event) => {
           venue,
         }
       `;
-      const nextEvent = await getSanityServerClient(false).fetch(Query, {
-        merchantOrderId: eventId,
-      });
+    const nextEvent = await getSanityServerClient(false).fetch(Query, {
+      merchantOrderId: eventId || "",
+    });
 
-      console.log(eventId, "eventId");
+    console.log(nextEvent, "nextEvent");
 
-      let ticket = subtractObjects(
-        nextEvent[0].ticket.ubication,
-        paymentWithProduct.buys
-      );
+    let ticket = subtractObjects(
+      nextEvent[0].ticket.ubication,
+      paymentWithProduct.buys
+    );
 
-      // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
-      if (result.status === "success") {
-        // Enviamos email de confirmación
-        (async function () {
-          try {
-            const data = await resend.emails.send({
-              from: "5 Luchas Clandestino <hola@5luchas.cl>",
-              to: paymentWithProduct.customer_email,
-              // to: 'alejandro.saez@rendalomaq.com',
-              subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
-              html: `Hola ${
-                paymentWithProduct.customer_name
-              }, </br> ¡Tu adhesión fue existosa!</br></br> ${
-                paymentWithProduct.ticketAmount
-              } ${
-                paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
-              } '${paymentWithProduct.ticketsType}' para ${
-                paymentWithProduct.product.name
-              }.</br></br>Nos vemos en ${nextEvent[0].venue.venueName} | ${
-                nextEvent[0].venue.venueAdress
-              } </br></br>
+    // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
+    if (result.status === "success") {
+      // Enviamos email de confirmación
+      (async function () {
+        try {
+          const data = await resend.emails.send({
+            from: "5 Luchas Clandestino <hola@5luchas.cl>",
+            to: paymentWithProduct.customer_email,
+            // to: 'alejandro.saez@rendalomaq.com',
+            subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
+            html: `Hola ${
+              paymentWithProduct.customer_name
+            }, </br> ¡Tu adhesión fue existosa!</br></br> ${
+              paymentWithProduct.ticketAmount
+            } ${
+              paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
+            } '${paymentWithProduct.ticketsType}' para ${
+              paymentWithProduct.product.name
+            }.</br></br>Nos vemos en ${nextEvent[0].venue.venueName} | ${
+              nextEvent[0].venue.venueAdress
+            } </br></br>
               Tú numero de orden es <strong>${
                 paymentWithProduct.payment_id_service
               }</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
               `,
-              tags: [
-                {
-                  name: "category",
-                  value: "confirm_email",
-                },
-              ],
-            });
-          } catch (e) {
-            console.error(e);
-            throw error(500, "El email no pudo ser enviado");
-          }
-        })();
+            tags: [
+              {
+                name: "category",
+                value: "confirm_email",
+              },
+            ],
+          });
+        } catch (e) {
+          console.error(e);
+          throw error(500, "El email no pudo ser enviado");
+        }
+      })();
 
-        const mutations = [
-          {
-            patch: {
-              id: nextEvent[0]._id, // replace with your document ID
-              set: {
-                ticket: {
-                  ubication: ticket,
-                },
+      const mutations = [
+        {
+          patch: {
+            id: nextEvent[0]._id, // replace with your document ID
+            set: {
+              ticket: {
+                ubication: ticket,
               },
             },
           },
-        ];
+        },
+      ];
 
-        await fetch(
-          `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${tokenWithWriteAccess}`,
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods": "POST",
-              "Access-Control-Allow-Headers": "Content-Type",
-            },
-            body: JSON.stringify({ mutations }),
+      await fetch(
+        `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${tokenWithWriteAccess}`,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+          body: JSON.stringify({ mutations }),
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
-        )
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((result) => console.log(result))
-          .catch((error) => console.error(error));
-      }
-    } else if (!eventId) {
-      throw new Error("Event ID is undefined");
+          return response.json();
+        })
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
     }
   } catch (e) {
     console.error(e);
