@@ -214,8 +214,10 @@ export const actions: Actions = {
         },
       });
 
+      if (payment.payment_id_service) {
       event.cookies.set('payment_id_service', payment.payment_id_service, { path: '/' });
-
+      }
+      
       dataUrlRedirect = result.url;
     } catch (error) {
       console.log(error);
