@@ -71,7 +71,7 @@ export const POST: RequestHandler = async (event) => {
       },
     });
 
-    const eventId = result?.payment?.additional_parameters.event_id;
+    const eventId = result?.payment?.additional_parameters.event_id || "";
     const Query = groq`
         *[_type == "event" && _id == $merchantOrderId && active == true]{
           _id,
@@ -82,7 +82,7 @@ export const POST: RequestHandler = async (event) => {
         }
       `;
     const nextEvent = await getSanityServerClient(false).fetch(Query, {
-      merchantOrderId: eventId || "",
+      merchantOrderId: eventId,
     });
 
     console.log(nextEvent, "nextEvent");

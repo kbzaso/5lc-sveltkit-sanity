@@ -175,7 +175,7 @@ export const actions: Actions = {
       country: "Chile",
       urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
       urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
-      payment: 99,
+      payment: 1,
       additional_parameters: {
         event_id: nextEvent._id,
       },
