@@ -7,17 +7,11 @@ import type { Event } from "$lib/types";
 import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import {
-  API_URL,
-  PMT_URL,
-  MERCHANT_CODE,
-  MERCHANT_API_TOKEN,
-  PAYMENT_COMPLETED_URL,
-  PAYMENT_CANCELLATION_URL,
-  PAYMENT_WEBHOOK_URL,
-  PRIVATE_TOKEN_PAYKU,
-  PAYMENT_WEBHOOK_URL_PAYKU,
-} from "$env/static/private";
-import { PUBLIC_TOKEN_PAYKU } from "$env/static/public";
+  PUBLIC_TOKEN_PAYKU,
+  PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
+  PUBLIC_PAYMENT_COMPLETED_URL,
+  PUBLIC_PAYKU_API_URL,
+} from "$env/static/public";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
 
@@ -78,9 +72,10 @@ export const load: PageServerLoad = async ({ parent, params }) => {
       event?.ticket?.thirds_tickets?.amount;
     // Suma de tickets que quedan en el Studio + los que se han vendido
 
-    const totalTickets =  totalTicketsLeftStudio + ticketsSoldCount 
+    const totalTickets = totalTicketsLeftStudio + ticketsSoldCount;
 
-    let remainingTickets: { [key: string]: { amount: number, price: number } } = {};
+    let remainingTickets: { [key: string]: { amount: number; price: number } } =
+      {};
 
     // Recalculate the ticket object
     for (let i = 0; i < partsOrder.length; i++) {
@@ -134,14 +129,14 @@ export const actions: Actions = {
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    const payment_method = form.get("payku")?.toString();
+    // const payment_method = form.get("payku")?.toString();
     const tickets = Number(form.get("tickets"));
 
-    if (!payment_method) {
-      error(404, {
-        message: "Debes seleccionar un método de pago",
-      });
-    }
+    // if (!payment_method) {
+    //   error(404, {
+    //     message: "Debes seleccionar un método de pago",
+    //   });
+    // }
 
     const totalTicketsLeftStudio =
       event.ticket.firsts_tickets.amount +
@@ -192,17 +187,17 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${event.title}`,
       name: name,
       country: "Chile",
-      urlreturn: PAYMENT_COMPLETED_URL,
-      urlnotify: PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
+      urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
-       event_id: event._id,
-      }
+        event_id: event._id,
+      },
     };
 
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch("https://app.payku.cl/api/transaction", {
+      const response = await fetch(`${PUBLIC_PAYKU_API_URL}/transaction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -222,7 +217,7 @@ export const actions: Actions = {
           ticketAmount: tickets,
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
-          payment_method: payment_method,
+          // ticketsType: payment_method,
           payment_id_service: result.id,
           product: {
             connect: {
@@ -237,126 +232,5 @@ export const actions: Actions = {
     }
 
     throw redirect(302, dataUrlRedirect);
-  },
-  etpay: async ({ params, request }) => {
-    let { event } = await getSanityServerClient(false).fetch<{
-      event: Event;
-    }>(eventQuery, {
-      slug: params.slug,
-    });
-
-    const totalTicketsLeftStudio =
-      event.ticket.firsts_tickets.amount +
-      event.ticket.seconds_tickets.amount +
-      event.ticket.thirds_tickets.amount;
-    const ticketsSold = await client.payment.aggregate({
-      where: {
-        payment_status: "success",
-        AND: [
-          {
-            productId: event._id,
-          },
-        ],
-      },
-      _sum: {
-        ticketAmount: true,
-      },
-    });
-
-    const total_tickets =
-      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
-
-    const form = await request.formData();
-    const name = form.get("name")?.toString();
-    const email = form.get("email")?.toString();
-    const phone = form.get("phone")?.toString();
-    const tickets = Number(form.get("tickets"));
-    const payment_method = form.get("etpay")?.toString();
-
-    if (!payment_method) {
-      error(404, {
-        message: "Debes seleccionar un método de pago",
-      });
-    }
-
-    let resp;
-
-    const priceTotal = calculatePrice(tickets, event.ticket);
-
-    // Data que se envia a ET_PAY
-    let request_data = {
-      merchant_code: MERCHANT_CODE,
-      merchant_api_token: MERCHANT_API_TOKEN,
-      merchant_order_id: event._id,
-      order_amount: priceTotal.totalCost,
-      customer_email: email,
-      payment_completed_url: PAYMENT_COMPLETED_URL,
-      payment_cancellation_url: PAYMENT_CANCELLATION_URL,
-      payment_webhook_url: PAYMENT_WEBHOOK_URL,
-      metadata: [
-        {
-          name: `${tickets} entradas`,
-          value: `${event.title} - ${
-            event.boveda ? "Bóveda Secreta" : event.venue.venueName
-          }`,
-          show: true,
-        },
-      ],
-    };
-
-    try {
-      const data = await fetch(`${API_URL}/session/initialize`, {
-        method: "POST",
-        headers: new Headers({
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "[*]",
-          "Access-Control-Allow-Methods": "POST",
-          "Access-Control-Allow-Headers": "Content-Type",
-        }),
-        body: JSON.stringify(request_data),
-        redirect: "follow",
-      });
-
-      resp = await data.json();
-
-      const product = await client.product.upsert({
-        where: {
-          id: event._id,
-        },
-        update: {
-          name: event.title,
-          stock: total_tickets,
-          date: event.date,
-        },
-        create: {
-          id: event._id,
-          name: event.title,
-          stock: total_tickets,
-          date: event.date,
-        },
-      });
-
-      const newPayment = await client.payment.create({
-        data: {
-          id: resp.token,
-          customer_name: name as string,
-          customer_email: email as string,
-          customer_phone: phone as string,
-          ticketAmount: tickets,
-          price: priceTotal.totalCost,
-          buys: priceTotal.ticket,
-          signature_token: resp.signature_token,
-          payment_method: payment_method,
-          product: {
-            connect: {
-              id: event._id,
-            },
-          },
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    throw redirect(302, `${PMT_URL}/session/${resp.token}`);
   },
 };

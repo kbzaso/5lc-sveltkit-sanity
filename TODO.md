@@ -23,6 +23,7 @@
     - [ ] QR
     - [ ] Politica de reembolso y cancelación
     - [ ] Información de contacto
+    - [ ] Download pdf with the info
     - [x] Order number
     - [x] Date
     - [x] Nombre del evento

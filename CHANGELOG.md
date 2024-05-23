@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Cookie saved when the payment process start
+
 ## [0.0.23] - 2024-05-22
 
 ### Add
