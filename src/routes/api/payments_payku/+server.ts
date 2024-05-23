@@ -12,7 +12,6 @@ import {
 } from "$lib/config/sanity/client";
 import { Resend } from "resend";
 import groq from "groq";
-import UbicationModalTickets from "$lib/components/events/UbicationModalTickets.svelte";
 import { LocaleConfig } from "$lib/utils";
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
