@@ -3,12 +3,11 @@ import { ActiveEventsQuery } from "$lib/config/sanity/queries";
 import { client } from "$lib/server/prisma";
 import { error } from "console";
 import type { PageServerLoad } from "../$types";
-import jwt from "jsonwebtoken";
-import { redirect } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
   // INFO DE COMPRA QUE VIENE EN LA COOKIE PAYKU
   const cookie = cookies.get("payment_id_service");
+  console.log("cookie", cookie);
   if (cookie) {
     try {
       const payment = await client.payment.findUnique({

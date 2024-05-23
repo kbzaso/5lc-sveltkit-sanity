@@ -10,19 +10,12 @@ import {
 } from "$lib/config/sanity/queries";
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import {
-  PAYMENT_COMPLETED_URL,
-  PAYMENT_CANCELLATION_URL,
-  PAYMENT_WEBHOOK_URL,
-  PRIVATE_TOKEN_PAYKU,
-  PAYMENT_WEBHOOK_URL_PAYKU,
-  PRIVATE_TOKEN_PAYKU_SANDBOX,
-} from "$env/static/private";
+import { PRIVATE_TOKEN_PAYKU } from "$env/static/private";
 import {
   PUBLIC_TOKEN_PAYKU,
-  PUBLIC_PAYKU_API_URL_SANDBOX,
   PUBLIC_PAYKU_API_URL,
-  PUBLIC_TOKEN_PAYKU_SANDBOX,
+  PUBLIC_PAYMENT_COMPLETED_URL,
+  PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
 } from "$env/static/public";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
@@ -180,8 +173,8 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${nextEvent.title}`,
       name: name,
       country: "Chile",
-      urlreturn: PAYMENT_COMPLETED_URL,
-      urlnotify: PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
+      urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
       payment: 99,
       additional_parameters: {
         event_id: nextEvent._id,
@@ -191,17 +184,14 @@ export const actions: Actions = {
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch(
-        `${PUBLIC_PAYKU_API_URL_SANDBOX}/transaction`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU_SANDBOX}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetch(`${PUBLIC_PAYKU_API_URL}/transaction`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+        },
+        body: JSON.stringify(payload),
+      });
       const result = await response.json();
 
       const payment = await client.payment.create({
@@ -224,28 +214,12 @@ export const actions: Actions = {
         },
       });
 
-      console.log(payment);
-      if (payment.payment_id_service) {
-        event.cookies.set("payment_id_service", payment?.payment_id_service, {
-          // send cookie for every page
-          // path: "/exito",
-          // server side only cookie so you can't use `document.cookie`
-          // httpOnly: true,
-          // only requests from same site can send cookies
-          // https://developer.mozilla.org/en-US/docs/Glossary/CSRF
-          sameSite: "lax",
-          // only sent over HTTPS in production
-          secure: process.env.NODE_ENV === "production",
-          // set cookie to expire after a month
-          maxAge: 5 * 60 * 60,
-        });
-      }
+      event.cookies.set('payment_id_service', payment.payment_id_service, { path: '/' });
 
       dataUrlRedirect = result.url;
     } catch (error) {
       console.log(error);
     }
-
     throw redirect(302, dataUrlRedirect);
   },
   payku: async (event) => {

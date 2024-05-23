@@ -14,9 +14,7 @@
 
   export let data: PageData;
 
-  $: ({ settings, welcome, nextEvent, events, payment_id_service } = data);
-
-  console.log(payment_id_service);
+  $: ({ settings, welcome, nextEvent, events } = data);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 
@@ -41,6 +39,7 @@
       currency: "CLP",
     }).format(thirdsTicketPrice);
   });
+
 </script>
 
 <svelte:head>

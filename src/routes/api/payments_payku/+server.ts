@@ -5,11 +5,7 @@ import {
   VITE_SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
   RESEND_API_KEY,
 } from "$env/static/private";
-import {
-  PUBLIC_TOKEN_PAYKU,
-  PUBLIC_PAYKU_API_URL_SANDBOX,
-  PUBLIC_TOKEN_PAYKU_SANDBOX,
-} from "$env/static/public";
+import { PUBLIC_TOKEN_PAYKU, PUBLIC_PAYKU_API_URL } from "$env/static/public";
 import {
   getSanityServerClient,
   overlayDrafts,
@@ -17,6 +13,7 @@ import {
 import { Resend } from "resend";
 import groq from "groq";
 import UbicationModalTickets from "$lib/components/events/UbicationModalTickets.svelte";
+import { LocaleConfig } from "$lib/utils";
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const datasetName = import.meta.env.VITE_SANITY_DATASET;
@@ -62,12 +59,12 @@ export const POST: RequestHandler = async (event) => {
 
   try {
     const response = await fetch(
-      `${PUBLIC_PAYKU_API_URL_SANDBOX}/transaction/${payment_id}`,
+      `${PUBLIC_PAYKU_API_URL}/transaction/${payment_id}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU_SANDBOX}`,
+          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
         },
       }
     );
@@ -104,8 +101,20 @@ export const POST: RequestHandler = async (event) => {
             to: paymentWithProduct.customer_email,
             // to: 'alejandro.saez@rendalomaq.com',
             subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
-            html: `Hola ${paymentWithProduct.customer_name}, </br> ¡Tu adhesión fue existosa!</br></br> ${paymentWithProduct.ticketAmount} ${paymentWithProduct.ticketAmount > 1 ? 'entradas' : 'entrada'} '${paymentWithProduct.ticketsType}' para ${paymentWithProduct.product.name}.</br></br>Nos vemos en ${nextEvent[0].venue.venueName} | ${nextEvent[0].venue.venueAdress} </br></br>
-            Tú numero de orden es <strong>${paymentWithProduct.payment_id_service}</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
+            html: `Hola ${
+              paymentWithProduct.customer_name
+            }, </br> ¡Tu adhesión fue existosa!</br></br> ${
+              paymentWithProduct.ticketAmount
+            } ${
+              paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
+            } '${paymentWithProduct.ticketsType}' para ${
+              paymentWithProduct.product.name
+            }.</br></br>Nos vemos en ${
+              nextEvent[0].venue.venueName
+            } | ${nextEvent[0].venue.venueAdress} </br></br>
+            Tú numero de orden es <strong>${
+              paymentWithProduct.payment_id_service
+            }</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
             `,
             tags: [
               {
