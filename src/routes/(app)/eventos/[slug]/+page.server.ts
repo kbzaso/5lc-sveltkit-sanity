@@ -129,14 +129,14 @@ export const actions: Actions = {
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    const payment_method = form.get("payku")?.toString();
+    // const payment_method = form.get("payku")?.toString();
     const tickets = Number(form.get("tickets"));
 
-    if (!payment_method) {
-      error(404, {
-        message: "Debes seleccionar un método de pago",
-      });
-    }
+    // if (!payment_method) {
+    //   error(404, {
+    //     message: "Debes seleccionar un método de pago",
+    //   });
+    // }
 
     const totalTicketsLeftStudio =
       event.ticket.firsts_tickets.amount +
@@ -217,7 +217,7 @@ export const actions: Actions = {
           ticketAmount: tickets,
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
-          ticketsType: payment_method,
+          // ticketsType: payment_method,
           payment_id_service: result.id,
           product: {
             connect: {

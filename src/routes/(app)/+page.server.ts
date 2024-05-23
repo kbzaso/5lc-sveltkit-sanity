@@ -229,7 +229,7 @@ export const actions: Actions = {
     const name = form.get("name")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    const payment_method = form.get("payku")?.toString();
+    // const payment_method = form.get("payku")?.toString();
     const tickets = Number(form.get("tickets"));
 
     const totalTicketsLeftStudio =
@@ -310,7 +310,7 @@ export const actions: Actions = {
           ticketAmount: tickets,
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
-          payment_method: payment_method,
+          // payment_method: payment_method,
           payment_id_service: result.id,
           product: {
             connect: {
