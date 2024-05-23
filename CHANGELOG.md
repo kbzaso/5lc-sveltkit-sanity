@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.24] - 2024-05-23
+
 ### Fix
 
 - Cookie saved when the payment process start
@@ -138,7 +140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.23...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.24...HEAD
+[0.0.24]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.23...0.0.24
 [0.0.23]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.22...0.0.23
 [0.0.22]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.21...0.0.22
 [0.0.21]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.20...0.0.21
