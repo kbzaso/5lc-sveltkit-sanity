@@ -9,13 +9,13 @@
   <div
     class="relative overflow-hidden w-full group border-gray-600 border hover:scale-105 hover:border-primary rounded-none transition-all h-fit md:h-96 ease-in-out group"
   >
-    {#if (event.ticket.firsts_tickets.amount === 0 && event.ticket.seconds_tickets.amount === 0 && event.ticket.thirds_tickets.amount === 0) || !event.sell}
+    <!-- {#if (event.ticket.batch.firsts_tickets.amount === 0 && event.ticket.batch.seconds_tickets.amount === 0 && event.ticket.batch.thirds_tickets.amount === 0) || !event.sell}
       <div
         class="badge bg-zinc-900 border-none rounded-sm absolute top-2 right-2 uppercase tracking-widest"
       >
         Adhesión agotada
       </div>
-    {/if}
+    {/if} -->
     <figure class="z-10">
       <img
         width="600"

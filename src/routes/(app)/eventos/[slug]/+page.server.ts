@@ -117,8 +117,153 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   };
 };
 
+// Hace la traduccoion de los tipos de tickets para guardarlo en DB
+let ubicatonTicketType = (type: string) => {
+  if (type === "ringside_tickets") {
+    return "Ringside";
+  } else if (type === "general_tickets") {
+    return "General";
+  }
+};
+
 export const actions: Actions = {
-  payku: async ({ params, request }) => {
+  ubication: async ({params, request, cookies}) => {
+    let { event } = await getSanityServerClient(false).fetch<{
+      event: Event;
+    }>(eventQuery, {
+      slug: params.slug,
+    });
+
+    const form = await request.formData();
+    const name = form.get("name")?.toString();
+    const rut = form.get("rut")?.toString();
+    const email = form.get("email")?.toString();
+    const phone = form.get("phone")?.toString();
+    const tickets = Number(form.get("tickets"));
+    const ticketsType = form.get("ticketsType")?.toString();
+    const totalPrice = form.get("totalPrice")?.toString();
+
+    let buyObject;
+
+    if (ticketsType === "ringside_tickets") {
+      buyObject = {
+        ringside_tickets: {
+          amount: tickets,
+        },
+        general_tickets: {
+          amount: 0,
+        },
+      };
+    } else {
+      buyObject = {
+        ringside_tickets: {
+          amount: 0,
+        },
+        general_tickets: {
+          amount: tickets,
+        },
+      };
+    }
+
+    const totalTicketsLeftStudio =
+      event.ticket.ubication.ringside_tickets.amount +
+      event.ticket.ubication.general_tickets.amount;
+
+    const ticketsSold = await client.payment.aggregate({
+      where: {
+        payment_status: "success",
+        AND: [
+          {
+            productId: event._id,
+          },
+        ],
+      },
+      _sum: {
+        ticketAmount: true,
+      },
+    });
+
+    const total_tickets =
+      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
+
+    const product = await client.product.upsert({
+      where: {
+        id: event._id,
+      },
+      update: {
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+      create: {
+        id: event._id,
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+    });
+
+    const payload = {
+      email: email,
+      amount: Number(totalPrice),
+      order: Math.floor(Math.random() * 1000000000),
+      subject: `${tickets} entradas para ${event.title}`,
+      name: name,
+      country: "Chile",
+      urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
+      urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
+      payment: 1,
+      additional_parameters: {
+        event_id: event._id,
+      },
+    };
+
+    let dataUrlRedirect = "";
+
+    try {
+      const response = await fetch(`${PUBLIC_PAYKU_API_URL}/transaction`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+
+      const payment = await client.payment.create({
+        data: {
+          customer_name: name as string,
+          customer_email: email as string,
+          customer_phone: phone as string,
+          rut: rut as string,
+          payment_status: result.status,
+          ticketAmount: tickets,
+          ticketsType: ubicatonTicketType(ticketsType || ""),
+          price: Number(totalPrice),
+          buys: buyObject,
+          payment_id_service: result.id,
+          product: {
+            connect: {
+              id: event._id,
+            },
+          },
+        },
+      });
+
+      if (payment.payment_id_service) {
+        cookies.set("payment_id_service", payment.payment_id_service, {
+          path: "/",
+        });
+      }
+
+      dataUrlRedirect = result.url;
+    } catch (error) {
+      console.log(error);
+    }
+    throw redirect(302, dataUrlRedirect);
+  },
+  batch: async ({ params, request }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {

@@ -283,8 +283,8 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${nextEvent.title}`,
       name: name,
       country: "Chile",
-      urlreturn: PAYMENT_COMPLETED_URL,
-      urlnotify: PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
+      urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
         event_id: nextEvent._id,
       },

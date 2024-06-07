@@ -6,9 +6,9 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import ModalTickets from "$lib/components/ModalTickets.svelte";
+  import ModalTickets from "$lib/components/events/BatchModalTickets.svelte";
   import InfiniteScroll from "$lib/components/InfiniteScroll.svelte";
-  import CardEvent from "$lib/components/CardEvent.svelte";
+  import CardEvent from "$lib/components/events/CardEvent.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
   import SingleEvent from "$lib/components/SingleEvent.svelte";
 
@@ -39,7 +39,6 @@
       currency: "CLP",
     }).format(thirdsTicketPrice);
   });
-
 </script>
 
 <svelte:head>

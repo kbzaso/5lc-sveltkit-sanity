@@ -7,7 +7,7 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import ModalTickets from "$lib/components/ModalTickets.svelte";
+  import ModalTickets from "$lib/components/events/BatchModalTickets.svelte";
   import Gallery from "$lib/components/Gallery.svelte";
   import Youtube from "$lib/components/Youtube.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
@@ -15,7 +15,11 @@
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
   import TandasTicketsSell from "$lib/components/events/TandasTicketsSell.svelte";
-  import { calculateTandas } from "$lib/utils/eventUtils";
+  import { calculateTandas, calculateUbications } from "$lib/utils/eventUtils";
+  import UbicationTicketsSell from "$lib/components/events/UbicationTicketsCard.svelte";
+  import UbicationModalTickets from "$lib/components/events/ModalTicketsSell.svelte";
+  import BatchModalTickets from "$lib/components/events/BatchModalTickets.svelte";
+  import ModalTicketsSell from "$lib/components/events/ModalTicketsSell.svelte";
 
   export let data: PageData;
 
@@ -43,10 +47,16 @@
   }
 
   let tandas: Tandas[] = [];
+  let ubications: any[] = [];
 
   onMount(() => {
-    // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-    tandas = calculateTandas($eventData.event?.ticket);
+    if($eventData?.event?.ticket.batch) {
+      // Necesito pasar el objeto de tandas a un array para poder ordenarlas
+      tandas = calculateTandas($eventData?.event?.ticket.batch);
+    } else {
+      // Necesito pasar el objeto de tandas a un array para poder ordenarlas
+      ubications = calculateUbications($eventData?.event?.ticket.ubication);
+    }
 
     if ($eventData?.event?.gallery !== null) {
       hasPhotos = Object.keys($eventData?.event?.gallery);
@@ -54,7 +64,6 @@
       hasPhotos = [];
     }
   });
-
   let disclaimerEvent = writable([]);
 </script>
 
@@ -250,18 +259,21 @@
                     </p>
                   {/if}
                 </div>
-
-                {#if $eventData?.event.tickets_sold !== $eventData?.event.total_tickets && $eventData?.event.active && $eventData?.event.sell}
-                  <!-- TANDAS -->
-                  <div class="flex gap-4 my-8">
-                    {#if tandas}
-                      {#each tandas as tanda}
-                        <TandasTicketsSell ticket={tanda} />
-                      {/each}
-                    {/if}
-                  </div>
-                  <!-- PROGRESS -->
-                  <div>
+                
+                <!-- TANDAS -->
+                <div class="flex gap-4 my-8">
+                  {#if $eventData?.event.sell_type === "batch"}
+                    {#each tandas as tanda}
+                      <TandasTicketsSell ticket={tanda} />
+                    {/each}
+                  {:else}
+                    {#each ubications as ubication}
+                      <UbicationTicketsSell ticket={ubication} />
+                    {/each}
+                  {/if}
+                </div>
+                <!-- PROGRESS -->
+                <!-- <div>
                     <div class="flex justify-between">
                       <span class="text-gray-400"
                         >🎟️ {$eventData?.event?.ticket?.seconds_tickets
@@ -283,8 +295,8 @@
                       value={$eventData?.event?.tickets_sold}
                       max={$eventData?.event?.total_tickets}
                     />
-                  </div>
-                {/if}
+                  </div> -->
+
                 {#if ($eventData?.event?.tickets_sold === $eventData?.event?.total_tickets && $eventData?.event?.active) || !$eventData?.event?.sell}
                   <div
                     class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
@@ -311,10 +323,16 @@
                         disclaimers={$eventData?.event?.disclaimers}
                         {disclaimerEvent}
                       />
-                      <ModalTickets
+                      <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
+                        <ModalTicketsSell
+                          sellSystem={$eventData?.event?.sell_type}
+                          ticket={$eventData?.event?.sell_type === 'ubication' ? $eventData?.event?.ticket?.ubication : $eventData?.event?.ticket?.batch}
+                          {disclaimerEvent}
+                        />
+                      <!-- <ModalTickets
                         nextEvent={$eventData?.event}
                         {disclaimerEvent}
-                      />
+                      /> -->
                     {/if}
                   </div>
                 {/if}

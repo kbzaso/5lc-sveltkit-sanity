@@ -4,6 +4,7 @@
     amount: number;
     price: number;
     type: string;
+    name: string;
   }
 
   export let ticket: Ticket;
@@ -15,6 +16,7 @@
     currency: "CLP",
   }).format(ticketPrice);
 </script>
+
 
 <div
   class:opacity-25={ticket.amount === 0}

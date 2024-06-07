@@ -7,10 +7,17 @@
     calculateUbicationPrice,
   } from "$lib/utils/eventUtils";
   export let ticket: any;
+  export let sellSystem: any;
   export let disclaimerEvent: any;
 
-  // ringside or general
+  console.log(ticket);
 
+  // BATCH LOGIC
+  
+  
+  
+  // UBICATION LOGIC
+  // ringside or general
   $: selectedTicketsType = "ringside_tickets";
   $: selectedTicketsQuantity = 1;
 
@@ -68,7 +75,7 @@
         >✕</button
       >
     </form>
-    <form action="?/ubication" method="POST" use:enhance class="space-y-4">
+    <form action={`?/${sellSystem}`} method="POST" use:enhance class="space-y-4">
       <div class="form-control w-full">
         <label class="label" for="name">
           <span class="label-text">¿Cuál es tu nombre?</span>
