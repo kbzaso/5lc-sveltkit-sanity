@@ -14,7 +14,6 @@ import { PRIVATE_TOKEN_PAYKU } from "$env/static/private";
 import {
   PUBLIC_TOKEN_PAYKU,
   PUBLIC_PAYKU_API_URL,
-  PUBLIC_PAYMENT_COMPLETED_URL,
   PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
 } from "$env/static/public";
 import { client } from "$lib/server/prisma";
@@ -173,7 +172,7 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${nextEvent.title}`,
       name: name,
       country: "Chile",
-      urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
+      urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
       urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
       payment: 1,
       additional_parameters: {
@@ -283,7 +282,7 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${nextEvent.title}`,
       name: name,
       country: "Chile",
-      urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
+      urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
       urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
         event_id: nextEvent._id,
