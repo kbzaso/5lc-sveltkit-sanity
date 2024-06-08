@@ -11,11 +11,6 @@ import {
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { PRIVATE_TOKEN_PAYKU } from "$env/static/private";
-import {
-  PUBLIC_TOKEN_PAYKU,
-  PUBLIC_PAYKU_API_URL,
-  PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
-} from "$env/static/public";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
 
@@ -173,7 +168,7 @@ export const actions: Actions = {
       name: name,
       country: "Chile",
       urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
-      urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
+      urlnotify: import.meta.env.VITE_PAYMENT_WEBHOOK_URL_PAYKU,
       payment: 1,
       additional_parameters: {
         event_id: nextEvent._id,
@@ -183,11 +178,11 @@ export const actions: Actions = {
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch(`${PUBLIC_PAYKU_API_URL}/transaction`, {
+      const response = await fetch(`${import.meta.env.VITE_PAYKU_API_URL}/transaction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
         },
         body: JSON.stringify(payload),
       });
@@ -283,7 +278,7 @@ export const actions: Actions = {
       name: name,
       country: "Chile",
       urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
-      urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
+      urlnotify: import.meta.env.VITE_PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
         event_id: nextEvent._id,
       },
@@ -296,7 +291,7 @@ export const actions: Actions = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
         },
         body: JSON.stringify(payload),
       });

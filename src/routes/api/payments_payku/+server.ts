@@ -5,7 +5,6 @@ import {
   VITE_SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
   RESEND_API_KEY,
 } from "$env/static/private";
-import { PUBLIC_TOKEN_PAYKU, PUBLIC_PAYKU_API_URL } from "$env/static/public";
 import {
   getSanityServerClient,
   overlayDrafts,
@@ -48,12 +47,12 @@ export const POST: RequestHandler = async (event) => {
 
   try {
     const response = await fetch(
-      `${PUBLIC_PAYKU_API_URL}/transaction/${payment_id}`,
+      `${import.meta.env.VITE_PAYKU_API_URL}/transaction/${payment_id}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
         },
       }
     );
