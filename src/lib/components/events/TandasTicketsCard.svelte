@@ -7,6 +7,7 @@
   }
 
   export let ticket: Ticket;
+  console.log(ticket);
 
   let ticketPrice = ticket.price;
 

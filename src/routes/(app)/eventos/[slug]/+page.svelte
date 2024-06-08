@@ -7,19 +7,16 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import ModalTickets from "$lib/components/events/BatchModalTickets.svelte";
   import Gallery from "$lib/components/Gallery.svelte";
   import Youtube from "$lib/components/Youtube.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
-  import TandasTicketsSell from "$lib/components/events/TandasTicketsSell.svelte";
   import { calculateTandas, calculateUbications } from "$lib/utils/eventUtils";
-  import UbicationTicketsSell from "$lib/components/events/UbicationTicketsCard.svelte";
-  import UbicationModalTickets from "$lib/components/events/ModalTicketsSell.svelte";
-  import BatchModalTickets from "$lib/components/events/BatchModalTickets.svelte";
   import ModalTicketsSell from "$lib/components/events/ModalTicketsSell.svelte";
+  import UbicationTicketsCard from "$lib/components/events/UbicationTicketsCard.svelte";
+  import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
 
   export let data: PageData;
 
@@ -259,16 +256,14 @@
                     </p>
                   {/if}
                 </div>
-                
-                <!-- TANDAS -->
                 <div class="flex gap-4 my-8">
                   {#if $eventData?.event.sell_type === "batch"}
                     {#each tandas as tanda}
-                      <TandasTicketsSell ticket={tanda} />
+                      <TandasTicketsCard ticket={tanda} />
                     {/each}
                   {:else}
                     {#each ubications as ubication}
-                      <UbicationTicketsSell ticket={ubication} />
+                      <UbicationTicketsCard ticket={ubication} />
                     {/each}
                   {/if}
                 </div>

@@ -3,6 +3,11 @@
   import { LocaleConfig } from "$lib/utils/index";
   import type { Event } from "$lib/types";
   export let event: Event;
+
+  $: eventDate = new Date(event?.date);
+  $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
+  $: hours = eventDate.getHours();
+  $: minutes = eventDate.getMinutes();
 </script>
 
 <a href={`/eventos/${event.slug}`}>
@@ -31,16 +36,21 @@
       class="bg-zinc-900/50 h-max grow backdrop-blur-xl absolute bottom-0 z-10 w-full pb-4"
     >
       <p
-        class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-4 px-4 pt-0"
+        class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-4 px-2 pt-0 truncate"
       >
         <time datetime={event.date.toString()}>
           {new Date(event.date).toLocaleDateString("es-CL", LocaleConfig)}
         </time>
+        -
+        <time datetime={eventDateFormatted}>
+          {hours}:{minutes < 10 ? "0" + minutes : minutes}
+        </time>
       </p>
 
-      <h2 class="text-primary font-ibm italic text-2xl md:text-4xl px-4 pt-0">
+      <h2 class="text-primary font-ibm italic text-2xl px-2 pt-0">
         {event.title}
       </h2>
+      <p class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 px-2 pt-0 truncate">{event.boveda ? 'Bóveda Secreta' : event.venue.venueName }</p>
     </div>
   </div>
 </a>

@@ -52,24 +52,24 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
     const ticketSystem = {
       firsts_tickets: {
-        amount: event?.ticket?.firsts_tickets?.amount,
-        price: event?.ticket?.firsts_tickets?.price,
+        amount: event?.ticket?.batch?.firsts_tickets?.amount,
+        price: event?.ticket?.batch?.firsts_tickets?.price,
       },
       seconds_tickets: {
-        amount: event?.ticket?.seconds_tickets?.amount,
-        price: event?.ticket?.seconds_tickets?.price,
+        amount: event?.ticket?.batch?.seconds_tickets?.amount,
+        price: event?.ticket?.batch?.seconds_tickets?.price,
       },
       thirds_tickets: {
-        amount: event?.ticket?.thirds_tickets?.amount,
-        price: event?.ticket?.thirds_tickets?.price,
+        amount: event?.ticket?.batch?.thirds_tickets?.amount,
+        price: event?.ticket?.batch?.thirds_tickets?.price,
       },
     };
 
     // Suma de tickets que quedan en el Studio
     const totalTicketsLeftStudio =
-      event?.ticket?.firsts_tickets?.amount +
-      event?.ticket?.seconds_tickets?.amount +
-      event?.ticket?.thirds_tickets?.amount;
+      event?.ticket?.batch?.firsts_tickets?.amount +
+      event?.ticket?.batch?.seconds_tickets?.amount +
+      event?.ticket?.batch?.thirds_tickets?.amount;
     // Suma de tickets que quedan en el Studio + los que se han vendido
 
     const totalTickets = totalTicketsLeftStudio + ticketsSoldCount;
@@ -94,12 +94,6 @@ export const load: PageServerLoad = async ({ parent, params }) => {
         price: ticketSystem[part].price,
       };
     }
-
-    event = {
-      ...event,
-      tickets_sold: ticketsSold._sum?.ticketAmount || 0,
-      total_tickets: totalTickets,
-    };
   }
 
   if (!welcome) {
@@ -251,7 +245,7 @@ export const actions: Actions = {
         },
       });
 
-      if (payment.payment_id_service) {
+      if (payment?.payment_id_service) {
         cookies.set("payment_id_service", payment.payment_id_service, {
           path: "/",
         });
@@ -263,7 +257,7 @@ export const actions: Actions = {
     }
     throw redirect(302, dataUrlRedirect);
   },
-  batch: async ({ params, request }) => {
+  batch: async ({ params, request, cookies }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
@@ -272,21 +266,18 @@ export const actions: Actions = {
 
     const form = await request.formData();
     const name = form.get("name")?.toString();
+    const rut = form.get("rut")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    // const payment_method = form.get("payku")?.toString();
     const tickets = Number(form.get("tickets"));
-
-    // if (!payment_method) {
-    //   error(404, {
-    //     message: "Debes seleccionar un método de pago",
-    //   });
-    // }
+    // Ajustar a los tipos de batch
+    // const ticketsType = form.get("ticketsType")?.toString();
+    const totalPrice = form.get("totalPrice")?.toString();
 
     const totalTicketsLeftStudio =
-      event.ticket.firsts_tickets.amount +
-      event.ticket.seconds_tickets.amount +
-      event.ticket.thirds_tickets.amount;
+      event?.ticket?.batch?.firsts_tickets?.amount +
+      event?.ticket?.batch?.seconds_tickets?.amount +
+      event?.ticket?.batch?.thirds_tickets?.amount;
     const ticketsSold = await client.payment.aggregate({
       where: {
         payment_status: "success",
@@ -304,7 +295,7 @@ export const actions: Actions = {
     const total_tickets =
       totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
 
-    const priceTotal = calculatePrice(tickets, event.ticket);
+    const priceTotal = calculatePrice(tickets, event?.ticket?.batch);
 
     const product = await client.product.upsert({
       where: {
@@ -351,18 +342,18 @@ export const actions: Actions = {
         body: JSON.stringify(payload),
       });
       const result = await response.json();
-      console.log(result);
 
-      await client.payment.create({
+      const payment = await client.payment.create({
         data: {
           customer_name: name as string,
           customer_email: email as string,
           customer_phone: phone as string,
+          rut: rut as string,
           payment_status: result.status,
           ticketAmount: tickets,
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
-          // ticketsType: payment_method,
+          ticketsType: 'Tandas',
           payment_id_service: result.id,
           product: {
             connect: {
@@ -371,6 +362,13 @@ export const actions: Actions = {
           },
         },
       });
+
+      if (payment?.payment_id_service) {
+        cookies.set("payment_id_service", payment.payment_id_service, {
+          path: "/",
+        });
+      }
+
       dataUrlRedirect = result.url;
     } catch (error) {
       console.log(error);

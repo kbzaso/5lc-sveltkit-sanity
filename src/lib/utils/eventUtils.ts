@@ -93,3 +93,14 @@ export function calculateUbicationPrice(ubications: Ubication, amount: number) {
 
   return total;
 }
+
+
+// Calculate total quantity of tickets available in the studio
+export function calculateTotalQuantity(ticketTypes: {
+  [key: string]: { amount: number };
+} = {}): number {
+  return Object.values(ticketTypes).reduce(
+    (total, ticketType) => total + ticketType.amount,
+    0
+  );
+}

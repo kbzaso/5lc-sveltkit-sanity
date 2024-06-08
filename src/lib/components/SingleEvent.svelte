@@ -8,7 +8,7 @@
   import { writable } from "svelte/store";
   import { onMount } from "svelte";
   import PlaceDisclaimerBoveda from "./events/PlaceDisclaimerBoveda.svelte";
-  import TandasTicketsSell from "./events/TandasTicketsSell.svelte";
+  import TandasTicketsSell from "./events/TandasTicketsCard.svelte";
   import { calculateUbications } from "$lib/utils/eventUtils";
   import UbicationTicketsSell from "./events/UbicationTicketsCard.svelte";
   import UbicationModalTickets from "./events/ModalTicketsSell.svelte";

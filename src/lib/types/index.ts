@@ -56,18 +56,18 @@ export interface Event {
   ticket: {
     batch: {
       firsts_tickets: {
-      price: number;
-      amount: number;
+        price: number;
+        amount: number;
+      };
+      seconds_tickets: {
+        price: number;
+        amount: number;
+      };
+      thirds_tickets: {
+        price: number;
+        amount: number;
+      };
     };
-    seconds_tickets: {
-      price: number;
-      amount: number;
-    };
-    thirds_tickets: {
-      price: number;
-      amount: number;
-    };
-    },
     ubication: {
       general_tickets: {
         price: number;
@@ -76,8 +76,8 @@ export interface Event {
       ringside_tickets: {
         price: number;
         amount: number;
-      }
-    }
+      };
+    };
   };
   description: InputValue;
   result: InputValue;
