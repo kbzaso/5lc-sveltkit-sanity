@@ -43,6 +43,10 @@
       selectedTicketsTotalPrice = obj.totalCost;
     }
   };
+
+  onMount(() => {
+    handleChange();
+  });
 </script>
 
 <button
