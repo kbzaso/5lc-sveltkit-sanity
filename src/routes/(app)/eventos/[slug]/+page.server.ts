@@ -222,6 +222,11 @@ export const actions: Actions = {
       });
       const result = await response.json();
 
+      console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL")
+      console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU")
+
+      console.log(result, "result")
+
       const payment = await client.payment.create({
         data: {
           customer_name: name as string,
@@ -339,6 +344,11 @@ export const actions: Actions = {
         body: JSON.stringify(payload),
       });
       const result = await response.json();
+
+      console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL")
+      console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU")
+
+      console.log(result, "result")
 
       const payment = await client.payment.create({
         data: {
