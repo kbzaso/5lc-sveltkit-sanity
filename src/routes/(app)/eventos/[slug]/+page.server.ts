@@ -132,6 +132,8 @@ export const actions: Actions = {
     const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
 
+    console.log(name, rut, email, phone, tickets, ticketsType, totalPrice);
+
     let buyObject;
 
     if (ticketsType === "ringside_tickets") {
@@ -268,7 +270,7 @@ export const actions: Actions = {
     // Ajustar a los tipos de batch
     // const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
-
+    console.log(name, rut, email, phone, tickets, totalPrice);
     const totalTicketsLeftStudio =
       event?.ticket?.batch?.firsts_tickets?.amount +
       event?.ticket?.batch?.seconds_tickets?.amount +
