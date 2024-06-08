@@ -6,9 +6,9 @@
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import ModalTickets from "$lib/components/ModalTickets.svelte";
+  import ModalTickets from "$lib/components/events/BatchModalTickets.svelte";
   import InfiniteScroll from "$lib/components/InfiniteScroll.svelte";
-  import CardEvent from "$lib/components/CardEvent.svelte";
+  import CardEvent from "$lib/components/events/CardEvent.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
   import SingleEvent from "$lib/components/SingleEvent.svelte";
 
@@ -39,7 +39,6 @@
       currency: "CLP",
     }).format(thirdsTicketPrice);
   });
-
 </script>
 
 <svelte:head>
@@ -79,19 +78,19 @@
   {#if $page.data.welcome.horizontalLine}
     <InfiniteScroll />
   {/if}
-  <Header
+  <!-- <Header
     imageTitle={urlForImage(welcome.imageTitle).crop("focalpoint").url()}
     preTitle={welcome.preTitle}
     textTitle={welcome.textTitle}
     description={welcome.description}
-  />
-  <main class="container px-4 mt-10 lg:-mt-40 mx-auto">
+  /> -->
+  <main class="container px-4 mt-28 mx-auto">
     {#if events && events.length > 0}
       {#if events.length > 1}
       <h1 class="text-3xl sub-title text-white sm:text-4xl">
         Próximos eventos
       </h1>
-      <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {#each events as event}
           <CardEvent {event} />
         {/each}

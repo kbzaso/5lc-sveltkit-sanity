@@ -4,14 +4,14 @@
   import { urlForImage } from "$lib/config/sanity";
   import { PortableText } from "@portabletext/svelte";
   import DisclaimerModal from "./DisclaimerModal.svelte";
-  import ModalTickets from "./ModalTickets.svelte";
+  import ModalTickets from "./events/BatchModalTickets.svelte";
   import { writable } from "svelte/store";
   import { onMount } from "svelte";
   import PlaceDisclaimerBoveda from "./events/PlaceDisclaimerBoveda.svelte";
-  import TandasTicketsSell from "./events/TandasTicketsSell.svelte";
+  import TandasTicketsSell from "./events/TandasTicketsCard.svelte";
   import { calculateUbications } from "$lib/utils/eventUtils";
-  import UbicationTicketsSell from "./events/UbicationTicketsSell.svelte";
-  import UbicationModalTickets from "./events/UbicationModalTickets.svelte";
+  import UbicationTicketsSell from "./events/UbicationTicketsCard.svelte";
+  import UbicationModalTickets from "./events/ModalTicketsSell.svelte";
   import type { PageData } from "./$types";
   export let event: Event;
 
@@ -118,15 +118,15 @@
 
             <!-- BATCH -->
             <!-- {#if event.sell_type === "batch"} -->
-              <!-- {#if event.active && event.sell} -->
-                <!-- TANDAS -->
-                <!-- <div class="flex gap-4 my-8">
+            <!-- {#if event.active && event.sell} -->
+            <!-- TANDAS -->
+            <!-- <div class="flex gap-4 my-8">
                   {#each tandas as tanda}
                     <TandasTicketsSell ticket={tanda} />
                   {/each}
                 </div> -->
-                <!-- PROGRESS -->
-                <!-- <div>
+            <!-- PROGRESS -->
+            <!-- <div>
                   <div class="flex justify-between">
                     <span class="text-gray-400"
                       >🎟️ {event?.ticket?.seconds_tickets?.amount <= 10
@@ -147,12 +147,10 @@
                     max={event?.total_tickets}
                   />
                 </div> -->
-              <!-- {/if} -->
+            <!-- {/if} -->
             <!-- {/if} -->
 
-
-            
-              <!-- <div
+            <!-- <div
                 class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
               >
                 <svg
@@ -168,7 +166,7 @@
 
                 <span class="uppercase tracking-widest">Adhesión agotada</span>
               </div> -->
-{#if event.sell_type === "ubication"}
+            {#if event.sell_type === "ubication"}
               <div class="flex gap-4 my-8">
                 {#each ubications as ubication}
                   <UbicationTicketsSell ticket={ubication} />
@@ -181,13 +179,15 @@
                     disclaimers={event?.disclaimers}
                     {disclaimerEvent}
                   />
-                  <UbicationModalTickets ticket={event.ticket.ubication} {disclaimerEvent} />
+                  <UbicationModalTickets
+                    ticket={event.ticket.ubication}
+                    {disclaimerEvent}
+                  />
                 {/if}
               </div>
-        {/if}
-
+            {/if}
           {/if}
-          
+
           <!-- BATCH -->
 
           <!-- UBICATION -->

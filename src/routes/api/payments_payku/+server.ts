@@ -5,7 +5,6 @@ import {
   VITE_SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
   RESEND_API_KEY,
 } from "$env/static/private";
-import { PUBLIC_TOKEN_PAYKU, PUBLIC_PAYKU_API_URL } from "$env/static/public";
 import {
   getSanityServerClient,
   overlayDrafts,
@@ -48,12 +47,12 @@ export const POST: RequestHandler = async (event) => {
 
   try {
     const response = await fetch(
-      `${PUBLIC_PAYKU_API_URL}/transaction/${payment_id}`,
+      `${import.meta.env.VITE_PAYKU_API_URL}/transaction/${payment_id}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
         },
       }
     );
@@ -79,20 +78,25 @@ export const POST: RequestHandler = async (event) => {
           ticket,
           total_tickets,
           venue,
+          sell_type,
         }
       `;
     const nextEvent = await getSanityServerClient(false).fetch(Query, {
       merchantOrderId: eventId,
     });
 
-    console.log(nextEvent, "nextEvent");
+    // VALIDAR SI EL EVENTO ES POR UBICACIÓN O TANDAS
+    if (nextEvent[0].sell_type === "ubication") {
+    } else {
+    }
 
     let ticket = subtractObjects(
-      nextEvent[0].ticket.ubication,
+      nextEvent[0].sell_type === "ubication"
+        ? nextEvent[0].ticket.ubication
+        : nextEvent[0].ticket.batch,
       paymentWithProduct.buys
     );
 
-    // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
     if (result.status === "success") {
       // Enviamos email de confirmación
       (async function () {
@@ -106,13 +110,13 @@ export const POST: RequestHandler = async (event) => {
               paymentWithProduct.customer_name
             }, </br> ¡Tu adhesión fue existosa!</br></br> ${
               paymentWithProduct.ticketAmount
-            } ${
-              paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
-            } '${paymentWithProduct.ticketsType}' para ${
-              paymentWithProduct.product.name
-            }.</br></br>Nos vemos en ${nextEvent[0].venue.venueName} | ${
-              nextEvent[0].venue.venueAdress
-            } </br></br>
+            } ${paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"} ${
+              paymentWithProduct.ticketsType !== "Tandas"
+                ? paymentWithProduct.ticketsType
+                : ""
+            } para ${paymentWithProduct.product.name}.</br></br>Nos vemos en ${
+              nextEvent[0].venue.venueName
+            } | ${nextEvent[0].venue.venueAdress} </br></br>
               Tú numero de orden es <strong>${
                 paymentWithProduct.payment_id_service
               }</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
@@ -130,18 +134,35 @@ export const POST: RequestHandler = async (event) => {
         }
       })();
 
-      const mutations = [
-        {
-          patch: {
-            id: nextEvent[0]._id, // replace with your document ID
-            set: {
-              ticket: {
-                ubication: ticket,
+      // MUTATION PARA ACTUALIZAR EL STOCK DEL STUDIO
+      let mutations;
+      if (nextEvent[0].sell_type === "ubication") {
+        mutations = [
+          {
+            patch: {
+              id: nextEvent[0]._id, // replace with your document ID
+              set: {
+                ticket: {
+                  ubication: ticket,
+                },
               },
             },
           },
-        },
-      ];
+        ];
+      } else {
+        mutations = [
+          {
+            patch: {
+              id: nextEvent[0]._id, // replace with your document ID
+              set: {
+                ticket: {
+                  batch: ticket,
+                },
+              },
+            },
+          },
+        ];
+      }
 
       await fetch(
         `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
