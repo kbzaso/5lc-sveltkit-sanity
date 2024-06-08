@@ -10,7 +10,7 @@ import {
 } from "$lib/config/sanity/queries";
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import { PRIVATE_TOKEN_PAYKU } from "$env/static/private";
+import { PRIVATE_TOKEN_PAYKU, VITE_PAYKU_API_URL, VITE_PAYMENT_COMPLETED_URL, VITE_PAYMENT_WEBHOOK_URL_PAYKU, VITE_PUBLIC_TOKEN_PAYKU } from "$env/static/private";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
 
@@ -167,8 +167,8 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${nextEvent.title}`,
       name: name,
       country: "Chile",
-      urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
-      urlnotify: import.meta.env.VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: VITE_PAYMENT_COMPLETED_URL,
+      urlnotify: VITE_PAYMENT_WEBHOOK_URL_PAYKU,
       payment: 1,
       additional_parameters: {
         event_id: nextEvent._id,
@@ -178,11 +178,11 @@ export const actions: Actions = {
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PAYKU_API_URL}/transaction`, {
+      const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${VITE_PUBLIC_TOKEN_PAYKU}`,
         },
         body: JSON.stringify(payload),
       });
@@ -277,8 +277,8 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${nextEvent.title}`,
       name: name,
       country: "Chile",
-      urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
-      urlnotify: import.meta.env.VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: VITE_PAYMENT_COMPLETED_URL,
+      urlnotify: VITE_PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
         event_id: nextEvent._id,
       },
@@ -291,7 +291,7 @@ export const actions: Actions = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${VITE_PUBLIC_TOKEN_PAYKU}`,
         },
         body: JSON.stringify(payload),
       });

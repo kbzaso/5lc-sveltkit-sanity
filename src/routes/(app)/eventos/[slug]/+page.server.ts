@@ -8,6 +8,7 @@ import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
+import { VITE_PAYKU_API_URL, VITE_PAYMENT_COMPLETED_URL, VITE_PAYMENT_WEBHOOK_URL_PAYKU, VITE_PUBLIC_TOKEN_PAYKU } from "$env/static/private";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
@@ -198,8 +199,8 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${event.title}`,
       name: name,
       country: "Chile",
-      urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
-      urlnotify: import.meta.env.VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: VITE_PAYMENT_COMPLETED_URL,
+      urlnotify: VITE_PAYMENT_WEBHOOK_URL_PAYKU,
       payment: 1,
       additional_parameters: {
         event_id: event._id,
@@ -209,11 +210,11 @@ export const actions: Actions = {
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PAYKU_API_URL}/transaction`, {
+      const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${VITE_PUBLIC_TOKEN_PAYKU}`,
         },
         body: JSON.stringify(payload),
       });
@@ -317,8 +318,8 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${event.title}`,
       name: name,
       country: "Chile",
-      urlreturn: import.meta.env.VITE_PAYMENT_COMPLETED_URL,
-      urlnotify: import.meta.env.VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: VITE_PAYMENT_COMPLETED_URL,
+      urlnotify: VITE_PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
         event_id: event._id,
       },
@@ -327,11 +328,11 @@ export const actions: Actions = {
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PAYKU_API_URL}/transaction`, {
+      const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${VITE_PUBLIC_TOKEN_PAYKU}`,
         },
         body: JSON.stringify(payload),
       });
