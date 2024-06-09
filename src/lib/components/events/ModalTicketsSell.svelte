@@ -4,13 +4,14 @@
   import type { Event } from "$lib/types";
   import {
     calculatePrice,
+    calculateTotalQuantity,
     calculateUbicationPrice,
   } from "$lib/utils/eventUtils";
   export let ticket: any;
+  export let sellSystem: any;
   export let disclaimerEvent: any;
 
   // ringside or general
-
   $: selectedTicketsType = "ringside_tickets";
   $: selectedTicketsQuantity = 1;
 
@@ -21,15 +22,31 @@
     currency: "CLP",
   }).format(selectedTicketsTotalPrice);
 
-  const hangleChange = () => {
-    if (selectedTicketsType === "ringside_tickets") {
-      selectedTicketsTotalPrice =
-        selectedTicketsQuantity * ticket.ringside_tickets.price;
-    } else if (selectedTicketsType === "general_tickets") {
-      selectedTicketsTotalPrice =
-        selectedTicketsQuantity * ticket.general_tickets.price;
+  // options for select
+  $: selectedTicketsTotalQuantity = calculateTotalQuantity(ticket);
+  $: options = Array.from(
+    { length: Math.min(selectedTicketsTotalQuantity, 10) },
+    (_, i) => i + 1
+  );
+
+  const handleChange = () => {
+    if (sellSystem === "ubication") {
+      if (selectedTicketsType === "ringside_tickets") {
+        selectedTicketsTotalPrice =
+          selectedTicketsQuantity * ticket?.ringside_tickets?.price;
+      } else if (selectedTicketsType === "general_tickets") {
+        selectedTicketsTotalPrice =
+          selectedTicketsQuantity * ticket.general_tickets.price;
+      }
+    } else {
+      let obj = calculatePrice(selectedTicketsQuantity, ticket);
+      selectedTicketsTotalPrice = obj.totalCost;
     }
   };
+
+  onMount(() => {
+    handleChange();
+  });
 </script>
 
 <button
@@ -68,7 +85,12 @@
         >✕</button
       >
     </form>
-    <form action="?/ubication" method="POST" use:enhance class="space-y-4">
+    <form
+      action={`?/${sellSystem}`}
+      method="POST"
+      use:enhance
+      class="space-y-4"
+    >
       <div class="form-control w-full">
         <label class="label" for="name">
           <span class="label-text">¿Cuál es tu nombre?</span>
@@ -84,14 +106,14 @@
       </div>
       <div class="form-control w-full">
         <label class="label" for="rut">
-            <span class="label-text">¿Cuál es tu RUT?</span>
-          </label>
-          <input
-            id="rut"
-            name="rut"
-            required
-            class="input input-bordered w-full"
-          />
+          <span class="label-text">¿Cuál es tu RUT?</span>
+        </label>
+        <input
+          id="rut"
+          name="rut"
+          required
+          class="input input-bordered w-full"
+        />
       </div>
       <div class="form-control w-full">
         <label class="label" for="email">
@@ -108,15 +130,15 @@
       </div>
       <div class="form-control w-full">
         <label class="label" for="phone">
-            <span class="label-text">¿Cuál es tu teléfono?</span>
-          </label>
-          <input
-            type="tel"
-            placeholder="+56 9 1234 5678"
-            id="phone"
-            name="phone"
-            class="input input-bordered w-full"
-          />
+          <span class="label-text">¿Cuál es tu teléfono?</span>
+        </label>
+        <input
+          type="tel"
+          placeholder="+56 9 1234 5678"
+          id="phone"
+          name="phone"
+          class="input input-bordered w-full"
+        />
       </div>
       <div class="form-control w-full">
         <label class="label" for="tickets">
@@ -128,68 +150,68 @@
           id="tickets"
           required
           class="select select-bordered w-full outline-none ring-0"
-          on:change={() => hangleChange()}
+          on:change={() => handleChange()}
         >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
+          {#each options as option (option)}
+            <option value={option}>{option}</option>
+          {/each}
         </select>
       </div>
-      <div>
-        <span class="label-text">Ubicación</span>
-        <div class="flex flex-col">
-          <label
-            class="label cursor-pointer flex justify-start gap-4"
-            for="ringside_tickets"
-          >
-            <input
-              type="radio"
-              id="ringside_tickets"
-              name="ringside_tickets"
-              value="ringside_tickets"
-              class="radio radio-primary"
-              checked={selectedTicketsType === "ringside_tickets"}
-              on:click={() => {
-                selectedTicketsType = "ringside_tickets";
-                hangleChange();
-              }}
-            />
-            <span class="label-text"> RINGSIDE </span>
-          </label>
+      {#if sellSystem === "ubication"}
+        <div>
+          <span class="label-text">Ubicación</span>
+          <div class="flex flex-col">
+            <label
+              class="label cursor-pointer flex justify-start gap-4"
+              for="ringside_tickets"
+            >
+              <input
+                type="radio"
+                id="ringside_tickets"
+                name="ringside_tickets"
+                value="ringside_tickets"
+                class="radio radio-primary"
+                checked={selectedTicketsType === "ringside_tickets"}
+                on:click={() => {
+                  selectedTicketsType = "ringside_tickets";
+                  handleChange();
+                }}
+              />
+              <span class="label-text">RINGSIDE </span>
+            </label>
 
-          <label
-            class="label cursor-pointer flex justify-start gap-4"
-            for="general_tickets"
-          >
-            <input
-              type="radio"
-              id="general_tickets"
-              name="general_tickets"
-              value="general_tickets"
-              class="radio radio-primary"
-              checked={selectedTicketsType === "general_tickets"}
-              on:click={() => {
-                selectedTicketsType = "general_tickets";
-                hangleChange();
-              }}
-            />
-            <span class="label-text"> GENERAL </span>
-          </label>
+            <label
+              class="label cursor-pointer flex justify-start gap-4"
+              for="general_tickets"
+            >
+              <input
+                type="radio"
+                id="general_tickets"
+                name="general_tickets"
+                value="general_tickets"
+                class="radio radio-primary"
+                checked={selectedTicketsType === "general_tickets"}
+                on:click={() => {
+                  selectedTicketsType = "general_tickets";
+                  handleChange();
+                }}
+              />
+              <span class="label-text">GENERAL </span>
+            </label>
+          </div>
         </div>
-      </div>
+      {/if}
       <input
         type="hidden"
         name="totalPrice"
         bind:value={selectedTicketsTotalPrice}
       />
-      <input type="hidden" name="ticketsType" id="ticketsType" bind:value={selectedTicketsType}>
+      <input
+        type="hidden"
+        name="ticketsType"
+        id="ticketsType"
+        bind:value={selectedTicketsType}
+      />
       <button
         type="submit"
         class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"

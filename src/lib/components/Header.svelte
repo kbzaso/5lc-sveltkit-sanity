@@ -10,10 +10,9 @@
   export let textTitle = "";
 </script>
 
-<section>
-  <div
+  <header
     id="header"
-    class={`container mx-auto h-[600px] lg:h-[800px] 2xl:h-[1000px] relative -mt-20 md:mt-0`}
+    class={`container mx-auto h-[600px] lg:h-[800px] 2xl:h-[1000px] relative -mt-20 md:mt-0 z-0`}
   >
     <div
       class="container mx-auto flex flex-col justify-end px-4 absolute bottom-4 lg:bottom-36 z-10 h-full"
@@ -42,5 +41,4 @@
     <div
       class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/90 lg:via-black/40 to-transparent h-96 md:h-[300px] lg:h-[600px] w-full"
     />
-  </div>
-</section>
+  </header>

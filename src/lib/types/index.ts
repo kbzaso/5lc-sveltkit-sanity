@@ -54,17 +54,29 @@ export interface Event {
     venueAdress: string;
   };
   ticket: {
-    firsts_tickets: {
-      price: number;
-      amount: number;
+    batch: {
+      firsts_tickets: {
+        price: number;
+        amount: number;
+      };
+      seconds_tickets: {
+        price: number;
+        amount: number;
+      };
+      thirds_tickets: {
+        price: number;
+        amount: number;
+      };
     };
-    seconds_tickets: {
-      price: number;
-      amount: number;
-    };
-    thirds_tickets: {
-      price: number;
-      amount: number;
+    ubication: {
+      general_tickets: {
+        price: number;
+        amount: number;
+      };
+      ringside_tickets: {
+        price: number;
+        amount: number;
+      };
     };
   };
   description: InputValue;
@@ -88,14 +100,4 @@ export interface Welcome {
   imageTitle: SanityImageSource;
   textTitle: string;
   description: InputValue;
-}
-
-export interface Event {
-  id: number;
-  title: string;
-  date: string;
-  total_tickets: number;
-  tickets_sold: number;
-  assistance: number;
-  playlist: string;
 }

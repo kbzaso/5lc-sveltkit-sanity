@@ -22,8 +22,8 @@ model Payment {
   customer_phone     String?
   productId          String
   buys               Json
-  ticketsType        String   @default("--")
   payment_id_service String?  @unique
+  ticketsType        String
   product            Product  @relation(fields: [productId], references: [id])
 }
 
@@ -33,31 +33,4 @@ model Product {
   stock    Int?
   date     DateTime? @db.Timestamptz(6)
   payments Payment[]
-}
-
-model Key {
-  id              String  @id @unique
-  hashed_password String?
-  user_id         String
-  User            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@index([user_id])
-}
-
-model Session {
-  id             String @id @unique
-  user_id        String
-  active_expires BigInt
-  idle_expires   BigInt
-  User           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@index([user_id])
-}
-
-model User {
-  id       String    @id @unique
-  name     String?
-  username String    @unique
-  Key      Key[]
-  Session  Session[]
 }

@@ -2,6 +2,11 @@
 
 ## Agregar información en pagina de exito y error
 
+### Fix
+    - [ ] Batch ticket type
+    - [x] Agregar información en pagina de exito payku
+    - [x] Send confrmaton email
+
 ### Add to DB
     - [ ] ¿hizo ingreso?
     - [x] Tipo de entrada (ringside_ticket, firsts_tickets)
@@ -31,8 +36,3 @@
     - [x] Ubicación
     - [x] Tipo de ticket (Ej. Entrada General)
     - [x] Información del comprador (Nombre, email)
-
-### Fix
-    - [ ] Batch ticket type
-    - [x] Agregar información en pagina de exito payku
-    - [x] Send confrmaton email

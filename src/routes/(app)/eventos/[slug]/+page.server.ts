@@ -6,14 +6,14 @@ import { eventQuery, welcomeQuery } from "$lib/config/sanity/queries";
 import type { Event } from "$lib/types";
 import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import {
-  PUBLIC_TOKEN_PAYKU,
-  PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
-  PUBLIC_PAYMENT_COMPLETED_URL,
-  PUBLIC_PAYKU_API_URL,
-} from "$env/static/public";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
+import {
+  VITE_PAYKU_API_URL,
+  VITE_PAYMENT_COMPLETED_URL,
+  VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+  VITE_PUBLIC_TOKEN_PAYKU,
+} from "$env/static/private";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
@@ -52,24 +52,24 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     const partsOrder = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
     const ticketSystem = {
       firsts_tickets: {
-        amount: event?.ticket?.firsts_tickets?.amount,
-        price: event?.ticket?.firsts_tickets?.price,
+        amount: event?.ticket?.batch?.firsts_tickets?.amount,
+        price: event?.ticket?.batch?.firsts_tickets?.price,
       },
       seconds_tickets: {
-        amount: event?.ticket?.seconds_tickets?.amount,
-        price: event?.ticket?.seconds_tickets?.price,
+        amount: event?.ticket?.batch?.seconds_tickets?.amount,
+        price: event?.ticket?.batch?.seconds_tickets?.price,
       },
       thirds_tickets: {
-        amount: event?.ticket?.thirds_tickets?.amount,
-        price: event?.ticket?.thirds_tickets?.price,
+        amount: event?.ticket?.batch?.thirds_tickets?.amount,
+        price: event?.ticket?.batch?.thirds_tickets?.price,
       },
     };
 
     // Suma de tickets que quedan en el Studio
     const totalTicketsLeftStudio =
-      event?.ticket?.firsts_tickets?.amount +
-      event?.ticket?.seconds_tickets?.amount +
-      event?.ticket?.thirds_tickets?.amount;
+      event?.ticket?.batch?.firsts_tickets?.amount +
+      event?.ticket?.batch?.seconds_tickets?.amount +
+      event?.ticket?.batch?.thirds_tickets?.amount;
     // Suma de tickets que quedan en el Studio + los que se han vendido
 
     const totalTickets = totalTicketsLeftStudio + ticketsSoldCount;
@@ -94,12 +94,6 @@ export const load: PageServerLoad = async ({ parent, params }) => {
         price: ticketSystem[part].price,
       };
     }
-
-    event = {
-      ...event,
-      tickets_sold: ticketsSold._sum?.ticketAmount || 0,
-      total_tickets: totalTickets,
-    };
   }
 
   if (!welcome) {
@@ -117,8 +111,17 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   };
 };
 
+// Hace la traduccoion de los tipos de tickets para guardarlo en DB
+let ubicatonTicketType = (type: string) => {
+  if (type === "ringside_tickets") {
+    return "Ringside";
+  } else if (type === "general_tickets") {
+    return "General";
+  }
+};
+
 export const actions: Actions = {
-  payku: async ({ params, request }) => {
+  ubication: async ({ params, request, cookies }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
@@ -127,21 +130,39 @@ export const actions: Actions = {
 
     const form = await request.formData();
     const name = form.get("name")?.toString();
+    const rut = form.get("rut")?.toString();
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
-    // const payment_method = form.get("payku")?.toString();
     const tickets = Number(form.get("tickets"));
+    const ticketsType = form.get("ticketsType")?.toString();
+    const totalPrice = form.get("totalPrice")?.toString();
 
-    // if (!payment_method) {
-    //   error(404, {
-    //     message: "Debes seleccionar un método de pago",
-    //   });
-    // }
+    let buyObject;
+
+    if (ticketsType === "ringside_tickets") {
+      buyObject = {
+        ringside_tickets: {
+          amount: tickets,
+        },
+        general_tickets: {
+          amount: 0,
+        },
+      };
+    } else {
+      buyObject = {
+        ringside_tickets: {
+          amount: 0,
+        },
+        general_tickets: {
+          amount: tickets,
+        },
+      };
+    }
 
     const totalTicketsLeftStudio =
-      event.ticket.firsts_tickets.amount +
-      event.ticket.seconds_tickets.amount +
-      event.ticket.thirds_tickets.amount;
+      event.ticket.ubication.ringside_tickets.amount +
+      event.ticket.ubication.general_tickets.amount;
+
     const ticketsSold = await client.payment.aggregate({
       where: {
         payment_status: "success",
@@ -159,7 +180,124 @@ export const actions: Actions = {
     const total_tickets =
       totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
 
-    const priceTotal = calculatePrice(tickets, event.ticket);
+    const product = await client.product.upsert({
+      where: {
+        id: event._id,
+      },
+      update: {
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+      create: {
+        id: event._id,
+        name: event.title,
+        stock: total_tickets,
+        date: event.date,
+      },
+    });
+
+    const payload = {
+      email: email,
+      order: Math.floor(Math.random() * 1000000000),
+      subject: `${tickets} entradas para ${event.title}`,
+      amount: Number(totalPrice),
+      name: name,
+      country: "Chile",
+      urlreturn: VITE_PAYMENT_COMPLETED_URL,
+      urlnotify: VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+      payment: 1,
+      additional_parameters: {
+        event_id: event._id,
+      },
+    };
+
+    let dataUrlRedirect = "";
+
+    try {
+      const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${VITE_PUBLIC_TOKEN_PAYKU}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+
+      console.log(result, "result");
+
+      const payment = await client.payment.create({
+        data: {
+          customer_name: name as string,
+          customer_email: email as string,
+          customer_phone: phone as string,
+          rut: rut as string,
+          payment_status: result.status,
+          ticketAmount: tickets,
+          ticketsType: ubicatonTicketType(ticketsType || ""),
+          price: Number(totalPrice),
+          buys: buyObject,
+          payment_id_service: result.id,
+          product: {
+            connect: {
+              id: event._id,
+            },
+          },
+        },
+      });
+
+      if (payment?.payment_id_service) {
+        cookies.set("payment_id_service", payment.payment_id_service, {
+          path: "/",
+        });
+      }
+
+      dataUrlRedirect = result.url;
+    } catch (error) {
+      console.log(error);
+    }
+    throw redirect(302, dataUrlRedirect);
+  },
+  batch: async ({ params, request, cookies }) => {
+    let { event } = await getSanityServerClient(false).fetch<{
+      event: Event;
+    }>(eventQuery, {
+      slug: params.slug,
+    });
+
+    const form = await request.formData();
+    const name = form.get("name")?.toString();
+    const rut = form.get("rut")?.toString();
+    const email = form.get("email")?.toString();
+    const phone = form.get("phone")?.toString();
+    const tickets = Number(form.get("tickets"));
+    // Ajustar a los tipos de batch
+    // const ticketsType = form.get("ticketsType")?.toString();
+    const totalPrice = form.get("totalPrice")?.toString();
+
+    const totalTicketsLeftStudio =
+      event?.ticket?.batch?.firsts_tickets?.amount +
+      event?.ticket?.batch?.seconds_tickets?.amount +
+      event?.ticket?.batch?.thirds_tickets?.amount;
+    const ticketsSold = await client.payment.aggregate({
+      where: {
+        payment_status: "success",
+        AND: [
+          {
+            productId: event._id,
+          },
+        ],
+      },
+      _sum: {
+        ticketAmount: true,
+      },
+    });
+
+    const total_tickets =
+      totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
+
+    const priceTotal = calculatePrice(tickets, event?.ticket?.batch);
 
     const product = await client.product.upsert({
       where: {
@@ -187,8 +325,8 @@ export const actions: Actions = {
       subject: `${tickets} entradas para ${event.title}`,
       name: name,
       country: "Chile",
-      urlreturn: PUBLIC_PAYMENT_COMPLETED_URL,
-      urlnotify: PUBLIC_PAYMENT_WEBHOOK_URL_PAYKU,
+      urlreturn: VITE_PAYMENT_COMPLETED_URL,
+      urlnotify: VITE_PAYMENT_WEBHOOK_URL_PAYKU,
       additional_parameters: {
         event_id: event._id,
       },
@@ -197,27 +335,27 @@ export const actions: Actions = {
     let dataUrlRedirect = "";
 
     try {
-      const response = await fetch(`${PUBLIC_PAYKU_API_URL}/transaction`, {
+      const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${PUBLIC_TOKEN_PAYKU}`,
+          Authorization: `Bearer ${VITE_PUBLIC_TOKEN_PAYKU}`,
         },
         body: JSON.stringify(payload),
       });
       const result = await response.json();
-      console.log(result);
 
-      await client.payment.create({
+      const payment = await client.payment.create({
         data: {
           customer_name: name as string,
           customer_email: email as string,
           customer_phone: phone as string,
+          rut: rut as string,
           payment_status: result.status,
           ticketAmount: tickets,
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
-          // ticketsType: payment_method,
+          ticketsType: "Tandas",
           payment_id_service: result.id,
           product: {
             connect: {
@@ -226,6 +364,13 @@ export const actions: Actions = {
           },
         },
       });
+
+      if (payment?.payment_id_service) {
+        cookies.set("payment_id_service", payment.payment_id_service, {
+          path: "/",
+        });
+      }
+
       dataUrlRedirect = result.url;
     } catch (error) {
       console.log(error);

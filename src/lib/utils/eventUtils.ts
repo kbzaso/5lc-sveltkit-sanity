@@ -1,3 +1,5 @@
+
+// BATCH TICKETS SYSTEM
 export function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
   let totalCost = 0;
   let remainingTickets = ticketsToBuy;
@@ -50,6 +52,8 @@ export function calculateTandas(tickets: Tickets) {
   return tandas;
 }
 
+
+//  UBICATIONS TICKETS SYSTEM
 type UbicationType = 'ringside_tickets' | 'general_tickets';
 type Ubication = Record<UbicationType, { amount: number }>;
 
@@ -88,4 +92,15 @@ export function calculateUbicationPrice(ubications: Ubication, amount: number) {
   }
 
   return total;
+}
+
+
+// Calculate total quantity of tickets available in the studio
+export function calculateTotalQuantity(ticketTypes: {
+  [key: string]: { amount: number };
+} = {}): number {
+  return Object.values(ticketTypes).reduce(
+    (total, ticketType) => total + ticketType.amount,
+    0
+  );
 }

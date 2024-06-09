@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add batch and ubication sell system on event slug
+
 ## [0.0.24] - 2024-05-23
 
 ### Fix
