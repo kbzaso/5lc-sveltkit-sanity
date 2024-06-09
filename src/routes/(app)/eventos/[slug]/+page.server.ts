@@ -137,8 +137,6 @@ export const actions: Actions = {
     const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
 
-    console.log(name, rut, email, phone, tickets, ticketsType, totalPrice);
-
     let buyObject;
 
     if (ticketsType === "ringside_tickets") {
@@ -214,16 +212,7 @@ export const actions: Actions = {
       },
     };
 
-    console.log(payload, "payload");
-
     let dataUrlRedirect = "";
-
-    console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL");
-    console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU");
-    console.log(
-      VITE_PAYMENT_WEBHOOK_URL_PAYKU,
-      "VITE_PAYMENT_WEBHOOK_URL_PAYKU"
-    );
 
     try {
       const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
@@ -286,7 +275,7 @@ export const actions: Actions = {
     // Ajustar a los tipos de batch
     // const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
-    console.log(name, rut, email, phone, tickets, totalPrice);
+
     const totalTicketsLeftStudio =
       event?.ticket?.batch?.firsts_tickets?.amount +
       event?.ticket?.batch?.seconds_tickets?.amount +
@@ -355,11 +344,6 @@ export const actions: Actions = {
         body: JSON.stringify(payload),
       });
       const result = await response.json();
-
-      console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL");
-      console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU");
-
-      console.log(result, "result");
 
       const payment = await client.payment.create({
         data: {

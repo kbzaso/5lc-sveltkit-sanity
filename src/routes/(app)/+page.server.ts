@@ -316,7 +316,6 @@ export const actions: Actions = {
         },
       });
 
-      console.log(payment);
       if (payment.payment_id_service) {
         event.cookies.set("payment_id_service", payment?.payment_id_service, {
           // send cookie for every page
