@@ -4,6 +4,7 @@ import { error } from "@sveltejs/kit";
 import {
   VITE_SANITY_API_WRITE_TOKEN as tokenWithWriteAccess,
   RESEND_API_KEY,
+  SLACK_WEBHOOK_URL,
 } from "$env/static/private";
 import {
   getSanityServerClient,
@@ -189,8 +190,6 @@ export const POST: RequestHandler = async (event) => {
     }
 
     // Enviamos notificacion a slack
-    const SLACK_WEBHOOK_URL =
-      "https://hooks.slack.com/services/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";
     const message = {
       text: `${paymentWithProduct.customer_name} compró $${
         paymentWithProduct.price
@@ -203,15 +202,6 @@ export const POST: RequestHandler = async (event) => {
       } para ${paymentWithProduct.product.name}. ${
         paymentWithProduct.customer_email
       } ${paymentWithProduct.customer_phone}`,
-      ttachments: [
-        {
-          fallback: "Fotografía del producto",
-          image_url:
-            "https://cdn.sanity.io/images/izngoptr/production/3d5c2f73c7055637e61354ce878f7e9d5be418ff-1080x1350.jpg?rect=0,135,1080,1080&w=200&h=600&q=80&fit=max&auto=format",
-          thumb_url:
-            "https://cdn.sanity.io/images/izngoptr/production/3d5c2f73c7055637e61354ce878f7e9d5be418ff-1080x1350.jpg?rect=0,135,1080,1080&w=200&h=600&q=80&fit=max&auto=format",
-        },
-      ],
     };
 
     await fetch(SLACK_WEBHOOK_URL, {
