@@ -8,7 +8,12 @@ import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
-import { VITE_PAYKU_API_URL, VITE_PAYMENT_COMPLETED_URL, VITE_PAYMENT_WEBHOOK_URL_PAYKU, VITE_PUBLIC_TOKEN_PAYKU } from "$env/static/private";
+import {
+  VITE_PAYKU_API_URL,
+  VITE_PAYMENT_COMPLETED_URL,
+  VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+  VITE_PUBLIC_TOKEN_PAYKU,
+} from "$env/static/private";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
@@ -116,7 +121,7 @@ let ubicatonTicketType = (type: string) => {
 };
 
 export const actions: Actions = {
-  ubication: async ({params, request, cookies}) => {
+  ubication: async ({ params, request, cookies }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
     }>(eventQuery, {
@@ -196,9 +201,9 @@ export const actions: Actions = {
 
     const payload = {
       email: email,
-      amount: Number(totalPrice),
       order: Math.floor(Math.random() * 1000000000),
       subject: `${tickets} entradas para ${event.title}`,
+      amount: Number(totalPrice),
       name: name,
       country: "Chile",
       urlreturn: VITE_PAYMENT_COMPLETED_URL,
@@ -209,7 +214,16 @@ export const actions: Actions = {
       },
     };
 
+    console.log(payload, "payload");
+
     let dataUrlRedirect = "";
+
+    console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL");
+    console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU");
+    console.log(
+      VITE_PAYMENT_WEBHOOK_URL_PAYKU,
+      "VITE_PAYMENT_WEBHOOK_URL_PAYKU"
+    );
 
     try {
       const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
@@ -222,10 +236,7 @@ export const actions: Actions = {
       });
       const result = await response.json();
 
-      console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL")
-      console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU")
-
-      console.log(result, "result")
+      console.log(result, "result");
 
       const payment = await client.payment.create({
         data: {
@@ -345,10 +356,10 @@ export const actions: Actions = {
       });
       const result = await response.json();
 
-      console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL")
-      console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU")
+      console.log(VITE_PAYKU_API_URL, "VITE_PAYKU_API_URL");
+      console.log(VITE_PUBLIC_TOKEN_PAYKU, "VITE_PUBLIC_TOKEN_PAYKU");
 
-      console.log(result, "result")
+      console.log(result, "result");
 
       const payment = await client.payment.create({
         data: {
@@ -360,7 +371,7 @@ export const actions: Actions = {
           ticketAmount: tickets,
           price: priceTotal.totalCost,
           buys: priceTotal.ticket,
-          ticketsType: 'Tandas',
+          ticketsType: "Tandas",
           payment_id_service: result.id,
           product: {
             connect: {
