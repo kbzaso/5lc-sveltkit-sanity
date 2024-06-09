@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Slack webhook
+
 ## [0.0.25] - 2024-06-08
+
+### Add
 
 - Add batch and ubication sell system on event slug
 

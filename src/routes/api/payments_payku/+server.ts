@@ -163,7 +163,7 @@ export const POST: RequestHandler = async (event) => {
           },
         ];
       }
-
+      // Actualizamos el stock en sanity
       await fetch(
         `https://${projectId}.api.sanity.io/v2022-08-08/data/mutate/${datasetName}`,
         {
@@ -187,6 +187,40 @@ export const POST: RequestHandler = async (event) => {
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
     }
+
+    // Enviamos notificacion a slack
+    const SLACK_WEBHOOK_URL =
+      "https://hooks.slack.com/services/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";
+    const message = {
+      text: `${paymentWithProduct.customer_name} compró $${
+        paymentWithProduct.price
+      } - ${paymentWithProduct.ticketAmount} ${
+        paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
+      } ${
+        paymentWithProduct.ticketsType !== "Tandas"
+          ? paymentWithProduct.ticketsType
+          : ""
+      } para ${paymentWithProduct.product.name}. ${
+        paymentWithProduct.customer_email
+      } ${paymentWithProduct.customer_phone}`,
+      ttachments: [
+        {
+          fallback: "Fotografía del producto",
+          image_url:
+            "https://cdn.sanity.io/images/izngoptr/production/3d5c2f73c7055637e61354ce878f7e9d5be418ff-1080x1350.jpg?rect=0,135,1080,1080&w=200&h=600&q=80&fit=max&auto=format",
+          thumb_url:
+            "https://cdn.sanity.io/images/izngoptr/production/3d5c2f73c7055637e61354ce878f7e9d5be418ff-1080x1350.jpg?rect=0,135,1080,1080&w=200&h=600&q=80&fit=max&auto=format",
+        },
+      ],
+    };
+
+    await fetch(SLACK_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
   } catch (e) {
     console.error(e);
     throw error(500, "El pago no pudo ser actualizado");
