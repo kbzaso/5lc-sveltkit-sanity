@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.27] - 2024-06-010
+
 ### Fix
 
 - Add conditional when tickets are sold out
@@ -156,7 +158,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.26...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.27...HEAD
+[0.0.27]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.26...0.0.27
 [0.0.26]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.25...0.0.26
 [0.0.25]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.24...0.0.25
 [0.0.24]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.23...0.0.24
