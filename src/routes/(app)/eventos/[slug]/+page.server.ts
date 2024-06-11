@@ -19,6 +19,8 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   const { previewMode } = await parent();
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
 
+  let totalTicketsLeftStudio;
+
   let { event, moreEvents } = await getSanityServerClient(previewMode).fetch<{
     event: Event;
     moreEvents: Event[];
@@ -65,12 +67,18 @@ export const load: PageServerLoad = async ({ parent, params }) => {
       },
     };
 
-    // Suma de tickets que quedan en el Studio
-    const totalTicketsLeftStudio =
-      event?.ticket?.batch?.firsts_tickets?.amount +
-      event?.ticket?.batch?.seconds_tickets?.amount +
-      event?.ticket?.batch?.thirds_tickets?.amount;
-    // Suma de tickets que quedan en el Studio + los que se han vendido
+    if(event?.sell_type === "batch"){
+      // Suma de tickets que quedan en el Studio
+      totalTicketsLeftStudio =
+        event?.ticket?.batch?.firsts_tickets?.amount +
+        event?.ticket?.batch?.seconds_tickets?.amount +
+        event?.ticket?.batch?.thirds_tickets?.amount;
+      // Suma de tickets que quedan en el Studio + los que se han vendido
+    } else {
+      totalTicketsLeftStudio =
+        event?.ticket?.ubication?.ringside_tickets?.amount +
+        event?.ticket?.ubication?.general_tickets?.amount;
+    }
 
     const totalTickets = totalTicketsLeftStudio + ticketsSoldCount;
 
@@ -101,6 +109,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   }
 
   return {
+    totalTicketsLeftStudio,
     welcome,
     previewMode,
     slug: event?.slug || params.slug,
