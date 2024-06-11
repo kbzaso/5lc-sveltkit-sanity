@@ -47,7 +47,7 @@
   let ubications: any[] = [];
 
   onMount(() => {
-    if($eventData?.event?.ticket.batch) {
+    if ($eventData?.event?.ticket.batch) {
       // Necesito pasar el objeto de tandas a un array para poder ordenarlas
       tandas = calculateTandas($eventData?.event?.ticket.batch);
     } else {
@@ -60,6 +60,7 @@
     } else {
       hasPhotos = [];
     }
+    console.log(data.totalTicketsLeftStudio);
   });
   let disclaimerEvent = writable([]);
 </script>
@@ -259,7 +260,7 @@
                 <div class="flex gap-4 my-8">
                   {#if $eventData?.event.sell_type === "batch"}
                     {#each tandas as tanda}
-                      <TandasTicketsCard ticket={tanda} />
+                        <TandasTicketsCard ticket={tanda} />
                     {/each}
                   {:else}
                     {#each ubications as ubication}
@@ -292,7 +293,7 @@
                     />
                   </div> -->
 
-                {#if ($eventData?.event?.tickets_sold === $eventData?.event?.total_tickets && $eventData?.event?.active) || !$eventData?.event?.sell}
+                {#if (data.totalTicketsLeftStudio === 0 && $eventData?.event?.active) || !$eventData?.event?.sell}
                   <div
                     class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
                   >
@@ -319,11 +320,13 @@
                         {disclaimerEvent}
                       />
                       <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
-                        <ModalTicketsSell
-                          sellSystem={$eventData?.event?.sell_type}
-                          ticket={$eventData?.event?.sell_type === 'ubication' ? $eventData?.event?.ticket?.ubication : $eventData?.event?.ticket?.batch}
-                          {disclaimerEvent}
-                        />
+                      <ModalTicketsSell
+                        sellSystem={$eventData?.event?.sell_type}
+                        ticket={$eventData?.event?.sell_type === "ubication"
+                          ? $eventData?.event?.ticket?.ubication
+                          : $eventData?.event?.ticket?.batch}
+                        {disclaimerEvent}
+                      />
                       <!-- <ModalTickets
                         nextEvent={$eventData?.event}
                         {disclaimerEvent}

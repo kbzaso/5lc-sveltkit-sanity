@@ -42,7 +42,7 @@
               : "badge-error"
           }`}
         >
-          🎟️ Últimas {ticket.amount || 0}
+          🎟️ {ticket.amount > 1 ? `Últimas ${ticket.amount}` : 'Última'}
         </span>
       {/if}
       <p class="text-lg">{formatedPrice || 0}</p>
