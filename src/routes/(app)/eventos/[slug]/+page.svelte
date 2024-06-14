@@ -62,7 +62,6 @@
     } else {
       hasPhotos = [];
     }
-    console.log(data.totalTicketsLeftStudio);
   });
   let disclaimerEvent = writable([]);
 </script>
