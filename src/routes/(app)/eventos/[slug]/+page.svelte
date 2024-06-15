@@ -47,12 +47,14 @@
   let ubications: any[] = [];
 
   onMount(() => {
-    if ($eventData?.event?.ticket.batch) {
-      // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-      tandas = calculateTandas($eventData?.event?.ticket.batch);
-    } else {
-      // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-      ubications = calculateUbications($eventData?.event?.ticket.ubication);
+    if ($eventData?.event?.active) {
+      if ($eventData?.event?.sell_type === "batch") {
+        // Necesito pasar el objeto de tandas a un array para poder ordenarlas
+        tandas = calculateTandas($eventData?.event?.ticket?.batch);
+      } else {
+        // Necesito pasar el objeto de tandas a un array para poder ordenarlas
+        ubications = calculateUbications($eventData?.event?.ticket?.ubication);
+      }
     }
 
     if ($eventData?.event?.gallery !== null) {
@@ -60,7 +62,6 @@
     } else {
       hasPhotos = [];
     }
-    console.log(data.totalTicketsLeftStudio);
   });
   let disclaimerEvent = writable([]);
 </script>
@@ -260,7 +261,7 @@
                 <div class="flex gap-4 my-8">
                   {#if $eventData?.event.sell_type === "batch"}
                     {#each tandas as tanda}
-                        <TandasTicketsCard ticket={tanda} />
+                      <TandasTicketsCard ticket={tanda} />
                     {/each}
                   {:else}
                     {#each ubications as ubication}
