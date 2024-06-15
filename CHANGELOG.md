@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.29] - 2024-06-15
+
 ### Fix
 
 - Add conditional when the event is inactive for don't calculate prices
@@ -168,7 +170,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.28...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.29...HEAD
+[0.0.29]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.28...0.0.29
 [0.0.28]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.27...0.0.28
 [0.0.27]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.26...0.0.27
 [0.0.26]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.25...0.0.26
