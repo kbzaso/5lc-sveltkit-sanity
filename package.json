@@ -57,6 +57,7 @@
     "@sanity/ui": "^0.37.22",
     "@sanity/vision": "3.0.0-dev-preview.22",
     "@sanity/webhook": "^2.0.0",
+    "@sentry/sveltekit": "^8.9.2",
     "@splidejs/svelte-splide": "^0.2.9",
     "@supabase/supabase-js": "^2.38.4",
     "@sveltejs/adapter-vercel": "^2.3.1",
