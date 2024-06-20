@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Fix negative numbers on price and amount inputs
+
 ## [0.0.30] - 2024-06-18
 
 ### Add
