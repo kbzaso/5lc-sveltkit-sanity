@@ -53,6 +53,6 @@
     </div>
   </div>
   <div>
-    <p>5 Luchas Clandestino © 2023 - Todos los derechos reservados</p>
+    <p>5 Luchas Clandestino © 2024 - Todos los derechos reservados</p>
   </div>
 </footer>

@@ -11,6 +11,7 @@
   import CardEvent from "$lib/components/events/CardEvent.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
   import SingleEvent from "$lib/components/SingleEvent.svelte";
+  import SuscribeForm from "$lib/components/SuscribeForm.svelte";
 
   export let data: PageData;
 
@@ -99,5 +100,7 @@
         <SingleEvent event={nextEvent}/>
       {/if}
     {/if}
+
+  <SuscribeForm/>
   </main>
 </div>
