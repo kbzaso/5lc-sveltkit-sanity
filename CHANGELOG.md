@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Add Mailchimp CTA
+
 ## [0.0.31] - 2024-06-20
 
 ### Fix
