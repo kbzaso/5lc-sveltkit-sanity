@@ -29,6 +29,8 @@
     - [ ] Politica de reembolso y cancelación
     - [ ] Información de contacto
     - [ ] Download pdf with the info
+    - [ ] Agregar otros metodos de pago
+    - [ ] Agregar la cookie en la url de respuesta
     - [x] Order number
     - [x] Date
     - [x] Nombre del evento
