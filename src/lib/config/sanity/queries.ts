@@ -63,6 +63,11 @@ export const eventFields = groq`
     title,
     disclaimer,
   },
+  "discounts": discounts[] -> {
+    code,
+    active,
+    percentage,
+  },
     description,
     seo_description,
     poster,

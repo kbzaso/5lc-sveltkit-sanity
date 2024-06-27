@@ -79,6 +79,11 @@ export interface Event {
       };
     };
   };
+  discounts: {
+    code: string;
+    active: boolean;
+    percentage: number;
+  };
   description: InputValue;
   result: InputValue;
   active: boolean;

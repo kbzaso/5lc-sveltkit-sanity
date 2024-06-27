@@ -4,7 +4,7 @@ import {
 } from "$lib/config/sanity/client";
 import { eventQuery, welcomeQuery } from "$lib/config/sanity/queries";
 import type { Event } from "$lib/types";
-import { error, redirect } from "@sveltejs/kit";
+import { error, redirect, fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { client } from "$lib/server/prisma";
 import { calculatePrice } from "$lib/utils/eventUtils";
@@ -67,7 +67,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
       },
     };
 
-    if(event?.sell_type === "batch"){
+    if (event?.sell_type === "batch") {
       // Suma de tickets que quedan en el Studio
       totalTicketsLeftStudio =
         event?.ticket?.batch?.firsts_tickets?.amount +
@@ -130,6 +130,37 @@ let ubicatonTicketType = (type: string) => {
 };
 
 export const actions: Actions = {
+  validate: async ({ request, params }) => {
+    let { event } = await getSanityServerClient(false).fetch<{
+      event: Event;
+    }>(eventQuery, {
+      slug: params.slug,
+    });
+
+    const form = await request.formData();
+    const discountCode = form.get("discount")?.toString().toLowerCase();
+
+    const validateDiscount = (discounts, code) => {
+      const discount = discounts.find(
+        (discount) => discount.code.toLowerCase() === code && discount.active
+      );
+      return discount
+        ? {
+            success: true,
+            error: false,
+            code: discountCode,
+            percentage: discount.percentage,
+            message: `¡Tú código de descuento del ${discount.percentage}% ha sido aplicado al total de tu compra!`,
+          }
+        : {
+            success: false,
+            error: true,
+            message: "Código de descuento no válido",
+          };
+    };
+
+    return validateDiscount(event.discounts, discountCode);
+  },
   ubication: async ({ params, request, cookies }) => {
     let { event } = await getSanityServerClient(false).fetch<{
       event: Event;
@@ -145,6 +176,9 @@ export const actions: Actions = {
     const tickets = Number(form.get("tickets"));
     const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
+    const discountCode = form.get("discountCode")?.toString();
+
+    console.log(discountCode, "discountCode");
 
     let buyObject;
 
@@ -234,8 +268,6 @@ export const actions: Actions = {
       });
       const result = await response.json();
 
-      console.log(result, "result");
-
       const payment = await client.payment.create({
         data: {
           customer_name: name as string,
@@ -247,6 +279,7 @@ export const actions: Actions = {
           ticketsType: ubicatonTicketType(ticketsType || ""),
           price: Number(totalPrice),
           buys: buyObject,
+          discount_code: discountCode,
           payment_id_service: result.id,
           product: {
             connect: {
@@ -284,6 +317,7 @@ export const actions: Actions = {
     // Ajustar a los tipos de batch
     // const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
+    const discountCode = form.get("discountCode")?.toString();
 
     const totalTicketsLeftStudio =
       event?.ticket?.batch?.firsts_tickets?.amount +
@@ -306,6 +340,7 @@ export const actions: Actions = {
     const total_tickets =
       totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
 
+      // Se vuelve a calcular el precio solo para obtener las tandas que se compraron en json para guardarlas en la DB
     const priceTotal = calculatePrice(tickets, event?.ticket?.batch);
 
     const product = await client.product.upsert({
@@ -329,7 +364,7 @@ export const actions: Actions = {
 
     const payload = {
       email: email,
-      amount: priceTotal.totalCost,
+      amount: Number(totalPrice),
       order: Math.floor(Math.random() * 1000000000),
       subject: `${tickets} entradas para ${event.title}`,
       name: name,
@@ -362,9 +397,10 @@ export const actions: Actions = {
           rut: rut as string,
           payment_status: result.status,
           ticketAmount: tickets,
-          price: priceTotal.totalCost,
+          price: Number(totalPrice),
           buys: priceTotal.ticket,
           ticketsType: "Tandas",
+          discount_code: discountCode,
           payment_id_service: result.id,
           product: {
             connect: {

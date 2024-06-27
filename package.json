@@ -16,7 +16,7 @@
     "@portabletext/svelte": "^1.0.1",
     "@resvg/resvg-js": "^2.4.1",
     "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "^1.0.1",
+    "@sveltejs/kit": "^1.20.4",
     "@tailwindcss/typography": "^0.5.9",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/node": "^20.8.9",
@@ -36,7 +36,7 @@
     "prisma": "^5.8.0",
     "satori": "^0.8.1",
     "satori-html": "^0.3.2",
-    "svelte": "^3.55.0",
+    "svelte": "^4.0.0",
     "svelte-check": "^2.10.3",
     "svelte-image-gallery": "^1.7.0",
     "svelte-preprocess": "^4.10.7",
@@ -46,7 +46,8 @@
     "ts-node": "^10.9.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.5",
-    "vite": "^4.0.3"
+    "vite": "^4.0.3",
+    "zod": "^3.23.8"
   },
   "dependencies": {
     "@prisma/client": "^5.8.0",
@@ -66,6 +67,7 @@
     "daisyui": "^3.5.1",
     "groq": "^2.33.2",
     "jsonwebtoken": "^9.0.2",
+    "lucide-svelte": "^0.397.0",
     "masonry-layout": "^4.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,26 +1,33 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import { onMount } from "svelte";
+  import { TicketX, TicketCheck } from "lucide-svelte";
   import type { Event } from "$lib/types";
   import {
     calculatePrice,
     calculateTotalQuantity,
     calculateUbicationPrice,
   } from "$lib/utils/eventUtils";
+  import Loading from "../Loading.svelte";
+  import { fly, slide } from "svelte/transition";
   export let ticket: any;
   export let sellSystem: any;
   export let disclaimerEvent: any;
+  export let discountResponse: any = null;
+  export let discountCodeExist: any;
+
+  $: discountResponse, (isLoading = false);
+  $: discountResponse, handleChange();
+
+  let isLoading = false;
+  let haveDiscount = false;
+  let priceBeforeDiscount = 0;
 
   // ringside or general
   $: selectedTicketsType = "ringside_tickets";
   $: selectedTicketsQuantity = 1;
 
-  let selectedTicketsTotalPrice = 0;
-
-  $: formattedFinalPrice = new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-  }).format(selectedTicketsTotalPrice);
+  $: selectedTicketsTotalPrice = 0;
 
   // options for select
   $: selectedTicketsTotalQuantity = calculateTotalQuantity(ticket);
@@ -41,12 +48,24 @@
     } else {
       let obj = calculatePrice(selectedTicketsQuantity, ticket);
       selectedTicketsTotalPrice = obj.totalCost;
+
+      // Si existe un descuento se aplica
+      if (discountResponse?.success) {
+        priceBeforeDiscount = obj.totalCost;
+        selectedTicketsTotalPrice =
+          selectedTicketsTotalPrice -
+          selectedTicketsTotalPrice * (discountResponse?.percentage / 100);
+      }
     }
   };
 
   onMount(() => {
     handleChange();
   });
+
+  function toggleDiscount() {
+    haveDiscount = !haveDiscount;
+  }
 </script>
 
 <button
@@ -146,6 +165,7 @@
         </label>
         <select
           bind:value={selectedTicketsQuantity}
+          disabled={isLoading}
           name="tickets"
           id="tickets"
           required
@@ -166,6 +186,7 @@
               for="ringside_tickets"
             >
               <input
+                disabled={isLoading}
                 type="radio"
                 id="ringside_tickets"
                 name="ringside_tickets"
@@ -185,6 +206,7 @@
               for="general_tickets"
             >
               <input
+                disabled={isLoading}
                 type="radio"
                 id="general_tickets"
                 name="general_tickets"
@@ -212,11 +234,107 @@
         id="ticketsType"
         bind:value={selectedTicketsType}
       />
+
+      {#if discountCodeExist && !discountResponse?.success}
+        <div class="form-control" out:slide>
+          <label class="cursor-pointer label flex justify-start gap-2">
+            <input
+              disabled={isLoading}
+              type="checkbox"
+              class="checkbox checkbox-warning"
+              on:click={toggleDiscount}
+            />
+            <span class="label-text">¿Tienes un código de descuento?</span>
+          </label>
+        </div>
+        {#if isLoading}
+          <div class="flex gap-2" in:fly={{ y: 20 }} out:slide>
+            <Loading /> Validando código...
+          </div>
+        {:else if haveDiscount}
+          <form
+            action="?/validate"
+            method="POST"
+            in:fly={{ y: 20 }}
+            out:slide
+            use:enhance
+            on:submit={() => {
+              isLoading = true;
+              handleChange();
+            }}
+          >
+            <div class="form-control w-full">
+              <label class="label" for="discount">
+                <span class="label-text">¡Amig@ dale!, agrega tú código</span>
+              </label>
+              <div class="flex gap-2">
+                <input
+                  type="text"
+                  name="discount"
+                  id="discount"
+                  class="input input-bordered w-full"
+                />
+                <button class="btn btn-outline btn-primary hover:text-black"
+                  >Validar</button
+                >
+              </div>
+              {#if !discountResponse?.success && discountResponse?.success !== undefined}
+                <p
+                  class="text-error mt-2 flex gap-2
+                "
+                >
+                  <TicketX />
+                  {discountResponse?.message}
+                </p>
+              {/if}
+            </div>
+          </form>
+        {/if}
+      {/if}
+
+      {#if discountResponse?.success}
+        <p class="mt-2 text-success flex gap-2" in:fly={{ y: 20 }}>
+          <TicketCheck />
+          {discountResponse?.message}
+        </p>
+      {/if}
+
+      <!-- Envio el codigo al servidor -->
+      {#if discountResponse?.success}
+        <input
+          type="hidden"
+          name="discountCode"
+          id="discountCode"
+          value={discountResponse?.code}
+        />
+      {/if}
+
+      <div class="divider divider-neutral text-white">Total</div>
+
+      <p class="text-center">
+        <span class="line-through text-error" in:fly={{ y: 20 }}
+          >{priceBeforeDiscount
+            ? new Intl.NumberFormat("es-CL", {
+                style: "currency",
+                currency: "CLP",
+              }).format(priceBeforeDiscount)
+            : ""}</span
+        >
+        <span class="text-2xl text-primary"
+          >{new Intl.NumberFormat("es-CL", {
+            style: "currency",
+            currency: "CLP",
+          }).format(selectedTicketsTotalPrice)}</span
+        >
+      </p>
+
       <button
         type="submit"
+        disabled={isLoading}
         class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
-        >{formattedFinalPrice} - Comprar</button
       >
+        Comprar
+      </button>
     </form>
   </div>
   <form method="dialog" class="modal-backdrop">
