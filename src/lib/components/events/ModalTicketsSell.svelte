@@ -37,10 +37,7 @@
   );
 
   function applyDiscount(total, percentage) {
-    return (
-      total -
-      total * (percentage / 100)
-    );
+    return total - total * (percentage / 100);
   }
 
   const handleChange = () => {
@@ -51,14 +48,20 @@
         // Si existe un descuento se aplica
         if (discountResponse?.success) {
           priceBeforeDiscount = selectedTicketsTotalPrice;
-          selectedTicketsTotalPrice = applyDiscount(selectedTicketsTotalPrice, discountResponse?.percentage)
+          selectedTicketsTotalPrice = applyDiscount(
+            selectedTicketsTotalPrice,
+            discountResponse?.percentage
+          );
         }
       } else if (selectedTicketsType === "general_tickets") {
         selectedTicketsTotalPrice =
           selectedTicketsQuantity * ticket.general_tickets.price;
         if (discountResponse?.success) {
           priceBeforeDiscount = selectedTicketsTotalPrice;
-          selectedTicketsTotalPrice = applyDiscount(selectedTicketsTotalPrice, discountResponse?.percentage)
+          selectedTicketsTotalPrice = applyDiscount(
+            selectedTicketsTotalPrice,
+            discountResponse?.percentage
+          );
         }
       }
     } else {
@@ -68,7 +71,10 @@
       // Si existe un descuento se aplica
       if (discountResponse?.success) {
         priceBeforeDiscount = obj.totalCost;
-        selectedTicketsTotalPrice = applyDiscount(selectedTicketsTotalPrice, discountResponse?.percentage)
+        selectedTicketsTotalPrice = applyDiscount(
+          selectedTicketsTotalPrice,
+          discountResponse?.percentage
+        );
       }
     }
   };
@@ -79,6 +85,17 @@
 
   function toggleDiscount() {
     haveDiscount = !haveDiscount;
+  }
+
+  // Reactive statement to identify ticket type with amount 0
+  $: ticketsWithZeroAmount = {
+    ringside: ticket?.ringside_tickets?.amount === 0,
+    general: ticket?.general_tickets?.amount === 0,
+  };
+
+  // Function to disable checkbox based on ticket type with amount 0
+  function isCheckboxDisabled(ticketType) {
+    return ticketsWithZeroAmount[ticketType];
   }
 </script>
 
@@ -200,12 +217,12 @@
               for="ringside_tickets"
             >
               <input
-                disabled={isLoading}
                 type="radio"
                 id="ringside_tickets"
                 name="ringside_tickets"
                 value="ringside_tickets"
                 class="radio radio-primary"
+                disabled={isCheckboxDisabled("ringside") || isLoading}
                 checked={selectedTicketsType === "ringside_tickets"}
                 on:click={() => {
                   selectedTicketsType = "ringside_tickets";
@@ -220,7 +237,7 @@
               for="general_tickets"
             >
               <input
-                disabled={isLoading}
+                disabled={isCheckboxDisabled("general") || isLoading}
                 type="radio"
                 id="general_tickets"
                 name="general_tickets"
