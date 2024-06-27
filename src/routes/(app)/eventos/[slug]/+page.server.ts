@@ -178,8 +178,6 @@ export const actions: Actions = {
     const totalPrice = form.get("totalPrice")?.toString();
     const discountCode = form.get("discountCode")?.toString();
 
-    console.log(form)
-
     let buyObject;
 
     if (ticketsType === "ringside_tickets") {
