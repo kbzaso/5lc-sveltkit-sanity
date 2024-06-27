@@ -36,14 +36,30 @@
     (_, i) => i + 1
   );
 
+  function applyDiscount(total, percentage) {
+    return (
+      total -
+      total * (percentage / 100)
+    );
+  }
+
   const handleChange = () => {
     if (sellSystem === "ubication") {
       if (selectedTicketsType === "ringside_tickets") {
         selectedTicketsTotalPrice =
           selectedTicketsQuantity * ticket?.ringside_tickets?.price;
+        // Si existe un descuento se aplica
+        if (discountResponse?.success) {
+          priceBeforeDiscount = selectedTicketsTotalPrice;
+          selectedTicketsTotalPrice = applyDiscount(selectedTicketsTotalPrice, discountResponse?.percentage)
+        }
       } else if (selectedTicketsType === "general_tickets") {
         selectedTicketsTotalPrice =
           selectedTicketsQuantity * ticket.general_tickets.price;
+        if (discountResponse?.success) {
+          priceBeforeDiscount = selectedTicketsTotalPrice;
+          selectedTicketsTotalPrice = applyDiscount(selectedTicketsTotalPrice, discountResponse?.percentage)
+        }
       }
     } else {
       let obj = calculatePrice(selectedTicketsQuantity, ticket);
@@ -52,9 +68,7 @@
       // Si existe un descuento se aplica
       if (discountResponse?.success) {
         priceBeforeDiscount = obj.totalCost;
-        selectedTicketsTotalPrice =
-          selectedTicketsTotalPrice -
-          selectedTicketsTotalPrice * (discountResponse?.percentage / 100);
+        selectedTicketsTotalPrice = applyDiscount(selectedTicketsTotalPrice, discountResponse?.percentage)
       }
     }
   };

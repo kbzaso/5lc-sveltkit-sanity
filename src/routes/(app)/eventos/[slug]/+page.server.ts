@@ -178,7 +178,7 @@ export const actions: Actions = {
     const totalPrice = form.get("totalPrice")?.toString();
     const discountCode = form.get("discountCode")?.toString();
 
-    console.log(discountCode, "discountCode");
+    console.log(form)
 
     let buyObject;
 
