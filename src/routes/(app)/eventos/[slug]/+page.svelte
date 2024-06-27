@@ -323,7 +323,7 @@
                       />
                       <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
                       <ModalTicketsSell
-                      discountCodeExist={$eventData?.event?.discounts}
+                        discountCodeExist={$eventData?.event?.discounts}
                         discountResponse={form}
                         sellSystem={$eventData?.event?.sell_type}
                         ticket={$eventData?.event?.sell_type === "ubication"
