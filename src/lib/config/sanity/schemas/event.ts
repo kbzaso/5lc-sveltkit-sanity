@@ -135,14 +135,14 @@ export default defineType({
       title: "Adhesión al evento",
       description: "Precios y cantidades de entradas disponibles en cada tanda",
       hidden: ({ document }) =>
-        document?.active === false || document.sell === false,
+        document?.active === false || document?.sell === false,
       fields: [
         {
           name: "ubication",
           title: "Ubicación",
           type: "object",
           hidden: ({ document }) =>
-          document?.active === false || document?.sell === false || document.sell_type !== "ubication",
+          document?.active === false || document?.sell === false || document?.sell_type !== "ubication",
           fields: [
             {
               title: "Ringside",
@@ -194,7 +194,7 @@ export default defineType({
           type: "object",
           title: "Tandas",
           hidden: ({ document }) =>
-            document?.active === false || document?.sell === false || document.sell_type !== "batch",
+            document?.active === false || document?.sell === false || document?.sell_type !== "batch",
           fields: [
             {
               title: "Primera tanda",
@@ -352,6 +352,7 @@ export default defineType({
       type: "array",
       description: "Equipo que participo en el evento",
       hidden: ({ document }) => document?.active === true,
+      validation: (Rule) => Rule.unique(),
       of: [
         {
           type: "reference",
@@ -360,10 +361,24 @@ export default defineType({
       ],
     },
     {
+      name: "discounts",
+      title: "Códigos de descuento",
+      type: "array",
+      hidden: ({ document }) => document?.active === false,
+      validation: (Rule) => Rule.unique(),
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "discountCodes" }],
+        },
+      ],
+    },
+    {
       name: "disclaimer",
       title: "Disclaimer",
       type: "array",
       hidden: ({ document }) => document?.active === false,
+      validation: (Rule) => Rule.unique(),
       description:
         "Debes seleccionar el disclaimer del evento, si no hay uno seleccionado, no se mostrara el botón de compra.",
       of: [
