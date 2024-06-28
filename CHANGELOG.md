@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.33] - 2024-06-28
+
 ### Fix
 
 - Check radiobox when the other option is disabled
@@ -196,8 +198,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.32...HEAD
-[0.0.32]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.32...0.0.32
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.33...HEAD
+[0.0.33]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.32...0.0.33
+[0.0.32]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.31...0.0.33
 [0.0.31]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.30...0.0.31
 [0.0.30]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.29...0.0.30
 [0.0.29]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.28...0.0.29
