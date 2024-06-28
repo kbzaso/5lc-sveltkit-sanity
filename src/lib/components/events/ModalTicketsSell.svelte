@@ -97,6 +97,14 @@
   function isCheckboxDisabled(ticketType) {
     return ticketsWithZeroAmount[ticketType];
   }
+
+  $: {
+    if (ticketsWithZeroAmount.ringside && !ticketsWithZeroAmount.general) {
+      selectedTicketsType = 'general_tickets';
+    } else if (ticketsWithZeroAmount.general && !ticketsWithZeroAmount.ringside) {
+      selectedTicketsType = 'ringside_tickets';
+    }
+  }
 </script>
 
 <button
@@ -223,6 +231,7 @@
                 value="ringside_tickets"
                 class="radio radio-primary"
                 disabled={isCheckboxDisabled("ringside") || isLoading}
+                bind:group={selectedTicketsType}
                 checked={selectedTicketsType === "ringside_tickets"}
                 on:click={() => {
                   selectedTicketsType = "ringside_tickets";
@@ -238,6 +247,7 @@
             >
               <input
                 disabled={isCheckboxDisabled("general") || isLoading}
+                bind:group={selectedTicketsType}
                 type="radio"
                 id="general_tickets"
                 name="general_tickets"
