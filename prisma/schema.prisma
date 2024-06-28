@@ -25,6 +25,7 @@ model Payment {
   payment_id_service String?  @unique
   ticketsType        String
   product            Product  @relation(fields: [productId], references: [id])
+  discount_code      String?
 }
 
 model Product {

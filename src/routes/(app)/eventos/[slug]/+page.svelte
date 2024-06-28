@@ -19,6 +19,7 @@
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
 
   export let data: PageData;
+  export let form;
 
   $: ({ initialData, previewMode, slug } = data);
   $: ({ data: eventData } = previewSubscription(eventQuery, {
@@ -322,6 +323,8 @@
                       />
                       <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
                       <ModalTicketsSell
+                        discountCodeExist={$eventData?.event?.discounts}
+                        discountResponse={form}
                         sellSystem={$eventData?.event?.sell_type}
                         ticket={$eventData?.event?.sell_type === "ubication"
                           ? $eventData?.event?.ticket?.ubication
