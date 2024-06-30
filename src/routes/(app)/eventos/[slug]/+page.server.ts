@@ -138,7 +138,7 @@ export const actions: Actions = {
     });
 
     const form = await request.formData();
-    const discountCode = form.get("discount")?.toString().toLowerCase();
+    const discountCode = form.get("discount")?.toString().toLowerCase().replace(/ /g, '');
 
     const validateDiscount = (discounts, code) => {
       const discount = discounts.find(
