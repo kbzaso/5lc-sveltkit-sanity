@@ -138,7 +138,8 @@ export const actions: Actions = {
     });
 
     const form = await request.formData();
-    const discountCode = form.get("discount")?.toString().toLowerCase().replace(/ /g, '');
+    const discountCode = form.get("discount")?.toString().toLowerCase();
+    const normalizeDiscountCode = discountCode?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '');
 
     const validateDiscount = (discounts, code) => {
       const discount = discounts.find(
@@ -148,7 +149,7 @@ export const actions: Actions = {
         ? {
             success: true,
             error: false,
-            code: discountCode,
+            code: normalizeDiscountCode,
             percentage: discount.percentage,
             message: `¡Tú código de descuento del ${discount.percentage}% ha sido aplicado al total de tu compra!`,
           }
@@ -159,7 +160,7 @@ export const actions: Actions = {
           };
     };
 
-    return validateDiscount(event.discounts, discountCode);
+    return validateDiscount(event.discounts, normalizeDiscountCode);
   },
   ubication: async ({ params, request, cookies }) => {
     let { event } = await getSanityServerClient(false).fetch<{
@@ -176,7 +177,10 @@ export const actions: Actions = {
     const tickets = Number(form.get("tickets"));
     const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
+
     const discountCode = form.get("discountCode")?.toString();
+    const normalizeDiscountCode = discountCode?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '');
+
 
     let buyObject;
 
@@ -277,7 +281,7 @@ export const actions: Actions = {
           ticketsType: ubicatonTicketType(ticketsType || ""),
           price: Number(totalPrice),
           buys: buyObject,
-          discount_code: discountCode,
+          discount_code: normalizeDiscountCode,
           payment_id_service: result.id,
           product: {
             connect: {
@@ -315,7 +319,9 @@ export const actions: Actions = {
     // Ajustar a los tipos de batch
     // const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
+
     const discountCode = form.get("discountCode")?.toString();
+    const normalizeDiscountCode = discountCode?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '');
 
     const totalTicketsLeftStudio =
       event?.ticket?.batch?.firsts_tickets?.amount +
@@ -398,7 +404,7 @@ export const actions: Actions = {
           price: Number(totalPrice),
           buys: priceTotal.ticket,
           ticketsType: "Tandas",
-          discount_code: discountCode,
+          discount_code: normalizeDiscountCode,
           payment_id_service: result.id,
           product: {
             connect: {
