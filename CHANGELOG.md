@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.34] - 2024-06-30
+
 ### Fix
 
 - Eliminate spaces in validation code form action
@@ -202,7 +204,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.33...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.34...HEAD
+[0.0.34]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.33...0.0.34
 [0.0.33]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.32...0.0.33
 [0.0.32]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.31...0.0.33
 [0.0.31]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.30...0.0.31
