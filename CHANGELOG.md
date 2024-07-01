@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+###
+
+- Normalize discount code when they comes with tildes
+  
 ## [0.0.34] - 2024-06-30
 
 ### Fix
