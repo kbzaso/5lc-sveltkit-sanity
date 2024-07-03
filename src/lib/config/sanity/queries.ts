@@ -9,7 +9,7 @@ const staffFields = groq`
   data,
   imageTitle,
   social,
-  staffImage,
+  "staffImage": staffImage.asset->url,
   "principalPhotographer": staffImage {
     photographer-> {
       name,
@@ -101,19 +101,9 @@ export const indexQuery = groq`
 
 // POSTS STUFF
 export const staffQuery = groq`
-{
-  "draft": *[_type == "staff" && slug.current == $slug && defined(draft) && draft == true][0]{
+*[_type == "staff" && slug.current == $slug] | order(_updatedAt desc) [0] {
     content,
     ${staffFields}
-  },
-  "staff": *[_type == "staff" && slug.current == $slug] | order(_updatedAt desc) [0] {
-    content,
-    ${staffFields}
-  },
-  "moreStaff": *[_type == "staff" && slug.current != $slug] | order(date desc, _updatedAt desc) [0...2] {
-    content,
-    ${staffFields}
-  }
 }`;
 
 // WRESTLER STUFF

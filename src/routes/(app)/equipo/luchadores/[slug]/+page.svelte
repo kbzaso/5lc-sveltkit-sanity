@@ -19,25 +19,21 @@
 
   export let data: PageData;
 
-  $: ({ initialData, previewMode, slug, allStaffSlider } = data);
-  $: ({ data: staffData } = previewSubscription(staffQuery, {
-    params: { slug },
-    initialData,
-    enabled: previewMode && !!slug,
-  }));
-
   // Función para comparar de forma aleatoria
   function compararAleatoriamente() {
     return Math.random() - 0.5;
   }
 
-  $: seo_image = urlForImage($staffData.staff?.staffImage)
-    .width(200)
-    .height(200)
-    .quality(90)
-    .url();
+  // $: seo_image = urlForImage(data?.staff?.staffImage)
+  //   .width(200)
+  //   .height(200)
+  //   .quality(90)
+  //   .url();
 
-  $: eventDate = new Date($staffData.staff.data.date);
+  console.log(data.staff.staffImage);
+  console.log(data?.staffImage);
+
+  $: eventDate = new Date(data?.staff.data.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
 
   let innerWidth = 0;
@@ -50,15 +46,15 @@
 
 <svelte:head>
   <title
-    >{$staffData.staff.title} - {$staffData?.staff?.pseudonym
-      ? $staffData?.staff?.pseudonym
+    >{data?.staff.title} - {data?.staff?.pseudonym
+      ? data?.staff?.pseudonym
       : ""}</title
   >
-  <meta
+  <!-- <meta
     content={`${$page.url.origin}/og?message=${seo_image}`}
     property="og:image"
   />
-  <meta name="description" content={`${$staffData.staff.seo_description}`} />
+  <meta name="description" content={`${data?.staff.seo_description}`} />
   <meta
     property="twitter:image"
     content={`${$page.url.origin}/og?message=${seo_image}`}
@@ -66,24 +62,21 @@
   <meta
     property="twitter:card"
     content={`${$page.url.origin}/og?message=${seo_image}`}
-  />
+  /> -->
   <meta
     property="twitter:title"
-    content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}
+    content={`${data?.staff.title} - ${data?.staff?.pseudonym}`}
   />
   <meta
     property="twitter:description"
-    content={`${$staffData.staff.seo_description}`}
+    content={`${data?.staff.seo_description}`}
   />
 
   <meta
     property="og:title"
-    content={`${$staffData.staff.title} - ${$staffData?.staff?.pseudonym}`}
+    content={`${data?.staff.title} - ${data?.staff?.pseudonym}`}
   />
-  <meta
-    property="og:description"
-    content={`${$staffData.staff.seo_description}`}
-  />
+  <meta property="og:description" content={`${data?.staff.seo_description}`} />
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
@@ -98,7 +91,7 @@
     <div
       class="pt-24 z-10 w-full flex flex-col lg:flex-row lg:justify-left items-center"
     >
-      {#if $staffData?.staff}
+      {#if data?.staff}
         <div class="">
           <figure
             class="relative max-w-[670px] md:min-w-[670px] flex justify-center min-h-fit"
@@ -108,14 +101,10 @@
               width="670"
               class="object-contain"
               fetchpriority="high"
-              src={urlForImage($staffData.staff?.staffImage)
-                .width(670)
-                .height(850)
-                .quality(80)
-                .url()}
-              alt={$staffData.staff.title}
+              src={`${data?.staff?.staffImage}?q=80&fit=max&auto=format`}
+              alt={data?.staff.title}
             />
-            {#if $staffData.staff.principalPhotographer !== null && $staffData.staff.principalPhotographer !== undefined}
+            {#if data?.staff.principalPhotographer !== null && data?.staff.principalPhotographer !== undefined}
               <figcaption
                 class="absolute bottom-20 lg:bottom-20 italic z-20 left-0 w-full text-sm flex justify-center items-end text-gray-300"
               >
@@ -124,10 +113,9 @@
                     class=" ml-2 link hover:text-primary underline"
                     target="_blank"
                     rel="noreferrer"
-                    href={$staffData.staff.principalPhotographer.photographer
+                    href={data?.staff.principalPhotographer.photographer
                       .imageUrl}
-                    >{$staffData.staff.principalPhotographer.photographer
-                      .name}</a
+                    >{data?.staff.principalPhotographer.photographer.name}</a
                   >
                 </span>
               </figcaption>
@@ -145,28 +133,28 @@
   >
     <div class="flex flex-col items-center space-y-1 lg:items-start pb-8">
       <span class="text-sm uppercase tracking-widest text-white text-center">
-        {$staffData?.staff?.pseudonym ? $staffData?.staff?.pseudonym : ""}
+        {data?.staff?.pseudonym ? data?.staff?.pseudonym : ""}
       </span>
       <h1
         class="text-6xl md:text-7xl font-black italic text-primary text-center sm:text-left"
       >
-        {$staffData.staff.title}
+        {data?.staff.title}
       </h1>
     </div>
 
     <div class="flex flex-col items-center prose-p:text-lg">
       <div>
-        {#if $staffData.staff.data?.weight}
+        {#if data?.staff.data?.weight}
           <p class="text-gray-300">
             Peso: <span class="text-primary font-bold"
-              >{$staffData.staff.data?.weight} kgs.</span
+              >{data?.staff.data?.weight} kgs.</span
             >
           </p>
         {/if}
-        {#if $staffData.staff.data?.height}
+        {#if data?.staff.data?.height}
           <p class="text-gray-300">
             Altura: <span class="text-primary font-bold"
-              >{$staffData.staff.data?.height} cms.</span
+              >{data?.staff.data?.height} cms.</span
             >
           </p>
         {/if}
@@ -178,29 +166,29 @@
             >
           </p>
         {/if}
-        {#if $staffData.staff.description}
+        {#if data?.staff.description}
           <p
             class="pt-4 prose hover:prose-a:after:text-primary hover:prose-a:decoration-primary prose-a:decoration-blue-500 prose-a:decoration-2 prose-a:underline-offset-2 prose-a:after:content-['_↗'] prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300 prose-a:after:text-blue-500 prose-a:after:font-black"
           >
-            <PortableText value={$staffData.staff.description} />
+            <PortableText value={data?.staff.description} />
           </p>
         {/if}
 
-        {#if $staffData.staff?.social}
+        {#if data?.staff?.social}
           <div class="mt-8 space-y-4">
             <h2 class="text-primary font-ibm italic text-2xl">
               Redes Sociales
             </h2>
 
             <ul class="flex space-x-4">
-              {#if $staffData.staff?.social?.instagram}
+              {#if data?.staff?.social?.instagram}
                 <li>
                   <a
                     title="Perfil en Instagram"
                     aria-label="Perfil en Instagram"
                     target="_blank"
                     rel="noreferrer"
-                    href={$staffData.staff.social.instagram}
+                    href={data?.staff.social.instagram}
                     ><Icon
                       src={AiOutlineInstagram}
                       className="fill-white hover:fill-primary"
@@ -209,14 +197,14 @@
                   >
                 </li>
               {/if}
-              {#if $staffData?.staff?.social?.facebook}
+              {#if data?.staff?.social?.facebook}
                 <li>
                   <a
                     title="Perfil en Facebook"
                     aria-label="Perfil en Facebook"
                     target="_blank"
                     rel="noreferrer"
-                    href={$staffData.staff.social.facebook}
+                    href={data?.staff.social.facebook}
                     ><Icon
                       src={AiOutlineFacebook}
                       className="fill-white hover:fill-primary"
@@ -225,14 +213,14 @@
                   >
                 </li>
               {/if}
-              {#if $staffData?.staff?.social?.youtube}
+              {#if data?.staff?.social?.youtube}
                 <li>
                   <a
                     title="Perfil en Youtube"
                     aria-label="Perfil en Youtube"
                     target="_blank"
                     rel="noreferrer"
-                    href={$staffData.staff.social.youtube}
+                    href={data?.staff.social.youtube}
                     ><Icon
                       src={AiOutlineYoutube}
                       className="fill-white hover:fill-primary"
@@ -241,14 +229,14 @@
                   >
                 </li>
               {/if}
-              {#if $staffData?.staff?.social?.twitter}
+              {#if data?.staff?.social?.twitter}
                 <li>
                   <a
                     title="Perfil en Twitter"
                     aria-label="Perfil en Twitter"
                     target="_blank"
                     rel="noreferrer"
-                    href={$staffData.staff.social.twitter}
+                    href={data?.staff.social.twitter}
                     ><Icon
                       src={FiTwitter}
                       className="fill-white hover:fill-primary"
@@ -257,14 +245,14 @@
                   >
                 </li>
               {/if}
-              {#if $staffData?.staff?.social?.tiktok}
+              {#if data?.staff?.social?.tiktok}
                 <li>
                   <a
                     title="Perfil en TikTok"
                     aria-label="Perfil en TikTok"
                     target="_blank"
                     rel="noreferrer"
-                    href={$staffData.staff.social.tiktok}
+                    href={data?.staff.social.tiktok}
                     ><Icon
                       src={SiTiktok}
                       className="fill-white hover:fill-primary"
@@ -273,14 +261,14 @@
                   >
                 </li>
               {/if}
-              {#if $staffData?.staff?.social?.other}
+              {#if data?.staff?.social?.other}
                 <li>
                   <a
                     title="Perfil en una web externa"
                     aria-label="Perfil en una web externa"
                     target="_blank"
                     rel="noreferrer"
-                    href={$staffData.staff.social.other}
+                    href={data?.staff.social.other}
                     ><Icon
                       src={BiLink}
                       className="fill-white hover:fill-primary"
@@ -296,7 +284,7 @@
     </div>
   </section>
 
-  {#if $staffData?.staff?.gallery !== null}
+  {#if data?.staff?.gallery !== null}
     <section class="md:mt-20 lg:mt-40">
       <h3
         class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
@@ -306,22 +294,19 @@
       <div
         class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
       >
-        <Gallery
-          id={$staffData?.staff?.slug}
-          images={$staffData?.staff?.gallery}
-        />
+        <Gallery id={data?.staff?.slug} images={data?.staff?.gallery} />
       </div>
     </section>
   {/if}
 
-  <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
+  <!-- <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
     <h4
       class="text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
     >
       Otros miembros del equipo
     </h4>
     <Splide
-      allStaff={allStaffSlider.sort(compararAleatoriamente).slice(0, 9)}
+      alldata?.staff={alldata?.staffSlider.sort(compararAleatoriamente).slice(0, 9)}
     />
-  </div>
+  </div> -->
 </div>
