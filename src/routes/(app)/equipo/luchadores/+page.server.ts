@@ -32,7 +32,7 @@ export const load: PageServerLoad = async ({ parent, params, request }) => {
 
   console.log("NO CACHE, LLAMADO A STUDIO");
 
-  kv.set("allWrestlers", JSON.stringify(allWrestlers), { ex: 86400 });
+  kv.set("allWrestlers", JSON.stringify(allWrestlers), { ex: 604800 });
   console.log(allWrestlers);
   return {
     allWrestlers,

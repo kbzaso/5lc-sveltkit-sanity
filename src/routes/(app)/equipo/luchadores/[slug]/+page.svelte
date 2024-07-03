@@ -19,6 +19,8 @@
 
   export let data: PageData;
 
+  console.log(data)
+
   // Función para comparar de forma aleatoria
   function compararAleatoriamente() {
     return Math.random() - 0.5;
@@ -30,23 +32,23 @@
   //   .quality(90)
   //   .url();
 
-  console.log(data.staff.staffImage);
-  console.log(data?.staffImage);
 
-  $: eventDate = new Date(data?.staff.data.date);
+  $: eventDate = new Date(data?.staff?.data?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
 
   let innerWidth = 0;
   $: condition = innerWidth < 768;
 
   let hasSocial: [] | string[] = [""];
+
+  console.log(data?.allStaffSlider)
 </script>
 
 <svelte:window bind:innerWidth />
 
 <svelte:head>
   <title
-    >{data?.staff.title} - {data?.staff?.pseudonym
+    >{data?.staff?.title} - {data?.staff?.pseudonym
       ? data?.staff?.pseudonym
       : ""}</title
   >
@@ -65,18 +67,18 @@
   /> -->
   <meta
     property="twitter:title"
-    content={`${data?.staff.title} - ${data?.staff?.pseudonym}`}
+    content={`${data?.staff?.title} - ${data?.staff?.pseudonym}`}
   />
   <meta
     property="twitter:description"
-    content={`${data?.staff.seo_description}`}
+    content={`${data?.staff?.seo_description}`}
   />
 
   <meta
     property="og:title"
-    content={`${data?.staff.title} - ${data?.staff?.pseudonym}`}
+    content={`${data?.staff?.title} - ${data?.staff?.pseudonym}`}
   />
-  <meta property="og:description" content={`${data?.staff.seo_description}`} />
+  <meta property="og:description" content={`${data?.staff?.seo_description}`} />
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
@@ -138,20 +140,20 @@
       <h1
         class="text-6xl md:text-7xl font-black italic text-primary text-center sm:text-left"
       >
-        {data?.staff.title}
+        {data?.staff?.title}
       </h1>
     </div>
 
     <div class="flex flex-col items-center prose-p:text-lg">
       <div>
-        {#if data?.staff.data?.weight}
+        {#if data?.staff?.data?.weight}
           <p class="text-gray-300">
             Peso: <span class="text-primary font-bold"
               >{data?.staff.data?.weight} kgs.</span
             >
           </p>
         {/if}
-        {#if data?.staff.data?.height}
+        {#if data?.staff?.data?.height}
           <p class="text-gray-300">
             Altura: <span class="text-primary font-bold"
               >{data?.staff.data?.height} cms.</span
@@ -166,11 +168,11 @@
             >
           </p>
         {/if}
-        {#if data?.staff.description}
+        {#if data?.staff?.description}
           <p
             class="pt-4 prose hover:prose-a:after:text-primary hover:prose-a:decoration-primary prose-a:decoration-blue-500 prose-a:decoration-2 prose-a:underline-offset-2 prose-a:after:content-['_↗'] prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300 prose-a:after:text-blue-500 prose-a:after:font-black"
           >
-            <PortableText value={data?.staff.description} />
+            <PortableText value={data?.staff?.description} />
           </p>
         {/if}
 
@@ -284,7 +286,7 @@
     </div>
   </section>
 
-  {#if data?.staff?.gallery !== null}
+  <!-- {#if data?.staff?.gallery !== null}
     <section class="md:mt-20 lg:mt-40">
       <h3
         class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
@@ -294,10 +296,10 @@
       <div
         class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
       >
-        <Gallery id={data?.staff?.slug} images={data?.staff?.gallery} />
+        <Gallery id={data?.slug} images={data?.staff?.gallery} />
       </div>
     </section>
-  {/if}
+  {/if} -->
 
   <!-- <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
     <h4
@@ -306,7 +308,7 @@
       Otros miembros del equipo
     </h4>
     <Splide
-      alldata?.staff={alldata?.staffSlider.sort(compararAleatoriamente).slice(0, 9)}
+      allStaff={data?.allStaffSlider?.slice(0, 9)}
     />
   </div> -->
 </div>
