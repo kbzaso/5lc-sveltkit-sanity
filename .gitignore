@@ -9,6 +9,7 @@ node_modules
 .vercel
 .vscode
 TODO.md 
+.unlighthouse/
 
 # Sentry Config File
 .sentryclirc

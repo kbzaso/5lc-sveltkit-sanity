@@ -36,4 +36,16 @@ export default defineType({
       validation: (rule) => rule.required(),
     },
   ],
+  preview: {
+    select: {
+      title: 'code',
+      subtitle: 'percentage',
+    },
+    prepare({ title, subtitle }) {
+      return {
+        title,
+        subtitle: `${subtitle}%`,
+      };
+    }
+  }
 });

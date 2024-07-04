@@ -4,25 +4,25 @@ import {
 } from "$lib/config/sanity/client";
 import {
   staffQuery,
-  welcomeQuery,
   staffSliderFields,
 } from "$lib/config/sanity/queries";
-import type { Staff } from "$lib/types";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
+import { kv } from "$lib/server/kv";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
-  const { previewMode } = await parent();
+  const cachedStaff = await kv.get(params.slug);
+  const cachedAllStaffSlider = await kv.get('allStaffSlider');
+  
+  if (cachedStaff && cachedAllStaffSlider) {
+    return {
+      staff: cachedStaff,
+      allStaffSlider: cachedAllStaffSlider,
+    };
+  }
 
-  const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
-  const allStaffSlider = await getSanityServerClient(false).fetch(
-    staffSliderFields
-  );
-
-  const { staff, moreStaff } = await getSanityServerClient(previewMode).fetch<{
-    staff: Staff;
-    moreStaff: Staff[];
-  }>(staffQuery, {
+  const allStaffSlider = await getSanityServerClient(false).fetch(staffSliderFields);
+  const staff = await getSanityServerClient(false).fetch(staffQuery, {
     slug: params.slug,
   });
 
@@ -36,14 +36,13 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     throw error(500, { message: "Alguna caga paso y no nos dimos cuenta" });
   }
 
+
+  // Cachea la data por 1 semana
+  await kv.set(params.slug, JSON.stringify(staff), { ex: 604800 });
+  await kv.set('allStaffSlider', JSON.stringify(allStaffSlider,), { ex: 604800 });
+  
   return {
-    previewMode,
-    slug: staff?.slug || params.slug,
-    initialData: {
-      staff,
-      moreStaff: overlayDrafts(moreStaff),
-    },
-    welcome,
+    staff,
     allStaffSlider,
   };
 };
