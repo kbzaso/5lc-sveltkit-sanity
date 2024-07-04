@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.36] - 2024-06-04
+
 ### Add
 
 - Add cache
@@ -214,7 +216,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.35...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.36...HEAD
+[0.0.36]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.35...0.0.36
 [0.0.35]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.34...0.0.35
 [0.0.34]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.33...0.0.34
 [0.0.33]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.32...0.0.33
