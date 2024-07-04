@@ -2,7 +2,11 @@ import {
   getSanityServerClient,
   overlayDrafts,
 } from "$lib/config/sanity/client";
-import { eventQuery, welcomeQuery } from "$lib/config/sanity/queries";
+import {
+  eventQuery,
+  resultQuery,
+  welcomeQuery,
+} from "$lib/config/sanity/queries";
 import type { Event } from "$lib/types";
 import { error, redirect, fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
@@ -14,8 +18,33 @@ import {
   VITE_PAYMENT_WEBHOOK_URL_PAYKU,
   VITE_PUBLIC_TOKEN_PAYKU,
 } from "$env/static/private";
+import { kv } from "$lib/server/kv";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
+  const cachedResult = await kv.get(params.slug);
+
+  if (cachedResult) {
+    console.log("RETURN CACHE");
+    return {
+       event: cachedResult,
+    };
+  } else {
+    const result = await getSanityServerClient(false).fetch(resultQuery, {
+      slug: params.slug,
+    });
+
+    if(result){
+      // Cachea la data por 1 semana
+      await kv.set(params.slug, JSON.stringify(result), { ex: 604800 });
+      console.log("SAVED CACHE, return result");
+      return {
+        event: result,
+      }
+    }
+  }
+
+  console.log('activo')
+
   const { previewMode } = await parent();
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
 
@@ -113,10 +142,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     welcome,
     previewMode,
     slug: event?.slug || params.slug,
-    initialData: {
-      event,
-      moreEvents: overlayDrafts(moreEvents),
-    },
+    event,
   };
 };
 
@@ -139,9 +165,12 @@ export const actions: Actions = {
 
     const form = await request.formData();
     const discountCode = form.get("discount")?.toString().toLowerCase();
-    const normalizeDiscountCode = discountCode?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '');
+    const normalizeDiscountCode = discountCode
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ /g, "");
 
-    const validateDiscount = (discounts, code) => {
+    const validateDiscount = (discounts, code: string) => {
       const discount = discounts.find(
         (discount) => discount.code.toLowerCase() === code && discount.active
       );
@@ -179,8 +208,10 @@ export const actions: Actions = {
     const totalPrice = form.get("totalPrice")?.toString();
 
     const discountCode = form.get("discountCode")?.toString();
-    const normalizeDiscountCode = discountCode?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '');
-
+    const normalizeDiscountCode = discountCode
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ /g, "");
 
     let buyObject;
 
@@ -321,7 +352,10 @@ export const actions: Actions = {
     const totalPrice = form.get("totalPrice")?.toString();
 
     const discountCode = form.get("discountCode")?.toString();
-    const normalizeDiscountCode = discountCode?.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '');
+    const normalizeDiscountCode = discountCode
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ /g, "");
 
     const totalTicketsLeftStudio =
       event?.ticket?.batch?.firsts_tickets?.amount +
@@ -344,7 +378,7 @@ export const actions: Actions = {
     const total_tickets =
       totalTicketsLeftStudio + (ticketsSold._sum?.ticketAmount || 0);
 
-      // Se vuelve a calcular el precio solo para obtener las tandas que se compraron en json para guardarlas en la DB
+    // Se vuelve a calcular el precio solo para obtener las tandas que se compraron en json para guardarlas en la DB
     const priceTotal = calculatePrice(tickets, event?.ticket?.batch);
 
     const product = await client.product.upsert({

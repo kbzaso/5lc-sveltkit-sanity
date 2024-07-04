@@ -90,6 +90,7 @@ export interface Event {
   extract: string;
   poster: SanityImageSource;
   slug: string;
+  playlist: string;
   videoUrl: string;
   disclaimers: [];
   sell: boolean;

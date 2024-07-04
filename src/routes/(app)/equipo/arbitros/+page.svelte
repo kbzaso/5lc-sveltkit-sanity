@@ -5,7 +5,7 @@
   import { page } from "$app/stores";
 
   export let data: PageData;
-  $: ({ allReferee } = data);
+  $: ({ allReferees } = data);
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
@@ -48,7 +48,7 @@
   <div
     class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-w-[320px]"
   >
-    {#each allReferee as referee}
+    {#each allReferees as referee}
       <a
         class="mb-6 sm:mb-0 lg:mb-20 xl:mb-0"
         href={`/equipo/arbitros/${referee.slug}`}
