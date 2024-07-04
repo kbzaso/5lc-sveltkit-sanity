@@ -9,7 +9,7 @@ const staffFields = groq`
   data,
   imageTitle,
   social,
-  "staffImage": staffImage.asset->url,
+  staffImage,
   "principalPhotographer": staffImage {
     photographer-> {
       name,

@@ -95,7 +95,11 @@
               width="670"
               class="object-contain"
               fetchpriority="high"
-              src={`${data?.staff?.staffImage}?q=80&fit=max&auto=format`}
+              src={urlForImage(data.staff?.staffImage)
+                .height(785)
+                .width(500)
+                .quality(40)
+                .url()}
               alt={data?.staff.title}
             />
             {#if data?.staff.principalPhotographer !== null && data?.staff.principalPhotographer !== undefined}
