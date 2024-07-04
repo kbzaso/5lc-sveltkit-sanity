@@ -19,18 +19,12 @@
 
   export let data: PageData;
 
-  console.log(data)
-
   // Función para comparar de forma aleatoria
   function compararAleatoriamente() {
     return Math.random() - 0.5;
   }
 
-  // $: seo_image = urlForImage(data?.staff?.staffImage)
-  //   .width(200)
-  //   .height(200)
-  //   .quality(90)
-  //   .url();
+  $: seo_image = `${data?.staff?.staffImage}?h=200?w=200?q=80&fit=max&auto=format`
 
 
   $: eventDate = new Date(data?.staff?.data?.date);
@@ -40,8 +34,6 @@
   $: condition = innerWidth < 768;
 
   let hasSocial: [] | string[] = [""];
-
-  console.log(data?.allStaffSlider)
 </script>
 
 <svelte:window bind:innerWidth />
@@ -52,7 +44,7 @@
       ? data?.staff?.pseudonym
       : ""}</title
   >
-  <!-- <meta
+  <meta
     content={`${$page.url.origin}/og?message=${seo_image}`}
     property="og:image"
   />
@@ -64,7 +56,7 @@
   <meta
     property="twitter:card"
     content={`${$page.url.origin}/og?message=${seo_image}`}
-  /> -->
+  />
   <meta
     property="twitter:title"
     content={`${data?.staff?.title} - ${data?.staff?.pseudonym}`}

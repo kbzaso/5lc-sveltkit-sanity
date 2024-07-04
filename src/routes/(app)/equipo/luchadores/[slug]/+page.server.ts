@@ -4,19 +4,20 @@ import {
 } from "$lib/config/sanity/client";
 import {
   staffQuery,
-  welcomeQuery,
   staffSliderFields,
 } from "$lib/config/sanity/queries";
-import type { Staff } from "$lib/types";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { kv } from "$lib/server/kv";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
-  const cached = await kv.get(params.slug);
-  if (cached) {
+  const cachedStaff = await kv.get(params.slug);
+  const cachedAllStaffSlider = await kv.get('allStaffSlider');
+  
+  if (cachedStaff && cachedAllStaffSlider) {
     return {
-      ...cached,
+      staff: cachedStaff,
+      allStaffSlider: cachedAllStaffSlider,
     };
   }
 
@@ -35,16 +36,13 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     throw error(500, { message: "Alguna caga paso y no nos dimos cuenta" });
   }
 
-  // Prepare the data to be cached
-  const currentData = {
-    staff,
-    allStaffSlider,
-  };
 
   // Cachea la data por 1 semana
-  await kv.set(params.slug, JSON.stringify(currentData), { ex: 604800 });
-
+  await kv.set(params.slug, JSON.stringify(staff), { ex: 604800 });
+  await kv.set('allStaffSlider', JSON.stringify(allStaffSlider,), { ex: 604800 });
+  
   return {
-    ...currentData,
+    staff,
+    allStaffSlider,
   };
 };

@@ -12,19 +12,19 @@ import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
+
+console.log("params.slug", params.slug);
   const { previewMode } = await parent();
 
-  const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
   const allStaffSlider = await getSanityServerClient(false).fetch(
     staffSliderFields
   );
 
-  const { staff, moreStaff } = await getSanityServerClient(previewMode).fetch<{
-    staff: Staff;
-    moreStaff: Staff[];
-  }>(staffQuery, {
+  const staff = await getSanityServerClient(false).fetch(staffQuery, {
     slug: params.slug,
   });
+
+  console.log(staff)
 
   if (!staff) {
     throw error(404, {
@@ -37,13 +37,7 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   }
 
   return {
-    previewMode,
-    slug: staff?.slug || params.slug,
-    initialData: {
-      staff,
-      moreStaff: overlayDrafts(moreStaff),
-    },
-    welcome,
+    staff,
     allStaffSlider,
   };
 };

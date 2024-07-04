@@ -16,17 +16,12 @@ export const load: PageServerLoad = async ({ parent, params, request, setHeaders
       results: cached,
     };
   }
-
-  console.log("not cached")
+  
   const results = await getSanityServerClient(false).fetch(resultsQuery);
 
   if (!results) {
     throw error(500, "No se encontraron resultados");
   }
-
-  console.log(request.headers.get("cache-control"))
-
-  console.log('NO CACHE, LLAMADO A STUDIO')
 
   kv.set("results", JSON.stringify(results), { ex: 86400 });
 

@@ -106,23 +106,6 @@ export const staffQuery = groq`
     ${staffFields}
 }`;
 
-// WRESTLER STUFF
-export const wrestlerQuery = groq`
-{
-  "draft": *[_type == "staff" && staffType == "wrestler" && slug.current == $slug && defined(draft) && draft == true][0]{
-    content,
-    ${staffFields}
-  },
-  "staff": *[_type == "staff" && staffType == "wrestler" && slug.current == $slug] | order(_updatedAt desc) [0] {
-    content,
-    ${staffFields}
-  },
-  "moreStaff": *[_type == "staff" && staffType == "wrestler" && slug.current != $slug] | order(date desc, _updatedAt desc) [0...2] {
-    content,
-    ${staffFields}
-  }
-}`;
-
 export const allStaffQuery = groq`
 *[_type == "staff"] | order(title asc) {
   ${staffFields}

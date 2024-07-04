@@ -2,7 +2,7 @@ import {
   getSanityServerClient,
   overlayDrafts,
 } from "$lib/config/sanity/client";
-import { eventQuery, welcomeQuery } from "$lib/config/sanity/queries";
+import { eventQuery, resultsQuery, welcomeQuery } from "$lib/config/sanity/queries";
 import type { Event } from "$lib/types";
 import { error, redirect, fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
@@ -20,6 +20,9 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
 
   let totalTicketsLeftStudio;
+
+  const results = await getSanityServerClient(false).fetch(resultsQuery);
+  console.log('results', results);
 
   let { event, moreEvents } = await getSanityServerClient(previewMode).fetch<{
     event: Event;

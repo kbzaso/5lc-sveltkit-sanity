@@ -11,15 +11,11 @@ import { kv } from "$lib/server/kv";
 export const load: PageServerLoad = async ({ parent, params, request }) => {
   const cached = await kv.get("allWrestlers");
   if (cached) {
-    console.log("cached allWrestlers");
     return {
       allWrestlers: cached,
     };
   }
 
-  console.log(cached);
-
-  console.log("not cached");
   const allWrestlers = await getSanityServerClient(false).fetch(
     allWrestlersQuery
   );
@@ -28,12 +24,8 @@ export const load: PageServerLoad = async ({ parent, params, request }) => {
     throw error(500, "staff not found");
   }
 
-  console.log(request.headers.get("cache-control"));
+  kv.set("allWrestlers", JSON.stringify(allWrestlers), { ex: 86400 });
 
-  console.log("NO CACHE, LLAMADO A STUDIO");
-
-  kv.set("allWrestlers", JSON.stringify(allWrestlers), { ex: 604800 });
-  console.log(allWrestlers);
   return {
     allWrestlers,
   };
