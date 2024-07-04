@@ -183,3 +183,9 @@ export const resultsQuery = groq`
   ${eventFields}
 }
 `;
+
+export const resultQuery = groq`
+*[_type == "event" && active == false && slug.current == $slug] | order(_updatedAt desc) [0] {
+    content,
+    ${eventFields}
+}`;

@@ -47,7 +47,7 @@
               height="414"
             />
             <img
-              src={urlForImage(image).height(414).width(736).quality(100).url()}
+              src={`${image}?h=414?w=736?q=80&fit=max&auto=format`}
               alt="Youtube Screenshot"
               class="aspect-video grayscale hover:grayscale-0 transition-all"
               width="736"

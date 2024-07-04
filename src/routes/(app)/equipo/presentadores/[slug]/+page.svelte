@@ -34,6 +34,8 @@
   $: condition = innerWidth < 768;
 
   let hasSocial: [] | string[] = [""];
+
+  console.log(data?.staff?.staffImage);
 </script>
 
 <svelte:window bind:innerWidth />

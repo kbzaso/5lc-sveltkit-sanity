@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { previewSubscription } from "$lib/config/sanity";
   import { eventQuery } from "$lib/config/sanity/queries";
-  import { urlForImage } from "$lib/config/sanity";
   import type { PageData } from "./$types";
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
@@ -17,23 +15,19 @@
   import ModalTicketsSell from "$lib/components/events/ModalTicketsSell.svelte";
   import UbicationTicketsCard from "$lib/components/events/UbicationTicketsCard.svelte";
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
+  import { urlForImage } from "$lib/config/sanity";
 
   export let data: PageData;
   export let form;
 
-  $: ({ initialData, previewMode, slug } = data);
-  $: ({ data: eventData } = previewSubscription(eventQuery, {
-    params: { slug },
-    initialData,
-    enabled: previewMode && !!slug,
-  }));
+  $: ({ event } = data);
 
-  $: eventDate = new Date($eventData?.event?.date);
+  $: eventDate = new Date(event?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
 
-  let seo_image = urlForImage($page.data.initialData.event.poster).url();
+  let seo_image = urlForImage(data.event.poster).url();
 
   let hasPhotos = [];
 
@@ -48,33 +42,35 @@
   let ubications: any[] = [];
 
   onMount(() => {
-    if ($eventData?.event?.active) {
-      if ($eventData?.event?.sell_type === "batch") {
+    if (event?.active) {
+      if (event?.sell_type === "batch") {
         // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-        tandas = calculateTandas($eventData?.event?.ticket?.batch);
+        tandas = calculateTandas(event?.ticket?.batch);
       } else {
         // Necesito pasar el objeto de tandas a un array para poder ordenarlas
-        ubications = calculateUbications($eventData?.event?.ticket?.ubication);
+        ubications = calculateUbications(event?.ticket?.ubication);
       }
     }
 
-    if ($eventData?.event?.gallery !== null) {
-      hasPhotos = Object.keys($eventData?.event?.gallery);
+    if (event?.gallery !== null) {
+      hasPhotos = Object.keys(event?.gallery);
     } else {
       hasPhotos = [];
     }
   });
+  
   let disclaimerEvent = writable([]);
+
 </script>
 
 <svelte:head>
-  <title>{$eventData?.event?.title}</title>
+  <title>{event?.title}</title>
 
   <meta
     content={`${$page.url.origin}/og?message=${seo_image}`}
     property="og:image"
   />
-  <meta name="description" content={`${$eventData?.event?.seo_description}`} />
+  <meta name="description" content={`${event?.seo_description}`} />
   <meta
     property="twitter:image"
     content={`${$page.url.origin}/og?message=${seo_image}`}
@@ -83,27 +79,18 @@
     property="twitter:card"
     content={`${$page.url.origin}/og?message=${seo_image}`}
   />
-  <meta property="twitter:title" content={`${$eventData?.event?.title}`} />
-  <meta
-    property="twitter:description"
-    content={`${$eventData?.event?.seo_description}`}
-  />
+  <meta property="twitter:title" content={`${event?.title}`} />
+  <meta property="twitter:description" content={`${event?.seo_description}`} />
 
-  <meta property="og:title" content={`${$eventData?.event?.title}`} />
-  <meta
-    property="og:description"
-    content={`${$eventData?.event?.seo_description}`}
-  />
+  <meta property="og:title" content={`${event?.title}`} />
+  <meta property="og:description" content={`${event?.seo_description}`} />
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
-{#if $eventData?.event}
+{#if event}
   <div class="xl:container xl:mx-auto min-w-[350px]">
     <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
-      <div
-        id="$eventData?.event"
-        class="h-fit flex flex-col lg:flex-row md:gap-4 lg:gap-0"
-      >
+      <div id="event" class="h-fit flex flex-col lg:flex-row md:gap-4 lg:gap-0">
         <div class="relative overflow-hidden">
           <div
             class="absolute w-[640px] h-72 -bottom-5 lg:w-72 lg:h-full z-10  md:top-[480px] lg:top-0 lg:left-[280px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"
@@ -113,7 +100,7 @@
             loading="lazy"
             width="600"
             height="750"
-            src={urlForImage($eventData?.event.poster)
+            src={urlForImage(data.event.poster)
               .width(600)
               .height(750)
               .url()}
@@ -124,7 +111,7 @@
           <div class="mt-4 lg:mt-0">
             <div class="mx-auto text-base lg:ml-auto lg:mr-0">
               <!-- EVENTO PASADO -->
-              {#if !$eventData?.event?.active}
+              {#if !event?.active}
                 <time
                   class="italic text-gray-500"
                   datetime={eventDateFormatted.charAt(0).toUpperCase() +
@@ -136,7 +123,7 @@
                 <h1
                   class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl"
                 >
-                  {$eventData?.event?.title}
+                  {event?.title}
                   <span
                     class="font-semibold leading-6 text-primary uppercase tracking-widest text-lg"
                     >(+18)</span
@@ -145,20 +132,19 @@
                 <p
                   class="prose prose-h3:text-primary prose-h2:font-ibm prose-h3:font-ibm prose-h2:text-primary prose-h1:text-primary prose-indigo mt-5"
                 >
-                  {#if $eventData?.event?.result}
+                  {#if event?.result}
                     <p>Estos fueron los resultados:</p>
-                    <PortableText value={$eventData?.event?.result} />
+                    <PortableText value={event?.result} />
                   {/if}
-                  {#if !$eventData?.event.boveda}
+                  {#if !event.boveda}
                     <p>
-                      Este evento se realizo en {$eventData.event.venue
-                        ?.venueName} -
+                      Este evento se realizo en {event.venue?.venueName} -
                       <a
                         target="_blank"
                         rel="noreferrer"
-                        href={$eventData.event.venue?.venueUrl}
+                        href={event.venue?.venueUrl}
                       >
-                        {$eventData.event.venue?.venueAdress}</a
+                        {event.venue?.venueAdress}</a
                       >
                     </p>
                   {:else}
@@ -173,17 +159,17 @@
                     </p>
                   {/if}
                 </p>
-                {#if $eventData?.event?.assistance && !$eventData?.event?.active}
+                {#if event?.assistance && !event?.active}
                   <AttendanceStat
-                    assistance={$eventData.event.assistance}
-                    event={$eventData.event.title}
+                    assistance={event.assistance}
+                    event={event.title}
                   />
                 {/if}
               {/if}
 
               <!-- EVENTO ACTIVO -->
 
-              {#if $eventData?.event?.active}
+              {#if event?.active}
                 <h2
                   class="font-semibold leading-6 text-primary uppercase tracking-widest"
                 >
@@ -192,7 +178,7 @@
                 <h1
                   class="mt-2 text-3xl font-bold leading-8 text-white sm:text-4xl"
                 >
-                  {$eventData?.event.title}
+                  {event.title}
                   <span
                     class="font-semibold leading-6 text-primary uppercase tracking-widest text-lg"
                     >(+18)</span
@@ -200,7 +186,7 @@
                 </h1>
                 <div class="prose prose-indigo mt-5">
                   <p>
-                    <PortableText value={$eventData?.event?.description} />
+                    <PortableText value={event?.description} />
                   </p>
 
                   <ul>
@@ -219,7 +205,7 @@
                         >(apertura 45 minutos antes)</span
                       >
                     </li>
-                    {#if $eventData?.event.boveda}
+                    {#if event.boveda}
                       <li>
                         Bóveda Secreta - <a
                           class="text-primary"
@@ -232,20 +218,20 @@
                       </li>
                     {:else}
                       <li>
-                        {$eventData?.event.venue?.venueName} -
+                        {event.venue?.venueName} -
                         <a
                           class="text-primary"
                           target="_blank"
                           rel="noreferrer"
-                          href={$eventData?.event.venue?.venueUrl}
+                          href={event.venue?.venueUrl}
                         >
-                          {$eventData?.event.venue?.venueAdress}</a
+                          {event.venue?.venueAdress}</a
                         >
                       </li>
                     {/if}
                   </ul>
 
-                  {#if $eventData?.event.boveda}
+                  {#if event.boveda}
                     <p class="border border-dashed border-primary p-4 text-sm">
                       La Bóveda Secreta se encuentra en el 3er piso de la
                       Galería “Nueva Copacabana” ubicada en calle San Antonio
@@ -260,7 +246,7 @@
                   {/if}
                 </div>
                 <div class="flex gap-4 my-8">
-                  {#if $eventData?.event.sell_type === "batch"}
+                  {#if event.sell_type === "batch"}
                     {#each tandas as tanda}
                       <TandasTicketsCard ticket={tanda} />
                     {/each}
@@ -274,7 +260,7 @@
                 <!-- <div>
                     <div class="flex justify-between">
                       <span class="text-gray-400"
-                        >🎟️ {$eventData?.event?.ticket?.seconds_tickets
+                        >🎟️ {event?.ticket?.seconds_tickets
                           ?.amount <= 10
                           ? "¡Últimas entradas!, no te quedes fuera."
                           : "Progreso de venta de tickets"}</span
@@ -283,19 +269,19 @@
                     </div>
                     <progress
                       class={`progress w-full ${
-                        $eventData?.event?.ticket?.firsts_tickets?.amount !== 0
+                        event?.ticket?.firsts_tickets?.amount !== 0
                           ? "progress-success"
-                          : $eventData?.event?.ticket?.seconds_tickets
+                          : event?.ticket?.seconds_tickets
                               ?.amount !== 0
                           ? "progress-info"
                           : "progress-error"
                       }`}
-                      value={$eventData?.event?.tickets_sold}
-                      max={$eventData?.event?.total_tickets}
+                      value={event?.tickets_sold}
+                      max={event?.total_tickets}
                     />
                   </div> -->
 
-                {#if (data.totalTicketsLeftStudio === 0 && $eventData?.event?.active) || !$eventData?.event?.sell}
+                {#if (data.totalTicketsLeftStudio === 0 && event?.active) || !event?.sell}
                   <div
                     class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
                   >
@@ -316,23 +302,23 @@
                   </div>
                 {:else}
                   <div class="mt-4">
-                    {#if $eventData?.event?.disclaimers}
+                    {#if event?.disclaimers}
                       <DisclaimerModal
-                        disclaimers={$eventData?.event?.disclaimers}
+                        disclaimers={event?.disclaimers}
                         {disclaimerEvent}
                       />
                       <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
                       <ModalTicketsSell
-                        discountCodeExist={$eventData?.event?.discounts}
+                        discountCodeExist={event?.discounts}
                         discountResponse={form}
-                        sellSystem={$eventData?.event?.sell_type}
-                        ticket={$eventData?.event?.sell_type === "ubication"
-                          ? $eventData?.event?.ticket?.ubication
-                          : $eventData?.event?.ticket?.batch}
+                        sellSystem={event?.sell_type}
+                        ticket={event?.sell_type === "ubication"
+                          ? event?.ticket?.ubication
+                          : event?.ticket?.batch}
                         {disclaimerEvent}
                       />
                       <!-- <ModalTickets
-                        nextEvent={$eventData?.event}
+                        nextEvent={event}
                         {disclaimerEvent}
                       /> -->
                     {/if}
@@ -351,24 +337,21 @@
         <div
           class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
         >
-          <Gallery
-            id={$eventData?.event.slug}
-            images={$eventData?.event.gallery}
-          />
+          <Gallery id={event.slug} images={event.gallery} />
         </div>
       </section>
     {/if}
   </div>
-  {#if $eventData?.event.videoUrl && !$eventData?.event.active}
+  {#if event.videoUrl && !event.active}
     <Youtube
-      link={$eventData?.event.videoUrl}
-      image={$eventData?.event?.gallery
-        ? $eventData?.event?.gallery[0]
-        : $page.data.welcome.heroImage}
+      link={event.videoUrl}
+      image={event?.gallery
+        ? event?.gallery[0]
+        : "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/boveda"}
     />
   {/if}
-  {#if $eventData?.event.playlist && !$eventData?.event.active}
-    <Spotify src={$eventData.event.playlist} />
+  {#if event.playlist && !event.active}
+    <Spotify src={event.playlist} />
   {/if}
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>
