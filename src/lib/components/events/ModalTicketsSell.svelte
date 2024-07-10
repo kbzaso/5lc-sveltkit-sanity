@@ -1,6 +1,6 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { TicketX, TicketCheck } from "lucide-svelte";
   import type { Event } from "$lib/types";
   import {
@@ -20,6 +20,7 @@
   $: discountResponse, handleChange();
 
   let isLoading = false;
+  let isSubmitting = false;
   let haveDiscount = false;
   let priceBeforeDiscount = 0;
 
@@ -36,7 +37,7 @@
     (_, i) => i + 1
   );
 
-  function applyDiscount(total, percentage) {
+  function applyDiscount(total: number, percentage: number) {
     return total - total * (percentage / 100);
   }
 
@@ -94,7 +95,7 @@
   };
 
   // Function to disable checkbox based on ticket type with amount 0
-  function isCheckboxDisabled(ticketType) {
+  function isCheckboxDisabled(ticketType: keyof typeof ticketsWithZeroAmount) {
     return ticketsWithZeroAmount[ticketType];
   }
 
@@ -105,6 +106,16 @@
       selectedTicketsType = 'ringside_tickets';
     }
   }
+
+  onDestroy(() => {
+    selectedTicketsType = "ringside_tickets";
+    selectedTicketsQuantity = 1;
+    selectedTicketsTotalPrice = 0;
+    isLoading = false;
+    isSubmitting = false;
+    haveDiscount = false;
+    priceBeforeDiscount = 0;
+  });
 </script>
 
 <button
@@ -148,6 +159,9 @@
       method="POST"
       use:enhance
       class="space-y-4"
+      on:submit={() => {
+        isSubmitting = true;
+      }}
     >
       <div class="form-control w-full">
         <label class="label" for="name">
@@ -371,10 +385,14 @@
 
       <button
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || isSubmitting}
         class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
       >
+      {#if isSubmitting}
+        <Loading /> Comprando...
+      {:else}
         Comprar
+      {/if}
       </button>
     </form>
   </div>
