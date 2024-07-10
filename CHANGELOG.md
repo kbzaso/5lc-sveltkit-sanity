@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.38] - 2024-07-10
+
 ### Add
 
 - Vercel Speed Insights
@@ -227,7 +229,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Several UI fixes in next event, and add price format
 
 [unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.37...HEAD
-[0.0.37]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.35...0.0.37
+[0.0.38]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.37...0.0.38
+[0.0.37]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.36...0.0.37
 [0.0.36]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.35...0.0.36
 [0.0.35]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.34...0.0.35
 [0.0.34]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.33...0.0.34
