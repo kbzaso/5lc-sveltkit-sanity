@@ -1,18 +1,20 @@
 <script lang="ts">
-  import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-
   import "./../../styles.css";
   import type { PageData } from "./$types";
   export let data: PageData;
   import DrawerNav from "$lib/components/DrawerNav.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import { fade } from "svelte/transition";
-
+  import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+  
   import navigationState from "$lib/stores/navigationState";
   import PageLoader from "$lib/components/PageLoader.svelte";
   import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import { onMount } from 'svelte';
 
-  injectSpeedInsights();
+  onMount(() => {
+    injectSpeedInsights();
+  });
 
   $: ({ settings } = data);
 
