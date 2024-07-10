@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { dev } from "$app/environment";
-  import { inject } from "@vercel/analytics";
-
-  inject({ mode: dev ? "development" : "production" });
+  import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
   import "./../../styles.css";
   import type { PageData } from "./$types";
@@ -14,6 +11,8 @@
   import navigationState from "$lib/stores/navigationState";
   import PageLoader from "$lib/components/PageLoader.svelte";
   import { afterNavigate, beforeNavigate } from "$app/navigation";
+
+  injectSpeedInsights();
 
   $: ({ settings } = data);
 
