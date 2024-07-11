@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "grit": "url('/grit.svg')",
+      },
       fontFamily: {
         ibm: ["IBM Plex Sans Condensed", "sans-serif"],
         "ibm-sans": ["IBM Plex Sans", "sans-serif"],
