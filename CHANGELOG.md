@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add remaining tickets on Slack notification
+- Add discount code if exist on Slack notification
+
 ## [0.0.38] - 2024-07-10
 
 ### Add

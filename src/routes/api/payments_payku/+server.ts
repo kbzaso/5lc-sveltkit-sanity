@@ -32,6 +32,7 @@ function subtractObjects(obj1, obj2) {
 }
 
 export const POST: RequestHandler = async (event) => {
+  console.log(event)
   const body = await event.request.json();
 
   const payment_id = body.payment_key;
@@ -86,9 +87,16 @@ export const POST: RequestHandler = async (event) => {
       merchantOrderId: eventId,
     });
 
+    let ticketsRemaining = 0;
     // VALIDAR SI EL EVENTO ES POR UBICACIÓN O TANDAS
     if (nextEvent[0].sell_type === "ubication") {
+      for (let key in nextEvent[0].ticket.ubication) {
+        ticketsRemaining += nextEvent[0].ticket.ubication[key].amount;
+      }
     } else {
+      for (let key in nextEvent[0].ticket.batch) {
+        ticketsRemaining += nextEvent[0].ticket.batch[key].amount;
+      }
     }
 
     let ticket = subtractObjects(
@@ -193,15 +201,17 @@ export const POST: RequestHandler = async (event) => {
     const message = {
       text: `${paymentWithProduct.customer_name} compró $${
         paymentWithProduct.price
-      } - ${paymentWithProduct.ticketAmount} ${
+      }${paymentWithProduct.discount_code ? ` con el código ${paymentWithProduct.discount_code}` : ""}
+      \n ${paymentWithProduct.ticketAmount} ${
         paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
       } ${
         paymentWithProduct.ticketsType !== "Tandas"
           ? paymentWithProduct.ticketsType
           : ""
-      } para ${paymentWithProduct.product.name}. ${
+      }para ${paymentWithProduct.product.name}.\n ${
         paymentWithProduct.customer_email
-      } ${paymentWithProduct.customer_phone}`,
+      } \n ${paymentWithProduct.customer_phone}\n\n${ticketsRemaining > 1 ? 'Quedan' : 'Queda' } ${ticketsRemaining} ${ticketsRemaining > 1 ? 'entradas' : 'entrada' } por vender.\n\n
+      ¡¡VAMOS QUE SE PUEDE!!`,
     };
 
     await fetch(SLACK_WEBHOOK_URL, {
