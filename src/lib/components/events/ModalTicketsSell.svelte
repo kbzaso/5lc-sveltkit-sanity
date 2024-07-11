@@ -30,12 +30,17 @@
 
   $: selectedTicketsTotalPrice = 0;
 
+  console.log(ticket, 'ticket')
+
   // options for select
   $: selectedTicketsTotalQuantity = calculateTotalQuantity(ticket);
+  console.log(selectedTicketsTotalQuantity, 'selectedTicketsTotalQuantity')
   $: options = Array.from(
     { length: Math.min(selectedTicketsTotalQuantity, 10) },
     (_, i) => i + 1
   );
+
+  console.log(options, 'options')
 
   function applyDiscount(total: number, percentage: number) {
     return total - total * (percentage / 100);
