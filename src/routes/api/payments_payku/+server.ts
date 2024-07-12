@@ -87,17 +87,8 @@ export const POST: RequestHandler = async (event) => {
       merchantOrderId: eventId,
     });
 
+    // variable para saber cuantas entradas quedan y que se envia en la notificación de slack
     let ticketsRemaining = 0;
-    // VALIDAR SI EL EVENTO ES POR UBICACIÓN O TANDAS
-    if (nextEvent[0].sell_type === "ubication") {
-      for (let key in nextEvent[0].ticket.ubication) {
-        ticketsRemaining += nextEvent[0].ticket.ubication[key].amount;
-      }
-    } else {
-      for (let key in nextEvent[0].ticket.batch) {
-        ticketsRemaining += nextEvent[0].ticket.batch[key].amount;
-      }
-    }
 
     let ticket = subtractObjects(
       nextEvent[0].sell_type === "ubication"
@@ -105,6 +96,10 @@ export const POST: RequestHandler = async (event) => {
         : nextEvent[0].ticket.batch,
       paymentWithProduct.buys
     );
+
+    for (let key in ticket) {
+      ticketsRemaining += ticket[key].amount;
+    }
 
     if (result.status === "success") {
       // Enviamos email de confirmación
