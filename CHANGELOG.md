@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.40] - 2024-07-12
+
 ### Fix
 
 - Fix tickets remain in the slack notification
@@ -241,7 +243,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.39...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.40...HEAD
+[0.0.40]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.39...0.0.40
 [0.0.39]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.38...0.0.39
 [0.0.38]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.37...0.0.38
 [0.0.37]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.36...0.0.37
