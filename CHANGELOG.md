@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Fix tickets remain in the slack notification
+
 ### Add
 
 - Background image in layout
