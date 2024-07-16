@@ -4,12 +4,8 @@
   export let data: PageData;
   import DrawerNav from "$lib/components/DrawerNav.svelte";
   import Footer from "$lib/components/Footer.svelte";
-  import { fade } from "svelte/transition";
   import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-  
-  import navigationState from "$lib/stores/navigationState";
-  import PageLoader from "$lib/components/PageLoader.svelte";
-  import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import { onNavigate } from "$app/navigation";
   import { onMount } from 'svelte';
 
   onMount(() => {
@@ -18,23 +14,22 @@
 
   $: ({ settings } = data);
 
-  beforeNavigate(() => {
-    navigationState.set("loading");
-  });
-  afterNavigate(() => {
-    navigationState.set("loaded");
-  });
+  onNavigate((navigation) => {
+      if (!(document as any).startViewTransition) return
+  
+      return new Promise((resolve) => {
+        (document as any).startViewTransition(async () => {
+          resolve()
+          await navigation.complete
+        })
+      })
+    })
 </script>
 
 <svelte:window />
 
-{#if $navigationState === "loading"}
-  <div out:fade={{ delay: 500 }}>
-    <PageLoader />
-  </div>
-{/if}
-
 <svelte:head>
+  <meta name="view-transition" content="same-origin">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
   <link

@@ -11,20 +11,20 @@
 
   // $: ({ results } = data);
 
-    const searchEvents: Event[] = data.results.map((result: Event) => ({
-      ...result,
-      searchTerms: `${result.title}`
-    }))
-  
-    const searchEventsStore = createSearchStore(searchEvents)
-  
-    const unsubscribe = searchEventsStore.subscribe((value) => {
-      searchHandler(value)
-    })
-  
-    onDestroy(() => {
-      unsubscribe()
-    })
+  const searchEvents: Event[] = data.results.map((result: Event) => ({
+    ...result,
+    searchTerms: `${result.title}`,
+  }));
+
+  const searchEventsStore = createSearchStore(searchEvents);
+
+  const unsubscribe = searchEventsStore.subscribe((value) => {
+    searchHandler(value);
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+  });
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 </script>
@@ -77,7 +77,12 @@
       <div class="label">
         <span class="label-text">Buscador</span>
       </div>
-      <input type="text" placeholder="Bovedinmanía..." class="input input-bordered w-full lg:max-w-xs" bind:value={$searchEventsStore.search} />
+      <input
+        type="text"
+        placeholder="Bovedinmanía..."
+        class="input input-bordered w-full lg:max-w-xs"
+        bind:value={$searchEventsStore.search}
+      />
     </label>
 
     <div class="mt-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

@@ -38,3 +38,9 @@
     @apply text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary;
   }
 }
+
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 100;
+}
