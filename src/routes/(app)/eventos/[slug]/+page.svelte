@@ -96,7 +96,7 @@
             class="absolute w-[640px] h-72 -bottom-5 lg:w-72 lg:h-full z-10  md:top-[480px] lg:top-0 lg:left-[280px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"
           />
           <img
-            class="object-contain md:rounded-sm"
+            class="object-contain md:rounded-sm poster"
             loading="lazy"
             width="600"
             height="750"

@@ -43,8 +43,6 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     }
   }
 
-  console.log('activo')
-
   const { previewMode } = await parent();
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
 
