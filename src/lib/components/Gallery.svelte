@@ -24,15 +24,15 @@
         img: urlForImage(image).height(2000).width(1333).quality(80).url(),
         thumb: urlForImage(image).width(400).quality(50).url(),
         alt: image.alt,
-        height: 1000,
-        width: 750,
+        height: 2000,
+        width: 1333,
         photographer: image.photographer?.name,
         photographerUrl: image.photographer?.imageUrl,
       };
     }
   });
 
-  let bp;
+  let bp: any;
 
   onMount(() => {
     // initialize BiggerPicture
@@ -52,38 +52,12 @@
 
   onDestroy(() => {
     if (bp) {
-      bp.destroy();
+      bp.close();
     }
   });
 </script>
 
-<section>
-  <!-- <div
-    id="images"
-    class="columns-2 sm:columns-3 md:columns-4 lg:columns-4 xl:columns-5"
-  >
-    {#each galleryImages as image}
-      <a
-        class={id}
-        href={image?.src}
-        data-img={image?.src}
-        data-thumb={image?.thumb}
-        data-height={image?.height}
-        data-width={image?.width}
-        data-alt={image?.alt}
-        data-caption={`Fotografía de ${image?.photographer} (<a class="underline" target="_blank" href=${image?.photographerUrl}>Instagram</a>)`}
-        aria-label={image?.alt}
-      >
-        <img
-          class="mb-2 rounded-sm"
-          loading="lazy"
-          width="400"
-          src={image?.thumb}
-          alt={image?.alt}
-        />
-      </a>
-    {/each}
-  </div> -->
+<section class="border-2 border-primary">
   <div id="inline" class="inline-gallery" />
 </section>
 

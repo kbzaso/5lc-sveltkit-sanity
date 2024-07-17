@@ -13,7 +13,6 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ parent, params }) => {
 
-console.log("params.slug", params.slug);
   const { previewMode } = await parent();
 
   const allStaffSlider = await getSanityServerClient(false).fetch(
@@ -23,8 +22,6 @@ console.log("params.slug", params.slug);
   const staff = await getSanityServerClient(false).fetch(staffQuery, {
     slug: params.slug,
   });
-
-  console.log(staff)
 
   if (!staff) {
     throw error(404, {

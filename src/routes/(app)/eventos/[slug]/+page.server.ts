@@ -24,7 +24,6 @@ export const load: PageServerLoad = async ({ parent, params }) => {
   const cachedResult = await kv.get(params.slug);
 
   if (cachedResult) {
-    console.log("RETURN CACHE");
     return {
        event: cachedResult,
     };
@@ -36,7 +35,6 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     if(result){
       // Cachea la data por 1 semana
       await kv.set(params.slug, JSON.stringify(result), { ex: 604800 });
-      console.log("SAVED CACHE, return result");
       return {
         event: result,
       }

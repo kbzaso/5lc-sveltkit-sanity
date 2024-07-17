@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fix
 
-- Fix staff image gallery
+- Fix staff and event image gallery
 
 ## [0.0.41] - 2024-07-15
 
