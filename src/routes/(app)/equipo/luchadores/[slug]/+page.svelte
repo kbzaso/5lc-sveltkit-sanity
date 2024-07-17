@@ -98,7 +98,7 @@
               src={urlForImage(data.staff?.staffImage)
                 .height(785)
                 .width(500)
-                .quality(40)
+                .quality(90)
                 .url()}
               alt={data?.staff.title}
             />
@@ -282,7 +282,7 @@
     </div>
   </section>
 
-  <!-- {#if data?.staff?.gallery !== null}
+  {#if data?.staff?.gallery !== null}
     <section class="md:mt-20 lg:mt-40">
       <h3
         class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
@@ -290,12 +290,12 @@
         Galería de imagenes
       </h3>
       <div
-        class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
+        class="container p-4 mx-auto w-full flex flex-col justify-center"
       >
         <Gallery id={data?.slug} images={data?.staff?.gallery} />
       </div>
     </section>
-  {/if} -->
+  {/if}
 
   <!-- <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
     <h4

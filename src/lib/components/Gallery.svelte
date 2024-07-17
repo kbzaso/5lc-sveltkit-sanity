@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { urlForImage } from "$lib/config/sanity";
 
   import BiggerPicture from "bigger-picture/svelte";
@@ -11,17 +11,17 @@
   let galleryImages = images.map((image: any) => {
     if (!image.vertical) {
       return {
-        src: urlForImage(image).height(750).width(1000).quality(90).url(),
+        img: urlForImage(image).height(1333).width(2000).quality(80).url(),
         thumb: urlForImage(image).width(400).quality(50).url(),
         alt: image.alt,
-        height: 750,
-        width: 1000,
+        height: 2000,
+        width: 3000,
         photographer: image.photographer?.name,
         photographerUrl: image.photographer?.imageUrl,
       };
     } else if (image.vertical) {
       return {
-        src: urlForImage(image).height(1000).width(750).quality(90).url(),
+        img: urlForImage(image).height(2000).width(1333).quality(80).url(),
         thumb: urlForImage(image).width(400).quality(50).url(),
         alt: image.alt,
         height: 1000,
@@ -32,32 +32,33 @@
     }
   });
 
+  let bp;
+
   onMount(() => {
-    // initialize
-    let bp = BiggerPicture({
-      target: document.body,
+    // initialize BiggerPicture
+    bp = BiggerPicture({
+      target: document.getElementById("inline")!
     });
 
-    // grab image links
-    let imageLinks = document.querySelectorAll(`a.${id}`);
-    // add click listener to open BiggerPicture
-    for (let link of imageLinks) {
-      link.addEventListener("click", openGallery);
-    }
+    // open inline gallery
+    bp.open({
+      items: galleryImages,
+      inline: true,
+      scale: 1,
+      intro: "fadeup",
+      noClose: true,
+    });
+  });
 
-    // open BiggerPicture
-    function openGallery(e: Event) {
-      e.preventDefault();
-      bp.open({
-        items: imageLinks,
-        el: e.currentTarget!,
-      });
+  onDestroy(() => {
+    if (bp) {
+      bp.destroy();
     }
   });
 </script>
 
-<section class="w-full mx-auto">
-  <div
+<section>
+  <!-- <div
     id="images"
     class="columns-2 sm:columns-3 md:columns-4 lg:columns-4 xl:columns-5"
   >
@@ -82,5 +83,23 @@
         />
       </a>
     {/each}
-  </div>
+  </div> -->
+  <div id="inline" class="inline-gallery" />
 </section>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .inline-gallery {
+    position: relative;
+    background: #222;
+    overflow: hidden;
+  }
+  .inline-gallery:before {
+    content: "";
+    padding-bottom: 66.66%;
+    display: block;
+  }
+</style>
