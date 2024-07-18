@@ -57,7 +57,7 @@
   });
 </script>
 
-<section class="border-2 border-primary">
+<section class="border-2 border-primary z-10">
   <div id="inline" class="inline-gallery" />
 </section>
 
