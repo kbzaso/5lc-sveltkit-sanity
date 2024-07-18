@@ -36,12 +36,16 @@
 
   // Add scroll event listener on mount
   onMount(() => {
-    window.addEventListener('scroll', handleScroll);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+    }
   });
 
   // Remove scroll event listener on destroy
   onDestroy(() => {
-    window.removeEventListener('scroll', handleScroll);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', handleScroll);
+    }
   });
 </script>
 
