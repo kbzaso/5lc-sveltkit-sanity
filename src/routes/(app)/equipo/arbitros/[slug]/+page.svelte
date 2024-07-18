@@ -282,7 +282,7 @@
     </div>
   </section>
 
-  <!-- {#if data?.staff?.gallery !== null}
+  {#if data?.staff?.gallery !== null}
     <section class="md:mt-20 lg:mt-40">
       <h3
         class="px-4 text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary"
@@ -295,7 +295,7 @@
         <Gallery id={data?.slug} images={data?.staff?.gallery} />
       </div>
     </section>
-  {/if} -->
+  {/if}
 
   <!-- <div class="py-4 px-4 mt-10 rounded-md min-w-[320px]">
     <h4

@@ -21,16 +21,44 @@
     easing: sineIn,
   };
   import { urlForImage } from "$lib/config/sanity";
+  import { onDestroy, onMount } from "svelte";
 
   export let logo: string;
   export let logoBlack: string;
   export let bovedin: string;
+
+  let isScrolled = false;
+
+  // Function to handle scroll event
+  const handleScroll = () => {
+    isScrolled = window.scrollY > 60;
+  };
+
+  // Add scroll event listener on mount
+  onMount(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+    }
+  });
+
+  // Remove scroll event listener on destroy
+  onDestroy(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', handleScroll);
+    }
+  });
 </script>
 
+<style>
+  .transition-blur {
+    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+  }
+</style>
+
 <div
-  class="w-full py-2 top-0 px-4 z-40 pt-2 bg-black/75 fixed backdrop-blur-md"
+  class={`w-full py-2 top-0 px-4 z-40 pt-2 fixed ${isScrolled ? 'backdrop-blur-md bg-black/25' : ''} transition-blur`}
 >
-  <div class="flex w-full justify-between items-center container mx-auto ">
+  <div class="flex w-full justify-between items-center container mx-auto">
     <a href="/">
       <img
         src={urlForImage(logo).url()}

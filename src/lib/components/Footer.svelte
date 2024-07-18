@@ -1,4 +1,4 @@
-<footer class="footer footer-center p-10 bg-base-200 text-gray-400 rounded">
+<footer class="footer footer-center p-10 text-white rounded">
   <div>
     <div class="grid grid-flow-col gap-4">
       <a
