@@ -68,9 +68,9 @@
   <meta property="og:url" content={`${$page.url.href}`} />
 </svelte:head>
 
-<main class="container mx-auto px-4 mt-36 mb-20 space-y-20">
+<main class="container mx-auto px-4 mt-28 mb-20 space-y-20">
   <div>
-    <h2 class="text-3xl sub-title text-white sm:text-4xl mt-6">
+    <h2 class="text-5xl mask sub-title text-white">
       Eventos pasados
     </h2>
     <label class="form-control w-full lg:max-w-xs">
@@ -121,7 +121,7 @@
               </p>
 
               <h2
-                class="text-primary font-ibm italic text-2xl md:text-4xl px-4 pt-0"
+                class="text-primary font-ibm italic text-3xl md:text-4xl px-4 pt-0 mask"
               >
                 {result.title}
               </h2>

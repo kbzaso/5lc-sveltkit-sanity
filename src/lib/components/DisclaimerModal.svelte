@@ -47,7 +47,7 @@
 
   <dialog
     id={`my_modal_${disclaimer.modalId}`}
-    class="modal modal-bottom sm:modal-middle bg-gray-700/75"
+    class="modal modal-bottom sm:modal-middle bg-black/75"
   >
     <div class="modal-box">
       <form method="dialog">

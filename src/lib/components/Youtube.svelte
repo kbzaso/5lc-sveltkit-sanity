@@ -15,7 +15,7 @@
           >
             Revive las luchas
           </h2>
-          <p class="mt-4 text-lg leading-8 text-gray-300">
+          <p class="mt-4 text-lg leading-8 text-white">
             Revisa nuestro material audiovisual de este y otros eventos en
             nuestro canal de Youtube.
           </p>

@@ -4,7 +4,7 @@
 </script>
 
 <div
-  class="flex flex-col md:flex-row container mt-36 mx-auto px-4 min-w-[320px] gap-8"
+  class="flex flex-col md:flex-row container mt-28 mx-auto px-4 min-w-[320px] gap-8"
 >
   <ul
     class="menu bg-zinc-900 menu-horizontal md:menu-vertical md:w-56 h-fit self-center md:self-start fixed bottom-4 md:sticky md:top-28 z-30 shadow-lg shadow-black"

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Add texture to some titles
+
 ## [0.0.42] - 2024-07-18
 
 ### Add
