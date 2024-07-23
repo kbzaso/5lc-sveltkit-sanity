@@ -1,3 +1,4 @@
+import type { EventDiscount, EventDiscounts } from "$lib/types/index";
 
 // BATCH TICKETS SYSTEM
 export function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
@@ -32,13 +33,15 @@ export function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
   return { totalCost, ticket };
 }
 
-
-
-type TicketType = 'firsts_tickets' | 'seconds_tickets' | 'thirds_tickets';
+type TicketType = "firsts_tickets" | "seconds_tickets" | "thirds_tickets";
 type Tickets = Record<TicketType, { amount: number }>;
 
 export function calculateTandas(tickets: Tickets) {
-  const partsOrder: TicketType[] = ["firsts_tickets", "seconds_tickets", "thirds_tickets"];
+  const partsOrder: TicketType[] = [
+    "firsts_tickets",
+    "seconds_tickets",
+    "thirds_tickets",
+  ];
 
   let tandas = Object.entries(tickets).map(([key, value]) => ({
     type: key as TicketType,
@@ -52,9 +55,8 @@ export function calculateTandas(tickets: Tickets) {
   return tandas;
 }
 
-
 //  UBICATIONS TICKETS SYSTEM
-type UbicationType = 'ringside_tickets' | 'general_tickets';
+type UbicationType = "ringside_tickets" | "general_tickets";
 type Ubication = Record<UbicationType, { amount: number }>;
 
 export function calculateUbications(tickets: Ubication) {
@@ -62,10 +64,10 @@ export function calculateUbications(tickets: Ubication) {
 
   let ubication = Object.entries(tickets).map(([key, value]) => {
     let name;
-    if (key === 'ringside_tickets') {
-      name = 'Ringside';
-    } else if (key === 'general_tickets') {
-      name = 'General';
+    if (key === "ringside_tickets") {
+      name = "Ringside";
+    } else if (key === "general_tickets") {
+      name = "General";
     }
 
     return {
@@ -82,7 +84,6 @@ export function calculateUbications(tickets: Ubication) {
   return ubication;
 }
 
-
 export function calculateUbicationPrice(ubications: Ubication, amount: number) {
   let total = 0;
 
@@ -94,13 +95,45 @@ export function calculateUbicationPrice(ubications: Ubication, amount: number) {
   return total;
 }
 
-
 // Calculate total quantity of tickets available in the studio
-export function calculateTotalQuantity(ticketTypes: {
-  [key: string]: { amount: number };
-} = {}): number {
+export function calculateTotalQuantity(
+  ticketTypes: {
+    [key: string]: { amount: number };
+  } = {}
+): number {
   return Object.values(ticketTypes).reduce(
     (total, ticketType) => total + ticketType.amount,
     0
   );
+}
+
+export function validateDiscount(discounts: EventDiscount[], code: string) {
+  const normalizeDiscountCode = code
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ /g, "");
+
+  if (Array.isArray(discounts)) {
+    const discount = discounts.find(
+      (discount: EventDiscount) => discount.code.toLowerCase() === normalizeDiscountCode && discount.active
+    );
+    return discount
+      ? {
+          success: true,
+          error: false,
+          code: normalizeDiscountCode,
+          percentage: discount.percentage,
+          message: `¡Tú código de descuento ${discount.code} del ${discount.percentage}% ha sido aplicado al total de tu compra!`,
+        }
+      : {
+          success: false,
+          error: true,
+          message: "Código de descuento no válido",
+        };
+  }
+  return {
+    success: false,
+    error: true,
+    message: "Error al aplicar el código de descuento",
+  };
 }

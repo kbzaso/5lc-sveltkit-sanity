@@ -15,9 +15,10 @@
   export let disclaimerEvent: any;
   export let discountResponse: any = null;
   export let discountCodeExist: any;
+  export let validatedDiscount: any;
 
   $: discountResponse, (isLoading = false);
-  $: discountResponse, handleChange();
+  $: discountResponse, handleChange(validatedDiscount);
 
   let isLoading = false;
   let isSubmitting = false;
@@ -41,11 +42,19 @@
     return total - total * (percentage / 100);
   }
 
-  const handleChange = () => {
+  const handleChange = (validatedDiscountExist?: any): void => {
     if (sellSystem === "ubication") {
       if (selectedTicketsType === "ringside_tickets") {
         selectedTicketsTotalPrice =
           selectedTicketsQuantity * ticket?.ringside_tickets?.price;
+        // Si existe un descuento en la url se aplica
+        if (validatedDiscountExist?.success) {
+          priceBeforeDiscount = selectedTicketsTotalPrice;
+          selectedTicketsTotalPrice = applyDiscount(
+            selectedTicketsTotalPrice,
+            validatedDiscountExist?.percentage
+          );
+        }
         // Si existe un descuento se aplica
         if (discountResponse?.success) {
           priceBeforeDiscount = selectedTicketsTotalPrice;
@@ -57,6 +66,14 @@
       } else if (selectedTicketsType === "general_tickets") {
         selectedTicketsTotalPrice =
           selectedTicketsQuantity * ticket.general_tickets.price;
+        // Si existe un descuento en la url se aplica
+        if (validatedDiscountExist?.success) {
+          priceBeforeDiscount = selectedTicketsTotalPrice;
+          selectedTicketsTotalPrice = applyDiscount(
+            selectedTicketsTotalPrice,
+            validatedDiscountExist?.percentage
+          );
+        }
         if (discountResponse?.success) {
           priceBeforeDiscount = selectedTicketsTotalPrice;
           selectedTicketsTotalPrice = applyDiscount(
@@ -66,10 +83,21 @@
         }
       }
     } else {
+      // BATCH
       let obj = calculatePrice(selectedTicketsQuantity, ticket);
       selectedTicketsTotalPrice = obj.totalCost;
 
-      // Si existe un descuento se aplica
+      // Si existe un descuento en la url se aplica
+      if (validatedDiscountExist?.success) {
+        priceBeforeDiscount = selectedTicketsTotalPrice;
+        selectedTicketsTotalPrice = applyDiscount(
+          selectedTicketsTotalPrice,
+          validatedDiscountExist?.percentage
+        );
+        return;
+      }
+
+      // Si se valida un descuento se aplica
       if (discountResponse?.success) {
         priceBeforeDiscount = obj.totalCost;
         selectedTicketsTotalPrice = applyDiscount(
@@ -81,7 +109,7 @@
   };
 
   onMount(() => {
-    handleChange();
+    handleChange(validatedDiscount);
   });
 
   function toggleDiscount() {
@@ -101,9 +129,12 @@
 
   $: {
     if (ticketsWithZeroAmount.ringside && !ticketsWithZeroAmount.general) {
-      selectedTicketsType = 'general_tickets';
-    } else if (ticketsWithZeroAmount.general && !ticketsWithZeroAmount.ringside) {
-      selectedTicketsType = 'ringside_tickets';
+      selectedTicketsType = "general_tickets";
+    } else if (
+      ticketsWithZeroAmount.general &&
+      !ticketsWithZeroAmount.ringside
+    ) {
+      selectedTicketsType = "ringside_tickets";
     }
   }
 
@@ -144,10 +175,7 @@
     Debes aceptar el código de conducta
   </p>
 {/if}
-<dialog
-  id="my_modal_5"
-  class="modal modal-bottom sm:modal-middle bg-black/75"
->
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle bg-black/75">
   <div class="modal-box">
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-primary absolute right-2 top-2"
@@ -223,7 +251,7 @@
           id="tickets"
           required
           class="select select-bordered w-full outline-none ring-0"
-          on:change={() => handleChange()}
+          on:change={() => handleChange(validatedDiscount)}
         >
           {#each options as option (option)}
             <option value={option}>{option}</option>
@@ -249,7 +277,7 @@
                 checked={selectedTicketsType === "ringside_tickets"}
                 on:click={() => {
                   selectedTicketsType = "ringside_tickets";
-                  handleChange();
+                  handleChange(validatedDiscount);
                 }}
               />
               <span class="label-text">RINGSIDE </span>
@@ -270,7 +298,7 @@
                 checked={selectedTicketsType === "general_tickets"}
                 on:click={() => {
                   selectedTicketsType = "general_tickets";
-                  handleChange();
+                  handleChange(validatedDiscount);
                 }}
               />
               <span class="label-text">GENERAL </span>
@@ -290,7 +318,7 @@
         bind:value={selectedTicketsType}
       />
 
-      {#if discountCodeExist && !discountResponse?.success}
+      {#if discountCodeExist && !discountResponse?.success && !validatedDiscount.success}
         <div class="form-control" out:slide>
           <label class="cursor-pointer label flex justify-start gap-2">
             <input
@@ -364,6 +392,13 @@
         />
       {/if}
 
+      {#if validatedDiscount.success}
+        <p class="mt-2 text-success flex gap-2" in:fly={{ y: 20 }}>
+          <TicketCheck />
+          {validatedDiscount?.message}
+        </p>
+      {/if}
+
       <div class="divider divider-neutral text-white">Total</div>
 
       <p class="text-center">
@@ -388,11 +423,11 @@
         disabled={isLoading || isSubmitting}
         class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
       >
-      {#if isSubmitting}
-        <Loading /> Comprando...
-      {:else}
-        Comprar
-      {/if}
+        {#if isSubmitting}
+          <Loading /> Comprando...
+        {:else}
+          Comprar
+        {/if}
       </button>
     </form>
   </div>

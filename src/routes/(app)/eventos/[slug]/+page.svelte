@@ -11,23 +11,28 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
-  import { calculateTandas, calculateUbications } from "$lib/utils/eventUtils";
+  import {
+    calculateTandas,
+    calculateUbications,
+    validateDiscount,
+  } from "$lib/utils/eventUtils";
   import ModalTicketsSell from "$lib/components/events/ModalTicketsSell.svelte";
   import UbicationTicketsCard from "$lib/components/events/UbicationTicketsCard.svelte";
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
   import { urlForImage } from "$lib/config/sanity";
+  import ChatBubble from "$lib/components/events/ChatBubble.svelte";
 
   export let data: PageData;
   export let form;
 
-  $: ({ event } = data);
+  $: ({ event, validatedDiscount } = data);
 
   $: eventDate = new Date(event?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
 
-  let seo_image = urlForImage(data.event.poster).url();
+  let seo_image = urlForImage(data?.event?.poster).url();
 
   let hasPhotos = [];
 
@@ -117,9 +122,7 @@
                     eventDateFormatted.slice(1)}
                 </time>
                 <div class="flex gap-4">
-                  <h1
-                    class="mt-2 text-5xl font-bold text-primary mask"
-                  >
+                  <h1 class="mt-2 text-5xl font-bold text-primary mask">
                     {event?.title}
                   </h1>
                 </div>
@@ -168,14 +171,15 @@
               <!-- EVENTO ACTIVO -->
 
               {#if event?.active}
+                {#if validatedDiscount?.success}
+                  <ChatBubble />
+                {/if}
                 <h2
                   class="font-semibold text-primary uppercase tracking-widest"
                 >
                   Próximo evento
                 </h2>
-                <h1
-                  class="mt-2 text-5xl font-bold mask text-white"
-                >
+                <h1 class="mt-2 text-5xl font-bold mask text-white">
                   {event.title}
                 </h1>
                 <div class="prose prose-indigo mt-5 text-white">
@@ -305,6 +309,7 @@
                       <ModalTicketsSell
                         discountCodeExist={event?.discounts}
                         discountResponse={form}
+                        {validatedDiscount}
                         sellSystem={event?.sell_type}
                         ticket={event?.sell_type === "ubication"
                           ? event?.ticket?.ubication
