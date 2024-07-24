@@ -47,6 +47,7 @@
   let ubications: any[] = [];
 
   onMount(() => {
+    console.log(validatedDiscount)
     if (event?.active) {
       if (event?.sell_type === "batch") {
         // Necesito pasar el objeto de tandas a un array para poder ordenarlas
@@ -65,6 +66,7 @@
   });
 
   let disclaimerEvent = writable([]);
+
 </script>
 
 <svelte:head>
@@ -171,9 +173,6 @@
               <!-- EVENTO ACTIVO -->
 
               {#if event?.active}
-                {#if validatedDiscount?.success}
-                  <ChatBubble />
-                {/if}
                 <h2
                   class="font-semibold text-primary uppercase tracking-widest"
                 >
@@ -243,14 +242,17 @@
                     </p>
                   {/if}
                 </div>
-                <div class="flex gap-4 my-8">
+                {#if validatedDiscount?.success && event?.active}
+                  <ChatBubble />
+                {/if}
+                <div class="flex gap-8 my-8 flex-col md:flex-row">
                   {#if event.sell_type === "batch"}
                     {#each tandas as tanda}
-                      <TandasTicketsCard ticket={tanda} />
+                      <TandasTicketsCard ticket={tanda} dicountPercentage={validatedDiscount?.percentage} />
                     {/each}
                   {:else}
                     {#each ubications as ubication}
-                      <UbicationTicketsCard ticket={ubication} />
+                      <UbicationTicketsCard ticket={ubication} dicountPercentage={validatedDiscount?.percentage} />
                     {/each}
                   {/if}
                 </div>

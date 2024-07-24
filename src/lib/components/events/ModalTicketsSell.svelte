@@ -366,7 +366,7 @@
                   class="text-error mt-2 flex gap-2
                 "
                 >
-                  <TicketX />
+                  <TicketX class="min-w-6" />
                   {discountResponse?.message}
                 </p>
               {/if}
@@ -377,24 +377,23 @@
 
       {#if discountResponse?.success}
         <p class="mt-2 text-success flex gap-2" in:fly={{ y: 20 }}>
-          <TicketCheck />
           {discountResponse?.message}
         </p>
       {/if}
 
       <!-- Envio el codigo al servidor -->
-      {#if discountResponse?.success}
+      {#if discountResponse?.success || validatedDiscount.success}
         <input
           type="hidden"
           name="discountCode"
           id="discountCode"
-          value={discountResponse?.code}
+          value={discountResponse?.code || validatedDiscount?.code}
         />
       {/if}
 
       {#if validatedDiscount.success}
         <p class="mt-2 text-success flex gap-2" in:fly={{ y: 20 }}>
-          <TicketCheck />
+          <TicketCheck class="min-w-6" />
           {validatedDiscount?.message}
         </p>
       {/if}

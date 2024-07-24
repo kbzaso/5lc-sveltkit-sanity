@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Ticket } from "lucide-svelte";
   interface Ticket {
     index: number;
     amount: number;
@@ -8,8 +9,14 @@
   }
 
   export let ticket: Ticket;
+  export let dicountPercentage: number | undefined;
 
   let ticketPrice = ticket.price;
+  let priceBeforeDiscount = ticket.price;
+
+  if (dicountPercentage) {
+    ticketPrice = ticket.price - (ticket.price * dicountPercentage) / 100;
+  }
 
   let formatedPrice = new Intl.NumberFormat("es-CL", {
     style: "currency",
@@ -17,13 +24,10 @@
   }).format(ticketPrice);
 </script>
 
-
 <div
   class:opacity-25={ticket.amount === 0}
-  class={`w-full border p-2 indicator flex flex-col justify-center items-center pt-2 max-w-xs min-h-16 ${
-    ticket.type === "ringside_tickets"
-      ? "border-success"
-      : "border-info"
+  class={`w-full border p-2 indicator flex flex-col justify-center items-center pt-2 max-w-sm min-h-16 ${
+    ticket.type === "ringside_tickets" ? "border-success" : "border-info"
   }`}
 >
   <span
@@ -42,10 +46,15 @@
               : "badge-error"
           }`}
         >
-          🎟️ {ticket.amount > 1 ? `Últimas ${ticket.amount}` : 'Última'}
+          {ticket.amount > 1 ? `Últimas ${ticket.amount}` : "Última"}
         </span>
       {/if}
-      <p class="text-lg">{formatedPrice || 0}</p>
+      <div class="text-center">
+        <span class="text-sm line-through text-error"
+          >{dicountPercentage ? `$${priceBeforeDiscount}` : ""}</span
+        >
+        <span class="text-lg text-primary">{formatedPrice || 0}</span>
+      </div>
     {:else}
       <span
         class="indicator-item indicator-bottom indicator-center badge badge-success rounded-none tracking-widest uppercase"

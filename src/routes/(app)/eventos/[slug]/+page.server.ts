@@ -140,8 +140,6 @@ export const load: PageServerLoad = async ({ parent, params, url }) => {
    if(Array.isArray(event.discounts)){
      validatedDiscount = validateDiscount(event.discounts, discountCodeFromUrl ?? "");
   }
-  console.log(discountCodeFromUrl)
-  console.log("validatedDiscount", validatedDiscount);
 
   return {
     totalTicketsLeftStudio,
