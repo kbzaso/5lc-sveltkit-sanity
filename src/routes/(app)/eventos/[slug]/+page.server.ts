@@ -11,7 +11,7 @@ import type { Event } from "$lib/types";
 import { error, redirect, fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { client } from "$lib/server/prisma";
-import { calculatePrice } from "$lib/utils/eventUtils";
+import { calculatePrice, validateDiscount } from "$lib/utils/eventUtils";
 import {
   VITE_PAYKU_API_URL,
   VITE_PAYMENT_COMPLETED_URL,
@@ -20,7 +20,7 @@ import {
 } from "$env/static/private";
 import { kv } from "$lib/server/kv";
 
-export const load: PageServerLoad = async ({ parent, params }) => {
+export const load: PageServerLoad = async ({ parent, params, url }) => {
   const cachedResult = await kv.get(params.slug);
 
   if (cachedResult) {
@@ -41,11 +41,14 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     }
   }
 
+  const discountCodeFromUrl = url.searchParams.get("discount_code")?.toString().toLowerCase();
+
+  
   const { previewMode } = await parent();
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
-
+  
   let totalTicketsLeftStudio;
-
+  
   let { event, moreEvents } = await getSanityServerClient(previewMode).fetch<{
     event: Event;
     moreEvents: Event[];
@@ -133,12 +136,18 @@ export const load: PageServerLoad = async ({ parent, params }) => {
     throw error(500, "Settings not found");
   }
 
+  let validatedDiscount;
+   if(Array.isArray(event.discounts)){
+     validatedDiscount = validateDiscount(event.discounts, discountCodeFromUrl ?? "");
+  }
+
   return {
     totalTicketsLeftStudio,
     welcome,
     previewMode,
     slug: event?.slug || params.slug,
     event,
+    validatedDiscount,
   };
 };
 
@@ -161,31 +170,10 @@ export const actions: Actions = {
 
     const form = await request.formData();
     const discountCode = form.get("discount")?.toString().toLowerCase();
-    const normalizeDiscountCode = discountCode
-      ?.normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/ /g, "");
 
-    const validateDiscount = (discounts, code: string) => {
-      const discount = discounts.find(
-        (discount) => discount.code.toLowerCase() === code && discount.active
-      );
-      return discount
-        ? {
-            success: true,
-            error: false,
-            code: normalizeDiscountCode,
-            percentage: discount.percentage,
-            message: `¡Tú código de descuento del ${discount.percentage}% ha sido aplicado al total de tu compra!`,
-          }
-        : {
-            success: false,
-            error: true,
-            message: "Código de descuento no válido",
-          };
-    };
-
-    return validateDiscount(event.discounts, normalizeDiscountCode);
+    if(Array.isArray(event.discounts)){
+      return validateDiscount(event.discounts, discountCode ?? "");
+    }
   },
   ubication: async ({ params, request, cookies }) => {
     let { event } = await getSanityServerClient(false).fetch<{

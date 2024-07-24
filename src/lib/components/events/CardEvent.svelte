@@ -62,7 +62,7 @@
         </time>
       </p>
 
-      <h2 class="text-primary font-ibm italic text-2xl px-2 pt-0">
+      <h2 class="text-primary font-ibm italic text-3xl px-2 pt-0 mask">
         {event.title}
       </h2>
       <p

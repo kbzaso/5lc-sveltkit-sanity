@@ -44,7 +44,7 @@
 </svelte:head>
 
 <main class="w-full">
-  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">
+  <h1 class="text-4xl font-bold text-white sm:text-4xl mask">
     Presentadores
   </h1>
   <div

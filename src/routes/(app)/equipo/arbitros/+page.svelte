@@ -44,7 +44,7 @@
 </svelte:head>
 
 <div class="w-full">
-  <h1 class="text-3xl font-bold leading-8 text-white sm:text-4xl">Arbitros</h1>
+  <h1 class="text-4xl font-bold mask text-white ">Arbitros</h1>
   <div
     class="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-w-[320px]"
   >

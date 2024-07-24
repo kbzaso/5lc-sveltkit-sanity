@@ -136,7 +136,7 @@
         {data?.staff?.pseudonym ? data?.staff?.pseudonym : ""}
       </span>
       <h1
-        class="text-6xl md:text-7xl font-black italic text-primary text-center sm:text-left"
+        class="text-6xl md:text-7xl font-black italic text-primary text-center sm:text-left mask"
       >
         {data?.staff?.title}
       </h1>
@@ -170,7 +170,7 @@
           <p
             class="pt-4 prose hover:prose-a:after:text-primary hover:prose-a:decoration-primary prose-a:decoration-blue-500 prose-a:decoration-2 prose-a:underline-offset-2 prose-a:after:content-['_↗'] prose-p:text-gray-300 prose-em:underline prose-em:decoration-2  prose-em:decoration-primary prose-em:underline-offset-2 prose-em:text-gray-300 prose-a:after:text-blue-500 prose-a:after:font-black"
           >
-            <PortableText value={data?.staff?.description} />
+            <PortableText value={data?.staff?.description} components={{}} />
           </p>
         {/if}
 

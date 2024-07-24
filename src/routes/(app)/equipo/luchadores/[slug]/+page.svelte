@@ -134,7 +134,7 @@
         {data?.staff?.pseudonym ? data?.staff?.pseudonym : ""}
       </span>
       <h1
-        class="text-6xl md:text-7xl font-black italic text-primary text-center sm:text-left"
+        class="text-6xl md:text-7xl mask font-black italic text-primary text-center sm:text-left"
       >
         {data?.staff?.title}
       </h1>

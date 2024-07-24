@@ -88,7 +88,7 @@
   <main class="container px-4 mt-28 mx-auto">
     {#if events && events.length > 0}
       {#if events.length > 1}
-      <h1 class="text-3xl sub-title text-white sm:text-4xl">
+      <h1 class="sub-title text-white text-5xl mask">
         Próximos eventos
       </h1>
       <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

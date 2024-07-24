@@ -37,7 +37,13 @@
   .sub-title {
     @apply text-white container mx-auto mb-4 font-ibm font-black text-2xl italic underline decoration-primary;
   }
+  .mask {
+    mask-image: url("/text-texture.png");
+    mask-size: 250px;
+    mask-repeat: repeat;
+  }
 }
+
 
 
 ::view-transition-old(root),

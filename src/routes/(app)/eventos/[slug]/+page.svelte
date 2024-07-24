@@ -11,23 +11,28 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
-  import { calculateTandas, calculateUbications } from "$lib/utils/eventUtils";
+  import {
+    calculateTandas,
+    calculateUbications,
+    validateDiscount,
+  } from "$lib/utils/eventUtils";
   import ModalTicketsSell from "$lib/components/events/ModalTicketsSell.svelte";
   import UbicationTicketsCard from "$lib/components/events/UbicationTicketsCard.svelte";
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
   import { urlForImage } from "$lib/config/sanity";
+  import ChatBubble from "$lib/components/events/ChatBubble.svelte";
 
   export let data: PageData;
   export let form;
 
-  $: ({ event } = data);
+  $: ({ event, validatedDiscount } = data);
 
   $: eventDate = new Date(event?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
 
-  let seo_image = urlForImage(data.event.poster).url();
+  let seo_image = urlForImage(data?.event?.poster).url();
 
   let hasPhotos = [];
 
@@ -42,6 +47,7 @@
   let ubications: any[] = [];
 
   onMount(() => {
+    console.log(validatedDiscount)
     if (event?.active) {
       if (event?.sell_type === "batch") {
         // Necesito pasar el objeto de tandas a un array para poder ordenarlas
@@ -58,7 +64,7 @@
       hasPhotos = [];
     }
   });
-  
+
   let disclaimerEvent = writable([]);
 
 </script>
@@ -100,10 +106,7 @@
             loading="lazy"
             width="600"
             height="750"
-            src={urlForImage(data.event.poster)
-              .width(600)
-              .height(750)
-              .url()}
+            src={urlForImage(data.event.poster).width(600).height(750).url()}
             alt="Afiche del próximo evento"
           />
         </div>
@@ -113,28 +116,26 @@
               <!-- EVENTO PASADO -->
               {#if !event?.active}
                 <time
-                  class="italic text-gray-500"
+                  class="italic"
                   datetime={eventDateFormatted.charAt(0).toUpperCase() +
                     eventDateFormatted.slice(1)}
                 >
                   {eventDateFormatted.charAt(0).toUpperCase() +
                     eventDateFormatted.slice(1)}
                 </time>
-                <h1
-                  class="mt-2 text-3xl font-bold leading-8 text-primary sm:text-4xl"
-                >
-                  {event?.title}
-                  <span
-                    class="font-semibold leading-6 text-primary uppercase tracking-widest text-lg"
-                    >(+18)</span
-                  >
-                </h1>
-                <p
-                  class="prose prose-h3:text-primary prose-h2:font-ibm prose-h3:font-ibm prose-h2:text-primary prose-h1:text-primary prose-indigo mt-5"
+                <div class="flex gap-4">
+                  <h1 class="mt-2 text-5xl font-bold text-primary mask">
+                    {event?.title}
+                  </h1>
+                </div>
+                <div
+                  class="prose prose-h3:text-primary prose-h2:font-ibm prose-h3:font-ibm prose-h2:text-primary prose-h1:text-primary prose-indigo mt-5 prose-p:text-white prose-p:text-lg"
                 >
                   {#if event?.result}
                     <p>Estos fueron los resultados:</p>
-                    <PortableText value={event?.result} />
+                    <p>
+                      <PortableText value={event?.result} components={{}} />
+                    </p>
                   {/if}
                   {#if !event.boveda}
                     <p>
@@ -142,6 +143,7 @@
                       <a
                         target="_blank"
                         rel="noreferrer"
+                        class="text-primary"
                         href={event.venue?.venueUrl}
                       >
                         {event.venue?.venueAdress}</a
@@ -152,13 +154,14 @@
                       Este evento se realizo en Bóveda Secreta - <a
                         target="_blank"
                         rel="noreferrer"
+                        class="text-primary"
                         href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
                       >
                         San Antonio 705, Santiago, Región Metropolitana</a
                       >
                     </p>
                   {/if}
-                </p>
+                </div>
                 {#if event?.assistance && !event?.active}
                   <AttendanceStat
                     assistance={event.assistance}
@@ -171,22 +174,16 @@
 
               {#if event?.active}
                 <h2
-                  class="font-semibold leading-6 text-primary uppercase tracking-widest"
+                  class="font-semibold text-primary uppercase tracking-widest"
                 >
                   Próximo evento
                 </h2>
-                <h1
-                  class="mt-2 text-3xl font-bold leading-8 text-white sm:text-4xl"
-                >
+                <h1 class="mt-2 text-5xl font-bold mask text-white">
                   {event.title}
-                  <span
-                    class="font-semibold leading-6 text-primary uppercase tracking-widest text-lg"
-                    >(+18)</span
-                  >
                 </h1>
-                <div class="prose prose-indigo mt-5">
+                <div class="prose prose-indigo mt-5 text-white">
                   <p>
-                    <PortableText value={event?.description} />
+                    <PortableText value={event?.description} components={{}} />
                   </p>
 
                   <ul>
@@ -201,7 +198,7 @@
                         {hours}:{minutes < 10 ? "0" + minutes : minutes}
                       </time>
                       → Inicio show
-                      <span class="italic text-gray-400"
+                      <span class="italic text-primary"
                         >(apertura 45 minutos antes)</span
                       >
                     </li>
@@ -245,14 +242,17 @@
                     </p>
                   {/if}
                 </div>
-                <div class="flex gap-4 my-8">
+                {#if validatedDiscount?.success && event?.active}
+                  <ChatBubble />
+                {/if}
+                <div class="flex gap-8 my-8 flex-col md:flex-row">
                   {#if event.sell_type === "batch"}
                     {#each tandas as tanda}
-                      <TandasTicketsCard ticket={tanda} />
+                      <TandasTicketsCard ticket={tanda} dicountPercentage={validatedDiscount?.percentage} />
                     {/each}
                   {:else}
                     {#each ubications as ubication}
-                      <UbicationTicketsCard ticket={ubication} />
+                      <UbicationTicketsCard ticket={ubication} dicountPercentage={validatedDiscount?.percentage} />
                     {/each}
                   {/if}
                 </div>
@@ -311,6 +311,7 @@
                       <ModalTicketsSell
                         discountCodeExist={event?.discounts}
                         discountResponse={form}
+                        {validatedDiscount}
                         sellSystem={event?.sell_type}
                         ticket={event?.sell_type === "ubication"
                           ? event?.ticket?.ubication

@@ -10,7 +10,6 @@
   };
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
   on:click={handleClick}
   class="lg:hover:scale-105 origin-bottom lg:hover:grayscale-0 lg:hover:opacity-100  transition-all lg:grayscale lg:opacity-75 relative min-[320px]:h-[210px] min-[335px]:h-[225px] min-[345px]:h-[240px] min-[375px]:h-[260px] min-[400px]:h-[280px] min-[425px]:h-[290px] min-[440px]:h-[320px] min-[450px]:h-[320px] min-[448px]:h-[320px] min-[458px]:h-[320px] min-[480px]:h-[340px] min-[500px]:h-[355px] min-[520px]:h-[360px] min-[530px]:h-[375px] min-[540px]:h-[385px] min-[560px]:h-[400px] min-[575px]:h-[400px] min-[585px]:h-[420px] min-[610px]:h-[430px] min-[620px]:h-[450px] min-[635px]:h-[455px] min-[655px]:h-[480px] min-[685px]:h-[490px] md:h-[290px] lg:h-[300px] xl:h-[385px]  2xl:h-[480px] flex items-end"
@@ -42,7 +41,7 @@
         {staff?.pseudonym ? staff?.pseudonym : ""}
       </p>
       <h3
-        class="text-primary font-ibm font-black text-2xl italic md:text-4xl px-2 pb-2 pt-0 truncate"
+        class="text-primary font-ibm font-black text-2xl italic md:text-4xl px-2 pb-2 pt-0 truncate mask"
       >
         {staff.title}
       </h3>

@@ -20,7 +20,7 @@
     >
       Los temitas que se gozaron
     </h2>
-    <p class="mt-4 text-lg leading-8 text-gray-300 ">
+    <p class="mt-4 text-lg leading-8 text-white ">
       Esta fue la playlist que sonó ese día en la Bóveda, con la cúal movimos el esqueleto.
     </p>
   </div>

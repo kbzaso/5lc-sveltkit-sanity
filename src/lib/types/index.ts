@@ -107,3 +107,17 @@ export interface Welcome {
   textTitle: string;
   description: InputValue;
 }
+
+export interface EventDiscount {
+  code:       string;
+  active:     boolean;
+  percentage: number;
+}
+
+export interface validatedDiscount {
+  success:     boolean;
+  error:       boolean;
+  code:        string;
+  percentage:  number;
+  message:     string;
+}
