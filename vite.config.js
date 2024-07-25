@@ -1,23 +1,40 @@
 import { sentrySvelteKit } from "@sentry/sveltekit";
 import { sveltekit } from "@sveltejs/kit/vite";
 import fs from "fs";
+import path from "path";
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  plugins: [sentrySvelteKit({
-    sourceMapsUploadOptions: {
-      org: "5lc",
-      project: "javascript-sveltekit"
-    }
-  }), sveltekit(), rawFonts([".ttf"])],
-
+  plugins: [
+    sentrySvelteKit({
+      sourceMapsUploadOptions: {
+        org: "5lc",
+        project: "javascript-sveltekit",
+      },
+    }),
+    sveltekit(),
+    rawFonts([".ttf"]),
+  ],
+  resolve: {
+    alias: {
+      rxjs: path.resolve(__dirname, "node_modules/rxjs"),
+      "rxjs/operators": path.resolve(
+        __dirname,
+        "node_modules/rxjs/operators/index.js"
+      ),
+      "styled-components": path.resolve(
+        __dirname,
+        "node_modules/styled-components"
+      ),
+    },
+  },
   optimizeDeps: {
     include: ["sanity"],
   },
 
-  build:{
-    sourcemap: true // Config vite to generate sourcemap when bundling.
-  }
+  build: {
+    sourcemap: true, // Config vite to generate sourcemap when bundling.
+  },
 };
 
 function rawFonts(ext) {

@@ -1,9 +1,11 @@
 import { defineType } from "sanity";
+import {CreditCardIcon} from '@sanity/icons'
 
 export default defineType({
   name: "discountCodes",
   title: "Códigos de descuento",
   type: "document",
+  icon: CreditCardIcon,
   fields: [ 
     {
       name: "code",

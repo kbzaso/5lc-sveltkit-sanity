@@ -398,4 +398,25 @@ export default defineType({
         Rule.max(160).warning("No puede exceder los 160 caracteres"),
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'date',
+      poster: 'poster',
+    },
+    prepare({ title, subtitle, poster }) {
+      const formattedDate = new Date(subtitle).toLocaleDateString('es-CL', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+      return {
+        title,
+        subtitle: formattedDate,
+        media: poster,
+      };
+    }
+  }
 });

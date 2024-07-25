@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Icons in the Studio
+
+### Add
+
+- Update Sanity Studio
+
 ## [0.0.43] - 2024-07-24
 
 ### Add
