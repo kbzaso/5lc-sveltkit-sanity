@@ -73,10 +73,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "resend": "^2.0.0",
-    "sanity": "^3.14.2",
+    "rxjs": "^7.8.1",
+    "sanity": "^3.52.2",
     "sanity-plugin-asset-source-unsplash": "^1.0.1",
     "sanity-plugin-media": "^2.2.4",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.1.12",
     "svelte-icons-pack": "^2.1.0",
     "uuid": "^9.0.1"
   },
