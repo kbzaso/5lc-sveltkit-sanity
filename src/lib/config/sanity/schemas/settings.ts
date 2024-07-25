@@ -4,7 +4,6 @@ export default defineType({
   name: "settings",
   title: "Settings",
   type: "document",
-  icon: EditIcon,
   fields: [
     {
       name: "title",
