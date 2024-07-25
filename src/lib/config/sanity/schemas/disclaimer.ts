@@ -1,9 +1,11 @@
 import { defineType } from "sanity";
+import {DocumentsIcon} from '@sanity/icons'
 
 export default defineType({
   name: "disclaimer",
   title: "Disclaimers",
   type: "document",
+  icon: DocumentsIcon,
   fields: [ 
     {
       name: "title",

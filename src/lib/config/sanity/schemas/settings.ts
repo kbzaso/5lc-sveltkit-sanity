@@ -1,11 +1,10 @@
-import { CogIcon } from "@sanity/icons";
 import { defineType } from "sanity";
 
 export default defineType({
   name: "settings",
   title: "Settings",
   type: "document",
-  icon: CogIcon,
+  icon: EditIcon,
   fields: [
     {
       name: "title",
@@ -53,5 +52,6 @@ export default defineType({
   ],
   preview: {
     prepare: () => ({ title: "Settings" }),
+
   },
 });
