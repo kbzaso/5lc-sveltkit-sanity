@@ -13,7 +13,7 @@ import {
 import { Resend } from "resend";
 import groq from "groq";
 import { LocaleConfig } from "$lib/utils";
-
+import { VENUE } from "$lib/const";
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const datasetName = import.meta.env.VITE_SANITY_DATASET;
 
@@ -72,7 +72,7 @@ export const POST: RequestHandler = async (event) => {
       },
     });
 
-    const eventId = result?.payment?.additional_parameters.event_id || "";
+    const eventId = result?.payment?.additional_parameters?.event_id || "";
     const Query = groq`
         *[_type == "event" && _id == $merchantOrderId && active == true]{
           _id,
@@ -111,18 +111,18 @@ export const POST: RequestHandler = async (event) => {
             // to: 'alejandro.saez@rendalomaq.com',
             subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
             html: `Hola ${
-              paymentWithProduct.customer_name
+              paymentWithProduct?.customer_name
             }, </br> ¡Tu adhesión fue existosa!</br></br> ${
-              paymentWithProduct.ticketAmount
-            } ${paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"} ${
-              paymentWithProduct.ticketsType !== "Tandas"
-                ? paymentWithProduct.ticketsType
+              paymentWithProduct?.ticketAmount
+            } ${paymentWithProduct?.ticketAmount > 1 ? "entradas" : "entrada"} ${
+              paymentWithProduct?.ticketsType !== "Tandas"
+                ? paymentWithProduct?.ticketsType
                 : ""
-            } para ${paymentWithProduct.product.name}.</br></br>Nos vemos en ${
-              nextEvent[0].venue.venueName
-            } | ${nextEvent[0].venue.venueAdress} </br></br>
+            } para ${paymentWithProduct?.product.name}.</br></br>Nos vemos en ${
+              nextEvent[0]?.venue?.venueName ? nextEvent[0]?.venue?.venueName : VENUE.NAME
+            } | ${nextEvent[0]?.venue?.venueAdress ? nextEvent[0]?.venue?.venueAdress : VENUE.ADDRESS } </br></br>
               Tú numero de orden es <strong>${
-                paymentWithProduct.payment_id_service
+                paymentWithProduct?.payment_id_service
               }</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
               `,
             tags: [

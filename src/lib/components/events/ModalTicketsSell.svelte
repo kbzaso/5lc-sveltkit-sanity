@@ -382,7 +382,7 @@
       {/if}
 
       <!-- Envio el codigo al servidor -->
-      {#if discountResponse?.success || validatedDiscount.success}
+      {#if discountResponse?.success || validatedDiscount?.success}
         <input
           type="hidden"
           name="discountCode"
@@ -391,7 +391,7 @@
         />
       {/if}
 
-      {#if validatedDiscount.success}
+      {#if validatedDiscount?.success}
         <p class="mt-2 text-success flex gap-2" in:fly={{ y: 20 }}>
           <TicketCheck class="min-w-6" />
           {validatedDiscount?.message}

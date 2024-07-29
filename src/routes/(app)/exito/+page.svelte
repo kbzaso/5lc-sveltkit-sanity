@@ -3,8 +3,8 @@
   import type { PageData } from "./$types";
   import Error from "$lib/components/Error.svelte";
   import { LocaleConfig } from "$lib/utils";
-  import { paymentIdService } from '$lib/stores/paymentIdService';
-
+  import { paymentIdService } from "$lib/stores/paymentIdService";
+  import { VENUE } from "$lib/const";
   export let data: PageData;
 
   $: ({
@@ -31,7 +31,7 @@
 
 <main class="min-h-screen relative mx-auto md:flex md:content-center">
   {#if status === "success"}
-  <figure class="z-10 absolute md:opacity-20 lg:opacity-100 lg:relative">
+    <figure class="z-10 absolute md:opacity-20 lg:opacity-100 lg:relative">
       <img
         id="poster"
         class="md:rounded-sm"
@@ -41,9 +41,9 @@
         src={urlForImage(event.poster).width(600).height(750).url()}
         alt="Afiche del evento"
       />
-  </figure>
+    </figure>
   {/if}
-  
+
   <div
     class="mx-auto prose items-center container px-4 content-center z-10 absolute md:relative md:mt-20 bottom-10"
   >
@@ -81,7 +81,12 @@
                 class="text-primary"
                 rel="noreferrer"
                 target="_blank"
-                href={event.venue.venueUrl}>{event.venue.venueAdress}</a
+                href={event?.venue?.venueUrl
+                  ? event?.venue?.venueUrl
+                  : VENUE.MAP_URL}
+                >{event?.venue?.venueAdress
+                  ? event?.venue?.venueAdress
+                  : VENUE.ADDRESS}</a
               >
             </li>
           </ul>
