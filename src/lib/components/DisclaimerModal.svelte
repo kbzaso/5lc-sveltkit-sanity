@@ -33,7 +33,7 @@
       bind:checked={inputs[i]}
         type="checkbox"
         id={`input_${disclaimer.modalId}`}
-        class="checkbox checkbox-warning"
+        class="checkbox checkbox-warning "
       />
       <p class="label-text">
         Acepto el <span
