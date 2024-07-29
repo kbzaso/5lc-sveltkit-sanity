@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.45] - 2024-07-29
+
 ### Fix
 
 - Error when non discount code was applied to an event
@@ -283,7 +285,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.44...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.45...HEAD
+[0.0.45]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.44...0.0.45
 [0.0.44]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.43...0.0.44
 [0.0.43]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.42...0.0.43
 [0.0.42]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.41...0.0.42
