@@ -9,8 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fix
 
-- Fix error when non discount code was applied to an event
+- Error when non discount code was applied to an event
 - Size of checkbox input
+- Slack Notification
+- Email confirmation
 
 ## [0.0.44] - 2024-07-25
 
