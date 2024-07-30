@@ -21,6 +21,7 @@
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
   import { urlForImage } from "$lib/config/sanity";
   import ChatBubble from "$lib/components/events/ChatBubble.svelte";
+  import { min } from "rxjs";
 
   export let data: PageData;
   export let form;
@@ -47,7 +48,7 @@
   let ubications: any[] = [];
 
   onMount(() => {
-    console.log(validatedDiscount)
+    console.log(event?.doorsOpen)
     if (event?.active) {
       if (event?.sell_type === "batch") {
         // Necesito pasar el objeto de tandas a un array para poder ordenarlas
@@ -195,11 +196,18 @@
                     </li>
                     <li>
                       <time datetime={eventDateFormatted}>
-                        {hours}:{minutes < 10 ? "0" + minutes : minutes}
+                        {new Intl.DateTimeFormat('es-CL', {
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          timeZone: 'America/Santiago',
+                        }).format(eventDate)}
                       </time>
-                      → Inicio show
-                      <span class="italic text-primary"
-                        >(apertura 45 minutos antes)</span
+                      <span class="italic"
+                        >| Apertura de puertas: {new Intl.DateTimeFormat('es-CL', {
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          timeZone: 'America/Santiago',
+                        }).format(eventDate.setMinutes(eventDate.getMinutes() - event?.doorsOpen))}</span
                       >
                     </li>
                     {#if event.boveda}
@@ -227,7 +235,6 @@
                       </li>
                     {/if}
                   </ul>
-
                   {#if event.boveda}
                     <p class="border border-dashed border-primary p-4 text-sm">
                       La Bóveda Secreta se encuentra en el 3er piso de la

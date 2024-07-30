@@ -46,6 +46,7 @@ export interface Event {
   title: string;
   seo_description: string;
   date: string;
+  doorsOpen: number;
   boveda: boolean;
   sell_type: string;
   venue: {
