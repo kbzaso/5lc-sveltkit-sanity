@@ -1,5 +1,6 @@
-import { defineType } from "sanity";
+import { defineType, defineField } from "sanity";
 import { CalendarIcon } from "@sanity/icons";
+import { DoorsOpenInput } from "../components/DoorsOpenInput";
 
 export const SELL_TYPE = [
   { title: "Tandas", value: "batch" },
@@ -41,7 +42,19 @@ export default defineType({
       name: "date",
       title: "Fecha y hora del evento",
       type: "datetime",
+      initialValue: () => new Date().toISOString(),
       validation: (Rule) => [Rule.required()],
+    },
+    {
+      name: "doorsOpen",
+      title: "Apertura de puertas",
+      description: "Número de minutos antes de que abran las puertas",
+      type: "number",
+      initialValue: 45,
+      components: {
+        input: DoorsOpenInput
+      },
+      validation: (Rule) => Rule.max(120).error("El valor no puede exceder los 120"),
     },
     {
       title: "El evento es en la Bóveda secreta?",

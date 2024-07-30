@@ -1,9 +1,31 @@
+import { UsersIcon } from "@sanity/icons";
+
 export const myStructure = (S) =>
   S.list()
     .title("Contenido")
     .items([
       S.listItem()
+        .title("Próximos Eventos")
+        .schemaType("event")
+        .child(
+          S.documentList()
+            .title("Próximos Eventos")
+            .filter("date >= now()")
+            .defaultOrdering([{ field: "date", direction: "asc" }])
+        ),
+      S.listItem()
+        .title("Eventos Pasados")
+        .schemaType("event")
+        .child(
+          S.documentList()
+            .title("Próximos Pasados")
+            .filter("date <= now()")
+            .defaultOrdering([{ field: "date", direction: "asc" }])
+        ),
+      S.divider(),
+      S.listItem()
         .title("Team")
+        .icon(UsersIcon)
         .child(
           /* Create a list of all posts */
           S.list()
@@ -11,6 +33,7 @@ export const myStructure = (S) =>
             .items([
               S.listItem()
                 .title("Luchadores")
+                .icon(UsersIcon)
                 .child(
                   S.documentList()
                     .title("Luchadores")
@@ -18,6 +41,7 @@ export const myStructure = (S) =>
                 ),
               S.listItem()
                 .title("Arbitros")
+                .icon(UsersIcon)
                 .child(
                   S.documentList()
                     .title("Arbitros")
@@ -25,6 +49,7 @@ export const myStructure = (S) =>
                 ),
               S.listItem()
                 .title("Presentadores")
+                .icon(UsersIcon)
                 .child(
                   S.documentList()
                     .title("Presentadores")
@@ -32,10 +57,10 @@ export const myStructure = (S) =>
                 ),
             ])
         ),
-      ...S.documentTypeListItems().filter(
-        (listItem) =>
-          !["staff", "settings", "welcome"].includes(listItem.getId())
-      ),
+        ...S.documentTypeListItems().filter(
+          (listItem) =>
+            !["staff", "settings", "welcome", "event"].includes(listItem.getId())
+        ),
       S.listItem()
         .title("Settings")
         .child(S.document().schemaType("settings").documentId("settings")),

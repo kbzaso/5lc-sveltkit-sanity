@@ -48,6 +48,7 @@ export const eventFields = groq`
     name,
     title,
     date,
+    doorsOpen,
     boveda,
     assistance,
     playlist,
