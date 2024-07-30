@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Add
 
 - Add Open Doors input on the Studio
+- Improve view for events on the Studio
 
 ## [0.0.45] - 2024-07-29
 
