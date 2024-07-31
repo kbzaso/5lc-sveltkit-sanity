@@ -21,7 +21,7 @@
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
   import { urlForImage } from "$lib/config/sanity";
   import ChatBubble from "$lib/components/events/ChatBubble.svelte";
-  import { min } from "rxjs";
+  import { BellRing, CalendarDays, DoorOpen, MapPin } from "lucide-svelte";
 
   export let data: PageData;
   export let form;
@@ -48,7 +48,7 @@
   let ubications: any[] = [];
 
   onMount(() => {
-    console.log(event?.doorsOpen)
+    console.log(event?.doorsOpen);
     if (event?.active) {
       if (event?.sell_type === "batch") {
         // Necesito pasar el objeto de tandas a un array para poder ordenarlas
@@ -67,7 +67,6 @@
   });
 
   let disclaimerEvent = writable([]);
-
 </script>
 
 <svelte:head>
@@ -100,7 +99,7 @@
       <div id="event" class="h-fit flex flex-col lg:flex-row md:gap-4 lg:gap-0">
         <div class="relative overflow-hidden">
           <div
-            class="absolute w-[640px] h-72 -bottom-5 lg:w-72 lg:h-full z-10  md:top-[480px] lg:top-0 lg:left-[280px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"
+            class="absolute w-[640px] h-72 -bottom-5 lg:w-72 lg:h-full z-10 md:top-[480px] lg:top-0 lg:left-[280px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"
           />
           <img
             class="object-contain md:rounded-sm poster"
@@ -187,51 +186,70 @@
                     <PortableText value={event?.description} components={{}} />
                   </p>
 
-                  <ul>
-                    <li>
+                  <ul class="list-none o-0">
+                    <li class="flex items-center gap-2">
+                      <CalendarDays class="stroke-primary" />
                       <time datetime={eventDateFormatted}>
                         {eventDateFormatted.charAt(0).toUpperCase() +
                           eventDateFormatted.slice(1)}
                       </time>
                     </li>
-                    <li>
+                    <li class="flex items-center gap-2">
+                      <BellRing class="stroke-primary" />
                       <time datetime={eventDateFormatted}>
-                        {new Intl.DateTimeFormat('es-CL', {
-                          hour: 'numeric',
-                          minute: 'numeric',
-                          timeZone: 'America/Santiago',
+                        Campanazo inicial:
+                        {new Intl.DateTimeFormat("es-CL", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          timeZone: "America/Santiago",
                         }).format(eventDate)}
                       </time>
-                      <span class="italic"
-                        >| Apertura de puertas: {new Intl.DateTimeFormat('es-CL', {
-                          hour: 'numeric',
-                          minute: 'numeric',
-                          timeZone: 'America/Santiago',
-                        }).format(eventDate.setMinutes(eventDate.getMinutes() - event?.doorsOpen))}</span
+                    </li>
+                    <li class="flex items-center gap-2">
+                      <DoorOpen class="stroke-primary" />
+                      <span
+                        >Apertura de puertas: {new Intl.DateTimeFormat(
+                          "es-CL",
+                          {
+                            hour: "numeric",
+                            minute: "numeric",
+                            timeZone: "America/Santiago",
+                          }
+                        ).format(
+                          eventDate.setMinutes(
+                            eventDate.getMinutes() - event?.doorsOpen
+                          )
+                        )}</span
                       >
                     </li>
                     {#if event.boveda}
-                      <li>
-                        Bóveda Secreta - <a
-                          class="text-primary"
-                          target="_blank"
-                          rel="noreferrer"
-                          href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
-                        >
-                          San Antonio 705, Santiago, Región Metropolitana</a
-                        >
+                      <li class="flex items-center gap-2">
+                        <MapPin class="stroke-primary" />
+                        <span>
+                          Bóveda Secreta - <a
+                            class="text-primary"
+                            target="_blank"
+                            rel="noreferrer"
+                            href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
+                          >
+                            San Antonio 705, Santiago, Región Metropolitana</a
+                          >
+                        </span>
                       </li>
                     {:else}
-                      <li>
-                        {event.venue?.venueName} -
-                        <a
-                          class="text-primary"
-                          target="_blank"
-                          rel="noreferrer"
-                          href={event.venue?.venueUrl}
-                        >
-                          {event.venue?.venueAdress}</a
-                        >
+                      <li class="flex items-center gap-2">
+                        <MapPin class="stroke-primary" />
+                        <span>
+                          {event.venue?.venueName} -
+                          <a
+                            class="text-primary"
+                            target="_blank"
+                            rel="noreferrer"
+                            href={event.venue?.venueUrl}
+                          >
+                            {event.venue?.venueAdress}</a
+                          >
+                        </span>
                       </li>
                     {/if}
                   </ul>
@@ -255,11 +273,17 @@
                 <div class="flex gap-8 my-8 flex-col md:flex-row">
                   {#if event.sell_type === "batch"}
                     {#each tandas as tanda}
-                      <TandasTicketsCard ticket={tanda} dicountPercentage={validatedDiscount?.percentage} />
+                      <TandasTicketsCard
+                        ticket={tanda}
+                        dicountPercentage={validatedDiscount?.percentage}
+                      />
                     {/each}
                   {:else}
                     {#each ubications as ubication}
-                      <UbicationTicketsCard ticket={ubication} dicountPercentage={validatedDiscount?.percentage} />
+                      <UbicationTicketsCard
+                        ticket={ubication}
+                        dicountPercentage={validatedDiscount?.percentage}
+                      />
                     {/each}
                   {/if}
                 </div>
