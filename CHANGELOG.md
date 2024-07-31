@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.46] - 2024-07-31
+
 ### Add
 
 - Icons to list on event slug
@@ -296,7 +298,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.46...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.47...HEAD
+[0.0.47]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.46...0.0.47
 [0.0.46]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.45...0.0.46
 [0.0.45]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.44...0.0.45
 [0.0.44]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.43...0.0.44
