@@ -79,16 +79,12 @@
   {#if $page.data.welcome.horizontalLine}
     <InfiniteScroll />
   {/if}
-  <!-- <Header
-    imageTitle={urlForImage(welcome.imageTitle).crop("focalpoint").url()}
-    preTitle={welcome.preTitle}
-    textTitle={welcome.textTitle}
-    description={welcome.description}
-  /> -->
-  <main class="container px-4 mt-28 mx-auto">
+  <Header
+  />
+  <main class="container px-4 mx-auto -mt-10 md:-mt-40">
     {#if events && events.length > 0}
       {#if events.length > 1}
-      <h1 class="sub-title text-white text-5xl mask">
+      <h1 class="sub-title text-white text-4xl md:text-5xl mask">
         Próximos eventos
       </h1>
       <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

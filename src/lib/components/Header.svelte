@@ -1,44 +1,28 @@
 <script lang="ts">
-  import { PortableText } from "@portabletext/svelte";
-  import type { InputValue } from "@portabletext/svelte/ptTypes";
   import { page } from "$app/stores";
-  import { urlForImage } from "$lib/config/sanity";
+  import { imageBuilder } from "$lib/config/sanity";
 
-  export let preTitle = "";
-  export let description: InputValue = [];
-  export let imageTitle = "";
-  export let textTitle = "";
+  const info = {
+    title: "Catarsis",
+    description: "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
+    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/u69g3iwicq5jtlvyonwp",
+  };
 </script>
 
   <header
     id="header"
-    class={`container mx-auto h-[600px] lg:h-[800px] 2xl:h-[1000px] relative -mt-20 md:mt-0 z-0`}
+    class={`mx-auto min-h-svh`}
   >
     <div
-      class="container mx-auto flex flex-col justify-end px-4 absolute bottom-4 lg:bottom-36 z-10 h-full"
+      class="container absolute px-4 z-10 h-full flex flex-col justify-end items-center text-center bottom-20 md:bottom-0 md:justify-center left-[50%] -translate-x-[50%]"
     >
-      <h1 class="text-xl uppercase tracking-widest lg:-mb-4 text-white">
-        ¡{preTitle}!
+      <h1 class="uppercase tracking-widest text-primary font-[AtomicMarker] text-7xl md:text-[150px] -rotate-3 drop-shadow-md">
+        {info.title}
       </h1>
-      <div class="w-full">
-        {#if !imageTitle}
-          <h1>{textTitle}</h1>
-        {:else}
-          <img
-            src={imageTitle}
-            alt="Siempre buena onda"
-            width="902"
-            height="109"
-          />
-        {/if}
-      </div>
 
-      <p class="text-md md:text-lg lg:max-w-4xl prose text-white">
-        <PortableText value={description} />
+      <p class="text-lg text-white pt-4 max-w-xl">
+        {info.description}
       </p>
     </div>
-    <img src={`${$page.data.welcome.heroImage ? urlForImage($page.data.welcome.heroImage).url() : 'https://res.cloudinary.com/dtj5xnlou/image/upload/v1701462962/bg-web.jpg' }`} alt="Portada" class="object-contain lg:object-cover absolute w-full h-full">
-    <div
-      class="absolute bottom-0 bg-gradient-to-t from-black/100 via-black/90 lg:via-black/40 to-transparent h-96 md:h-[300px] lg:h-[600px] w-full"
-    />
+    <img src={info.image} alt="Portada" class="object-cover md:object-cover absolute w-full h-full maskImages md:opacity-50">
   </header>

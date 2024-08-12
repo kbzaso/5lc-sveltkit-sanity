@@ -25,6 +25,24 @@
   textarea {
     @apply font-ibm-sans;
   }
+
+  @font-face {
+    font-family: "AtomicMarkerExtras";
+    src: url("/fonts/AtomicMarkerExtras.woff2") format("woff2"),
+      url("/fonts/AtomicMarkerExtras.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "AtomicMarker";
+    src: url("/fonts/AtomicMarker.woff2") format("woff2"),
+      url("/fonts/AtomicMarker.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
 }
 
 @layer components {
@@ -52,4 +70,8 @@
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 100;
+}
+
+.maskImages {
+  mask-image: linear-gradient(black 30%, transparent);
 }
