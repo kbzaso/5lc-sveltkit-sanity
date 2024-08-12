@@ -27,7 +27,7 @@
 
 <a href={`/eventos/${event.slug}`}>
   <div
-    class="relative overflow-hidden w-full group border-gray-600 border hover:scale-105 hover:border-primary rounded-none transition-all h-fit md:h-96 ease-in-out group"
+    class="overflow-hidden w-64 h-fit hover:border-primary rounded-none transition-all md:h-96 ease-in-out group"
   >
     {#if totalTicketsLeftStudio === 0 || !event.sell}
       <div
@@ -36,7 +36,7 @@
         Adhesión agotada
       </div>
     {/if}
-    <figure class="z-10">
+    <figure class="z-10 drop-shadow-xl">
       <img
         width="600"
         height="600"
@@ -46,30 +46,25 @@
         alt={event.title}
       />
     </figure>
-
-    <div
-      class="bg-zinc-900/50 h-max grow backdrop-blur-xl absolute bottom-0 z-10 w-full pb-4"
+  </div>
+  <div
+      class="h-max grow z-10 w-full"
     >
+    
+    <h2 class="text-primary font-ibm italic text-xl pt-2 mask">
+      {event.title}
+    </h2>
+    <p
+      class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 truncate"
+    >
+      <time datetime={event.date.toString()}>
+        {new Date(event.date).toLocaleDateString("es-CL", LocaleConfig)}
+      </time>
+    </p>
       <p
-        class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-4 px-2 pt-0 truncate"
-      >
-        <time datetime={event.date.toString()}>
-          {new Date(event.date).toLocaleDateString("es-CL", LocaleConfig)}
-        </time>
-        -
-        <time datetime={eventDateFormatted}>
-          {hours}:{minutes < 10 ? "0" + minutes : minutes}
-        </time>
-      </p>
-
-      <h2 class="text-primary font-ibm italic text-3xl px-2 pt-0 mask">
-        {event.title}
-      </h2>
-      <p
-        class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 px-2 pt-0 truncate"
+        class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 truncate"
       >
         {event.boveda ? "Bóveda Secreta" : event.venue.venueName}
       </p>
     </div>
-  </div>
 </a>

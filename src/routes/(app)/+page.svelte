@@ -12,6 +12,7 @@
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
   import SingleEvent from "$lib/components/SingleEvent.svelte";
   import SuscribeForm from "$lib/components/SuscribeForm.svelte";
+  import { TinySlider } from "svelte-tiny-slider";
 
   export let data: PageData;
 
@@ -79,24 +80,19 @@
   {#if $page.data.welcome.horizontalLine}
     <InfiniteScroll />
   {/if}
-  <Header
-  />
-  <main class="container px-4 mx-auto -mt-10 md:-mt-40">
-    {#if events && events.length > 0}
-      {#if events.length > 1}
-      <h1 class="sub-title text-white text-4xl md:text-5xl mask">
-        Próximos eventos
-      </h1>
-      <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <Header />
+  <section class="container px-4 mx-auto -mt-10 md:-mt-40">
+    {#if events.length > 0}
+      <TinySlider gap="20px">
         {#each events as event}
           <CardEvent {event} />
         {/each}
-      </div>
-      {:else}
-        <SingleEvent event={nextEvent}/>
-      {/if}
+      </TinySlider>
     {/if}
+  </section>
+  <SuscribeForm />
+  <!-- Puntos diferenciadores -->
+  <section>
 
-  <SuscribeForm/>
-  </main>
+  </section>
 </div>
