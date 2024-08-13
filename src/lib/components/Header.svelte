@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import { imageBuilder } from "$lib/config/sanity";
 
   const info = {
     title: "Catarsis",
     description: "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
-    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/u69g3iwicq5jtlvyonwp",
+    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_800,h_534/v1/5LC/u69g3iwicq5jtlvyonwp",
   };
 </script>
 

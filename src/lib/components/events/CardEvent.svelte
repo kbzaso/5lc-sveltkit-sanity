@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CalendarRange, MapPin } from 'lucide-svelte';
   import { urlForImage } from "$lib/config/sanity";
   import { LocaleConfig } from "$lib/utils/index";
   import type { Event } from "$lib/types";
@@ -57,14 +58,14 @@
     <p
       class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 truncate"
     >
-      <time datetime={event.date.toString()}>
-        {new Date(event.date).toLocaleDateString("es-CL", LocaleConfig)}
+      <time class="flex items-center gap-2" datetime={event.date.toString()}>
+       <CalendarRange/> {new Date(event.date).toLocaleDateString("es-CL", LocaleConfig)}
       </time>
     </p>
       <p
-        class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 truncate"
+        class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 truncate flex gap-2 items-center"
       >
-        {event.boveda ? "Bóveda Secreta" : event.venue.venueName}
+        <MapPin/> {event.boveda ? "Bóveda Secreta" : event.venue.venueName}
       </p>
     </div>
 </a>
