@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { inView, animate, stagger } from "motion";
   import { CalendarRange, MapPin } from "lucide-svelte";
   import { urlForImage } from "$lib/config/sanity";
   import { LocaleConfig } from "$lib/utils/index";
   import type { Event } from "$lib/types";
+  import { onMount } from "svelte";
   export let event: Event;
 
   $: eventDate = new Date(event?.date);
@@ -24,9 +26,21 @@
       event?.ticket?.ubication?.ringside_tickets?.amount +
       event?.ticket?.ubication?.general_tickets?.amount;
   }
+
+
+  onMount(() => {
+    const cards = document.querySelectorAll(".card");
+    inView(cards, (info) => {
+      animate(
+        info.target,
+        { opacity: 1, transform: "none" },
+        { delay: stagger(0.2), duration: 0.9, easing: [0.17, 0.55, 0.55, 1] }
+      );
+    });
+  });
 </script>
 
-<a href={`/eventos/${event.slug}`} class="pl-4 pr-4 lg:px-0 group  ">
+<a href={`/eventos/${event.slug}`} class="pl-4 pr-4 lg:px-0 group -translate-x-20 opacity-0 card">
   <div
     class="overflow-hidden w-64 h-fit hover:border-primary rounded-none transition-all md:h-96 ease-in-out group "
   >

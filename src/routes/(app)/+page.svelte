@@ -20,6 +20,7 @@
   import Hero from "$lib/components/Hero.svelte";
   import WhoWeAre from "$lib/components/WhoWeAre.svelte";
   import Statistics from "$lib/components/Statistics.svelte";
+  import { inView, animate } from "motion";
 
   export let data: PageData;
 
@@ -71,15 +72,21 @@
 
   const infoHero = {
     title: "Catarsis",
-    description: "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
-    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/u69g3iwicq5jtlvyonwp",
+    description:
+      "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
+    image:
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/u69g3iwicq5jtlvyonwp",
   };
 
   const infoCTA = {
     title: "¡Se parte!",
     description: "Y sumate a la comunidad",
-    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/bufh9o713u3otfclhnqq",
+    image:
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/bufh9o713u3otfclhnqq",
   };
+  onMount(() => {
+    animate(".box", { x: 100 }, { duration: 10 });
+  });
 </script>
 
 <svelte:head>
@@ -120,8 +127,13 @@
     <InfiniteScroll />
   {/if}
   <Hero info={infoHero} />
-  <main id='events' class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20">
-    <h2 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
+  <main
+    id="events"
+    class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20"
+  >
+    <h2
+      class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 view-animate-single animate-fade-in animate-range-[entry_10%_contain_25%]"
+    >
       Próximos Eventos
     </h2>
     {#if isMobile && events.length > 0}
@@ -132,7 +144,9 @@
       </TinySlider>
       <SuscribeForm />
     {:else}
-      <div class="flex items-start lg:gap-4">
+      <div
+        class="flex items-start lg:gap-4 view-animate-[animate-zoom-in] animate-zoom-in animate-range-[entry_10%_contain_25%]"
+      >
         {#each events as event}
           <CardEvent {event} />
         {/each}
@@ -140,14 +154,16 @@
       </div>
     {/if}
   </main>
-  <Statistics/>
-
+  <Statistics />
   <Slider items={allStaff} reverse={false} />
   <Slider items={allStaff2} reverse={true} />
-  <WhoWeAre/>
-  
-
-  <Faq/>
-
-  <Hero info={infoCTA} containerClass={'min-h-[450px] lg:min-h-[600px] container'} titleClass={'text-7xl'} descriptionClass={'font-ibm italic text-4xl'} cta={true} />
+  <WhoWeAre />
+  <Faq />
+  <Hero
+    info={infoCTA}
+    containerClass={"min-h-[450px] lg:min-h-[600px] container"}
+    titleClass={"text-7xl"}
+    descriptionClass={"font-ibm italic text-4xl"}
+    cta={true}
+  />
 </div>
