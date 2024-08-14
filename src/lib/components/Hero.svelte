@@ -7,7 +7,7 @@
   }
 
   export let info: Info;
-  export let containerClass: string = 'min-h-svh';
+  export let containerClass: string = 'min-h-svh lg:min-h-[800px]';
   export let titleClass: string = 'text-7xl md:text-[150px]';
   export let descriptionClass: string = 'text-lg';
   export let cta: boolean = false;
