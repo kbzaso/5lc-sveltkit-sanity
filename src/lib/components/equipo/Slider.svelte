@@ -30,7 +30,7 @@
                 src={urlForImage(staff?.staffImage)
                   .height(334)
                   .width(250)
-                  .quality(70)
+                  .quality(100)
                   .url()}
                 alt={staff.title}
               />
@@ -91,7 +91,7 @@
 
   @keyframes autoRun {
     from {
-      left: 3000px;
+      left: 2500px;
     }
     to {
       left: calc(var(--width) * -1);
@@ -113,7 +113,7 @@
       left: calc(var(--width) * -1);
     }
     to {
-      left: 3000px;
+      left: 2500px;
     }
   }
 </style>

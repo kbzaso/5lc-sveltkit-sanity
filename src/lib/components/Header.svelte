@@ -3,7 +3,7 @@
   const info = {
     title: "Catarsis",
     description: "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
-    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_800,h_534/v1/5LC/u69g3iwicq5jtlvyonwp",
+    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/u69g3iwicq5jtlvyonwp",
   };
 </script>
 
@@ -14,7 +14,7 @@
     <div
       class="container absolute px-4 z-10 h-full flex flex-col justify-end items-center text-center bottom-20 md:bottom-0 md:justify-center left-[50%] -translate-x-[50%]"
     >
-      <h1 class="uppercase tracking-widest text-primary font-[AtomicMarker] text-7xl md:text-[150px] -rotate-3 drop-shadow-md neon-flicker">
+      <h1 class="uppercase tracking-widest text-primary font-[AtomicMarker] text-7xl md:text-[150px] -rotate-3 drop-shadow-md">
         {info.title}
       </h1>
 
@@ -27,7 +27,7 @@
 
 
   <style>
-.neon-flicker {
+/* .neon-flicker {
     color: #fff;
     text-shadow:
       0 0 5px #fff,
@@ -56,5 +56,5 @@
     20%, 24%, 55% {
       text-shadow: none;
     }
-  }
+  } */
   </style>
