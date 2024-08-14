@@ -1,6 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-import animations from '@midudev/tailwind-animations'
-
 module.exports = {
   content: [
     "./src/**/*.{html,js,svelte}",
@@ -21,7 +19,6 @@ module.exports = {
     require("daisyui"),
     require("@tailwindcss/typography"),
     require("flowbite/plugin"),
-    animations,
   ],
   darkMode: "class",
   daisyui: {
