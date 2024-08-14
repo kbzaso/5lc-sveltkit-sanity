@@ -120,7 +120,7 @@
     <InfiniteScroll />
   {/if}
   <Hero info={infoHero} />
-  <main id='events' class="container mx-auto -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20">
+  <main id='events' class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20">
     <h2 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
       Próximos Eventos
     </h2>
@@ -132,7 +132,7 @@
       </TinySlider>
       <SuscribeForm />
     {:else}
-      <div class="flex items-start">
+      <div class="flex items-start lg:gap-4">
         {#each events as event}
           <CardEvent {event} />
         {/each}
@@ -140,14 +140,12 @@
       </div>
     {/if}
   </main>
+  <Statistics/>
 
-  <!-- Puntos diferenciadores -->
+  <Slider items={allStaff} reverse={false} />
+  <Slider items={allStaff2} reverse={true} />
   <WhoWeAre/>
   
-  <Slider items={allStaff} reverse={false} />
-  <!-- Estadisticas -->
-  <Statistics/>
-  <Slider items={allStaff2} reverse={true} />
 
   <Faq/>
 

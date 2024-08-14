@@ -19,7 +19,7 @@
     <div
       class="container absolute px-4 z-10 h-full flex flex-col justify-end items-center text-center bottom-20 md:bottom-0 md:justify-center left-[50%] -translate-x-[50%]"
     >
-      <span class={`uppercase tracking-widest text-primary font-[AtomicMarker] drop-shadow-md -rotate-6 ${titleClass}`}>
+      <span class={`text-primary font-[AtomicMarker] -rotate-6 ${titleClass} z-10 mix-blend-plus-lighter`}>
         {info.title}
       </span>
 
@@ -30,7 +30,7 @@
         <a href="#events" class="btn btn-primary mt-4">¡Quiero ir!</a>
       {/if}
     </div>
-    <img src={info.image} alt="Portada" class="object-cover md:object-cover absolute w-full h-full maskImages md:opacity-50">
+    <img src={info.image} alt="Portada" class="object-cover md:object-cover absolute w-full h-full maskImages z-0 md:opacity-60">
   </section>
 
 

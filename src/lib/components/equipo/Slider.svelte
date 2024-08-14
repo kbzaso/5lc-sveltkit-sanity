@@ -2,11 +2,9 @@
   import { urlForImage } from "$lib/config/sanity";
   export let reverse: boolean;
   export let items;
-
-  console.log(reverse);
 </script>
 
-<section class="container mx-auto mt-20">
+<section class="container mx-auto mt-20 max-w-6xl">
   <div
     class="slider"
     style={`
@@ -20,7 +18,7 @@
     <div class="list">
       {#each items as staff, index}
         <div class="item" style={`--position: ${index + 1}`}>
-          <a href={`/equipo/luchadores/${staff.slug}`}>
+          <a href={`/equipo/luchadores/${staff.slug.current}`}>
             <figure>
               <img
               class="hover:scale-105 transition-all"

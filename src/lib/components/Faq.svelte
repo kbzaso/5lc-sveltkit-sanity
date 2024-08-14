@@ -39,7 +39,7 @@
   }
 </script>
 
-<section class="container mx-auto space-y-2 max-w-2xl my-20">
+<section class="container mx-auto space-y-2 max-w-2xl mb-20 mt-40">
   <h3
     class="text-4xl font-bold text-white mask font-ibm italic mb-4 text-center"
   >

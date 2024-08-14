@@ -1,5 +1,5 @@
 <section
-  class="flex w-full md:w-64 items-center justify-center relative mt-20 md:mt-0"
+  class="flex w-full md:w-64 items-center justify-center relative mt-20 md:mt-0 lg:min-w-64"
 >
   <div class="bg-primary p-0.5 z-10 md:h-96">
     <div class="flex h-full w-full items-center justify-center">

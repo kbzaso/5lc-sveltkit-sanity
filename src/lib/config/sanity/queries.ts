@@ -111,6 +111,7 @@ export const allStaffQuery = groq`
   title,
   staffImage,
   pseudonym,
+  slug,
   
 }`
 
@@ -119,7 +120,7 @@ export const allStaffQuery2 = groq`
   title,
   staffImage,
   pseudonym,
-  
+  slug,
 }`
 
 export const allAnnonceursQuery = groq`
