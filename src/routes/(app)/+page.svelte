@@ -14,10 +14,22 @@
   import SuscribeForm from "$lib/components/SuscribeForm.svelte";
   import { TinySlider } from "svelte-tiny-slider";
   import { ChevronRight } from "lucide-svelte";
+  import CardStaff from "$lib/components/CardStaff.svelte";
+  import Slider from "$lib/components/equipo/Slider.svelte";
 
   export let data: PageData;
 
-  $: ({ settings, welcome, nextEvent, events } = data);
+  $: ({ settings, nextEvent, events, allStaff, allStaff2 } = data);
+
+
+  let staffGroup1 = {};
+  let staffGroup2 = {};
+
+  let isMobile = false;
+
+  const checkScreenWidth = () => {
+    isMobile = window.innerWidth <= 768;
+  };
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 
@@ -41,6 +53,11 @@
       style: "currency",
       currency: "CLP",
     }).format(thirdsTicketPrice);
+
+    checkScreenWidth();
+    window.addEventListener("resize", checkScreenWidth);
+
+    return () => window.removeEventListener("resize", checkScreenWidth);
   });
 
   const info = {
@@ -91,28 +108,46 @@
     <InfiniteScroll />
   {/if}
   <Header />
-  <main class="container pl-4 mx-auto -mt-10 md:-mt-20 relative">
-    {#if events.length > 0}
-      <TinySlider gap="20px">
+  <main class="container mx-auto -mt-10 md:-mt-20 relative md:mb-20">
+    <h2 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
+      Próximos Eventos
+    </h2>
+    {#if isMobile && events.length > 0}
+      <TinySlider>
         {#each events as event}
           <CardEvent {event} />
         {/each}
         <svelte:fragment slot="controls" let:setIndex let:currentIndex>
           {#if currentIndex > 0}
             <button
-              class="absolute left-0 top-[50%] -translate-y-[50%] pl-4"
-              on:click={() => setIndex(currentIndex - 1)}><ChevronRight class="stroke-primary h-10 w-10 rotate-180"/></button
+              class="absolute left-0 top-[50%] -translate-y-[50%]"
+              on:click={() => setIndex(currentIndex - 1)}
+              ><ChevronRight
+                class="stroke-primary h-10 w-10 rotate-180"
+              /></button
             >
           {/if}
 
           {#if currentIndex < events.length - 1}
-            <button  class="absolute right-0 top-[50%] -translate-y-[50%]" on:click={() => setIndex(currentIndex + 1)}><ChevronRight class="stroke-primary h-10 w-10"/></button>
+            <button
+              class="absolute right-0 top-[50%] -translate-y-[50%]"
+              on:click={() => setIndex(currentIndex + 1)}
+              ><ChevronRight class="stroke-primary h-10 w-10" /></button
+            >
           {/if}
         </svelte:fragment>
       </TinySlider>
+      <SuscribeForm />
+    {:else}
+      <div class="flex items-start">
+        {#each events as event}
+          <CardEvent {event} />
+        {/each}
+        <SuscribeForm />
+      </div>
     {/if}
   </main>
-  <SuscribeForm />
+
   <!-- Puntos diferenciadores -->
   <section>
     <div
@@ -167,7 +202,7 @@
     class="mt-32 container mx-auto flex flex-col items-center md:flex-row gap-10 lg:gap-20 md:justify-center"
   >
     <div class="h-96 bg-cover w-56 flex flex-col items-center relative">
-      <span class="text-white font-ibm text-6xl z-10 pt-16">+170</span>
+      <span class="text-white font-ibm italic text-6xl z-10 pt-16">+170</span>
       <span
         class="font-[AtomicMarker] text-7xl -rotate-6 mt-4 text-primary z-10 mix-blend-plus-lighter"
         >Eventos</span
@@ -183,7 +218,7 @@
       />
     </div>
     <div class="h-96 bg-cover w-56 flex flex-col items-center relative">
-      <span class="text-white font-ibm text-6xl z-10 pt-16">+850</span>
+      <span class="text-white font-ibm italic text-6xl z-10 pt-16">+850</span>
       <span
         class="font-[AtomicMarker] text-7xl -rotate-6 mt-4 text-primary z-10 mix-blend-plus-lighter"
         >Luchas</span
@@ -199,7 +234,8 @@
       />
     </div>
     <div class="h-96 bg-cover w-56 flex flex-col items-center relative">
-      <span class="text-white font-ibm text-6xl z-10 pt-16">+13.600</span>
+      <span class="text-white font-ibm italic text-6xl z-10 pt-16">+13.600</span
+      >
       <span
         class="font-[AtomicMarker] text-6xl -rotate-6 mt-10 text-primary z-10 mix-blend-plus-lighter"
         >Adhesiones</span
@@ -211,4 +247,6 @@
       />
     </div>
   </section>
+  <Slider items={allStaff} reverse={false} />
+  <Slider items={allStaff2} reverse={true} />
 </div>

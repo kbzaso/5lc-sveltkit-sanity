@@ -7,6 +7,9 @@ import {
   welcomeQuery,
   nextEventQuery,
   ActiveEventsQuery,
+  allWrestlersQuery,
+  allStaffQuery,
+  allStaffQuery2,
 } from "$lib/config/sanity/queries";
 import { error, json, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
@@ -21,6 +24,8 @@ export const load: PageServerLoad = async () => {
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
   let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
   let events = await getSanityServerClient(false).fetch(ActiveEventsQuery);
+  let allStaff = await getSanityServerClient(false).fetch(allStaffQuery);
+  let allStaff2 = await getSanityServerClient(false).fetch(allStaffQuery2);
 
   // Valida si existe un solo evento
   if (events.length === 1) {
@@ -66,6 +71,8 @@ export const load: PageServerLoad = async () => {
     settings,
     welcome,
     nextEvent,
+    allStaff,
+    allStaff2,
   };
 };
 
@@ -212,7 +219,6 @@ let ubicatonTicketType = (type: string) => {
 //       if (payment.payment_id_service) {
 //       event.cookies.set('payment_id_service', payment.payment_id_service, { path: '/' });
 //       }
-      
 //       dataUrlRedirect = result.url;
 //     } catch (error) {
 //       console.log(error);

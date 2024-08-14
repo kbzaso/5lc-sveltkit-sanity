@@ -1,7 +1,7 @@
 <section
-  class="flex w-full items-center justify-center mt-14 relative md:mx-auto"
+  class="flex w-full md:w-64 items-center justify-center relative mt-20 md:mt-0"
 >
-  <div class="h-fit w-full bg-primary p-0.5 z-10">
+  <div class="bg-primary p-0.5 z-10 md:h-96">
     <div class="flex h-full w-full items-center justify-center">
         <div class="p-4">
           <span class="card-title font-ibm italic text-black"
@@ -24,3 +24,4 @@
     </div>
   </div>
 </section>
+
