@@ -1,29 +1,37 @@
 <script lang="ts">
 
-  const info = {
-    title: "Catarsis",
-    description: "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
-    image: "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/u69g3iwicq5jtlvyonwp",
-  };
+  type Info = {
+    title: string;
+    description: string;
+    image: string;
+  }
+
+  export let info: Info;
+  export let containerClass: string = 'min-h-svh';
+  export let titleClass: string = 'text-7xl md:text-[150px]';
+  export let descriptionClass: string = 'text-lg';
+  export let cta: boolean = false;
 </script>
 
-  <header
-    id="header"
-    class={`mx-auto min-h-svh`}
+  <section
+    class={`mx-auto ${containerClass} relative`}
   >
     <div
       class="container absolute px-4 z-10 h-full flex flex-col justify-end items-center text-center bottom-20 md:bottom-0 md:justify-center left-[50%] -translate-x-[50%]"
     >
-      <h1 class="uppercase tracking-widest text-primary font-[AtomicMarker] text-7xl md:text-[150px] -rotate-3 drop-shadow-md">
+      <span class={`uppercase tracking-widest text-primary font-[AtomicMarker] drop-shadow-md -rotate-6 ${titleClass}`}>
         {info.title}
-      </h1>
+      </span>
 
-      <p class="text-lg text-white pt-4 max-w-xl z-10">
+      <p class={`text-white pt-8 max-w-xl z-10 ${descriptionClass}`}>
         {info.description}
       </p>
+      {#if cta}
+        <a href="#events" class="btn btn-primary mt-4">¡Quiero ir!</a>
+      {/if}
     </div>
     <img src={info.image} alt="Portada" class="object-cover md:object-cover absolute w-full h-full maskImages md:opacity-50">
-  </header>
+  </section>
 
 
   <style>

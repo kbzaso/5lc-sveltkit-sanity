@@ -13,7 +13,7 @@
           </p>
           <div class="card-actions justify-end">
             <button
-              class="btn btn-black w-full mt-4"
+              class="btn btn-black w-full mt-4 hover:scale-105"
               data-tally-open="meAW1q"
               data-tally-overlay="1"
               data-tally-emoji-text="✉️"
