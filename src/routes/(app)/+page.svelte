@@ -1,7 +1,7 @@
 <script lang="ts">
   import { urlForImage } from "$lib/config/sanity";
   import type { PageData } from "./$types";
-  import Header from "$lib/components/Header.svelte";
+  import Header from "$lib/components/Hero.svelte";
   import { PortableText } from "@portabletext/svelte";
   import { LocaleConfig } from "$lib/utils/index";
   import { page } from "$app/stores";
@@ -12,10 +12,24 @@
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
   import SingleEvent from "$lib/components/SingleEvent.svelte";
   import SuscribeForm from "$lib/components/SuscribeForm.svelte";
+  import { TinySlider } from "svelte-tiny-slider";
+  import { ChevronRight } from "lucide-svelte";
+  import CardStaff from "$lib/components/CardStaff.svelte";
+  import Slider from "$lib/components/equipo/Slider.svelte";
+  import Faq from "$lib/components/Faq.svelte";
+  import Hero from "$lib/components/Hero.svelte";
+  import WhoWeAre from "$lib/components/WhoWeAre.svelte";
+  import Statistics from "$lib/components/Statistics.svelte";
 
   export let data: PageData;
 
-  $: ({ settings, welcome, nextEvent, events } = data);
+  $: ({ settings, nextEvent, events, allStaff, allStaff2 } = data);
+
+  let isMobile = false;
+
+  const checkScreenWidth = () => {
+    isMobile = window.innerWidth <= 768;
+  };
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 
@@ -39,7 +53,36 @@
       style: "currency",
       currency: "CLP",
     }).format(thirdsTicketPrice);
+
+    checkScreenWidth();
+    window.addEventListener("resize", checkScreenWidth);
+
+    return () => window.removeEventListener("resize", checkScreenWidth);
   });
+
+  const info = {
+    SIEMPRE_BUENA_ONDA:
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/qnaz8aihcarkfaqjtipr",
+    INTENSIDAD:
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/mbyajlax7ea1hkuuwkbe",
+    BOVEDA_SECRETA:
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/bufh9o713u3otfclhnqq",
+  };
+
+  const infoHero = {
+    title: "Catarsis",
+    description:
+      "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
+    image:
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/u69g3iwicq5jtlvyonwp",
+  };
+
+  const infoCTA = {
+    title: "¡Se parte!",
+    description: "Y sumate a la comunidad",
+    image:
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/bufh9o713u3otfclhnqq",
+  };
 </script>
 
 <svelte:head>
@@ -79,28 +122,44 @@
   {#if $page.data.welcome.horizontalLine}
     <InfiniteScroll />
   {/if}
-  <!-- <Header
-    imageTitle={urlForImage(welcome.imageTitle).crop("focalpoint").url()}
-    preTitle={welcome.preTitle}
-    textTitle={welcome.textTitle}
-    description={welcome.description}
-  /> -->
-  <main class="container px-4 mt-28 mx-auto">
-    {#if events && events.length > 0}
-      {#if events.length > 1}
-      <h1 class="sub-title text-white text-5xl mask">
-        Próximos eventos
-      </h1>
-      <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <Hero info={infoHero} />
+  <main
+    id="events"
+    class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20"
+  >
+    <h2
+      class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 view-animate-single animate-fade-in animate-range-[entry_10%_contain_25%]"
+    >
+      Próximos Eventos
+    </h2>
+    {#if isMobile && events.length > 0}
+      <TinySlider>
         {#each events as event}
           <CardEvent {event} />
         {/each}
+      </TinySlider>
+      <SuscribeForm />
+    {:else}
+      <div
+        class="flex items-start lg:gap-4 view-animate-[animate-zoom-in] animate-zoom-in animate-range-[entry_10%_contain_25%]"
+      >
+        {#each events as event}
+          <CardEvent {event} />
+        {/each}
+        <SuscribeForm />
       </div>
-      {:else}
-        <SingleEvent event={nextEvent}/>
-      {/if}
     {/if}
-
-  <SuscribeForm/>
   </main>
+  <Statistics />
+  <Slider items={allStaff} reverse={false} />
+  <Slider items={allStaff2} reverse={true} />
+  <WhoWeAre />
+  <Faq />
+  <Hero
+    info={infoCTA}
+    containerClass={"min-h-[450px] lg:min-h-[600px] container"}
+    titleClass={"text-7xl"}
+    descriptionClass={"font-ibm italic text-4xl"}
+    cta={true}
+  />
 </div>

@@ -58,7 +58,7 @@
 <div
   class={`w-full py-2 top-0 px-4 z-40 pt-2 fixed ${isScrolled ? 'backdrop-blur-md bg-black/25' : ''} transition-blur`}
 >
-  <div class="flex w-full justify-between items-center container mx-auto">
+  <div class="flex w-full justify-between items-center container mx-auto max-w-6xl">
     <a href="/">
       <img
         src={urlForImage(logo).url()}
