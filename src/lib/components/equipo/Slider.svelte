@@ -4,12 +4,12 @@
   export let items;
 </script>
 
-<section class="container mx-auto mt-20 max-w-6xl">
+<section class="container mx-auto max-w-6xl">
   <div
     class="slider"
     style={`
-      --height: 406px;
-      --width: 250px;
+      --height: 350px;
+      --width: 270px;
       --quantity: ${items.length};
       --animation-speed: 100s;
       `}
@@ -22,12 +22,12 @@
             <figure>
               <img
               class="hover:scale-105 transition-all"
-                height="334"
-                width="250"
+                height="270"
+                width="270"
                 loading="lazy"
                 src={urlForImage(staff?.staffImage)
-                  .height(334)
-                  .width(250)
+                  .height(270)
+                  .width(270)
                   .quality(100)
                   .url()}
                 alt={staff.title}

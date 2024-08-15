@@ -20,7 +20,6 @@
   import Hero from "$lib/components/Hero.svelte";
   import WhoWeAre from "$lib/components/WhoWeAre.svelte";
   import Statistics from "$lib/components/Statistics.svelte";
-  import { inView, animate } from "motion";
 
   export let data: PageData;
 
@@ -84,9 +83,6 @@
     image:
       "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/bufh9o713u3otfclhnqq",
   };
-  onMount(() => {
-    animate(".box", { x: 100 }, { duration: 10 });
-  });
 </script>
 
 <svelte:head>

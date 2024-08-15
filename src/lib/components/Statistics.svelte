@@ -1,5 +1,5 @@
 <section
-    class="my-20 mx-auto flex flex-col items-center md:flex-row gap-10 md:gap-0 md:justify-center lg:max-w-6xl"
+    class="mb-40 mt-20 mx-auto flex flex-col items-center md:flex-row gap-10 md:gap-0 md:justify-center lg:max-w-6xl"
   >
     <div class="h-[380px] w-56 md:w-4/12 flex flex-col items-center relative grow">
       <span class="text-white font-ibm italic text-6xl z-10 pt-56 lg:pt-60">+170</span>
