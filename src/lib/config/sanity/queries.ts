@@ -7,7 +7,6 @@ const staffFields = groq`
   pseudonym,
   "slug": slug.current,
   data,
-  imageTitle,
   social,
   staffImage,
   "principalPhotographer": staffImage {
@@ -108,9 +107,21 @@ export const staffQuery = groq`
 }`;
 
 export const allStaffQuery = groq`
-*[_type == "staff"] | order(title asc) {
-  ${staffFields}
-}`;
+*[_type == "staff" && title == "Zatara" || title == "Fear" || title == "Prosciutto" || title == "Zack Over" || title == "Sara Phoenix" || title == "Jin Kyle" || title == "Cami Love" || title == "Owen Kampos" || title == "Mauri Parker" || title == "Límite"] {
+  title,
+  staffImage,
+  pseudonym,
+  slug,
+  
+}`
+
+export const allStaffQuery2 = groq`
+*[_type == "staff" && title == "Gárate" || title == "Billy Rocka" || title == "Iván Navarro" || title == "Natalia Stack" || title == "Anarko Montaña" || title == "Máximo" || title == "Alissa Webb" || title == "Alcold" || title == "Mansilla" || title == "Cris Santana"] {
+  title,
+  staffImage,
+  pseudonym,
+  slug,
+}`
 
 export const allAnnonceursQuery = groq`
 *[_type == "staff" && staffType == "annonceurs"] | order(title asc) {
