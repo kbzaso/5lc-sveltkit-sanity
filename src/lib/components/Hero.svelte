@@ -19,7 +19,7 @@
     class="container absolute px-4 z-10 h-full flex flex-col justify-end items-center text-center bottom-20 md:bottom-0 md:justify-center left-[50%] -translate-x-[50%]"
   >
     <span
-      class={`text-primary font-[AtomicMarker] ${titleClass} z-10 mix-blend-plus-lighter autoshow`}
+      class={`text-primary font-[AtomicMarker] ${titleClass} z-10 mix-blend-plus-lighter`}
     >
       {info.title}
     </span>
@@ -37,6 +37,3 @@
     class="object-cover md:object-cover absolute w-full h-full maskImages z-0 md:opacity-60 "
   />
 </section>
-
-<style>
-</style>

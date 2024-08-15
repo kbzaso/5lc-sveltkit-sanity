@@ -1,6 +1,6 @@
 <section>
     <div
-      class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full lg:container mx-auto"
+      class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full mx-auto max-w-6xl"
     >
       <div
         class="h-96 bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_800,h_534/v1/5LC/qnaz8aihcarkfaqjtipr')] bg-cover relative bg-center"
