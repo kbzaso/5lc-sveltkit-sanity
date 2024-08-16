@@ -20,6 +20,8 @@
   import Hero from "$lib/components/Hero.svelte";
   import WhoWeAre from "$lib/components/WhoWeAre.svelte";
   import Statistics from "$lib/components/Statistics.svelte";
+  import Youtube from "svelte-youtube-embed";
+  import { Youtube as YTIcon } from 'lucide-svelte';
 
   export let data: PageData;
 
@@ -81,7 +83,7 @@
     title: "¡Se parte!",
     description: "Y sumate a la comunidad",
     image:
-      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/bufh9o713u3otfclhnqq",
+      "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/bufh9o713u3otfclhnqq",
   };
 </script>
 
@@ -122,15 +124,15 @@
   {#if $page.data.welcome.horizontalLine}
     <InfiniteScroll />
   {/if}
-  <Hero info={infoHero} />
   <main
     id="events"
     class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20"
   >
+    <Hero info={infoHero} />
     <h2
-      class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 view-animate-single animate-fade-in animate-range-[entry_10%_contain_25%]"
+      class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 xl:pl-0"
     >
-      Próximos Eventos
+      Próximos Eventos <span class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span>
     </h2>
     {#if isMobile && events.length > 0}
       <TinySlider>
@@ -140,9 +142,7 @@
       </TinySlider>
       <SuscribeForm />
     {:else}
-      <div
-        class="flex items-start lg:gap-4 view-animate-[animate-zoom-in] animate-zoom-in animate-range-[entry_10%_contain_25%]"
-      >
+      <div class="flex items-start lg:gap-4 pl-4 xl:pl-0">
         {#each events as event}
           <CardEvent {event} />
         {/each}
@@ -151,6 +151,47 @@
     {/if}
   </main>
   <Statistics />
+  <!-- TESTIMONIOS -->
+  <section
+    class="container mx-auto max-w-6xl flex flex-col items-center relative"
+  >
+    <h3 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
+      <span class="font-[AtomicMarkerExtras] text-primary">k</span> Testimonios <span class="font-[AtomicMarkerExtras] text-primary">k</span>
+    </h3>
+    <div class="hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16 ">
+      <span
+        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+        >I</span
+      >
+      <span
+        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary  "
+        >F</span
+      >
+      <span
+        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary "
+        >U</span
+      >
+    </div>
+    <div class="container max-w-3xl  lg:mb-20">
+      <Youtube id="v5Nj6oG-Fs0" animations={false} --title-color={'transparent'} >
+        <button class="bg-black/50 rounded-full p-4"><YTIcon class="stroke-primary w-10 h-10" /></button>
+      </Youtube>
+    </div>
+    <div class=" lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10">
+      <span
+        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+        >F</span
+      >
+      <span
+        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary  "
+        >I</span
+      >
+      <span
+        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary "
+        >U</span
+      >
+    </div>
+  </section>
   <Slider items={allStaff} reverse={false} />
   <Slider items={allStaff2} reverse={true} />
   <WhoWeAre />

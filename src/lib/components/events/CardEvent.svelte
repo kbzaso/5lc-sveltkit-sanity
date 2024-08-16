@@ -29,7 +29,7 @@
 
 </script>
 
-<a href={`/eventos/${event.slug}`} class="pl-4 pr-4 lg:px-0 group">
+<a href={`/eventos/${event.slug}`} class="pl-4 pr-4 lg:px-0 group md:pl-0">
   <div
     class="overflow-hidden w-64 h-fit hover:border-primary rounded-none transition-all md:h-96 ease-in-out group "
   >
