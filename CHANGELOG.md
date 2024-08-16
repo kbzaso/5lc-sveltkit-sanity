@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.49] - 2024-08-16
+
+### Add
+
+- Add testimonies video
+
 ## [0.0.48] - 2024-08-14
 
 ### Add
@@ -304,7 +310,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.48...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.49...HEAD
+[0.0.49]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.48...0.0.49
 [0.0.48]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.47...0.0.48
 [0.0.47]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.46...0.0.47
 [0.0.46]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.45...0.0.46
