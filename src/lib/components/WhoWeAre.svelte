@@ -29,7 +29,7 @@
         </div>
       </div>
       <div
-        class="md:col-span-2 md:row-start-2 h-96 bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1000,h_667/v1/5LC/bufh9o713u3otfclhnqq')] bg-cover bg-center relative"
+        class="md:col-span-2 md:row-start-2 h-96 bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_20,w_1000,h_667/v1/5LC/bufh9o713u3otfclhnqq')] bg-cover bg-center relative"
       >
         <div
           class="text-7xl md:text-7xl lg:text-9xl text-primary h-fit absolute -bottom-16 w-full flex flex-col lg:flex-row items-center lg:justify-center"
