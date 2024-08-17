@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Import of the testimonies video
+- Html tag in the hero component
+
 ## [0.0.49] - 2024-08-16
 
 ### Add

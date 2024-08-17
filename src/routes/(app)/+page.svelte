@@ -20,8 +20,7 @@
   import Hero from "$lib/components/Hero.svelte";
   import WhoWeAre from "$lib/components/WhoWeAre.svelte";
   import Statistics from "$lib/components/Statistics.svelte";
-  import Youtube from "svelte-youtube-embed";
-  import { Youtube as YTIcon } from 'lucide-svelte';
+  import Video from "$lib/components/Video.svelte";
 
   export let data: PageData;
 
@@ -72,7 +71,7 @@
   };
 
   const infoHero = {
-    title: "Catarsis",
+    title: "Clandestino",
     description:
       "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
     image:
@@ -118,6 +117,7 @@
     content={`Equipo humano que ve el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida de nuestra comunidad.`}
   />
   <meta property="og:url" content={`${$page.url.href}`} />
+  <link rel="canonical" href='https://www.5luchas.cl' />
 </svelte:head>
 
 <div>
@@ -128,7 +128,7 @@
     id="events"
     class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20"
   >
-    <Hero info={infoHero} />
+    <Hero info={infoHero} tag='h1' />
     <h2
       class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 xl:pl-0"
     >
@@ -151,47 +151,7 @@
     {/if}
   </main>
   <Statistics />
-  <!-- TESTIMONIOS -->
-  <section
-    class="container mx-auto max-w-6xl flex flex-col items-center relative"
-  >
-    <h3 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
-      <span class="font-[AtomicMarkerExtras] text-primary">k</span> Testimonios <span class="font-[AtomicMarkerExtras] text-primary">k</span>
-    </h3>
-    <div class="hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16 ">
-      <span
-        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
-        >I</span
-      >
-      <span
-        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary  "
-        >F</span
-      >
-      <span
-        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary "
-        >U</span
-      >
-    </div>
-    <div class="container max-w-3xl  lg:mb-20">
-      <Youtube id="v5Nj6oG-Fs0" animations={false} --title-color={'transparent'} >
-        <button class="bg-black/50 rounded-full p-4"><YTIcon class="stroke-primary w-10 h-10" /></button>
-      </Youtube>
-    </div>
-    <div class=" lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10">
-      <span
-        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
-        >F</span
-      >
-      <span
-        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary  "
-        >I</span
-      >
-      <span
-        class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary "
-        >U</span
-      >
-    </div>
-  </section>
+  <Video />
   <Slider items={allStaff} reverse={false} />
   <Slider items={allStaff2} reverse={true} />
   <WhoWeAre />
