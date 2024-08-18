@@ -47,7 +47,7 @@
   ></script>
 </svelte:head>
 
-<div class={`flex flex-col min-h-screen bg-grit bg-[length:500px_500px] bg-repeat`}>
+<div class={`flex flex-col min-h-screen bg-grit bg-[length:500px_500px] bg-repeat min-w-[375px]`}>
   <DrawerNav
     logo={settings.logo}
     logoBlack={settings.logoBlack}
