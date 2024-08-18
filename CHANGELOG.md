@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Background video to Hero component
+
 ## [0.0.50] - 2024-08-17
 
 ### Fix

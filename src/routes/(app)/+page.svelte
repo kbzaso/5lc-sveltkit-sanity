@@ -76,6 +76,8 @@
       "¡Ven a vivir la experiencia de 5 Luchas Clandestino! Acompañanos en la búsqueda de la liberación del estrés y la rutina diaria a través de la Lucha Libre. ",
     image:
       "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/u69g3iwicq5jtlvyonwp",
+    video:
+      "https://res.cloudinary.com/dtj5xnlou/video/upload/f_auto:video,q_auto/yt1mvqeddyok3dqszmpz",
   };
 
   const infoCTA = {
@@ -117,22 +119,28 @@
     content={`Equipo humano que ve el espectáculo de la lucha libre como una herramienta de expresión creativa, enfocados en liberar el peso de la vida de nuestra comunidad.`}
   />
   <meta property="og:url" content={`${$page.url.href}`} />
-  <link rel="canonical" href='https://www.5luchas.cl' />
+  <link rel="canonical" href="https://www.5luchas.cl" />
 </svelte:head>
 
 <div>
   {#if $page.data.welcome.horizontalLine}
     <InfiniteScroll />
   {/if}
+  <Hero
+    info={infoHero}
+    tag="h1"
+    titleClass="text-6xl sm:text-8xl md:text-9xl"
+  />
   <main
     id="events"
     class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20"
   >
-    <Hero info={infoHero} tag='h1' />
     <h2
       class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 xl:pl-0"
     >
-      Próximos Eventos <span class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span>
+      Próximos Eventos <span
+        class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
+      >
     </h2>
     {#if isMobile && events.length > 0}
       <TinySlider>
