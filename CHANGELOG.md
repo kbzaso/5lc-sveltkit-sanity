@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.51] - 2024-08-17
+
 ### Add
 
 - Background video to Hero component
@@ -321,7 +323,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.50...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.51...HEAD
+[0.0.51]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.50...0.0.51
 [0.0.50]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.49...0.0.50
 [0.0.49]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.48...0.0.49
 [0.0.48]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.47...0.0.48
