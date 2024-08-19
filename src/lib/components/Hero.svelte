@@ -33,12 +33,11 @@
       autoplay
       loop
       class="w-full h-full object-cover object-top maskImages z-0 opacity-60"
-      style="https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/zzvzz41vo88dfhoief9v')"
+      poster="https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/zzvzz41vo88dfhoief9v"
       muted
       playsinline
       ><source
         src={info.video}
-        data-wf-ignore="true"
       />
       <!-- <source
         src="https://cdn.prod.website-files.com/63458a69c8844adfbb0236cd/6596bd9cd5c5805231b3ac72_Glovox 2023 (alta) (1)_1-transcode.webm"
