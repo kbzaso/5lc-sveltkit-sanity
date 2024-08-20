@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Color to the scroll bar
+
 ## [0.0.52] - 2024-08-19
 
 ### Fix

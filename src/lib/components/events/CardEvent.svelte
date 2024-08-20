@@ -35,7 +35,7 @@
   >
     {#if totalTicketsLeftStudio === 0 || !event.sell}
       <div
-        class="badge bg-red-500/90 text-black font-extrabold border-none rounded-sm absolute py-4 uppercase tracking-widest z-10 w-full"
+        class="badge bg-red-500/90 text-black font-extrabold border-none rounded-sm absolute py-4 uppercase tracking-widest z-10 w-full top-0 transition-all lg:group-hover:-top-12"
       >
         Adhesión agotada
       </div>
@@ -45,7 +45,7 @@
         width="600"
         height="600"
         loading="lazy"
-        class={`object-cover object-top h-72 md:h-96 w-full hover:scale-110 ease-in hover:rotate-2 group transition-all ${totalTicketsLeftStudio === 0 || !event.sell ? 'grayscale lg:hover:grayscale-0 lg:delay-150' : ''}`}
+        class={`object-cover object-top h-72 md:h-96 w-full hover:scale-110 ease-in hover:rotate-2 transition-all ${totalTicketsLeftStudio === 0 || !event.sell ? 'grayscale lg:group-hover:grayscale-0 delay-150' : ''}`}
         src={urlForImage(event.poster).height(600).width(600).quality(80).url()}
         alt={event.title}
       />
@@ -71,15 +71,3 @@
     </p>
   </div>
 </a>
-
-
-<style>
-.badge {
-    top: 0;
-    transition: top 0.3s;
-  }
-
-  .group:hover .badge {
-    top: -50px;
-  }
-</style>
