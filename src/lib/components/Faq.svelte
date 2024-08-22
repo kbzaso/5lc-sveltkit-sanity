@@ -3,7 +3,7 @@
     {
       question: "¿Qué debo presentar para ingresar a un evento?",
       answer:
-        "El ingreso a nuestros shows se realiza mediante lista en el acceso el día del show, donde te solicitarán nombre, rut o mail con el que se hizo la compra de entradas. Siempre se respetará el orden de llegada, no se permite reserva de espacios.",
+        " El ingreso a nuestros shows se gestiona mediante una lista en el acceso el día del evento. Allí, te solicitarán tu nombre, RUT o el correo electrónico utilizado para comprar las entradas. El ingreso se realiza por orden de llegada y no se permite reservar espacios.",
     },
     {
       question: "¿A que hora comienzan los eventos de 5 Luchas?",
@@ -23,12 +23,12 @@
     {
       question: "¿Puedo ingresar comida y bebestibles a la Bóveda?",
       answer:
-        "No, disponemos de diferentes opciones de brebajes para consumo así como de bajones, incluyendo alternativas vegetarianas. Nos ayudas mucho más si consumes lo que ofrecemos en cada show.",
+        "No, disponemos de una variada gama de bebidas y refrigerios para tu deleite, incluyendo opciones vegetarianas. Apoyándonos consumiendo lo que ofrecemos en cada espectáculo, nos ayudas a seguir brindándote la mejor experiencia de Lucha Libre.",
     },
     {
       question: "¿Que pasa si compre mi entrada y no puedo ir?",
       answer:
-        "En caso de que necesites la devolución de tu entrada, puedes contactarnos a hola@5luchas.cl para solicitar el reembolso o venderla a alguien que si pueda asistir. Esto siempre antes de la fecha del show en cuestión.",
+        "En caso de imprevistos que te impidan asistir, puedes contactarnos a hola@5luchas.cl para solicitar el reembolso de tu entrada. También tienes la opción de venderla a otra persona interesada en asistir al evento. Estos trámites deben realizarse antes de la fecha del show correspondiente.",
     },
   ];
 

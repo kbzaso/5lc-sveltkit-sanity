@@ -1,3 +1,4 @@
+<script></script>
 <section>
     <div
       class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full mx-auto max-w-6xl"

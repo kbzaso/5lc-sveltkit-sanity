@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- add aria-hidden to decorative html tag 
+
 ## [0.0.53] - 2024-08-20
 
 ### Add

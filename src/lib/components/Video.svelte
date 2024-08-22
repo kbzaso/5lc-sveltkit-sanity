@@ -7,19 +7,19 @@
   class="container mx-auto max-w-6xl flex flex-col items-center relative"
 >
   <h3 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
-    <span class="font-[AtomicMarkerExtras] text-primary">k</span> Testimonios
-    <span class="font-[AtomicMarkerExtras] text-primary">k</span>
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary">k</span> Testimonios
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary">k</span>
   </h3>
   <div
     class="hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16"
   >
-    <span class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >I</span
     >
-    <span class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >F</span
     >
-    <span class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >U</span
     >
   </div>
@@ -33,13 +33,13 @@
   <div
     class=" lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10"
   >
-    <span class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >F</span
     >
-    <span class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >I</span
     >
-    <span class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >U</span
     >
   </div>
