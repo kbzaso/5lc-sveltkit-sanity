@@ -1,3 +1,6 @@
+<script lang="ts">
+  export let info;
+</script>
 <section
   class="flex w-full md:w-64 items-center justify-center relative mt-20 md:mt-0 lg:min-w-64"
 >
@@ -5,11 +8,10 @@
     <div class="flex h-full w-full items-center justify-center">
         <div class="p-4">
           <span class="card-title font-ibm italic text-black"
-            >Suscríbete a nuestro Newsletter!</span
+            >{info.title}</span
           >
           <p class="text-pretty text-black">
-            Semanalmente te enviamos las noticias más importantes del proyecto,
-            futuros eventos, carteleras, descuentos y más.
+            {info.description}
           </p>
           <div class="card-actions justify-end">
             <button
@@ -17,7 +19,7 @@
               data-tally-open="meAW1q"
               data-tally-overlay="1"
               data-tally-emoji-text="✉️"
-              data-tally-emoji-animation="wave">YA PO'</button
+              data-tally-emoji-animation="wave">{info.btn}</button
             >
           </div>
         </div>
