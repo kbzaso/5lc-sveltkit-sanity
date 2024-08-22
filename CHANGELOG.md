@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.54] - 2024-08-22
+
 ### Fix
 
 - add aria-hidden to decorative html tag 
@@ -339,7 +341,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.53...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.54...HEAD
+[0.0.54]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.53...0.0.54
 [0.0.53]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.52...0.0.53
 [0.0.52]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.51...0.0.52
 [0.0.51]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.50...0.0.51
