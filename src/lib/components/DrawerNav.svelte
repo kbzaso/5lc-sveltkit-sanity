@@ -47,15 +47,98 @@
       window.removeEventListener('scroll', handleScroll);
     }
   });
+
+
+
+
+// NAVBAR MOBILE
+  import { fade, fly, slide } from 'svelte/transition';
+  import { cubicOut } from 'svelte/easing';
+  import { spring } from 'svelte/motion';
+
+  let isOpen = false;
+  let startY: number;
+  let currentY: number;
+  const sheetHeight = spring(75, { stiffness: 0.1, damping: 0.7 });
+
+  const navItems = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  function handleTouchStart(event: TouchEvent) {
+    startY = event.touches[0].clientY;
+    currentY = startY;
+  }
+
+  function handleTouchMove(event: TouchEvent) {
+    currentY = event.touches[0].clientY;
+    const deltaY = currentY - startY;
+    if (deltaY > 0) {
+      event.preventDefault();
+      const newHeight = Math.max(0, 75 - (deltaY / window.innerHeight) * 100);
+      sheetHeight.set(newHeight);
+    }
+  }
+
+  function handleTouchEnd() {
+    const deltaY = currentY - startY;
+    if (deltaY > window.innerHeight * 0.2) {
+      closeSheet();
+    } else {
+      sheetHeight.set(100, { hard: false });
+    }
+  }
+
+  function openSheet() {
+    isOpen = true;
+    sheetHeight.set(100, { hard: true });
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSheet() {
+    sheetHeight.set(0, { hard: false }).then(() => {
+      isOpen = false;
+      document.body.style.overflow = '';
+    });
+  }
+
+  onMount(() => {
+    sheetHeight.set(75);
+    return () => {
+      document.body.style.overflow = '';
+    };
+  });
 </script>
 
 <style>
   .transition-blur {
     transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
   }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  #navbar {
+    animation: slideDown 0.5s ease-in-out forwards;
+  }
+
+
+
+
 </style>
 
-<div
+<div id="navbar"
   class={`w-full py-2 top-0 px-4 z-40 pt-2 fixed ${isScrolled ? 'backdrop-blur-md bg-black/25' : ''} transition-blur`}
 >
   <div class="flex w-full justify-between items-center container mx-auto max-w-6xl">
@@ -69,7 +152,7 @@
       />
     </a>
     <button
-      on:click={() => (hidden2 = false)}
+    on:click={openSheet} aria-label="Open menu"
       class="btn btn-primary drawer-button md:hidden">Menu</button
     >
     <div class="flex-none hidden md:flex ">
@@ -136,86 +219,46 @@
     </div>
   </div>
 </div>
-
-<Drawer
-  divClass="overflow-y-auto z-50 p-4 bg-primary"
-  transitionType="fly"
-  {transitionParams}
-  bind:hidden={hidden2}
-  id="sidebar2"
->
-  <div class="flex items-center">
-    <img src={urlForImage(logoBlack).url()} alt="Logo de 5LC" />
-    <CloseButton on:click={() => (hidden2 = true)} class="mb-4 text-black" />
+{#if isOpen}
+  <div
+    class="fixed inset-x-0 bottom-0 z-50 bg-black overflow-hidden"
+    style="height: {$sheetHeight}vh;"
+    on:touchstart={handleTouchStart}
+    on:touchmove={handleTouchMove}
+    on:touchend={handleTouchEnd}
+    transition:fly={{ y: 200, duration: 300 }}
+  >
+    <div class="cursor-grab active:cursor-grabbing">
+      <div class="grid p-2 ">
+        <svg class="h-6 w-6 text-gray-400 justify-self-center" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16" />
+        </svg>
+        <button
+          on:click={closeSheet}
+          class="p-2 absolute right-2 text-primary hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          aria-label="Close menu"
+        >
+          <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-col h-full overflow-y-auto">
+      
+      <div class="flex-grow">
+        <div class="flex flex-col space-y-2 p-4">
+          {#each navItems as item}
+            <a
+              href={item.href}
+              class="w-full text-left px-4 py-6 text-lg font-medium text-primary font-ibm italic"
+              on:click={closeSheet}
+            >
+              {item.name}
+            </a>
+          {/each}
+        </div>
+      </div>
+    </div>
   </div>
-  <Sidebar>
-    <SidebarWrapper divClass="overflow-y-auto py-4 px-0 rounded-sm w-full">
-      <SidebarGroup>
-        <SidebarItem
-          href="/"
-          label="Inicio"
-          on:click={() => (hidden2 = true)}
-        />
-        <SidebarDropdownWrapper label="Equipo">
-          <!-- <svelte:fragment slot="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
-          </svelte:fragment> -->
-          <SidebarDropdownItem
-            data-sveltekit-preload-data="hover"
-            on:click={() => (hidden2 = true)}
-            href="/equipo/luchadores"
-            label="Luchadores"
-          />
-          <SidebarDropdownItem
-            data-sveltekit-preload-data="hover"
-            on:click={() => (hidden2 = true)}
-            href="/equipo/arbitros"
-            label="Arbitros"
-          />
-          <SidebarDropdownItem
-            data-sveltekit-preload-data="hover"
-            on:click={() => (hidden2 = true)}
-            href="/equipo/presentadores"
-            label="Presentadores"
-          />
-        </SidebarDropdownWrapper>
-
-        <SidebarItem
-          href="/eventos"
-          label="Eventos pasados"
-          data-sveltekit-preload-data="hover"
-          on:click={() => (hidden2 = true)}
-        />
-
-        <SidebarDropdownWrapper label="Redes sociales">
-          <!-- <svelte:fragment slot="icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
-            </svelte:fragment> -->
-          <SidebarDropdownItem
-            href="http://www.instagram.com/5luchas"
-            label="Instagram"
-          />
-          <SidebarDropdownItem
-            href="https://www.youtube.com/@5LuchasClandestino"
-            label="Youtube"
-          />
-          <SidebarDropdownItem
-            href="https://www.facebook.com/5luchas/"
-            label="Facebook"
-          />
-        </SidebarDropdownWrapper>
-        <SidebarItem
-          data-tally-open="31AeNQ"
-          data-tally-overlay="1"
-          data-tally-emoji-text="👋"
-          data-tally-emoji-animation="wave"
-          label="Contacto"
-          on:click={() => (hidden2 = true)}
-        />
-      </SidebarGroup>
-      <picture class="absolute bottom-0 left-0 landscape:hidden">
-        <img class="w-40" src={urlForImage(bovedin).url()} alt="Bovedin" />
-      </picture>
-    </SidebarWrapper>
-  </Sidebar>
-</Drawer>
+{/if}
