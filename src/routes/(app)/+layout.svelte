@@ -2,11 +2,11 @@
   import "./../../styles.css";
   import type { PageData } from "./$types";
   export let data: PageData;
-  import DrawerNav from "$lib/components/DrawerNav.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
   import { onNavigate } from "$app/navigation";
   import { onMount } from 'svelte';
+  import Nav from "$lib/components/Nav.svelte";
 
   onMount(() => {
     injectSpeedInsights();
@@ -48,7 +48,7 @@
 </svelte:head>
 
 <div class={`flex flex-col min-h-screen bg-grit bg-[length:500px_500px] bg-repeat min-w-[375px]`}>
-  <DrawerNav
+  <Nav
     logo={settings.logo}
     logoBlack={settings.logoBlack}
     bovedin={settings.bovedin}
