@@ -2,11 +2,11 @@
   import "./../../styles.css";
   import type { PageData } from "./$types";
   export let data: PageData;
-  import DrawerNav from "$lib/components/DrawerNav.svelte";
   import Footer from "$lib/components/Footer.svelte";
-  import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+  import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
   import { onNavigate } from "$app/navigation";
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
+  import Nav from "$lib/components/Nav.svelte";
 
   onMount(() => {
     injectSpeedInsights();
@@ -15,21 +15,21 @@
   $: ({ settings } = data);
 
   onNavigate((navigation) => {
-      if (!(document as any).startViewTransition) return
-  
-      return new Promise((resolve) => {
-        (document as any).startViewTransition(async () => {
-          resolve()
-          await navigation.complete
-        })
-      })
-    })
+    if (!(document as any).startViewTransition) return;
+
+    return new Promise((resolve) => {
+      (document as any).startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 </script>
 
 <svelte:window />
 
 <svelte:head>
-  <meta name="view-transition" content="same-origin">
+  <meta name="view-transition" content="same-origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
   <link
@@ -45,15 +45,45 @@
     src="https://analytics.umami.is/script.js"
     data-website-id="86ceac1e-89c3-42ea-abef-dbfac5379da5"
   ></script>
+  <link
+    rel="preload"
+    href="/fonts/AtomicMarkerExtras.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/AtomicMarkerExtras.woff"
+    as="font"
+    type="font/woff"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/AtomicMarker.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/AtomicMarker.woff"
+    as="font"
+    type="font/woff"
+    crossorigin="anonymous"
+  />
 </svelte:head>
 
-<div class={`flex flex-col min-h-screen bg-grit bg-[length:500px_500px] bg-repeat min-w-[375px]`}>
-  <DrawerNav
+<div
+  class={`flex flex-col min-h-screen bg-grit bg-[length:500px_500px] bg-repeat min-w-[375px]`}
+>
+  <Nav
     logo={settings.logo}
-    logoBlack={settings.logoBlack}
-    bovedin={settings.bovedin}
   />
-  <section class="grow selection:bg-fuchsia-300 selection:text-fuchsia-900 h-full">
+  <section
+    class="grow selection:bg-fuchsia-300 selection:text-fuchsia-900 h-full"
+  >
     <slot />
   </section>
 

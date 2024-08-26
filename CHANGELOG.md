@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Mobile menu
+
 ## [0.0.54] - 2024-08-22
 
 ### Fix
 
-- add aria-hidden to decorative html tag 
+- add aria-hidden to decorative html tag
 
 ## [0.0.53] - 2024-08-20
 
