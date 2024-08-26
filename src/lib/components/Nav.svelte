@@ -12,8 +12,6 @@
   import MobileNavMenu from "$lib/components/MobileNavMenu.svelte";
 
   export let logo: string;
-  export let logoBlack: string;
-  export let bovedin: string;
 
   let mobileNavMenu: any;
 
