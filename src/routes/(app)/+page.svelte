@@ -14,6 +14,7 @@
   import Statistics from "$lib/components/Statistics.svelte";
   import Video from "$lib/components/Video.svelte";
   import { infoLanding } from "$lib/const";
+  import Loader from "$lib/components/Loader.svelte";
 
   export let data: PageData;
 
@@ -50,6 +51,7 @@
 
     checkScreenWidth();
     window.addEventListener("resize", checkScreenWidth);
+
 
     return () => window.removeEventListener("resize", checkScreenWidth);
   });
@@ -138,4 +140,5 @@
     descriptionClass={"font-ibm italic text-4xl"}
     cta={true}
   />
+  <Loader />
 </div>

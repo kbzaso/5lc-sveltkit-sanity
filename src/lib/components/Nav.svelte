@@ -145,6 +145,6 @@
   }
 
   #navbar {
-    animation: slideDown 0.5s ease-in-out forwards;
+    animation: slideDown 0.5s ease-in-out .5s forwards;
   }
   </style>
