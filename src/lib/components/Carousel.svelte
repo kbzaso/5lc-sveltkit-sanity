@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Carousel } from "flowbite-svelte";
   let showThumbs = false;
   let showCaptions = false;
 

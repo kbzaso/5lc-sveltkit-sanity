@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Next event to mobile menu
+
 ## [0.0.56] - 2024-08-26
 
 ### Add
