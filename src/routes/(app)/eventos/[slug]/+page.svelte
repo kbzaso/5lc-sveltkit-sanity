@@ -22,6 +22,7 @@
   import { urlForImage } from "$lib/config/sanity";
   import ChatBubble from "$lib/components/events/ChatBubble.svelte";
   import { BellRing, CalendarDays, DoorOpen, MapPin } from "lucide-svelte";
+  import Countdown from "$lib/components/events/Countdown.svelte";
 
   export let data: PageData;
   export let form;
@@ -94,7 +95,10 @@
 </svelte:head>
 
 {#if event}
-  <div class="xl:container xl:mx-auto min-w-[350px]">
+  <div class="container mx-auto max-w-6xl min-w-[350px]">
+    {#if event?.active}
+      <Countdown date={eventDate} />
+    {/if}
     <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
       <div id="event" class="h-fit flex flex-col lg:flex-row md:gap-4 lg:gap-0">
         <div class="relative overflow-hidden">
@@ -171,7 +175,6 @@
               {/if}
 
               <!-- EVENTO ACTIVO -->
-
               {#if event?.active}
                 <h2
                   class="font-semibold text-primary uppercase tracking-widest"
