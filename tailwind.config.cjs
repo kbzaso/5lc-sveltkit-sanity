@@ -2,7 +2,6 @@
 module.exports = {
   content: [
     "./src/**/*.{html,js,svelte}",
-    "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
   ],
   theme: {
     extend: {
@@ -18,7 +17,6 @@ module.exports = {
   plugins: [
     require("daisyui"),
     require("@tailwindcss/typography"),
-    require("flowbite/plugin"),
   ],
   darkMode: "class",
   daisyui: {
