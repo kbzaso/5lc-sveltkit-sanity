@@ -32,6 +32,19 @@
     },
   ];
 
+  import { onMount } from "svelte";
+
+  let isFirst = true;
+
+  onMount(() => {
+    const radios = document.querySelectorAll<HTMLInputElement>(
+      'input[type="radio"][name="my-accordion-4"]'
+    );
+    if (radios.length > 0) {
+      radios[0].checked = true;
+    }
+  });
+
   let indexSelected: number = 0;
 
   function handleChange(index: number) {
@@ -47,7 +60,13 @@
   </h3>
   {#each faq as { question, answer }, index}
     <div class="collapse rounded-none collapse-arrow">
-      <input type="checkbox" class="peer" checked={index === indexSelected} />
+      <input
+        type="radio"
+        class="peer"
+        name="my-accordion-4"
+        checked={index === 0 ? isFirst : false}
+        on:change={() => (isFirst = false)}
+      />
       <button
         on:click={() => {
           handleChange(index);

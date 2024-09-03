@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Only one item on FAQ can be open
+- Desc order for past event on the studio
+
 ## [0.0.57] - 2024-08-27
 
 ### Add
