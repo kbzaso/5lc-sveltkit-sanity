@@ -20,7 +20,7 @@ export const myStructure = (S) =>
           S.documentList()
             .title("Próximos Pasados")
             .filter("date <= now()")
-            .defaultOrdering([{ field: "date", direction: "asc" }])
+            .defaultOrdering([{ field: "date", direction: "desc" }])
         ),
       S.divider(),
       S.listItem()
