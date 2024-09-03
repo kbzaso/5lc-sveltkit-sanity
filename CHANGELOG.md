@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Countdown not show when discount code was applied throught params query
+
 ## [0.0.58] - 2024-09-02
 
 ### Fix

@@ -23,33 +23,34 @@
   import ChatBubble from "$lib/components/events/ChatBubble.svelte";
   import { BellRing, CalendarDays, DoorOpen, MapPin } from "lucide-svelte";
   import Countdown from "$lib/components/events/Countdown.svelte";
+  import discountCodes from "$lib/config/sanity/schemas/discountCodes";
 
   export let data: PageData;
   export let form;
 
   $: ({ event, validatedDiscount } = data);
 
+  
   $: eventDate = new Date(event?.date);
   $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
-
+  
   let seo_image = urlForImage(data?.event?.poster).url();
-
+  
   let hasPhotos = [];
-
+  
   interface Tandas {
     index: number;
     amount: number;
     price: number;
     type: string;
   }
-
+  
   let tandas: Tandas[] = [];
   let ubications: any[] = [];
-
+  
   onMount(() => {
-    console.log(event?.doorsOpen);
     if (event?.active) {
       if (event?.sell_type === "batch") {
         // Necesito pasar el objeto de tandas a un array para poder ordenarlas
@@ -96,7 +97,7 @@
 
 {#if event}
   <div class="container mx-auto max-w-6xl min-w-[350px]">
-    {#if event?.active}
+    {#if event?.active && validatedDiscount?.error}
       <Countdown date={eventDate} />
     {/if}
     <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
