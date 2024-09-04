@@ -11,7 +11,7 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
-  import { Ticket } from 'lucide-svelte';
+  import { Ticket } from "lucide-svelte";
   import {
     calculateTandas,
     calculateUbications,
@@ -32,7 +32,12 @@
   $: ({ event, validatedDiscount } = data);
 
   $: eventDate = new Date(event?.date);
-  $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
+  $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
 
@@ -173,7 +178,7 @@
               <!-- EVENTO ACTIVO -->
               {#if event?.active}
                 <h2
-                  class="text-primary uppercase tracking-widest text-sm text-center"
+                  class="text-primary uppercase tracking-widest text-sm text-center mb-4"
                 >
                   Próximo evento
                 </h2>
@@ -182,10 +187,59 @@
                 >
                   {event.title}
                 </h1>
-                <div class="prose prose-indigo text-white text-xl text-center">
-                  <p>
+                <div
+                  class="text-white text-2xl md:text-3xl text-center space-y-8"
+                >
+                  <p class="max-w-2xl mx-auto mt-2">
                     <PortableText value={event?.description} components={{}} />
                   </p>
+                  <div class="flex lg:flex-row flex-col gap-2 justify-center">
+                    <span class="text-lg flex gap-2 justify-center">
+                      <CalendarDays class="stroke-primary" />
+                      <time datetime={eventDateFormatted}>
+                        {eventDateFormatted.charAt(0).toUpperCase() +
+                          eventDateFormatted.slice(1)}
+                      </time>
+                      -
+                      <time class="uppercase" datetime={eventDateFormatted}>
+                        {new Intl.DateTimeFormat("es-CL", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          timeZone: "America/Santiago",
+                        }).format(eventDate)}
+                      </time>
+                    </span>
+                    {#if event.boveda}
+                      <div class="flex items-center gap-2 justify-center">
+                        <MapPin class="stroke-primary" />
+                        <div class="text-lg">
+                          Bóveda Secreta - <a
+                            class="text-primary underline"
+                            target="_blank"
+                            rel="noreferrer"
+                            href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
+                          >
+                            San Antonio 705, Santiago.</a
+                          >
+                        </div>
+                      </div>
+                    {:else}
+                      <div class="flex items-center gap-2 justify-center">
+                        <MapPin class="stroke-primary" />
+                        <div class="text-lg">
+                          {event.venue?.venueName} -
+                          <a
+                            class="text-primary underline"
+                            target="_blank"
+                            rel="noreferrer"
+                            href={event.venue?.venueUrl}
+                          >
+                            {event.venue?.venueAdress}</a
+                          >
+                        </div>
+                      </div>
+                    {/if}
+                  </div>
                   <!-- LISTA -->
                   <!-- <ul class="list-none o-0">
                     <li class="flex items-center gap-2">
@@ -273,7 +327,7 @@
           </div>
         </div>
       </div>
-      <div class="mx-auto px-4 max-w-4xl">
+      <div class="mx-auto px-4 max-w-4xl mt-10">
         <h3 class="text-3xl font-ibm italic text-white mask text-center">
           Adhierete ahora
         </h3>
@@ -289,22 +343,21 @@
         {/if}
 
         {#if event.sell_type === "ubication"}
-        <div class="flex gap-4 mt-4 flex-col md:flex-row">
-          {#each ubications as ubication}
-            <UbicationTicketsCard
-              ticket={ubication}
-              dicountPercentage={validatedDiscount?.percentage}
-              {validatedDiscount}
-            />
-          {/each}
-        </div>
+          <div class="flex gap-4 mt-4 flex-col md:flex-row">
+            {#each ubications as ubication}
+              <UbicationTicketsCard
+                ticket={ubication}
+                dicountPercentage={validatedDiscount?.percentage}
+              />
+            {/each}
+          </div>
         {/if}
 
         {#if (data.totalTicketsLeftStudio === 0 && event?.active) || !event?.sell}
           <div
             class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
           >
-          <Ticket />
+            <Ticket />
             <span class="uppercase tracking-widest">Adhesión agotada</span>
           </div>
         {:else}
@@ -323,7 +376,6 @@
                 ticket={event?.sell_type === "ubication"
                   ? event?.ticket?.ubication
                   : event?.ticket?.batch}
-                {disclaimerEvent}
               />
             {/if}
           </div>

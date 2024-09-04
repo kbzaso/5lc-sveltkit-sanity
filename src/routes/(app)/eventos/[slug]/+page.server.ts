@@ -188,7 +188,7 @@ export const actions: Actions = {
     const email = form.get("email")?.toString();
     const phone = form.get("phone")?.toString();
     const tickets = Number(form.get("tickets"));
-    const ticketsType = form.get("ticketsType")?.toString();
+    const ticketsType = form.get("ticketsType")?.toString() || "";
     const totalPrice = form.get("totalPrice")?.toString();
     
     const discountCode = form.get("discountCode")?.toString();
