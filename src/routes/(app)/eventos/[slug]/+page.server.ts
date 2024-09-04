@@ -181,7 +181,7 @@ export const actions: Actions = {
     }>(eventQuery, {
       slug: params.slug,
     });
-
+    
     const form = await request.formData();
     const name = form.get("name")?.toString();
     const rut = form.get("rut")?.toString();
@@ -190,14 +190,15 @@ export const actions: Actions = {
     const tickets = Number(form.get("tickets"));
     const ticketsType = form.get("ticketsType")?.toString();
     const totalPrice = form.get("totalPrice")?.toString();
-
+    
     const discountCode = form.get("discountCode")?.toString();
     const normalizeDiscountCode = discountCode
-      ?.normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/ /g, "");
-
+    ?.normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ /g, "");
+    
     let buyObject;
+    console.log(form)
 
     if (ticketsType === "ringside_tickets") {
       buyObject = {

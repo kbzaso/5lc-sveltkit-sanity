@@ -33,9 +33,9 @@
       bind:checked={inputs[i]}
         type="checkbox"
         id={`input_${disclaimer.modalId}`}
-        class="checkbox checkbox-warning "
+        class="checkbox checkbox-primary "
       />
-      <p class="label-text">
+      <p class="label-text text-primary">
         Acepto el <span
           class="anchor"
           onclick={`my_modal_${disclaimer.modalId}.showModal()`}

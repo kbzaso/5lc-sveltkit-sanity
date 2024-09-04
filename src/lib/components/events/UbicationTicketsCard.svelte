@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { Ticket } from "lucide-svelte";
-  import { writable } from "svelte/store";
   interface Ticket {
     index: number;
     amount: number;
@@ -24,7 +22,6 @@
     currency: "CLP",
   }).format(ticketPrice);
 
-  $: disclaimerEvent = writable([]);
 </script>
 
 <!-- <div
@@ -68,31 +65,26 @@
   </div>
 </div> -->
 
-<div class="w-full max-w-md">
-  <div class="relative bg-primary p-6 text-black mask">
+<div class:opacity-30={ticket.amount === 0} class="w-full">
+  <div class="relative bg-primary p-6 text-black" >
     <!-- Notches -->
     <div class="absolute left-0 top-16 w-4 h-4 bg-black" />
     <div class="absolute right-0 top-16 w-4 h-4 bg-black" />
 
-    <h2 class="text-2xl font-bold mb-2 text-center">{ticket.name}</h2>
-    <div class="flex justify-center gap-4 items-center mb-4">
+    <h2 class="text-2xl font-bold mb-2 text-center pb-2">{ticket.name}</h2>
+    <div class="w-full border border-black/30 border-b-0 border-dashed"></div>
+    <div class="flex justify-center gap-4 items-center mb-4 mt-2">
       <p class="text-2xl font-bold text-center line-through opacity-50">
         {dicountPercentage ? `$${priceBeforeDiscount}` : ""}
       </p>
       <p class="text-2xl font-bold text-center">{formatedPrice || 0}</p>
     </div>
-    <button
-    disabled={!$disclaimerEvent}
-      class="mt-4 btn grow w-full rounded-none btn-black cursor-pointer text-white no-underline disabled:bg-black/50 disabled:text-white"
-    >
-      QUIERO IR
-    </button>
     <p
       class={`mt-2 font-semibold tracking-widest uppercase text-sm text-center`}
     >
       {ticket.amount > 1
         ? `Últimas ${ticket.amount} entradas`
-        : "Última entrada"}
+        : "Agotado"}
     </p>
   </div>
 </div>
