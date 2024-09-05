@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Topbar for alerts
+- Add paper texture to the ticket in slug event
+
 ## [0.0.59] - 2024-09-05
 
 ### Fix

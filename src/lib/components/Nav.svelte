@@ -10,6 +10,7 @@
   import { urlForImage } from "$lib/config/sanity";
   import { onDestroy, onMount } from "svelte";
   import MobileNavMenu from "$lib/components/MobileNavMenu.svelte";
+  import Topbar from "./Topbar.svelte";
 
   export let logo: string;
 
@@ -37,11 +38,13 @@
   });
 </script>
 
+
+
 <div
   id="navbar"
-  class={`w-full py-2 top-0 px-4 z-40 pt-2 fixed ${
-    isScrolled ? "backdrop-blur-md bg-black/25" : ""
-  } transition-blur`}
+  class={`w-full py-2 px-4 z-40 pt-2 fixed ${
+    isScrolled ? "backdrop-blur-md bg-black/25 top-0" : "top-12"
+  } transition-all ease-linear duration-50`}
 >
   <div
     class="flex w-full justify-between items-center container mx-auto max-w-6xl"
@@ -126,7 +129,7 @@
 </div>
 <!-- Drawer Menu -->
 <MobileNavMenu bind:this={mobileNavMenu} />
-
+<Topbar />
 
 <style>
   .transition-blur {
