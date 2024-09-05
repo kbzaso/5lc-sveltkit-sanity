@@ -126,7 +126,7 @@
     {/if}
   </main>
   <Statistics />
-  <Video />
+  <Video url='https://youtu.be/v5Nj6oG-Fs0?si=Grt_PcZO9VohSpDg' />
   <Slider items={allStaff} reverse={false} />
   <Slider items={allStaff2} reverse={true} />
   <WhoWeAre />

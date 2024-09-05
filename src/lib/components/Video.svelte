@@ -1,45 +1,78 @@
 <script lang="ts">
   import Youtube from "svelte-youtube-embed";
   import { Youtube as YTIcon } from "lucide-svelte";
+  import { extractYouTubeId } from "$lib/utils";
+  import { onMount } from "svelte";
+
+  export let url: string;
+  export let title: string = "Testimonios";
+
+  const videoId = extractYouTubeId(url);
+
+  let isBaseRoute = false;
+
+  onMount(() => {
+    // Verifica si la ruta actual es la base
+    isBaseRoute = location.pathname === '/';
+
+    console.log(isBaseRoute)
+  });
 </script>
 
 <section
-  class="container mx-auto max-w-6xl flex flex-col items-center relative"
+  class="container mx-auto max-w-6xl flex flex-col items-center relative mt-20"
 >
   <h3 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary">k</span> Testimonios
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary">k</span>
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
+      >k</span
+    >
+    {title}
+    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
+      >k</span
+    >
   </h3>
   <div
-    class="hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16"
+    class={`${isBaseRoute ? 'hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16' : 'hidden'}`}
   >
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span
+      aria-hidden="true"
+      class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >I</span
     >
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span
+      aria-hidden="true"
+      class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >F</span
     >
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span
+      aria-hidden="true"
+      class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >U</span
     >
   </div>
-  <div class="container max-w-3xl lg:mb-20">
-    <Youtube id="v5Nj6oG-Fs0" animations={false} --title-color={"transparent"}>
+  <div class="container max-w-3xl lg:mb-20 z-10">
+    <Youtube id={videoId} animations={false} --title-color={"transparent"}>
       <button class="bg-black/50 rounded-full p-4"
         ><YTIcon class="stroke-primary w-10 h-10" /></button
       >
     </Youtube>
   </div>
   <div
-    class=" lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10"
+    class={`${isBaseRoute ? 'lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10' : 'hidden'}`}
   >
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span
+      aria-hidden="true"
+      class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >F</span
     >
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span
+      aria-hidden="true"
+      class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >I</span
     >
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
+    <span
+      aria-hidden="true"
+      class="font-[AtomicMarkerExtras] text-7xl lg:text-9xl text-primary"
       >U</span
     >
   </div>

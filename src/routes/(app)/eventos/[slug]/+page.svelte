@@ -26,6 +26,7 @@
   import Countdown from "$lib/components/events/Countdown.svelte";
   import { disclaimerEvent } from "$lib/stores";
   import Sponsors from "$lib/components/events/Sponsors.svelte";
+  import Video from "$lib/components/Video.svelte";
 
   export let data: PageData;
   export let form;
@@ -72,7 +73,6 @@
     } else {
       hasPhotos = [];
     }
-    console.log(event.sponsors_array);
   });
 
 </script>
@@ -348,7 +348,7 @@
           {/if}
 
           {#if event.sell_type === "ubication"}
-            <div class="flex gap-4 mt-4 flex-col md:flex-row">
+            <div class="flex gap-4 mt-4 flex-col md:flex-row ">
               {#each ubications as ubication}
                 <UbicationTicketsCard
                   ticket={ubication}
@@ -382,6 +382,9 @@
                     ? event?.ticket?.ubication
                     : event?.ticket?.batch}
                 />
+              {/if}
+              {#if event?.promotion_video}
+              <Video title='¿Qué dicen los asistentes a 5 Luchas Clandestino?' url={event?.promotion_video} />
               {/if}
               {#if event?.sponsors_array?.sponsors.length > 0}
                 <Sponsors sponsors={event.sponsors_array.sponsors} title="Auspiciadores" />
