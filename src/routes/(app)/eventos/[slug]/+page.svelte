@@ -383,7 +383,7 @@
                     : event?.ticket?.batch}
                 />
               {/if}
-              {#if event?.sponsors_array.sponsors.length > 0}
+              {#if event?.sponsors_array?.sponsors.length > 0}
                 <Sponsors sponsors={event.sponsors_array.sponsors} title="Auspiciadores" />
               {/if}
             </div>
