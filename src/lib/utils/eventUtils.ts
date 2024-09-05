@@ -34,7 +34,7 @@ export function calculatePrice(ticketsToBuy: number, ticketSystem: any) {
 }
 
 type TicketType = "firsts_tickets" | "seconds_tickets" | "thirds_tickets";
-type Tickets = Record<TicketType, { amount: number }>;
+type Tickets = Record<TicketType, { amount: number, price: number }>;
 
 export function calculateTandas(tickets: Tickets) {
   const partsOrder: TicketType[] = [

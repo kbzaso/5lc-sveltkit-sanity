@@ -61,10 +61,6 @@
     mask-size: 250px;
     mask-repeat: repeat;
   }
-
-  [type="checkbox"]:checked {
-    background-size: 1rem;
-  }
 }
 
 ::view-transition-old(root),

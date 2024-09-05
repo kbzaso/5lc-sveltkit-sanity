@@ -52,6 +52,7 @@ export const eventFields = groq`
     assistance,
     playlist,
     slug,
+    sponsors_array,
     venue,
     sell_type,
     ticket,

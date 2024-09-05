@@ -12,7 +12,7 @@ export const infoLanding = {
     image:
       "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_1500,h_1001/v1/5LC/u69g3iwicq5jtlvyonwp",
     video:
-      "https://res.cloudinary.com/dtj5xnlou/video/upload/f_auto:video,q_auto/yt1mvqeddyok3dqszmpz",
+      "https://res.cloudinary.com/dtj5xnlou/video/upload/f_auto,q_auto/v1725338656/5LC/EXTRACTOS_1.mp4",
   },
   newsletter: {
     title: "¡Suscríbete a nuestro Newsletter!",
