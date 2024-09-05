@@ -1,8 +1,9 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import { onDestroy, onMount } from "svelte";
-  import { TicketX, TicketCheck } from "lucide-svelte";
+  import { TicketX, TicketCheck, Ticket } from "lucide-svelte";
   import type { Event } from "$lib/types";
+  import { disclaimerEvent } from "$lib/stores";
   import {
     calculatePrice,
     calculateTotalQuantity,
@@ -12,7 +13,6 @@
   import { fly, slide } from "svelte/transition";
   export let ticket: any;
   export let sellSystem: any;
-  export let disclaimerEvent: any;
   export let discountResponse: any = null;
   export let discountCodeExist: any;
   export let validatedDiscount: any;
@@ -151,27 +151,14 @@
 
 <button
   disabled={!$disclaimerEvent}
-  class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline"
+  class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline disabled:bg-primary disabled:text-black mask"
   onclick="my_modal_5.showModal()"
 >
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-    stroke="currentColor"
-    class="w-6 h-6"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-    />
-  </svg>
+<Ticket />
   ¡Quiero ir!</button
 >
 {#if !$disclaimerEvent}
-  <p class="text-xs text-error text-center mt-2">
+  <p class="mt-2 badge badge-error w-full rounded-none">
     Debes aceptar el código de conducta
   </p>
 {/if}
@@ -201,7 +188,7 @@
           id="name"
           required
           placeholder="Escribe tú nombre"
-          class="input input-bordered w-full "
+          class="input input-bordered w-full"
         />
       </div>
       <div class="form-control w-full">
@@ -280,7 +267,14 @@
                   handleChange(validatedDiscount);
                 }}
               />
-              <span class="label-text">RINGSIDE </span>
+              <span
+                class="label-text"
+                class:line-through={isCheckboxDisabled("ringside")}
+                >RINGSIDE
+              </span>
+              {#if isCheckboxDisabled("ringside")}
+                <div class="badge badge-error">Agotado</div>
+              {/if}
             </label>
 
             <label
@@ -301,7 +295,14 @@
                   handleChange(validatedDiscount);
                 }}
               />
-              <span class="label-text">GENERAL </span>
+              <span
+                class="label-text"
+                class:line-through={isCheckboxDisabled("general")}
+                >GENERAL
+              </span>
+              {#if isCheckboxDisabled("general")}
+                <div class="badge badge-error">Agotado</div>
+              {/if}
             </label>
           </div>
         </div>

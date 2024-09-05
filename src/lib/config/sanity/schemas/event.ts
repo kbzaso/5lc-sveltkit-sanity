@@ -279,6 +279,56 @@ export default defineType({
       ],
     },
     {
+      name: "sponsors_array",
+      type: "object",
+      title: "Sponsors",
+      hidden: ({ document }) => document?.active === false,
+      fields: [
+        {
+          name: "sponsors",
+          type: "array",
+          title: "Sponsor",
+          of: [
+            {
+              name: "sponsor_image",
+              type: "image",
+              title: "Image",
+              fields: [
+                {
+                  name: "sponsor_name",
+                  type: "string",
+                  title: "Nombre del Sponsor",
+                },
+                {
+                  name: "sponsor_url",
+                  type: "url",
+                  title: "URL del Sponsor",
+                },
+              ],
+            },
+          ],
+          options: {
+            layout: "grid",
+          },
+        },
+      ],
+      preview: {
+        select: {
+          images: "images",
+          image: "images.0",
+        },
+        prepare(selection) {
+          const { images, image } = selection;
+
+          return {
+            title: `Gallery block of ${Object.keys(images).length} images`,
+            subtitle: `Alt text: ${image.alt}`,
+            media: image,
+          };
+        },
+      },
+    },
+    {
       name: "gallery",
       type: "object",
       title: "Galería de fotos",

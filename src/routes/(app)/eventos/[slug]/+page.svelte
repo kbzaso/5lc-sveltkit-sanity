@@ -11,6 +11,7 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
+  import { Ticket } from "lucide-svelte";
   import {
     calculateTandas,
     calculateUbications,
@@ -23,33 +24,38 @@
   import ChatBubble from "$lib/components/events/ChatBubble.svelte";
   import { BellRing, CalendarDays, DoorOpen, MapPin } from "lucide-svelte";
   import Countdown from "$lib/components/events/Countdown.svelte";
-  import discountCodes from "$lib/config/sanity/schemas/discountCodes";
+  import { disclaimerEvent } from "$lib/stores";
+  import Sponsors from "$lib/components/events/Sponsors.svelte";
 
   export let data: PageData;
   export let form;
 
   $: ({ event, validatedDiscount } = data);
 
-  
   $: eventDate = new Date(event?.date);
-  $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", LocaleConfig);
+  $: eventDateFormatted = eventDate.toLocaleDateString("es-CL", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
   $: hours = eventDate.getHours();
   $: minutes = eventDate.getMinutes();
-  
+
   let seo_image = urlForImage(data?.event?.poster).url();
-  
+
   let hasPhotos = [];
-  
+
   interface Tandas {
     index: number;
     amount: number;
     price: number;
     type: string;
   }
-  
+
   let tandas: Tandas[] = [];
   let ubications: any[] = [];
-  
+
   onMount(() => {
     if (event?.active) {
       if (event?.sell_type === "batch") {
@@ -66,9 +72,9 @@
     } else {
       hasPhotos = [];
     }
+    console.log(event.sponsors_array);
   });
 
-  let disclaimerEvent = writable([]);
 </script>
 
 <svelte:head>
@@ -101,23 +107,20 @@
       <Countdown date={eventDate} />
     {/if}
     <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
-      <div id="event" class="h-fit flex flex-col lg:flex-row md:gap-4 lg:gap-0">
-        <div class="relative overflow-hidden">
-          <div
-            class="absolute w-[640px] h-72 -bottom-5 lg:w-72 lg:h-full z-10 md:top-[480px] lg:top-0 lg:left-[280px] xl:left-[330px] bg-gradient-to-t lg:bg-gradient-to-l from-black/100 via-black/60 to-transparent"
-          />
-          <img
-            class="object-contain md:rounded-sm poster"
-            loading="lazy"
-            width="600"
-            height="750"
-            src={urlForImage(data.event.poster).width(600).height(750).url()}
-            alt="Afiche del próximo evento"
-          />
-        </div>
-        <div class="z-10 relative -top-20 lg:top-0 lg:-left-12 px-4 lg:px-0">
+      <div id="event" class={`relative h-fit flex  ${event?.active ? 'flex-col' : 'flex-col lg:flex-row'} md:gap-4 lg:gap-0`}>
+        <img
+          class={`${event?.active ? 'object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-40' : 'object-contain w-full lg:w-1/2' }  md:rounded-sm maskImages`}
+          loading="lazy"
+          width="800"
+          height="1000"
+          src={urlForImage(data.event.poster).width(800).height(1000).url()}
+          alt="Afiche del evento"
+        />
+        <div
+          class={`z-10 ${event?.active ? 'absolute lg:left-[50%] lg:-translate-x-[50%] top-[50%] -translate-y-[50%]' : 'relative -top-40 md:top-0'} px-4 w-full`}
+        >
           <div class="mt-4 lg:mt-0">
-            <div class="mx-auto text-base lg:ml-auto lg:mr-0">
+            <div class="mx-auto text-white lg:ml-auto lg:mr-0">
               <!-- EVENTO PASADO -->
               {#if !event?.active}
                 <time
@@ -178,19 +181,70 @@
               <!-- EVENTO ACTIVO -->
               {#if event?.active}
                 <h2
-                  class="font-semibold text-primary uppercase tracking-widest"
+                  class="text-primary uppercase tracking-widest text-sm text-center mb-4"
                 >
                   Próximo evento
                 </h2>
-                <h1 class="mt-2 text-5xl font-bold mask text-white">
+                <h1
+                  class="text-5xl lg:text-7xl font-bold mask text-white text-center"
+                >
                   {event.title}
                 </h1>
-                <div class="prose prose-indigo mt-5 text-white">
-                  <p>
+                <div
+                  class="text-white text-lg lg:text-2xl md:text-3xl text-center space-y-8"
+                >
+                  <p class="max-w-2xl mx-auto mt-2">
                     <PortableText value={event?.description} components={{}} />
                   </p>
-
-                  <ul class="list-none o-0">
+                  <div class="flex lg:flex-row flex-col gap-2 justify-center">
+                    <span class="text-lg flex gap-2 justify-center">
+                      <CalendarDays class="stroke-primary" />
+                      <time datetime={eventDateFormatted}>
+                        {eventDateFormatted.charAt(0).toUpperCase() +
+                          eventDateFormatted.slice(1)}
+                      </time>
+                      -
+                      <time class="uppercase" datetime={eventDateFormatted}>
+                        {new Intl.DateTimeFormat("es-CL", {
+                          hour: "numeric",
+                          minute: "numeric",
+                          timeZone: "America/Santiago",
+                        }).format(eventDate)}
+                      </time>
+                    </span>
+                    {#if event.boveda}
+                      <div class="flex items-center gap-2 justify-center">
+                        <MapPin class="stroke-primary" />
+                        <div class="text-lg">
+                          Bóveda Secreta - <a
+                            class="text-primary underline"
+                            target="_blank"
+                            rel="noreferrer"
+                            href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
+                          >
+                            San Antonio 705, Santiago.</a
+                          >
+                        </div>
+                      </div>
+                    {:else}
+                      <div class="flex items-center gap-2 justify-center">
+                        <MapPin class="stroke-primary" />
+                        <div class="text-lg">
+                          {event.venue?.venueName} -
+                          <a
+                            class="text-primary underline"
+                            target="_blank"
+                            rel="noreferrer"
+                            href={event.venue?.venueUrl}
+                          >
+                            {event.venue?.venueAdress}</a
+                          >
+                        </div>
+                      </div>
+                    {/if}
+                  </div>
+                  <!-- LISTA -->
+                  <!-- <ul class="list-none o-0">
                     <li class="flex items-center gap-2">
                       <CalendarDays class="stroke-primary" />
                       <time datetime={eventDateFormatted}>
@@ -269,103 +323,78 @@
                       y
                       <span class="text-primary">Puente Cal y Canto</span>.
                     </p>
-                  {/if}
+                  {/if} -->
                 </div>
-                {#if validatedDiscount?.success && event?.active}
-                  <ChatBubble />
-                {/if}
-                <div class="flex gap-8 my-8 flex-col md:flex-row">
-                  {#if event.sell_type === "batch"}
-                    {#each tandas as tanda}
-                      <TandasTicketsCard
-                        ticket={tanda}
-                        dicountPercentage={validatedDiscount?.percentage}
-                      />
-                    {/each}
-                  {:else}
-                    {#each ubications as ubication}
-                      <UbicationTicketsCard
-                        ticket={ubication}
-                        dicountPercentage={validatedDiscount?.percentage}
-                      />
-                    {/each}
-                  {/if}
-                </div>
-                <!-- PROGRESS -->
-                <!-- <div>
-                    <div class="flex justify-between">
-                      <span class="text-gray-400"
-                        >🎟️ {event?.ticket?.seconds_tickets
-                          ?.amount <= 10
-                          ? "¡Últimas entradas!, no te quedes fuera."
-                          : "Progreso de venta de tickets"}</span
-                      >
-                      <span class="animate-bounce">🔥</span>
-                    </div>
-                    <progress
-                      class={`progress w-full ${
-                        event?.ticket?.firsts_tickets?.amount !== 0
-                          ? "progress-success"
-                          : event?.ticket?.seconds_tickets
-                              ?.amount !== 0
-                          ? "progress-info"
-                          : "progress-error"
-                      }`}
-                      value={event?.tickets_sold}
-                      max={event?.total_tickets}
-                    />
-                  </div> -->
-
-                {#if (data.totalTicketsLeftStudio === 0 && event?.active) || !event?.sell}
-                  <div
-                    class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      ><path
-                        fill="currentColor"
-                        d="M7 21v-3.904q-.917-.386-1.655-1.012q-.737-.626-1.26-1.43q-.522-.804-.803-1.733Q3 11.992 3 11q0-3.527 2.52-5.763Q8.04 3 11.998 3t6.48 2.237Q21 7.473 21 11q0 .992-.282 1.921t-.804 1.733q-.522.804-1.26 1.43q-.737.626-1.654 1.016V21zm1-1h1.423v1h1.539v-1h2.076v1h1.539v-1H16v-3.55q.912-.283 1.65-.817q.737-.535 1.262-1.251q.525-.716.806-1.581Q20 11.937 20 11q0-3.125-2.212-5.062T12 4Q8.425 4 6.212 5.938T4 11q0 .937.282 1.801q.281.864.806 1.58q.525.717 1.266 1.252q.74.534 1.646.817zm2.692-4.827h2.616L12 12.558zm-2.189-2.558q.668 0 1.14-.475q.472-.476.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.475q-.472.476-.472 1.143t.475 1.14q.476.472 1.143.472m7 0q.668 0 1.14-.475q.472-.476.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.475q-.472.476-.472 1.143t.475 1.14q.476.472 1.143.472M8 20v-3.55q-.906-.283-1.646-.817q-.74-.535-1.266-1.251q-.525-.716-.806-1.581Q4 11.937 4 11q0-3.125 2.213-5.062T12 4q3.575 0 5.788 1.938T20 11q0 .937-.282 1.801q-.281.864-.806 1.58q-.525.717-1.263 1.252q-.737.534-1.649.817V20h-1.423v-.923h-1.539V20h-2.076v-.923H9.423V20z"
-                      /></svg
-                    >
-
-                    <span class="uppercase tracking-widest"
-                      >Adhesión agotada</span
-                    >
-                  </div>
-                {:else}
-                  <div class="mt-4">
-                    {#if event?.disclaimers}
-                      <DisclaimerModal
-                        disclaimers={event?.disclaimers}
-                        {disclaimerEvent}
-                      />
-                      <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
-                      <ModalTicketsSell
-                        discountCodeExist={event?.discounts}
-                        discountResponse={form}
-                        {validatedDiscount}
-                        sellSystem={event?.sell_type}
-                        ticket={event?.sell_type === "ubication"
-                          ? event?.ticket?.ubication
-                          : event?.ticket?.batch}
-                        {disclaimerEvent}
-                      />
-                      <!-- <ModalTickets
-                        nextEvent={event}
-                        {disclaimerEvent}
-                      /> -->
-                    {/if}
-                  </div>
-                {/if}
               {/if}
+              <!-- /EVENTO ACTIVO -->
             </div>
           </div>
         </div>
       </div>
+      {#if event?.active}
+        <div class="mx-auto px-4 max-w-4xl mt-16 lg:mt-28">
+          <h3 class="text-3xl font-ibm italic text-white mask text-center">
+            Adhierete ahora
+          </h3>
+          {#if event.sell_type === "batch"}
+            <div class="flex gap-8 my-8 flex-col md:flex-row">
+              {#each tandas as tanda}
+                <TandasTicketsCard
+                  ticket={tanda}
+                  dicountPercentage={validatedDiscount?.percentage}
+                />
+              {/each}
+            </div>
+          {/if}
+
+          {#if event.sell_type === "ubication"}
+            <div class="flex gap-4 mt-4 flex-col md:flex-row">
+              {#each ubications as ubication}
+                <UbicationTicketsCard
+                  ticket={ubication}
+                  dicountPercentage={validatedDiscount?.percentage}
+                />
+              {/each}
+            </div>
+          {/if}
+
+          {#if (data.totalTicketsLeftStudio === 0 && event?.active) || !event?.sell}
+            <div
+              class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
+            >
+              <Ticket />
+              <span class="uppercase tracking-widest">Adhesión agotada</span>
+            </div>
+          {:else}
+            <div class="mt-4">
+              {#if event?.disclaimers}
+                <DisclaimerModal
+                  disclaimers={event?.disclaimers}
+                  {disclaimerEvent}
+                />
+                <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
+                <ModalTicketsSell
+                  discountCodeExist={event?.discounts}
+                  discountResponse={form}
+                  {validatedDiscount}
+                  sellSystem={event?.sell_type}
+                  ticket={event?.sell_type === "ubication"
+                    ? event?.ticket?.ubication
+                    : event?.ticket?.batch}
+                />
+              {/if}
+              {#if event?.sponsors_array?.sponsors.length > 0}
+                <Sponsors sponsors={event.sponsors_array.sponsors} title="Auspiciadores" />
+              {/if}
+            </div>
+          {/if}
+        </div>
+      {/if}
     </div>
+
+    {#if validatedDiscount?.success && event?.active}
+      <ChatBubble />
+    {/if}
 
     {#if hasPhotos.length > 0}
       <section class="md:mt-20">

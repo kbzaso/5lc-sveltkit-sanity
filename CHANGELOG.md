@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Countdown not show when discount code was applied throught params query
 - Down the resolution of the Hero background video
+- New active event design
 
 ## [0.0.58] - 2024-09-02
 
