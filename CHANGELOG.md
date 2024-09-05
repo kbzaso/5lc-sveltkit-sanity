@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.59] - 2024-09-05
+
 ### Fix
 
 - Countdown not show when discount code was applied throught params query
@@ -372,7 +374,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.58...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.59...HEAD
+[0.0.59]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.58...0.0.59
 [0.0.58]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.57...0.0.58
 [0.0.57]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.56...0.0.57
 [0.0.56]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.55...0.0.56
