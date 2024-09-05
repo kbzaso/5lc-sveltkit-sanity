@@ -391,6 +391,12 @@ export default defineType({
       },
     },
     {
+      name: "promotion_video",
+      type: "url",
+      title: "URL del vide promocional",
+      hidden: ({ document }) => document?.active === false,
+    },
+    {
       name: "videoUrl",
       type: "url",
       title: "URL de la grabación del evento",

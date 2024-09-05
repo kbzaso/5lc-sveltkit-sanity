@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Topbar for alerts
 - Add paper texture to the ticket in slug event
+- Add promotional video input on events
 
 ## [0.0.59] - 2024-09-05
 
