@@ -25,6 +25,7 @@
   import { BellRing, CalendarDays, DoorOpen, MapPin } from "lucide-svelte";
   import Countdown from "$lib/components/events/Countdown.svelte";
   import { disclaimerEvent } from "$lib/stores";
+  import Sponsors from "$lib/components/events/Sponsors.svelte";
 
   export let data: PageData;
   export let form;
@@ -71,7 +72,9 @@
     } else {
       hasPhotos = [];
     }
+    console.log(event.sponsors_array);
   });
+
 </script>
 
 <svelte:head>
@@ -104,9 +107,9 @@
       <Countdown date={eventDate} />
     {/if}
     <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
-      <div id="event" class="relative h-fit flex flex-col md:gap-4 lg:gap-0">
+      <div id="event" class={`relative h-fit flex  ${event?.active ? 'flex-col' : 'flex-col lg:flex-row'} md:gap-4 lg:gap-0`}>
         <img
-          class="object-cover blur-sm object-top md:w-full h-96 md:h-[500px] md:rounded-sm poster opacity-40 maskImages"
+          class={`${event?.active ? 'object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-40' : 'object-contain w-full lg:w-1/2' }  md:rounded-sm maskImages`}
           loading="lazy"
           width="800"
           height="1000"
@@ -114,10 +117,10 @@
           alt="Afiche del evento"
         />
         <div
-          class="z-10 absolute lg:left-[50%] lg:-translate-x-[50%] top-[50%] -translate-y-[50%] px-4 lg:w-max"
+          class={`z-10 ${event?.active ? 'absolute lg:left-[50%] lg:-translate-x-[50%] top-[50%] -translate-y-[50%]' : 'relative -top-40 md:top-0'} px-4 w-full`}
         >
           <div class="mt-4 lg:mt-0">
-            <div class="mx-auto text-base lg:ml-auto lg:mr-0">
+            <div class="mx-auto text-white lg:ml-auto lg:mr-0">
               <!-- EVENTO PASADO -->
               {#if !event?.active}
                 <time
@@ -188,7 +191,7 @@
                   {event.title}
                 </h1>
                 <div
-                  class="text-white text-2xl md:text-3xl text-center space-y-8"
+                  class="text-white text-lg lg:text-2xl md:text-3xl text-center space-y-8"
                 >
                   <p class="max-w-2xl mx-auto mt-2">
                     <PortableText value={event?.description} components={{}} />
@@ -323,64 +326,70 @@
                   {/if} -->
                 </div>
               {/if}
+              <!-- /EVENTO ACTIVO -->
             </div>
           </div>
         </div>
       </div>
-      <div class="mx-auto px-4 max-w-4xl mt-10">
-        <h3 class="text-3xl font-ibm italic text-white mask text-center">
-          Adhierete ahora
-        </h3>
-        {#if event.sell_type === "batch"}
-          <div class="flex gap-8 my-8 flex-col md:flex-row">
-            {#each tandas as tanda}
-              <TandasTicketsCard
-                ticket={tanda}
-                dicountPercentage={validatedDiscount?.percentage}
-              />
-            {/each}
-          </div>
-        {/if}
+      {#if event?.active}
+        <div class="mx-auto px-4 max-w-4xl mt-16 lg:mt-28">
+          <h3 class="text-3xl font-ibm italic text-white mask text-center">
+            Adhierete ahora
+          </h3>
+          {#if event.sell_type === "batch"}
+            <div class="flex gap-8 my-8 flex-col md:flex-row">
+              {#each tandas as tanda}
+                <TandasTicketsCard
+                  ticket={tanda}
+                  dicountPercentage={validatedDiscount?.percentage}
+                />
+              {/each}
+            </div>
+          {/if}
 
-        {#if event.sell_type === "ubication"}
-          <div class="flex gap-4 mt-4 flex-col md:flex-row">
-            {#each ubications as ubication}
-              <UbicationTicketsCard
-                ticket={ubication}
-                dicountPercentage={validatedDiscount?.percentage}
-              />
-            {/each}
-          </div>
-        {/if}
+          {#if event.sell_type === "ubication"}
+            <div class="flex gap-4 mt-4 flex-col md:flex-row">
+              {#each ubications as ubication}
+                <UbicationTicketsCard
+                  ticket={ubication}
+                  dicountPercentage={validatedDiscount?.percentage}
+                />
+              {/each}
+            </div>
+          {/if}
 
-        {#if (data.totalTicketsLeftStudio === 0 && event?.active) || !event?.sell}
-          <div
-            class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
-          >
-            <Ticket />
-            <span class="uppercase tracking-widest">Adhesión agotada</span>
-          </div>
-        {:else}
-          <div class="mt-4">
-            {#if event?.disclaimers}
-              <DisclaimerModal
-                disclaimers={event?.disclaimers}
-                {disclaimerEvent}
-              />
-              <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
-              <ModalTicketsSell
-                discountCodeExist={event?.discounts}
-                discountResponse={form}
-                {validatedDiscount}
-                sellSystem={event?.sell_type}
-                ticket={event?.sell_type === "ubication"
-                  ? event?.ticket?.ubication
-                  : event?.ticket?.batch}
-              />
-            {/if}
-          </div>
-        {/if}
-      </div>
+          {#if (data.totalTicketsLeftStudio === 0 && event?.active) || !event?.sell}
+            <div
+              class="alert bg-zinc-900/75 border-none backdrop-blur-sm shadow-lg flex justify-center rounded-none mt-4"
+            >
+              <Ticket />
+              <span class="uppercase tracking-widest">Adhesión agotada</span>
+            </div>
+          {:else}
+            <div class="mt-4">
+              {#if event?.disclaimers}
+                <DisclaimerModal
+                  disclaimers={event?.disclaimers}
+                  {disclaimerEvent}
+                />
+                <!-- CONDICIONAL DE QUE MODAL SE CARGA SI ES DE BATCH O DE UBICATION -->
+                <ModalTicketsSell
+                  discountCodeExist={event?.discounts}
+                  discountResponse={form}
+                  {validatedDiscount}
+                  sellSystem={event?.sell_type}
+                  ticket={event?.sell_type === "ubication"
+                    ? event?.ticket?.ubication
+                    : event?.ticket?.batch}
+                />
+              {/if}
+              {#if event?.sponsors_array.sponsors.length > 0}
+                <Sponsors sponsors={event.sponsors_array.sponsors} title="Auspiciadores" />
+              {/if}
+            </div>
+          {/if}
+        </div>
+      {/if}
     </div>
 
     {#if validatedDiscount?.success && event?.active}

@@ -151,14 +151,14 @@
 
 <button
   disabled={!$disclaimerEvent}
-  class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline"
+  class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline disabled:bg-primary disabled:text-black mask"
   onclick="my_modal_5.showModal()"
 >
 <Ticket />
   ¡Quiero ir!</button
 >
 {#if !$disclaimerEvent}
-  <p class="text-sm text-error text-center mt-2">
+  <p class="mt-2 badge badge-error w-full rounded-none">
     Debes aceptar el código de conducta
   </p>
 {/if}
