@@ -18,6 +18,7 @@ import settingType from "$lib/config/sanity/schemas/settings";
 import welcomeType from "$lib/config/sanity/schemas/welcome";
 import disclaimerType from "$lib/config/sanity/schemas/disclaimer";
 import discountType from "$lib/config/sanity/schemas/discountCodes";
+import faqType from "$lib/config/sanity/schemas/faq";
 /*------------------------------------*/
 
 export default defineConfig({
@@ -27,7 +28,7 @@ export default defineConfig({
   title: app.appName + " - Studio",
   schema: {
     // If you want more content types, you can add them to this array
-    types: [staffType, authorType, settingType, welcomeType, eventType, disclaimerType, discountType],
+    types: [staffType, authorType, settingType, welcomeType, eventType, disclaimerType, discountType, faqType],
   },
   plugins: [
     deskTool({

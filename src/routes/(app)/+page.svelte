@@ -13,7 +13,7 @@
   import WhoWeAre from "$lib/components/WhoWeAre.svelte";
   import Statistics from "$lib/components/Statistics.svelte";
   import Video from "$lib/components/Video.svelte";
-  import { infoLanding } from "$lib/const";
+  import { infoLanding, faq } from "$lib/const";
 
   export let data: PageData;
 
@@ -130,7 +130,7 @@
   <Slider items={allStaff} reverse={false} />
   <Slider items={allStaff2} reverse={true} />
   <WhoWeAre />
-  <Faq />
+  <Faq questions={faq} />
   <Hero
     info={infoLanding.cta}
     containerClass={"min-h-[450px] lg:min-h-[600px] container"}

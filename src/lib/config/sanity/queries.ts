@@ -54,6 +54,15 @@ export const eventFields = groq`
     slug,
     sponsors_array,
     promotion_video,
+    "faq": faq[] -> {
+      title,
+    faq {
+      doubt[] {
+          question,
+          answer
+      }
+    }
+    },
     venue,
     sell_type,
     ticket,
@@ -115,7 +124,7 @@ export const allStaffQuery = groq`
   pseudonym,
   slug,
   
-}`
+}`;
 
 export const allStaffQuery2 = groq`
 *[_type == "staff" && title == "Gárate" || title == "Billy Rocka" || title == "Iván Navarro" || title == "Natalia Stack" || title == "Anarko Montaña" || title == "Máximo" || title == "Alissa Webb" || title == "Alcold" || title == "Mansilla" || title == "Cris Santana"] {
@@ -123,7 +132,7 @@ export const allStaffQuery2 = groq`
   staffImage,
   pseudonym,
   slug,
-}`
+}`;
 
 export const allAnnonceursQuery = groq`
 *[_type == "staff" && staffType == "annonceurs"] | order(title asc) {
