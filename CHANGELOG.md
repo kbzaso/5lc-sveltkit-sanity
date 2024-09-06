@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.61] - 2024-09-06
+
 ### Add
 
 - Faq on events
@@ -388,7 +390,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Several UI fixes in next event, and add price format
 
 [unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.60...HEAD
-[0.0.59]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.59...0.0.60
+[0.0.61]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.60...0.0.61
+[0.0.60]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.59...0.0.60
 [0.0.59]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.58...0.0.59
 [0.0.58]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.57...0.0.58
 [0.0.57]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.56...0.0.57
