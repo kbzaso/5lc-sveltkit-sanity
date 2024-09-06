@@ -22,11 +22,14 @@
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
   import { urlForImage } from "$lib/config/sanity";
   import ChatBubble from "$lib/components/events/ChatBubble.svelte";
-  import { BellRing, CalendarDays, DoorOpen, MapPin } from "lucide-svelte";
+  import { MapPin } from "lucide-svelte";
   import Countdown from "$lib/components/events/Countdown.svelte";
   import { disclaimerEvent } from "$lib/stores";
   import Sponsors from "$lib/components/events/Sponsors.svelte";
   import Video from "$lib/components/Video.svelte";
+  import Doubt from "$lib/components/events/Doubt.svelte";
+  import Faq from "$lib/components/Faq.svelte";
+  import { faq } from "$lib/const";
 
   export let data: PageData;
   export let form;
@@ -107,9 +110,18 @@
       <Countdown date={eventDate} />
     {/if}
     <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
-      <div id="event" class={`relative h-fit flex  ${event?.active ? 'flex-col' : 'flex-col lg:flex-row'} md:gap-4 lg:gap-0`}>
+      <div
+        id="event"
+        class={`relative h-fit flex  ${
+          event?.active ? "flex-col" : "flex-col lg:flex-row"
+        } md:gap-4 lg:gap-0`}
+      >
         <img
-          class={`${event?.active ? 'object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-40' : 'object-contain w-full lg:w-1/2' }  md:rounded-sm maskImages`}
+          class={`${
+            event?.active
+              ? "object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-40"
+              : "object-contain w-full lg:w-1/2"
+          }  md:rounded-sm maskImages`}
           loading="lazy"
           width="800"
           height="1000"
@@ -117,7 +129,11 @@
           alt="Afiche del evento"
         />
         <div
-          class={`z-10 ${event?.active ? 'absolute lg:left-[50%] lg:-translate-x-[50%] top-[50%] -translate-y-[50%]' : 'relative -top-40 md:top-0'} px-4 w-full`}
+          class={`z-10 ${
+            event?.active
+              ? "absolute lg:left-[50%] lg:-translate-x-[50%] top-[50%] -translate-y-[50%]"
+              : "relative -top-40 md:top-0"
+          } px-4 w-full`}
         >
           <div class="mt-4 lg:mt-0">
             <div class="mx-auto text-white lg:ml-auto lg:mr-0">
@@ -198,7 +214,6 @@
                   </p>
                   <div class="flex lg:flex-row flex-col gap-2 justify-center">
                     <span class="text-lg flex gap-2 justify-center">
-                      <CalendarDays class="stroke-primary" />
                       <time datetime={eventDateFormatted}>
                         {eventDateFormatted.charAt(0).toUpperCase() +
                           eventDateFormatted.slice(1)}
@@ -213,21 +228,20 @@
                       </time>
                     </span>
                     {#if event.boveda}
-                      <div class="flex items-center gap-2 justify-center">
-                        <MapPin class="stroke-primary" />
-                        <div class="text-lg">
-                          Bóveda Secreta - <a
-                            class="text-primary underline"
+                      <div >
+                        <p class="text-lg">
+                          Bóveda Secreta <a 
+                            class="text-primary underline truncate"
                             target="_blank"
                             rel="noreferrer"
                             href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
                           >
                             San Antonio 705, Santiago.</a
                           >
-                        </div>
+                        </p>
                       </div>
                     {:else}
-                      <div class="flex items-center gap-2 justify-center">
+                      <div class="text-lg flex gap-2 justify-center">
                         <MapPin class="stroke-primary" />
                         <div class="text-lg">
                           {event.venue?.venueName} -
@@ -334,7 +348,7 @@
       {#if event?.active}
         <div class="mx-auto px-4 max-w-4xl mt-16 lg:mt-28">
           <h3 class="text-3xl font-ibm italic text-white mask text-center">
-            Adhierete ahora
+            Asegura tu cupo
           </h3>
           {#if event.sell_type === "batch"}
             <div class="flex gap-8 my-8 flex-col md:flex-row">
@@ -348,7 +362,7 @@
           {/if}
 
           {#if event.sell_type === "ubication"}
-            <div class="flex gap-4 mt-4 flex-col md:flex-row ">
+            <div class="flex gap-4 mt-4 flex-col md:flex-row">
               {#each ubications as ubication}
                 <UbicationTicketsCard
                   ticket={ubication}
@@ -384,11 +398,21 @@
                 />
               {/if}
               {#if event?.promotion_video}
-              <Video title='¿Qué dicen los asistentes a 5 Luchas Clandestino?' url={event?.promotion_video} />
+                <Video
+                  title={event?.promotion_video.title}
+                  url={event?.promotion_video.url}
+                />
               {/if}
               {#if event?.sponsors_array?.sponsors.length > 0}
-                <Sponsors sponsors={event.sponsors_array.sponsors} title="Auspiciadores" />
+                <Sponsors
+                  sponsors={event.sponsors_array.sponsors}
+                  title="Auspiciadores"
+                />
               {/if}
+              {#if event?.faq}
+                <Faq questions={event?.faq[0].faq.doubt}/>
+              {/if}
+              <Doubt />
             </div>
           {/if}
         </div>

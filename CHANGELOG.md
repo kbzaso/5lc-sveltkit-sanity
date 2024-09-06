@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Faq on events
+- Add CTA on events
+
 ## [0.0.60] - 2024-09-05
 
 ### Add

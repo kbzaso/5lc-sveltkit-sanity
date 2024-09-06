@@ -392,10 +392,23 @@ export default defineType({
     },
     {
       name: "promotion_video",
-      type: "url",
-      title: "URL del vide promocional",
+      type: "object",
+      title: "Video promocional",
       hidden: ({ document }) => document?.active === false,
+      fields: [
+        {
+          name: "title",
+          type: "string",
+          title: "Titulo del video promocional (Aparecera arriba del video)",
+        },
+        {
+          name: "url",
+          type: "url",
+          title: "URL del video promocional",
+        },
+      ],
     },
+    
     {
       name: "videoUrl",
       type: "url",
@@ -454,6 +467,21 @@ export default defineType({
         {
           type: "reference",
           to: [{ type: "disclaimer" }],
+        },
+      ],
+    },
+    {
+      name: "faq",
+      title: "Faqs",
+      type: "array",
+      hidden: ({ document }) => document?.active === false,
+      validation: (Rule) => Rule.unique(),
+      description:
+        "Debes seleccionar el conjunto de preguntas",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "faqs" }],
         },
       ],
     },
