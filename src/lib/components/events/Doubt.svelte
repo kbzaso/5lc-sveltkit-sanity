@@ -1,28 +1,20 @@
-<script lang="ts">
-  // You can add any necessary imports here
-</script>
-
-<section class="container mx-auto py-16 md:py-24">
-  <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
-    <div class="w-full md:w-1/2 h-full">
+  <div class="flex flex-col gap-8 max-w-4xl mx-auto mt-10">
+    <div class="relative w-full overflow-hidden ">
       <img
         src="https://res.cloudinary.com/dtj5xnlou/image/upload/v1725640461/5LC/sara_cta.jpg"
         alt="Luchadora en el ring"
-        class="w-full h-96 object-cover w"
+        class="w-full h-auto"
+        width={1200}
+        height={600}
       />
-    </div>
-    <div class="w-full md:w-1/2 space-y-6">
-      <h2 class="text-3xl md:text-5xl font-ibm italic text-primary">
-        ¿Aún no estái' seguro de ir?
-      </h2>
-      <p class="text-lg">¡Escríbenos y te guiamos!</p>
-      <div class="flex flex-col sm:flex-row gap-4">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-6 text-white flex flex-col items-center">
+        <h3 class="text-3xl drop-shadow-md md:text-4xl font-ibm italic mb-2 text-center">¿Aún no estái' seguro de ir?</h3>
         <button data-tally-hide-title="1" data-tally-auto-close="5000" data-tally-open="w5vZoZ" data-tally-overlay="1" data-tally-emoji-text="🤔" data-tally-emoji-animation="wave"
-          class="btn btn-primary"
+          class="btn btn-primary mt-4 w-full max-w-sm"
         >
-          Contactar
+        ¡Escríbenos y te guiamos!
         </button>
       </div>
     </div>
   </div>
-</section>

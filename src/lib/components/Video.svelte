@@ -14,22 +14,20 @@
   onMount(() => {
     // Verifica si la ruta actual es la base
     isBaseRoute = location.pathname === '/';
-
-    console.log(isBaseRoute)
   });
 </script>
 
 <section
   class="container mx-auto max-w-6xl flex flex-col items-center relative mt-20"
 >
-  <h3 class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4">
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
-      >k</span
-    >
+  <h3 class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4">
+    <!-- <span aria-hidden="true"
+    class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
+  > -->
     {title}
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
-      >k</span
-    >
+    <span aria-hidden="true"
+        class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
+      >
   </h3>
   <div
     class={`${isBaseRoute ? 'hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16' : 'hidden'}`}
@@ -50,7 +48,7 @@
       >U</span
     >
   </div>
-  <div class="container max-w-3xl lg:mb-20 z-10">
+  <div class="lg:mb-20 z-10">
     <Youtube id={videoId} animations={false} --title-color={"transparent"}>
       <button class="bg-black/50 rounded-full p-4"
         ><YTIcon class="stroke-primary w-10 h-10" /></button
