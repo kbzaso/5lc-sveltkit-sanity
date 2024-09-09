@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Gallery images for matches on slug event
+
 ## [0.0.61] - 2024-09-06
 
 ### Add

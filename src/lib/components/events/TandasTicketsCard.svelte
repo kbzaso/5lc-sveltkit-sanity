@@ -26,7 +26,7 @@
 
 <div
   class:opacity-25={ticket.amount === 0}
-  class={`w-full border p-2 indicator flex flex-col justify-center items-center pt-2 max-w-sm min-h-16 ${
+  class={`w-full border p-2 indicator flex flex-col justify-center items-center pt-2 min-h-16 ${
     ticket.type === "firsts_tickets"
       ? "border-success"
       : ticket?.type === "seconds_tickets"

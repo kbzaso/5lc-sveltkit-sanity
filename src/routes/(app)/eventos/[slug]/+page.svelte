@@ -29,7 +29,7 @@
   import Video from "$lib/components/Video.svelte";
   import Doubt from "$lib/components/events/Doubt.svelte";
   import Faq from "$lib/components/Faq.svelte";
-  import { faq } from "$lib/const";
+  import Cartelera from "$lib/components/events/Cartelera.svelte";
 
   export let data: PageData;
   export let form;
@@ -76,8 +76,8 @@
     } else {
       hasPhotos = [];
     }
+    console.log(event?.billboard);
   });
-
 </script>
 
 <svelte:head>
@@ -228,9 +228,9 @@
                       </time>
                     </span>
                     {#if event.boveda}
-                      <div >
+                      <div>
                         <p class="text-lg">
-                          Bóveda Secreta <a 
+                          Bóveda Secreta <a
                             class="text-primary underline truncate"
                             target="_blank"
                             rel="noreferrer"
@@ -403,21 +403,24 @@
                   url={event?.promotion_video.url}
                 />
               {/if}
+              {#if event?.billboard?.images.length > 0}
+                <Cartelera billboard={event.billboard.images} />
+              {/if}
+              {#if event?.faq}
+                <Faq questions={event?.faq[0].faq.doubt} />
+              {/if}
               {#if event?.sponsors_array?.sponsors.length > 0}
                 <Sponsors
                   sponsors={event.sponsors_array.sponsors}
                   title="Auspiciadores"
                 />
               {/if}
-              {#if event?.faq}
-                <Faq questions={event?.faq[0].faq.doubt}/>
-              {/if}
-              <Doubt />
             </div>
           {/if}
         </div>
       {/if}
     </div>
+    <Doubt />
 
     {#if validatedDiscount?.success && event?.active}
       <ChatBubble />

@@ -391,6 +391,68 @@ export default defineType({
       },
     },
     {
+      name: "billboard",
+      type: "object",
+      title: "Luchas confirmadas",
+      hidden: ({ document }) => document?.active === false,
+      fields: [
+        {
+          name: "images",
+          type: "array",
+          title: "Images",
+          of: [
+            {
+              name: "image",
+              type: "image",
+              title: "Image",
+              fields: [
+                {
+                  name: "type_of_match",
+                  type: "string",
+                  title: "Tipo de lucha",
+                },
+                {
+                  name: "referenceStaff",
+                  title: "Staff",
+                  type: "array",
+                  description: "Equipo que participa en la lucha",
+                  hidden: ({ document }) => document?.active === false,
+                  validation: (Rule) => Rule.unique(),
+                  of: [
+                    {
+                      type: "reference",
+                      to: [{ type: "staff" }],
+                    },
+                  ],
+                  options: {
+                    layout: "grid",
+                  },
+                },
+              ],
+            },
+          ],
+          options: {
+            layout: "grid",
+          },
+        },
+      ],
+      preview: {
+        select: {
+          images: "images",
+          image: "images.0",
+        },
+        prepare(selection) {
+          const { images, image } = selection;
+
+          return {
+            title: `Gallery block of ${Object.keys(images).length} images`,
+            subtitle: `Alt text: ${image.alt}`,
+            media: image,
+          };
+        },
+      },
+    },
+    {
       name: "promotion_video",
       type: "object",
       title: "Video promocional",
