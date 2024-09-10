@@ -53,6 +53,7 @@ export const eventFields = groq`
     playlist,
     slug,
     billboard,
+    tournament_billboard,
     sponsors_array,
     promotion_video,
     "faq": faq[] -> {
