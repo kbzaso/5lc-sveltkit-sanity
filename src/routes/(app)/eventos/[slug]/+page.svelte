@@ -76,7 +76,6 @@
     } else {
       hasPhotos = [];
     }
-    console.log(event?.billboard);
   });
 </script>
 
@@ -242,7 +241,6 @@
                       </div>
                     {:else}
                       <div class="text-lg flex gap-2 justify-center">
-                        <MapPin class="stroke-primary" />
                         <div class="text-lg">
                           {event.venue?.venueName} -
                           <a
@@ -362,7 +360,7 @@
           {/if}
 
           {#if event.sell_type === "ubication"}
-            <div class="flex gap-4 mt-4 flex-col md:flex-row">
+            <div class="flex gap-4 mt-4">
               {#each ubications as ubication}
                 <UbicationTicketsCard
                   ticket={ubication}
@@ -404,6 +402,7 @@
                 />
               {/if}
               {#if event?.billboard?.images.length > 0}
+                <Cartelera billboard={event.tournament_billboard.images} title="Luchas del Torneo" />
                 <Cartelera billboard={event.billboard.images} />
               {/if}
               {#if event?.faq}
@@ -420,7 +419,9 @@
         </div>
       {/if}
     </div>
-    <Doubt />
+    {#if event?.active}
+      <Doubt />
+    {/if}
 
     {#if validatedDiscount?.success && event?.active}
       <ChatBubble />

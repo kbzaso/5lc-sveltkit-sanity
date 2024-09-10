@@ -3,6 +3,7 @@
   import { TinySlider } from "svelte-tiny-slider";
 
   export let billboard;
+  export let title: string = "Cartelera";
 </script>
 
 <section class="mt-10">
@@ -12,12 +13,12 @@
     <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
       >k</span
     >
-    Cartelera confirmada
+    {title}
     <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
       >k</span
     >
   </h3>
-  <div id="catelera" class="grid sm:grid-cols-2 gap-4">
+  <div id="catelera" class={`${billboard.length > 2 ? "columns-2 md:columns-3" : "columns-1 md:columns-2"} gap-4`}>
   {#each billboard as image}
       <img
         class="w-full h-auto"
