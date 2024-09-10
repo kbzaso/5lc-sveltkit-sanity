@@ -18,7 +18,7 @@
       >k</span
     >
   </h3>
-  <div id="catelera" class={`${billboard.length > 2 ? "columns md:columns-3" : "columns-2å"} gap-4`}>
+  <div id="catelera" class={`${billboard.length > 2 ? "columns md:columns-3" : "columns-2"} gap-4`}>
   {#each billboard as image}
       <img
         class="w-full h-auto"
