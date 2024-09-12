@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.64] - 2024-09-12
+
 ### Add
 
 - Modal for match info
@@ -405,7 +407,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.63...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.64...HEAD
+[0.0.64]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.63...0.0.64
 [0.0.63]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.62...0.0.63
 [0.0.62]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.61...0.0.62
 [0.0.61]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.60...0.0.61
