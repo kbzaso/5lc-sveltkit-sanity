@@ -48,7 +48,7 @@
       >U</span
     >
   </div>
-  <div class="lg:mb-20 z-10">
+  <div class="lg:mb-20 z-10 border border-primary">
     <Youtube id={videoId} animations={false} --title-color={"transparent"}>
       <button class="bg-black/50 rounded-full p-4"
         ><YTIcon class="stroke-primary w-10 h-10" /></button
