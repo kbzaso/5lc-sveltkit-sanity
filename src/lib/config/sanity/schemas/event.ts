@@ -52,9 +52,10 @@ export default defineType({
       type: "number",
       initialValue: 45,
       components: {
-        input: DoorsOpenInput
+        input: DoorsOpenInput,
       },
-      validation: (Rule) => Rule.max(120).error("El valor no puede exceder los 120"),
+      validation: (Rule) =>
+        Rule.max(120).error("El valor no puede exceder los 120"),
     },
     {
       title: "El evento es en la Bóveda secreta?",
@@ -136,7 +137,7 @@ export default defineType({
       type: "string",
       validation: (Rule) => Rule.required(),
       hidden: ({ document }) =>
-            document?.active === false || document?.sell === false,
+        document?.active === false || document?.sell === false,
       options: {
         list: SELL_TYPE.map(({ title, value }) => ({ title, value })),
         layout: "radio",
@@ -155,7 +156,9 @@ export default defineType({
           title: "Ubicación",
           type: "object",
           hidden: ({ document }) =>
-          document?.active === false || document?.sell === false || document?.sell_type !== "ubication",
+            document?.active === false ||
+            document?.sell === false ||
+            document?.sell_type !== "ubication",
           fields: [
             {
               title: "Ringside",
@@ -167,14 +170,20 @@ export default defineType({
                   name: "price",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('El precio tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "El precio tiene que ser un número positivo"
+                    ),
                 },
                 {
                   title: "Cantidad",
                   name: "amount",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('La cantidad tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "La cantidad tiene que ser un número positivo"
+                    ),
                 },
               ],
             },
@@ -189,14 +198,20 @@ export default defineType({
                   name: "price",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('El precio tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "El precio tiene que ser un número positivo"
+                    ),
                 },
                 {
                   title: "Cantidad",
                   name: "amount",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('La cantidad tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "La cantidad tiene que ser un número positivo"
+                    ),
                 },
               ],
             },
@@ -207,7 +222,9 @@ export default defineType({
           type: "object",
           title: "Tandas",
           hidden: ({ document }) =>
-            document?.active === false || document?.sell === false || document?.sell_type !== "batch",
+            document?.active === false ||
+            document?.sell === false ||
+            document?.sell_type !== "batch",
           fields: [
             {
               title: "Primera tanda",
@@ -219,14 +236,20 @@ export default defineType({
                   name: "price",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('El precio tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "El precio tiene que ser un número positivo"
+                    ),
                 },
                 {
                   title: "Cantidad",
                   name: "amount",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('La cantidad tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "La cantidad tiene que ser un número positivo"
+                    ),
                 },
               ],
             },
@@ -241,14 +264,20 @@ export default defineType({
                   name: "price",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('El precio tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "El precio tiene que ser un número positivo"
+                    ),
                 },
                 {
                   title: "Cantidad",
                   name: "amount",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('La cantidad tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "La cantidad tiene que ser un número positivo"
+                    ),
                 },
               ],
             },
@@ -263,14 +292,20 @@ export default defineType({
                   name: "price",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('El precio tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "El precio tiene que ser un número positivo"
+                    ),
                 },
                 {
                   title: "Cantidad",
                   name: "amount",
                   type: "number",
                   initialValue: 0,
-                  validation: Rule => Rule.positive().error('La cantidad tiene que ser un número positivo'),
+                  validation: (Rule) =>
+                    Rule.positive().error(
+                      "La cantidad tiene que ser un número positivo"
+                    ),
                 },
               ],
             },
@@ -418,6 +453,11 @@ export default defineType({
                   title: "Tipo de lucha",
                 },
                 {
+                  name: "url",
+                  type: "url",
+                  title: "URL del video promocional",
+                },
+                {
                   name: "referenceStaff",
                   title: "Staff",
                   type: "array",
@@ -538,7 +578,6 @@ export default defineType({
         },
       ],
     },
-    
     {
       name: "videoUrl",
       type: "url",
@@ -606,8 +645,7 @@ export default defineType({
       type: "array",
       hidden: ({ document }) => document?.active === false,
       validation: (Rule) => Rule.unique(),
-      description:
-        "Debes seleccionar el conjunto de preguntas",
+      description: "Debes seleccionar el conjunto de preguntas",
       of: [
         {
           type: "reference",
@@ -627,23 +665,23 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
-      subtitle: 'date',
-      poster: 'poster',
+      title: "title",
+      subtitle: "date",
+      poster: "poster",
     },
     prepare({ title, subtitle, poster }) {
-      const formattedDate = new Date(subtitle).toLocaleDateString('es-CL', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-      })
+      const formattedDate = new Date(subtitle).toLocaleDateString("es-CL", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      });
       return {
         title,
         subtitle: formattedDate,
         media: poster,
       };
-    }
-  }
+    },
+  },
 });

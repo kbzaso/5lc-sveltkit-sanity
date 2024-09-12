@@ -118,7 +118,7 @@
         <img
           class={`${
             event?.active
-              ? "object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-40"
+              ? "object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-50 -mt-20"
               : "object-contain w-full lg:w-1/2"
           }  md:rounded-sm maskImages`}
           loading="lazy"
