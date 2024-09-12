@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Modal for match info
+
 ## [0.0.63] - 2024-09-10
 
 ### Fix

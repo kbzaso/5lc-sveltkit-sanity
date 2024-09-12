@@ -1,4 +1,4 @@
-<div class="flex justify-center fixed bottom-10 right-10">
+<div class="flex justify-center fixed bottom-10 right-10 z-10">
   <div
     class="chat chat-end fixed z-20 bottom-0 left-0 pr-4 pb-4 md:p-0 backdrop-blur-lg md:backdrop-blur-0 md:relative w-full"
   >
