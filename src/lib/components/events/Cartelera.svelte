@@ -8,10 +8,10 @@
   export let title: string = "Cartelera";
 
   // const videoId = extractYouTubeId(billboard.images.url);
-  let reloadVideo = {};
+  let reloadVideo: { [key: string]: boolean } = {};
 
   // Function to reload the video
-  function reloadVideoComponent(dialogId) {
+  function reloadVideoComponent(dialogId: string) {
     reloadVideo[dialogId] = false;
     setTimeout(() => {
       reloadVideo[dialogId] = true;
@@ -74,9 +74,9 @@
             <h3 class="text-2xl font-ibm italic text-primary text-pretty">
               {image.type_of_match}
             </h3>
-            <p class="py-4 text-white">
+            <!-- <p class="py-4 text-white">
               Press ESC key or click the button below to close
-            </p>
+            </p> -->
             {#if image.url}
               {#await extractYouTubeId(image.url) then youtubeId}
                 {#if reloadVideo[`my_modal_${image.type_of_match.slice(0, 3)}_${i + 1}`]}
