@@ -401,9 +401,11 @@
                   url={event?.promotion_video.url}
                 />
               {/if}
+              {#if event?.tournament_billboard?.images.length > 0}
+              <Cartelera billboard={event?.tournament_billboard?.images} title="Luchas del Torneo" />
+              {/if}
               {#if event?.billboard?.images.length > 0}
-                <Cartelera billboard={event.tournament_billboard.images} title="Luchas del Torneo" />
-                <Cartelera billboard={event.billboard.images} />
+                <Cartelera billboard={event?.billboard?.images} />
               {/if}
               {#if event?.faq}
                 <Faq questions={event?.faq[0].faq.doubt} />
