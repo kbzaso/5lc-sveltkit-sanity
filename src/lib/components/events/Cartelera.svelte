@@ -34,9 +34,7 @@
 
   <div
     id="catelera"
-    class={`${
-      billboard.length > 2 ? "columns-2 md:columns-3" : "columns-1 md:columns-2"
-    } gap-4`}
+    class="parent"
   >
     {#each billboard as image, i}
       <article>
@@ -128,5 +126,16 @@
       grid-column: 1;
       grid-row: 1;
     }
+  }
+
+  .parent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .parent article {
+    flex: 1 1 200px; /*  Stretching: */
+    margin: 5px;
   }
 </style>
