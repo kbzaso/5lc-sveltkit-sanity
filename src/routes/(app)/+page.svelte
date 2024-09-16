@@ -105,28 +105,20 @@
     <h2
       class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 xl:pl-0"
     >
-      Próximos Eventos <span aria-hidden="true"
+      Próximos Eventos <span
+        aria-hidden="true"
         class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
       >
     </h2>
-    {#if isMobile && events.length > 0}
-      <TinySlider>
-        {#each events as event}
-          <CardEvent {event} />
-        {/each}
-      </TinySlider>
-      <SuscribeForm info={infoLanding.newsletter}/>
-    {:else}
-      <div class="flex items-start lg:gap-4 pl-4 xl:pl-0">
-        {#each events as event}
-          <CardEvent {event} />
-        {/each}
-        <SuscribeForm info={infoLanding.newsletter} />
-      </div>
-    {/if}
+    <section class="flex items-start lg:gap-4 pl-4 xl:pl-0 flex-wrap">
+      {#each events as event}
+        <CardEvent {event} />
+      {/each}
+      <SuscribeForm info={infoLanding.newsletter} />
+    </section>
   </main>
   <Statistics />
-  <Video url='https://youtu.be/v5Nj6oG-Fs0?si=Grt_PcZO9VohSpDg' />
+  <Video url="https://youtu.be/v5Nj6oG-Fs0?si=Grt_PcZO9VohSpDg" />
   <Slider items={allStaff} reverse={false} />
   <Slider items={allStaff2} reverse={true} />
   <WhoWeAre />
