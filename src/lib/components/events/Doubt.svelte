@@ -1,7 +1,11 @@
-  <div class="flex flex-col gap-8 max-w-4xl mx-auto mt-10">
+<script lang="ts">
+  import {BASE_URL_ASSETS} from "$lib/const";
+</script>
+
+<div class="flex flex-col gap-8 max-w-4xl mx-auto mt-10">
     <div class="relative w-full overflow-hidden ">
       <img
-        src="https://res.cloudinary.com/dtj5xnlou/image/upload/v1725640461/5LC/sara_cta.jpg"
+        src={`${BASE_URL_ASSETS}/sara_cta.jpg`}
         alt="Luchadora en el ring"
         class="w-full h-auto"
         width={1200}
