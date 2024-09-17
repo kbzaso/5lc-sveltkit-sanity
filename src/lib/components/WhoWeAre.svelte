@@ -1,49 +1,58 @@
-<script></script>
+<script lang="ts">
+  import { BASE_URL_ASSETS } from "$lib/const";
+</script>
+
 <section>
-    <div
-      class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full mx-auto max-w-6xl"
-    >
+  <div
+    class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full mx-auto max-w-6xl"
+  >
+    <div class="wrap">
       <div
-        class="h-96 bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_800,h_534/v1/5LC/qnaz8aihcarkfaqjtipr')] bg-cover relative bg-center"
+      class="text-6xl lg:text-8xl text-primary mix-blend-plus-lighter relative"
       >
-        <div
-          class="text-7xl md:text-7xl lg:text-8xl text-primary h-fit absolute -bottom-20 w-full flex flex-col items-center z-10 mix-blend-plus-lighter"
+
+      <p class="font-[AtomicMarker] text-center absolute -bottom-10 -rotate-6 left-4 text-pretty">Siempre Buena Onda</p
         >
-          <span class="font-[AtomicMarker] drop-shadow-lg -rotate-6"
-            >Siempre</span
-          >
-          <span class="font-[AtomicMarker] drop-shadow-lg -rotate-12"
-            >Buena</span
-          >
-          <spa class="font-[AtomicMarker] drop-shadow-lg -rotate-3">Onda</spa>
-        </div>
+        <!-- <span class="font-[AtomicMarker] absolute -bottom-12 -rotate-6 left-28 md:left-40">Buena</span>
+        <spa class="font-[AtomicMarker] absolute -bottom-28 -rotate-6 left-48 md:left-80">Onda</spa> -->
       </div>
-      <div
-        class="h-96 bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto,w_800,h_534/v1/5LC/mbyajlax7ea1hkuuwkbe')] bg-cover bg-center relative"
-      >
-        <div
-          class="text-7xl md:text-7xl lg:text-8xl text-primary h-fit absolute -bottom-10 items-center w-full flex flex-col z-10 mix-blend-plus-lighter"
-        >
-          <span class="font-[AtomicMarker] drop-shadow-lg -rotate-6"
-            >Intensidad</span
-          >
-        </div>
-      </div>
-      <div
-        class="md:col-span-2 md:row-start-2 h-96 bg-[url('https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_20,w_1000,h_667/v1/5LC/bufh9o713u3otfclhnqq')] bg-cover bg-center relative"
-      >
-        <div
-          class="text-7xl md:text-7xl lg:text-9xl text-primary h-fit absolute -bottom-16 w-full flex flex-col lg:flex-row items-center lg:justify-center"
-        >
-          <span
-            class="font-[AtomicMarker] drop-shadow-lg mix-blend-plus-lighter -rotate-6"
-            >Bóveda</span
-          >
-          <span
-            class="font-[AtomicMarker] drop-shadow-lg mix-blend-plus-lighter -rotate-12"
-            >Secreta</span
-          >
-        </div>
-      </div>
+
+      <img src={`${BASE_URL_ASSETS}/home_siempre_buena_onda.avif`} alt="" class="object-cover h-full">
     </div>
-  </section>
+
+    <div class="wrap">
+      <div
+      class="mix-blend-plus-lighter text-6xl lg:text-8xl text-primary relative"
+      >
+
+      <span class="font-[AtomicMarker] absolute -bottom-10 -rotate-6 left-[50%] -translate-x-[50%]">Intensidad</span
+        >
+      </div>
+
+      <img src={`${BASE_URL_ASSETS}/home_intensidad.avif`} alt="" class="object-cover h-full">
+    </div>
+
+    <div class="md:col-span-2 md:row-start-2 h-96 w-full wrap">
+      <div
+      class="text-6xl lg:text-8xl text-primary mix-blend-plus-lighter relative"
+      >
+
+      <span class="font-[AtomicMarker] absolute bottom-0 -rotate-6 left-[50%] -translate-x-[50%]">Comunidad</span
+        >
+      </div>
+
+      <img src={`${BASE_URL_ASSETS}/home_boveda_secreta.avif`} alt="Comunidad 5 luchas clandestino" class="object-cover object-bottom h-[500px] w-full">
+    </div>
+  </div>
+</section>
+
+<style>
+  .wrap {
+  display: grid;
+  & > * {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+</style>

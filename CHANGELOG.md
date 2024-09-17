@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Change static files from Cloudinary to Cloudflare
+
 ## [0.0.65] - 2024-09-16
 
 ### Fix
