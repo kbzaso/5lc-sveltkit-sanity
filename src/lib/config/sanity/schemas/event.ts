@@ -451,6 +451,13 @@ export default defineType({
                   name: "type_of_match",
                   type: "string",
                   title: "Tipo de lucha",
+                  description: "Ejemplo: Perfecto Bundy vs. Come Niños",
+                },
+                {
+                  type: "text",
+                  name: "description",
+                  title: "Descripción de la lucha",
+                  description: "Ejemplo: Lucha sin descalificación y sin limite de tiempo",
                 },
                 {
                   name: "url",
@@ -518,6 +525,13 @@ export default defineType({
                   name: "type_of_match",
                   type: "string",
                   title: "Tipo de lucha",
+                  initialValue: "Ejemplo: Perfecto Bundy vs. Come Niños",
+                },
+                {
+                  type: "text",
+                  name: "description",
+                  title: "Descripción de la lucha",
+                  description: "Ejemplo: Lucha sin descalificación y sin limite de tiempo",
                 },
                 {
                   name: "referenceStaff",

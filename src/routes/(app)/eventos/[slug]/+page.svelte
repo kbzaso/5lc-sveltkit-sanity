@@ -124,7 +124,7 @@
           loading="lazy"
           width="800"
           height="1000"
-          src={urlForImage(data.event.poster).width(800).height(1000).url()}
+          src={urlForImage(data?.event?.poster).width(800).height(1000).url()}
           alt="Afiche del evento"
         />
         <div
@@ -408,7 +408,7 @@
                 <Cartelera billboard={event?.billboard?.images} />
               {/if}
               {#if event?.faq}
-                <Faq questions={event?.faq[0].faq.doubt} />
+                <Faq questions={event?.faq[0].faq.doubt} poster={event?.poster}/>
               {/if}
               {#if event?.sponsors_array?.sponsors.length > 0}
                 <Sponsors
