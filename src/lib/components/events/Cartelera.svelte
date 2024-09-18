@@ -60,7 +60,7 @@
               <div
                 class="badge badge-primary self-end uppercase drop-shadow-md mb-6 rounded-none"
               >
-                video promocional
+                Ver más
               </div>
             {/if}
           </button>
@@ -84,9 +84,9 @@
               <h3 class="text-2xl font-ibm italic text-primary text-pretty">
                 {image.type_of_match}
               </h3>
-              <!-- <p class="py-4 text-white">
-              Press ESC key or click the button below to close
-            </p> -->
+              <p class="py-4 text-white">
+              {image.description}
+            </p>
               {#if image.url}
                 {#await extractYouTubeId(image.url) then youtubeId}
                   {#if reloadVideo[`my_modal_${image.type_of_match.slice(0, 3)}_${i + 1}`]}

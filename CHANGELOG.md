@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Image in faq for desktop
+- Description input for billboard
+
 ## [0.0.66] - 2024-09-17
 
 ### Fix
