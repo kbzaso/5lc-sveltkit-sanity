@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.68] - 2024-09-19
+
 ### Fix
 
 - Responsive on mobile when discount code was added
@@ -430,7 +432,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.67...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.68...HEAD
+[0.0.68]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.67...0.0.68
 [0.0.67]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.66...0.0.67
 [0.0.66]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.65...0.0.66
 [0.0.65]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.64...0.0.65
