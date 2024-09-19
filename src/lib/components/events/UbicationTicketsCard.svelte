@@ -79,7 +79,7 @@
 
     <h2 class="text-3xl font-ibm italic mb-2 text-center pb-2">{ticket.name}</h2>
     <div class="w-full border border-black/30 border-b-0 border-dashed"></div>
-    <div class="flex justify-center gap-4 items-center mt-4">
+    <div class={`flex justify-center items-center mt-4 ${dicountPercentage ? 'flex-col' : 'flex-row' }`}>
       {#if dicountPercentage}
       <p class="text-2xl font-bold text-center line-through opacity-50">
         {dicountPercentage ? `$${priceBeforeDiscount}` : ""}
