@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Responsive on mobile when discount code was added
+
 ## [0.0.67] - 2024-09-18
 
 ### Add

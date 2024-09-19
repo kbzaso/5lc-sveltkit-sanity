@@ -151,7 +151,7 @@
 
 <button
   disabled={!$disclaimerEvent}
-  class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline disabled:bg-primary disabled:text-black mask"
+  class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline disabled:bg-primary disabled:text-black btn-lg"
   onclick="my_modal_5.showModal()"
 >
 <Ticket />
@@ -180,56 +180,57 @@
     >
       <div class="form-control w-full">
         <label class="label" for="name">
-          <span class="label-text">¿Cuál es tu nombre?</span>
+          <span class="label-text text-primary">¿Cuál es tu nombre?</span>
         </label>
         <input
           type="name"
           name="name"
           id="name"
           required
-          placeholder="Escribe tú nombre"
-          class="input input-bordered w-full"
+          placeholder="Pimpinela Escarlata..."
+          class="input input-bordered w-full input-primary input-lg"
         />
       </div>
       <div class="form-control w-full">
         <label class="label" for="rut">
-          <span class="label-text">¿Cuál es tu RUT?</span>
+          <span class="label-text text-primary">¿Cuál es tu RUT?</span>
         </label>
         <input
           id="rut"
           name="rut"
           required
-          class="input input-bordered w-full"
+          placeholder="12345678-9"
+          class="input input-bordered w-full input-primary input-lg"
         />
       </div>
       <div class="form-control w-full">
         <label class="label" for="email">
-          <span class="label-text">¿Cuál es tu correo?</span>
+          <span class="label-text text-primary">¿Cuál es tu correo?</span>
         </label>
         <input
           type="email"
           name="email"
           id="email"
           required
-          placeholder="Escribe tú correo"
-          class="input input-bordered w-full"
+          placeholder="micorreo@correo.cl"
+          class="input input-bordered w-full input-primary input-lg"
         />
       </div>
       <div class="form-control w-full">
         <label class="label" for="phone">
-          <span class="label-text">¿Cuál es tu teléfono?</span>
+          <span class="label-text text-primary">¿Cuál es tu teléfono?</span>
         </label>
         <input
           type="tel"
           placeholder="+56 9 1234 5678"
           id="phone"
           name="phone"
-          class="input input-bordered w-full"
+          class="input input-bordered w-full input-primary input-lg"
         />
       </div>
       <div class="form-control w-full">
         <label class="label" for="tickets">
-          <span class="label-text">¿Cuántas entradas?</span>
+          <span class="label-text text-primary">¿Cuántas entradas?</span>
         </label>
         <select
           bind:value={selectedTicketsQuantity}
@@ -237,7 +238,7 @@
           name="tickets"
           id="tickets"
           required
-          class="select select-bordered w-full outline-none ring-0"
+          class="select select-bordered w-full outline-none ring-0 select-primary select-lg"
           on:change={() => handleChange(validatedDiscount)}
         >
           {#each options as option (option)}
@@ -247,7 +248,7 @@
       </div>
       {#if sellSystem === "ubication"}
         <div>
-          <span class="label-text">Ubicación</span>
+          <span class="label-text text-primary">Ubicación</span>
           <div class="flex flex-col">
             <label
               class="label cursor-pointer flex justify-start gap-4"
@@ -325,7 +326,7 @@
             <input
               disabled={isLoading}
               type="checkbox"
-              class="checkbox checkbox-warning"
+              class="checkbox checkbox-primary"
               on:click={toggleDiscount}
             />
             <span class="label-text">¿Tienes un código de descuento?</span>
@@ -356,7 +357,7 @@
                   type="text"
                   name="discount"
                   id="discount"
-                  class="input input-bordered w-full"
+                  class="input input-bordered w-full input-primary"
                 />
                 <button class="btn btn-outline btn-primary hover:text-black"
                   >Validar</button
@@ -421,7 +422,7 @@
       <button
         type="submit"
         disabled={isLoading || isSubmitting}
-        class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2"
+        class="flex grow w-full items-center rounded-none btn btn-primary cursor-pointer text-black no-underline col-span-2 btn-lg"
       >
         {#if isSubmitting}
           <Loading /> Comprando...
