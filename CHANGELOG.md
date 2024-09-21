@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Grid on billboard and add url input for every match
+
 ## [0.0.69] - 2024-09-21
 
 ### Add

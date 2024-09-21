@@ -31,22 +31,25 @@
     >
   </h3>
 
-  <div
-    id="catelera"
-    class="parent"
-  >
+  <div id="catelera" class="parent">
     {#each billboard as image, i}
       <article>
         <div>
           <button
-            class={`focus:outline-primary wrap ${image.url ? "cursor-pointer border border-primary" : " cursor-default "}`}
+            class={`focus:outline-primary wrap ${
+              image.url
+                ? "cursor-pointer border border-primary"
+                : " cursor-default "
+            }`}
             on:click={() =>
               reloadVideoComponent(
                 `my_modal_${image.type_of_match.slice(0, 3)}_${i + 1}`
               )}
-            onclick={image.url ? `my_modal_${image.type_of_match.slice(0, 3)}_${
-              i + 1
-            }.showModal()` : ''}
+            onclick={image.url
+              ? `my_modal_${image.type_of_match.slice(0, 3)}_${
+                  i + 1
+                }.showModal()`
+              : ""}
           >
             <img
               class={`w-full h-auto ${image.url ? "maskImages" : ""}`}
@@ -84,8 +87,8 @@
                 {image.type_of_match}
               </h3>
               <p class="py-4 text-white">
-              {image.description}
-            </p>
+                {image.description}
+              </p>
               {#if image.url}
                 {#await extractYouTubeId(image.url) then youtubeId}
                   {#if reloadVideo[`my_modal_${image.type_of_match.slice(0, 3)}_${i + 1}`]}
@@ -135,7 +138,24 @@
   }
 
   .parent article {
-    flex: 1 1 200px; /*  Stretching: */
+    flex: 1 1 calc(33.33% - 10px); /* 1/3 of the container width minus margin */
+    max-width: calc(33.33% - 10px); /* Ensure no more than 3 items per row */
     margin: 5px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+
+  /* Optional: Media query for smaller screens */
+  @media (max-width: 768px) {
+    .parent article {
+      flex: 1 1 calc(50% - 10px); /* 2 items per row on smaller screens */
+      max-width: calc(50% - 10px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .parent article {
+      flex: 1 1 100%; /* 1 item per row on very small screens */
+      max-width: 100%;
+    }
   }
 </style>

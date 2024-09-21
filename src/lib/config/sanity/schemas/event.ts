@@ -534,6 +534,11 @@ export default defineType({
                   description: "Ejemplo: Lucha sin descalificación y sin limite de tiempo",
                 },
                 {
+                  name: "url",
+                  type: "url",
+                  title: "URL del video promocional",
+                },
+                {
                   name: "referenceStaff",
                   title: "Staff",
                   type: "array",
