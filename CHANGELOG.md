@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.70] - 2024-09-21
+
 ### Fix
 
 - Grid on billboard and add url input for every match
@@ -442,7 +444,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.69...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.70...HEAD
+[0.0.70]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.69...0.0.70
 [0.0.69]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.68...0.0.69
 [0.0.68]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.67...0.0.68
 [0.0.67]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.66...0.0.67
