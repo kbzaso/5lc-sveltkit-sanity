@@ -13,7 +13,7 @@
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
       <div class="absolute bottom-0 left-0 right-0 p-6 text-white flex flex-col items-center">
-        <h3 class="text-3xl drop-shadow-md md:text-4xl font-ibm italic mb-2 text-center">¿Aún no estái' seguro de ir?</h3>
+        <h3 class="text-3xl drop-shadow-md md:text-4xl font-ibm italic mb-2 text-center">¿Aún no estái' seguro/a de ir?</h3>
         <button data-tally-hide-title="1" data-tally-auto-close="5000" data-tally-open="w5vZoZ" data-tally-overlay="1" data-tally-emoji-text="🤔" data-tally-emoji-animation="wave"
           class="btn btn-primary mt-4 w-full max-w-sm"
         >

@@ -62,7 +62,7 @@
     id="drawer-button"
       on:click={() => mobileNavMenu.openSheet()}
       aria-label="Open menu"
-      class="btn btn-primary drawer-button md:hidden">Menu</button
+      class="btn text-black uppercase bg-white drawer-button md:hidden">Menu</button
     >
     <div class="flex-none hidden md:flex">
       <nav class="menu menu-horizontal px-1 gap-2">

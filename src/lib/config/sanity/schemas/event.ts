@@ -583,7 +583,7 @@ export default defineType({
         {
           name: "title",
           type: "string",
-          title: "Titulo del video promocional (Aparecera arriba del video)",
+          title: "Titulo del video promocional.",
         },
         {
           name: "url",

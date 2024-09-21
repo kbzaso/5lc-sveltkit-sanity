@@ -11,7 +11,7 @@
   import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
-  import { Ticket } from "lucide-svelte";
+  import { Ticket, Play } from "lucide-svelte";
   import {
     calculateTandas,
     calculateUbications,
@@ -30,6 +30,7 @@
   import Doubt from "$lib/components/events/Doubt.svelte";
   import Faq from "$lib/components/Faq.svelte";
   import Cartelera from "$lib/components/events/Cartelera.svelte";
+  import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
 
   export let data: PageData;
   export let form;
@@ -111,14 +112,14 @@
     <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
       <div
         id="event"
-        class={`relative h-fit flex  ${
-          event?.active ? "flex-col" : "flex-col lg:flex-row"
+        class={`flex ${
+          event?.active ? "wrap flex-col" : "flex-col lg:flex-row"
         } md:gap-4 lg:gap-0`}
       >
         <img
           class={`${
             event?.active
-              ? "object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-50 -mt-20"
+              ? "object-cover blur-lg object-top md:w-full h-96 md:h-[500px] opacity-50 -mt-20"
               : "object-contain w-full lg:w-1/2"
           }  md:rounded-sm maskImages`}
           loading="lazy"
@@ -129,9 +130,7 @@
         />
         <div
           class={`z-10 ${
-            event?.active
-              ? "absolute lg:left-[50%] lg:-translate-x-[50%] top-[50%] -translate-y-[50%]"
-              : "relative -top-40 md:top-0"
+            event?.active ? "" : "relative -top-40 md:top-0"
           } px-4 w-full`}
         >
           <div class="mt-4 lg:mt-0">
@@ -195,11 +194,11 @@
 
               <!-- EVENTO ACTIVO -->
               {#if event?.active}
-                <h2
-                  class="text-primary uppercase tracking-widest text-sm text-center mb-4"
+                <p
+                  class="text-primary uppercase tracking-widest text-sm text-center mb-4 font-bold lg:mt-0"
                 >
                   Próximo evento
-                </h2>
+                </p>
                 <h1
                   class="text-5xl lg:text-7xl font-bold mask text-white text-center"
                 >
@@ -340,11 +339,15 @@
               {/if}
               <!-- /EVENTO ACTIVO -->
             </div>
+            {#if event?.promotion_video}
+              <PromotionalVideo url={event?.promotion_video.url} />
+            {/if}
           </div>
         </div>
       </div>
+
       {#if event?.active}
-        <div class="mx-auto px-4 max-w-4xl mt-16 lg:mt-28">
+        <div class="mx-auto px-4 max-w-4xl mt-36 lg:mt-10">
           <h3 class="text-3xl font-ibm italic text-white mask text-center">
             Asegura tu cupo
           </h3>
@@ -395,20 +398,25 @@
                     : event?.ticket?.batch}
                 />
               {/if}
-              {#if event?.promotion_video}
-                <Video
-                  title={event?.promotion_video.title}
-                  url={event?.promotion_video.url}
-                />
-              {/if}
+              <!-- VIDEO TESTIMONIO -->
+              <Video
+                title="¿Qué dicen los asistentes a 5 Luchas Clandestino?"
+                url="https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"
+              />
               {#if event?.tournament_billboard?.images.length > 0}
-              <Cartelera billboard={event?.tournament_billboard?.images} title="Luchas del Torneo" />
+                <Cartelera
+                  billboard={event?.tournament_billboard?.images}
+                  title="Luchas del Torneo"
+                />
               {/if}
               {#if event?.billboard?.images.length > 0}
                 <Cartelera billboard={event?.billboard?.images} />
               {/if}
               {#if event?.faq}
-                <Faq questions={event?.faq[0].faq.doubt} poster={event?.poster}/>
+                <Faq
+                  questions={event?.faq[0].faq.doubt}
+                  poster={event?.poster}
+                />
               {/if}
               {#if event?.sponsors_array?.sponsors.length > 0}
                 <Sponsors
@@ -454,3 +462,13 @@
 {:else}
   <h1>Ups! no encontramos el evento que buscas.</h1>
 {/if}
+
+<style>
+  .wrap {
+    display: grid;
+    & > * {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+</style>

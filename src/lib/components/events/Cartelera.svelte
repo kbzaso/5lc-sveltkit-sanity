@@ -7,7 +7,6 @@
   export let billboard;
   export let title: string = "Cartelera";
 
-  // const videoId = extractYouTubeId(billboard.images.url);
   let reloadVideo: { [key: string]: boolean } = {};
 
   // Function to reload the video
@@ -93,7 +92,8 @@
                     <Youtube
                       id={youtubeId}
                       animations={false}
-                      --title-color={"transparent"}
+                      --title-color="transparent"
+                      --title-shadow-color="transparent"
                     >
                       <button class="bg-black/50 rounded-full p-4"
                         ><YTIcon class="stroke-primary w-10 h-10" /></button
