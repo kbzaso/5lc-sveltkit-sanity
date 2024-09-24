@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Improved Slack notification and email buy confirmation
+
 ## [0.0.70] - 2024-09-21
 
 ### Fix

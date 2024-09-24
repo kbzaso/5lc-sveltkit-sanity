@@ -32,7 +32,6 @@ function subtractObjects(obj1, obj2) {
 }
 
 export const POST: RequestHandler = async (event) => {
-  console.log(event)
   const body = await event.request.json();
 
   const payment_id = body.payment_key;
@@ -101,6 +100,18 @@ export const POST: RequestHandler = async (event) => {
       ticketsRemaining += ticket[key].amount;
     }
 
+    const paymentsSold = await client.payment.aggregate({
+      _sum: {
+        ticketAmount: true,
+      },
+      where: {
+        productId: eventId,
+        payment_status: "success",
+      },
+    });
+
+    console.log(paymentsSold._sum.ticketAmount);
+
     if (result.status === "success") {
       // Enviamos email de confirmación
       (async function () {
@@ -110,20 +121,27 @@ export const POST: RequestHandler = async (event) => {
             to: paymentWithProduct.customer_email,
             // to: 'alejandro.saez@rendalomaq.com',
             subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
-            html: `Hola ${
-              paymentWithProduct?.customer_name
-            }, </br> ¡Tu adhesión fue existosa!</br></br> ${
-              paymentWithProduct?.ticketAmount
-            } ${paymentWithProduct?.ticketAmount > 1 ? "entradas" : "entrada"} ${
+            html: `
+            <p>Hola ${paymentWithProduct?.customer_name},</p>
+  <p>¡Tu adhesión fue existosa!</p>
+  <p>${paymentWithProduct?.ticketAmount} ${
+              paymentWithProduct?.ticketAmount > 1 ? "entradas" : "entrada"
+            } ${
               paymentWithProduct?.ticketsType !== "Tandas"
                 ? paymentWithProduct?.ticketsType
                 : ""
-            } para ${paymentWithProduct?.product.name}.</br></br>Nos vemos en ${
-              nextEvent[0]?.venue?.venueName ? nextEvent[0]?.venue?.venueName : VENUE.NAME
-            } | ${nextEvent[0]?.venue?.venueAdress ? nextEvent[0]?.venue?.venueAdress : VENUE.ADDRESS } </br></br>
-              Tú numero de orden es <strong>${
-                paymentWithProduct?.payment_id_service
-              }</strong> (No se lo compartas a nadie, te lo pediremos al ingresar) </br></br> <strong>¡Gracias por tu apoyo!</strong> </br></br> <strong>5 Luchas Clandestino</strong>
+            } para ${paymentWithProduct?.product.name}.</p>
+  <p>Nos vemos en ${
+    nextEvent[0]?.venue?.venueName ? nextEvent[0]?.venue?.venueName : VENUE.NAME
+  } | ${
+              nextEvent[0]?.venue?.venueAdress
+                ? nextEvent[0]?.venue?.venueAdress
+                : VENUE.ADDRESS
+            }</p>
+  <p>Numero de orden: <strong>${
+    paymentWithProduct?.payment_id_service
+  }</strong></p>
+  <p><strong>5 Luchas Clandestino</strong></p>
               `,
             tags: [
               {
@@ -194,19 +212,52 @@ export const POST: RequestHandler = async (event) => {
 
     // Enviamos notificacion a slack
     const message = {
-      text: `${paymentWithProduct.customer_name} compró $${
-        paymentWithProduct.price
-      }${paymentWithProduct.discount_code ? ` con el código ${paymentWithProduct.discount_code}` : ""}
-      \n ${paymentWithProduct.ticketAmount} ${
-        paymentWithProduct.ticketAmount > 1 ? "entradas" : "entrada"
-      } ${
-        paymentWithProduct.ticketsType !== "Tandas"
-          ? paymentWithProduct.ticketsType
-          : ""
-      }para ${paymentWithProduct.product.name}.\n ${
-        paymentWithProduct.customer_email
-      } \n ${paymentWithProduct.customer_phone}\n\n${ticketsRemaining > 1 ? 'Quedan' : 'Queda' } ${ticketsRemaining} ${ticketsRemaining > 1 ? 'entradas' : 'entrada' } por vender.\n\n
-      ¡¡VAMOS QUE SE PUEDE!!`,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "*Se ha realizado una adhesión* 🔥",
+          },
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `Comprador: ${paymentWithProduct.customer_name}\nEmail: ${paymentWithProduct.customer_email}\nTeléfono: ${paymentWithProduct.customer_phone}`,
+          },
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `Entradas: ${paymentWithProduct.ticketAmount} ${
+              paymentWithProduct.ticketsType !== "Tandas"
+                ? `${paymentWithProduct.ticketsType}`
+                : ""
+            }\nPrecio: $${paymentWithProduct.price}\nEvento: ${
+              paymentWithProduct.product.name
+            }\n${
+              paymentWithProduct.discount_code
+                ? `Código: ${paymentWithProduct.discount_code}`
+                : ""
+            }`,
+          },
+        },
+        {
+          type: "section",
+          fields: [
+            {
+              type: "mrkdwn",
+              text: `*Tickets vendidos:*\n${paymentsSold._sum.ticketAmount}`,
+            },
+            {
+              type: "mrkdwn",
+              text: `*Tickets por vender:*\n${ticketsRemaining}`,
+            },
+          ],
+        },
+      ],
     };
 
     await fetch(SLACK_WEBHOOK_URL, {

@@ -59,7 +59,7 @@
         : "¡Ups! Algo salió mal"}
     </h1>
 
-    <p class="text-white md:text-gray-400 mt-3">
+    <p class="text-white mt-3">
       {status === "success"
         ? `${customer_name} en unos minutos recibirás un correo en ${customer_email} con los detalles de tu compra para "${event.title}".`
         : `Lo sentimos, algo paso en el proceso de pago y finalmente el cobro no se ha realizado a tu cuenta, te pedimos lo vuelvas a intentar. 🙏`}
