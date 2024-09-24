@@ -31,6 +31,7 @@
   import Faq from "$lib/components/Faq.svelte";
   import Cartelera from "$lib/components/events/Cartelera.svelte";
   import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
+  import Agenda from "$lib/components/events/Agenda.svelte";
 
   export let data: PageData;
   export let form;
@@ -105,11 +106,11 @@
 </svelte:head>
 
 {#if event}
-  <div class="container mx-auto max-w-6xl min-w-[350px]">
+  <div class=" mx-auto min-w-[350px]">
     {#if event?.active && validatedDiscount?.error}
       <Countdown date={eventDate} />
     {/if}
-    <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
+    <div class="min-w-[350px] mx-auto mt-20 h-min">
       <div
         id="event"
         class={`flex ${
@@ -347,7 +348,7 @@
       </div>
 
       {#if event?.active}
-        <div class="mx-auto px-4 max-w-4xl mt-36 lg:mt-10">
+        <div class="container mx-auto px-4 mt-36 lg:mt-10">
           <h3 class="text-3xl font-ibm italic text-white mask text-center">
             Asegura tu cupo
           </h3>
@@ -398,11 +399,7 @@
                     : event?.ticket?.batch}
                 />
               {/if}
-              <!-- VIDEO TESTIMONIO -->
-              <Video
-                title="¿Qué dicen los asistentes a 5 Luchas Clandestino?"
-                url="https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"
-              />
+              <section class="py-40 space-y-8">
               {#if event?.tournament_billboard?.images.length > 0}
                 <Cartelera
                   billboard={event?.tournament_billboard?.images}
@@ -412,6 +409,13 @@
               {#if event?.billboard?.images.length > 0}
                 <Cartelera billboard={event?.billboard?.images} />
               {/if}
+            </section>
+              <Agenda/>
+              <!-- VIDEO TESTIMONIO -->
+              <Video
+                title="¿Qué dicen los asistentes a 5 Luchas Clandestino?"
+                url="https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"
+              />
               {#if event?.faq}
                 <Faq
                   questions={event?.faq[0].faq.doubt}
