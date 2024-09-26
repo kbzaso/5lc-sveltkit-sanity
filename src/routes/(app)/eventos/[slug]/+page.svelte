@@ -8,7 +8,6 @@
   import Gallery from "$lib/components/Gallery.svelte";
   import Youtube from "$lib/components/Youtube.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
-  import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
   import { Ticket, Play } from "lucide-svelte";
@@ -350,6 +349,9 @@
       {#if event?.active}
         <div class="container mx-auto px-4 mt-36 lg:mt-10">
           <h3 class="text-3xl font-ibm italic text-white mask text-center">
+            <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
+      >O</span
+    >
             Asegura tu cupo
           </h3>
           {#if event.sell_type === "batch"}
@@ -410,7 +412,7 @@
                 <Cartelera billboard={event?.billboard?.images} />
               {/if}
             </section>
-              <Agenda/>
+              <Agenda agenda={event?.agenda[0]}/>
               <!-- VIDEO TESTIMONIO -->
               <Video
                 title="¿Qué dicen los asistentes a 5 Luchas Clandestino?"

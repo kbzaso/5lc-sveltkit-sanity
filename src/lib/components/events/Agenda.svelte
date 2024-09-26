@@ -2,63 +2,9 @@
   import { Sparkle, ClockIcon, MapPinIcon } from "lucide-svelte";
   import { quintOut } from "svelte/easing";
   import { fade, slide } from "svelte/transition";
-  const agendaItems = [
-    {
-      time: "16:00 PM",
-      title: "Apertura de puertas",
-      location: "Ingreso principal Teatro La Cúpula",
-    },
-    {
-      time: "16:40 AM",
-      title: "Meet and Greet",
-      location: "A un costado del escenario",
-    },
-    {
-      time: "18:00 PM",
-      title: "Campanazo inicial y bienvenida al evento",
-      location: "Teatro La Cúpula",
-    },
-    {
-      time: "18:15 PM",
-      title: "3 Luchas",
-      location: "XL vs. Eric Fox",
-    },
-    {
-      time: "19:15 PM",
-      title: "Break - 1",
-      location: "Teatro La Cúpula",
-    },
-    {
-      time: "19:35 PM",
-      title: "3 Luchas",
-      location: "Teatro La Cúpula",
-    },
-    {
-      time: "20:35 PM",
-      title: "Break - 2",
-      location: "Teatro La Cúpula",
-    },
-    {
-      time: "21:00 PM",
-      title: "2 Luchas",
-      location: "Teatro La Cúpula",
-    },
-    {
-      time: "21:35 PM",
-      title: "Break - 3",
-      location: "Teatro La Cúpula",
-    },
-    {
-      time: "21:20 PM",
-      title: "Final del Torneo Rey Clandestino 2024",
-      location: "Teatro La Cúpula",
-    },
-    {
-      time: "22:00 PM",
-      title: "Termino del evento",
-      location: "Teatro La Cúpula",
-    },
-  ];
+
+  export let agenda;
+  const agendaItems = agenda.schedule;
 
   const attractions = [
     {
@@ -95,11 +41,20 @@
   function toggleShowAll() {
     showAllAgendaItems = !showAllAgendaItems;
   }
+
+  function convertNewlinesToBreaks(text) {
+    return text.replace(/\n/g, '<br>');
+  }
 </script>
 
 <section class="flex gap-8 w-full flex-col lg:flex-row">
   <article id="agenda" class="bg-black/60 w-full lg:w-1/2">
-    <h5 class="text-4xl font-ibm italic mask text-primary mb-4">Agenda</h5>
+    <h5 class="text-4xl font-ibm italic mask text-white mb-4">
+      <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
+        >P</span
+      >
+      Agenda
+    </h5>
     <ul class="space-y-4">
       {#each showAllAgendaItems ? agendaItems : agendaItems.slice(0, 5) as item, index}
         <li
@@ -116,12 +71,14 @@
               class="bg-success text-black px-2 py-1 rounded-full text-xs flex items-center"
             >
               <ClockIcon class="mr-1 h-3 w-3" />
-              {item.time}
+              {item.activity_date}
             </span>
           </div>
           <div class="mt-2 flex items-center text-sm text-primary">
-            <Sparkle class="mr-1 h-4 w-4 text-primary" />
-            {item.location}
+            {#if item.description}
+              <Sparkle class="mr-1 h-4 w-4 text-primary" />
+              {@html convertNewlinesToBreaks(item.description)}
+            {/if}
           </div>
         </li>
       {/each}
@@ -136,7 +93,12 @@
     {/if}
   </article>
   <article id="attractions" class="w-full lg:w-1/2">
-    <h5 class="text-4xl font-ibm italic mask text-primary mb-4">Servicios y Facilidades</h5>
+    <h5 class="text-4xl font-ibm italic mask text-white mb-4">
+      <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
+        >H</span
+      >
+      Servicios y Facilidades
+    </h5>
     <div class="grid grid-cols-2 gap-4">
       {#each attractions as attraction, index}
         <button
@@ -153,7 +115,9 @@
               alt="Person in a pink striped sweater"
               class="absolute inset-0 w-full min-h-96 object-cover"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+            />
             <div class="absolute bottom-4 left-4 right-4">
               <h2
                 class={`text-2xl break-words font-ibm italic mask text-white mix-blend-lighten ${
