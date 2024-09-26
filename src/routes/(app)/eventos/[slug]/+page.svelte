@@ -31,6 +31,7 @@
   import Cartelera from "$lib/components/events/Cartelera.svelte";
   import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
   import Agenda from "$lib/components/events/Agenda.svelte";
+  import Attraction from "$lib/components/events/Attraction.svelte";
 
   export let data: PageData;
   export let form;
@@ -349,9 +350,10 @@
       {#if event?.active}
         <div class="container mx-auto px-4 mt-36 lg:mt-10">
           <h3 class="text-3xl font-ibm italic text-white mask text-center">
-            <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
-      >O</span
-    >
+            <span
+              aria-hidden="true"
+              class="font-[AtomicMarkerExtras] text-primary">O</span
+            >
             Asegura tu cupo
           </h3>
           {#if event.sell_type === "batch"}
@@ -402,17 +404,29 @@
                 />
               {/if}
               <section class="py-40 space-y-8">
-              {#if event?.tournament_billboard?.images.length > 0}
-                <Cartelera
-                  billboard={event?.tournament_billboard?.images}
-                  title="Luchas del Torneo"
-                />
-              {/if}
-              {#if event?.billboard?.images.length > 0}
-                <Cartelera billboard={event?.billboard?.images} />
-              {/if}
-            </section>
-              <Agenda agenda={event?.agenda[0]}/>
+                {#if event?.tournament_billboard?.images.length > 0}
+                  <Cartelera
+                    billboard={event?.tournament_billboard?.images}
+                    title="Luchas del Torneo"
+                  />
+                {/if}
+                {#if event?.billboard?.images.length > 0}
+                  <Cartelera billboard={event?.billboard?.images} />
+                {/if}
+              </section>
+              <section class="gap-8 w-full grid grid-cols-1 md:grid-cols-2">
+                {#if event?.agenda && event?.attraction}
+                  <Agenda agenda={event?.agenda[0]} />
+                  <Attraction attractions={event?.attraction[0]} />
+                {:else if event?.agenda}
+                  <Agenda agenda={event?.agenda[0]} alone=true />
+                {:else if event?.attraction}
+                  <Attraction
+                    attractions={event?.attraction[0]}
+                    alone=true
+                  />
+                {/if}
+              </section>
               <!-- VIDEO TESTIMONIO -->
               <Video
                 title="¿Qué dicen los asistentes a 5 Luchas Clandestino?"
