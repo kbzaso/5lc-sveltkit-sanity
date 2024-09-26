@@ -2,6 +2,7 @@
   import { Sparkle, ClockIcon, MapPinIcon } from "lucide-svelte";
   import { quintOut } from "svelte/easing";
   import { fade, slide } from "svelte/transition";
+  import { convertNewlinesToBreaks } from "$lib/utils/index";
 
   export let agenda;
   export let alone: boolean;
@@ -44,9 +45,6 @@
     showAllAgendaItems = !showAllAgendaItems;
   }
 
-  function convertNewlinesToBreaks(text) {
-    return text.replace(/\n/g, "<br>");
-  }
 </script>
 
 <article id="agenda" class={`w-full ${alone ? "col-span-2" : ""}`}>

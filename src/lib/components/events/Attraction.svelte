@@ -1,8 +1,6 @@
 <script lang="ts">
   import { urlForImage } from "$lib/config/sanity";
-  import { Sparkle, ClockIcon, MapPinIcon } from "lucide-svelte";
-  import { quintOut } from "svelte/easing";
-  import { fade, slide } from "svelte/transition";
+  import { convertNewlinesToBreaks } from "$lib/utils/index";
 
 export let attractions;
 export let alone: boolean;
@@ -21,7 +19,7 @@ export let alone: boolean;
       <button
         onclick={`modal_${index}.showModal()`}
         class={`w-full h-full overflow-hidden min-h-60 rounded-sm hover:scale-105 transition-transform ${
-          index === attractions.length - 1 && attractions.length % 2 !== 0
+          index === attractions.item.length - 1 && attractions.item.length % 2 !== 0
             ? "col-span-2"
             : ""
         }`}
@@ -62,7 +60,7 @@ export let alone: boolean;
             {attraction.title}
           </h3>
           <p class="py-4 text-white">
-            {attraction.description}
+            {@html convertNewlinesToBreaks(attraction.description)}
           </p>
           <div class="modal-action">
             <form method="dialog">

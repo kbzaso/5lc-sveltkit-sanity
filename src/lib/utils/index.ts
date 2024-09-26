@@ -9,3 +9,7 @@ export function extractYouTubeId(url: string) {
   const match = url.match(regex);
   return match ? match[1] : null;
 }
+
+export function convertNewlinesToBreaks(text) {
+  return text.replace(/\n/g, "<br>");
+}
