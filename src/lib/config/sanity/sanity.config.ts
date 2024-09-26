@@ -19,7 +19,7 @@ import welcomeType from "$lib/config/sanity/schemas/welcome";
 import disclaimerType from "$lib/config/sanity/schemas/disclaimer";
 import discountType from "$lib/config/sanity/schemas/discountCodes";
 import faqType from "$lib/config/sanity/schemas/faq";
-import agendaType from "$lib/config/sanity/schemas/agenda";
+import agendaType from "$lib/config/sanity/schemas/Agenda";
 import attractionType from "$lib/config/sanity/schemas/Attraction";
 /*------------------------------------*/
 
