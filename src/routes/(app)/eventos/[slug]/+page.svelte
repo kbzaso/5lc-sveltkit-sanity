@@ -30,8 +30,8 @@
   import Faq from "$lib/components/Faq.svelte";
   import Cartelera from "$lib/components/events/Cartelera.svelte";
   import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
-  import Agenda from "$lib/components/events/agenda.svelte";
   import Attraction from "$lib/components/events/Attraction.svelte";
+  import Agenda from "$lib/components/events/Agenda.svelte";
 
   export let data: PageData;
   export let form;
@@ -416,14 +416,14 @@
               </section>
               <section class="gap-8 w-full grid grid-cols-1 md:grid-cols-2">
                 {#if event?.agenda && event?.attraction}
-                  <Agenda agenda={event?.agenda[0]} />
-                  <Attraction attractions={event?.attraction[0]} />
+                  <Agenda agenda={event?.agenda[0]} alone={false}/>
+                  <Attraction attractions={event?.attraction[0]} alone={false} />
                 {:else if event?.agenda}
-                  <Agenda agenda={event?.agenda[0]} alone=true />
+                  <Agenda agenda={event?.agenda[0]} alone={true} />
                 {:else if event?.attraction}
                   <Attraction
                     attractions={event?.attraction[0]}
-                    alone=true
+                    alone={true}
                   />
                 {/if}
               </section>

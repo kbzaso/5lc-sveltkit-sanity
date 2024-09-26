@@ -5,7 +5,7 @@
   import { fade, slide } from "svelte/transition";
 
 export let attractions;
-export let alone;
+export let alone: boolean;
 
 </script>
 
