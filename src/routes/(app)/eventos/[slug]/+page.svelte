@@ -30,7 +30,7 @@
   import Faq from "$lib/components/Faq.svelte";
   import Cartelera from "$lib/components/events/Cartelera.svelte";
   import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
-  import Agenda from "$lib/components/events/Agenda.svelte";
+  import Agenda from "$lib/components/events/agenda.svelte";
   import Attraction from "$lib/components/events/Attraction.svelte";
 
   export let data: PageData;
