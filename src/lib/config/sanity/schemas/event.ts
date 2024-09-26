@@ -631,6 +631,32 @@ export default defineType({
       ],
     },
     {
+      name: "attraction",
+      title: "Atracciones o Facilidades",
+      type: "array",
+      hidden: ({ document }) => document?.active === false,
+      validation: (Rule) => Rule.unique(),
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "attraction" }],
+        },
+      ],
+    },
+    {
+      name: "agenda",
+      title: "Agenda",
+      type: "array",
+      hidden: ({ document }) => document?.active === false,
+      validation: (Rule) => Rule.unique(),
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "agenda" }],
+        },
+      ],
+    },
+    {
       name: "discounts",
       title: "Códigos de descuento",
       type: "array",

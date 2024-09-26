@@ -18,17 +18,14 @@
   }
 </script>
 
-<section class="mt-10">
+<div>
   <h3
     class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 text-center"
   >
     <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
-      >k</span
+      >O</span
     >
     {title}
-    <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
-      >k</span
-    >
   </h3>
 
   <div id="catelera" class="parent">
@@ -120,7 +117,7 @@
       </article>
     {/each}
   </div>
-</section>
+</div>
 
 <style>
   .wrap {
