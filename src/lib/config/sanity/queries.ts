@@ -49,6 +49,22 @@ export const eventFields = groq`
     date,
     doorsOpen,
     boveda,
+    "attraction" : attraction[] -> {
+      title,
+      item[] {
+          title,
+          description,
+          asset,
+      }
+    },
+    "agenda" : agenda[] -> {
+      title,
+      schedule[] {
+        title,
+        activity_date,
+        description,
+      }
+    },
     assistance,
     playlist,
     slug,

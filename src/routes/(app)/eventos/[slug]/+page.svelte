@@ -8,7 +8,6 @@
   import Gallery from "$lib/components/Gallery.svelte";
   import Youtube from "$lib/components/Youtube.svelte";
   import DisclaimerModal from "$lib/components/DisclaimerModal.svelte";
-  import { writable } from "svelte/store";
   import AttendanceStat from "$lib/components/AttendanceStat.svelte";
   import Spotify from "$lib/components/Spotify.svelte";
   import { Ticket, Play } from "lucide-svelte";
@@ -31,6 +30,8 @@
   import Faq from "$lib/components/Faq.svelte";
   import Cartelera from "$lib/components/events/Cartelera.svelte";
   import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
+  import Attraction from "$lib/components/events/Attraction.svelte";
+  import Agenda from "$lib/components/events/Agenda.svelte";
 
   export let data: PageData;
   export let form;
@@ -105,11 +106,11 @@
 </svelte:head>
 
 {#if event}
-  <div class="container mx-auto max-w-6xl min-w-[350px]">
+  <div class=" mx-auto min-w-[350px]">
     {#if event?.active && validatedDiscount?.error}
       <Countdown date={eventDate} />
     {/if}
-    <div class="container xl:mx-auto min-w-[350px] mx-auto mt-20 h-min">
+    <div class="min-w-[350px] mx-auto mt-20 h-min">
       <div
         id="event"
         class={`flex ${
@@ -347,8 +348,12 @@
       </div>
 
       {#if event?.active}
-        <div class="mx-auto px-4 max-w-4xl mt-36 lg:mt-10">
+        <div class="container mx-auto px-4 mt-36 lg:mt-10">
           <h3 class="text-3xl font-ibm italic text-white mask text-center">
+            <span
+              aria-hidden="true"
+              class="font-[AtomicMarkerExtras] text-primary">O</span
+            >
             Asegura tu cupo
           </h3>
           {#if event.sell_type === "batch"}
@@ -398,20 +403,35 @@
                     : event?.ticket?.batch}
                 />
               {/if}
+              <section class="py-40 space-y-8">
+                {#if event?.tournament_billboard?.images.length > 0}
+                  <Cartelera
+                    billboard={event?.tournament_billboard?.images}
+                    title="Luchas del Torneo"
+                  />
+                {/if}
+                {#if event?.billboard?.images.length > 0}
+                  <Cartelera billboard={event?.billboard?.images} />
+                {/if}
+              </section>
+              <section class="gap-8 w-full grid grid-cols-1 md:grid-cols-2">
+                {#if event?.agenda && event?.attraction}
+                  <Agenda agenda={event?.agenda[0]} alone={false}/>
+                  <Attraction attractions={event?.attraction[0]} alone={false} />
+                {:else if event?.agenda}
+                  <Agenda agenda={event?.agenda[0]} alone={true} />
+                {:else if event?.attraction}
+                  <Attraction
+                    attractions={event?.attraction[0]}
+                    alone={true}
+                  />
+                {/if}
+              </section>
               <!-- VIDEO TESTIMONIO -->
               <Video
                 title="¿Qué dicen los asistentes a 5 Luchas Clandestino?"
                 url="https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"
               />
-              {#if event?.tournament_billboard?.images.length > 0}
-                <Cartelera
-                  billboard={event?.tournament_billboard?.images}
-                  title="Luchas del Torneo"
-                />
-              {/if}
-              {#if event?.billboard?.images.length > 0}
-                <Cartelera billboard={event?.billboard?.images} />
-              {/if}
               {#if event?.faq}
                 <Faq
                   questions={event?.faq[0].faq.doubt}
