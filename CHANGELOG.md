@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- View promotional video btn hover
+- Show more btn on Agenda component
+
 ## [0.0.72] - 2024-09-25
 
 ### Add
