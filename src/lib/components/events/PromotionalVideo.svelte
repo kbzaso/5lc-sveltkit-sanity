@@ -22,10 +22,10 @@
   <button
     on:click={() => reloadVideoComponent(`modal_promotional_video`)}
     onclick="modal_promotional_video.showModal()"
-    class="flex gap-2 items-center btn btn-primary btn-outline w-full md:w-fit"
+    class="flex gap-2 items-center btn btn-primary btn-outline w-full md:w-fit group"
   >
     <span class="uppercase"> Ver video promocional</span>
-    <Play class="text-primary" />
+    <Play class="text-primary group-hover:text-black" />
   </button>
 </div>
 
