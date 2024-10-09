@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.74] - 2024-10-08
+
 ### Add
 
 - New hero video (dron)
@@ -472,7 +474,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.73...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.74...HEAD
+[0.0.74]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.73...0.0.74
 [0.0.73]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.72...0.0.73
 [0.0.72]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.71...0.0.72
 [0.0.71]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.70...0.0.71
