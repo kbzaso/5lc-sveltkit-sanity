@@ -76,7 +76,7 @@
 </svelte:head>
 
 <div
-  class={`flex flex-col min-h-screen bg-grit bg-[length:500px_500px] bg-repeat min-w-[375px]`}
+  class={`flex flex-col min-h-screen min-w-[375px]`}
 >
   <Nav
     logo={settings.logo}

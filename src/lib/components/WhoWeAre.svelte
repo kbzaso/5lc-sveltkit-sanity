@@ -4,23 +4,21 @@
 
 <section>
   <div
-    class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full mx-auto max-w-6xl"
+    class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full mx-auto max-w-7xl"
   >
-    <div class="wrap">
+    <div class="h-96 w-full wrap">
       <div
       class="text-6xl lg:text-8xl text-primary mix-blend-plus-lighter relative"
       >
 
       <p class="font-[AtomicMarker] text-center absolute -bottom-10 -rotate-6 left-4 text-pretty">Siempre Buena Onda</p
         >
-        <!-- <span class="font-[AtomicMarker] absolute -bottom-12 -rotate-6 left-28 md:left-40">Buena</span>
-        <spa class="font-[AtomicMarker] absolute -bottom-28 -rotate-6 left-48 md:left-80">Onda</spa> -->
       </div>
 
-      <img src={`${BASE_URL_ASSETS}/home_siempre_buena_onda.avif`} alt="" class="object-cover h-full">
+      <img src={`${BASE_URL_ASSETS}/home_siempre_buena_onda.avif`} alt="Asistentes al evento asombrados" class="object-cover h-full w-full">
     </div>
 
-    <div class="wrap">
+    <div class="h-96 w-full wrap">
       <div
       class="mix-blend-plus-lighter text-6xl lg:text-8xl text-primary relative"
       >
@@ -29,7 +27,7 @@
         >
       </div>
 
-      <img src={`${BASE_URL_ASSETS}/home_intensidad.avif`} alt="" class="object-cover h-full">
+      <img src={`${BASE_URL_ASSETS}/home_intensidad.avif`} alt="" class="object-cover h-full w-full">
     </div>
 
     <div class="md:col-span-2 md:row-start-2 h-96 w-full wrap">

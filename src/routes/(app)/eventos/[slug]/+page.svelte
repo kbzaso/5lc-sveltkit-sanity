@@ -21,7 +21,6 @@
   import TandasTicketsCard from "$lib/components/events/TandasTicketsCard.svelte";
   import { urlForImage } from "$lib/config/sanity";
   import ChatBubble from "$lib/components/events/ChatBubble.svelte";
-  import { MapPin } from "lucide-svelte";
   import Countdown from "$lib/components/events/Countdown.svelte";
   import { disclaimerEvent } from "$lib/stores";
   import Sponsors from "$lib/components/events/Sponsors.svelte";
@@ -79,6 +78,7 @@
       hasPhotos = [];
     }
   });
+
 </script>
 
 <svelte:head>
@@ -107,8 +107,8 @@
 
 {#if event}
   <div class=" mx-auto min-w-[350px]">
-    {#if event?.active && validatedDiscount?.error}
-      <Countdown date={eventDate} />
+    {#if event?.active}
+    <Countdown date={eventDate} />
     {/if}
     <div class="min-w-[350px] mx-auto mt-20 h-min">
       <div
@@ -403,28 +403,30 @@
                     : event?.ticket?.batch}
                 />
               {/if}
-              <section class="py-40 space-y-8">
-                {#if event?.tournament_billboard?.images.length > 0}
+              {#if event?.tournament_billboard?.images.length > 0}
+                <section class="py-40 space-y-8">
                   <Cartelera
                     billboard={event?.tournament_billboard?.images}
                     title="Luchas del Torneo"
                   />
-                {/if}
-                {#if event?.billboard?.images.length > 0}
+                </section>
+              {/if}
+              {#if event?.billboard?.images.length > 0}
+                <section class="py-40 space-y-8">
                   <Cartelera billboard={event?.billboard?.images} />
-                {/if}
-              </section>
+                </section>
+              {/if}
               <section class="gap-8 w-full grid grid-cols-1 md:grid-cols-2">
                 {#if event?.agenda && event?.attraction}
-                  <Agenda agenda={event?.agenda[0]} alone={false}/>
-                  <Attraction attractions={event?.attraction[0]} alone={false} />
+                  <Agenda agenda={event?.agenda[0]} alone={false} />
+                  <Attraction
+                    attractions={event?.attraction[0]}
+                    alone={false}
+                  />
                 {:else if event?.agenda}
                   <Agenda agenda={event?.agenda[0]} alone={true} />
                 {:else if event?.attraction}
-                  <Attraction
-                    attractions={event?.attraction[0]}
-                    alone={true}
-                  />
+                  <Attraction attractions={event?.attraction[0]} alone={true} />
                 {/if}
               </section>
               <!-- VIDEO TESTIMONIO -->

@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    background-color: black;
+    background-color: #0d0d0d;
   }
   html {
     scroll-behavior: smooth;
@@ -24,24 +24,6 @@
   input,
   textarea {
     @apply font-ibm-sans;
-  }
-
-  @font-face {
-    font-family: "AtomicMarkerExtras";
-    src: url("/fonts/AtomicMarkerExtras.woff2") format("woff2"),
-      url("/fonts/AtomicMarkerExtras.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "AtomicMarker";
-    src: url("/fonts/AtomicMarker.woff2") format("woff2"),
-      url("/fonts/AtomicMarker.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
   }
 }
 
@@ -90,6 +72,10 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background: var(--sb-thumb-color);
   border-radius: 1px;
+}
+
+.background-grit {
+  @apply bg-grit bg-[length:500px_500px] bg-repeat
 }
 
 @supports not selector(::-webkit-scrollbar) {

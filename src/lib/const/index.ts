@@ -9,8 +9,9 @@ export const VENUE = {
 export const infoLanding = {
   hero: {
     title: "Clandestino",
+    subtitle: "5 Luchas",
     description:
-      "¡Sumérgete en la clandestinidad de 5 Luchas! Embárcate en un viaje liberador que romperá las cadenas del estrés y la monotonía a través de la electrizante pasión de la Lucha Libre.",
+      "Embárcate en un viaje liberador que romperá las cadenas del estrés y la monotonía a través de la electrizante pasión de la Lucha Libre.",
     image:
       `${BASE_URL_ASSETS}/home_preview_web_video.jpg`,
     video:
@@ -29,6 +30,25 @@ export const infoLanding = {
       `${BASE_URL_ASSETS}/sara_cta.jpg`,
   },
 };
+
+export const media =[
+  {
+    media: 'Últimas Noticias',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Las_%C3%9Altimas_Noticias_logo.svg/1200px-Las_%C3%9Altimas_Noticias_logo.svg.png',
+  },
+  {
+    media: 'Rock & Pop',
+    url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Rock_%26_Pop_logo_2013.svg/1200px-Rock_%26_Pop_logo_2013.svg.png',
+  },
+  {
+    media: 'Radio ADN',
+    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/ADN_Radio_Chile.svg/1280px-ADN_Radio_Chile.svg.png",
+  },
+  {
+    media: 'TVR',
+    url: 'https://s3-mspro.nyc3.cdn.digitaloceanspaces.com/tenant/5f4534bd9d9a9e5e37ecdd8a/mediaLibrary/photo/cd5aeaba-003d-43f0-9571-a710892e4ff0-extra-large-standard-q100.png',
+  }
+]
 
 export const faq = [
   {

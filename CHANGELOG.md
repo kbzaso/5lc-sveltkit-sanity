@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Hero component
+- Countdown component
+
 ## [0.0.75] - 2024-10-09
 
 ### Fix

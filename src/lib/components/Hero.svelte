@@ -1,40 +1,63 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { media } from "$lib/const/index"
 
   type Info = {
     title: string;
+    subtitle?: string;
     description: string;
     image?: string;
     video?: string;
+    media?: [];
   };
 
   export let info: Info;
   export let containerClass: string = "min-h-svh lg:min-h-[800px]";
   export let titleClass: string = "text-7xl md:text-[150px]";
-  export let descriptionClass: string = "text-lg";
+  export let descriptionClass: string = "";
   export let cta: boolean = false;
   export let tag: string = "span";
 </script>
 
 <section
-  class={`mx-auto ${containerClass} relative h-dvh w-full max-w-[100vw] md:aspect-video md:h-[80vh] xl:h-full min-w-[375px]`}
+  class={`mx-auto ${containerClass} relative w-full md:aspect-video max-h-[700px] min-w-[375px]`}
 >
   {#if info.video}
-    <h1
-      class={`text-primary font-[AtomicMarker] ${titleClass} z-10 absolute bottom-60 md:top-1/2 left-1/2 -translate-x-1/2 md:-translate-y-[180px] -rotate-6`}
+    <div
+      class="z-10 absolute top-1/2 max-w-6xl lg:left-1/2 lg:-translate-x-[50%] md:-translate-y-[150px] xl:-translate-y-[100px] lg:-translate-y-[200px] space-y-4 flex flex-col lg:flex-row lg:items-end w-full justify-between px-4 lg:mx-0"
     >
-      {info.title}
-    </h1>
-    <p
-      class={`text-white pt-8 w-full md:max-w-2xl z-10 ${descriptionClass} absolute bottom-24 px-4 md:top-1/2 left-1/2 -translate-x-1/2 md:-translate-y-[50px] text-center`}
-    >
-      {info.description}
-    </p>
+      <div class="space-y-4">
+        <h1
+          class={`text-white drop-shadow-xl ${titleClass} uppercase flex flex-col `}
+        >
+          <span class="text-5xl font-ibm drop-shadow-2xl">{info.subtitle}</span>
+          <span
+            class="font-[AtomicMarker] bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-red-500"
+          >
+            {info.title}
+          </span>
+        </h1>
+        <p class={`text-gray-300 ${descriptionClass}`}>
+          {info.description}
+        </p>
+      </div>
+      <div class="flex flex-col lg:items-end justify-end">
+        <p class="text-sm text-gray-300">Hemos aparecido en:</p>
+        <div class="flex flex-wrap gap-4 mt-4">
+          {#each media as media}
+            <img
+              src={media.url}
+              alt="Logo de la revista"
+              class="h-5"
+            />
+          {/each}
+        </div>
+      </div>
+    </div>
     <video
       id="bg_video"
       autoplay
       loop
-      class="w-full h-[600px] object-cover object-bottom maskImages z-0"
+      class="w-full h-[400px] md:h-[600px] lg:h-[800px] object-cover object-bottom z-0 maskImages"
       poster="https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/zzvzz41vo88dfhoief9v"
       muted
       playsinline

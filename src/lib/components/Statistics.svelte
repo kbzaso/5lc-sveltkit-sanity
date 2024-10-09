@@ -48,7 +48,7 @@
   >
     <span class="text-white font-ibm italic text-6xl z-10 pt-60">+13.600</span>
     <span
-      class="font-[AtomicMarker] text-6xl -rotate-6 mt-4 text-primary z-10 mix-blend-plus-lighter"
+      class="font-[AtomicMarker] text-5xl lg:text-6xl -rotate-6 mt-4 text-primary z-10 mix-blend-plus-lighter"
       >Adhesiones</span
     >
     <img
