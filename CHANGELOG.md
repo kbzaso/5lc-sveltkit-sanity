@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- dataStructure for filter future events
+- Show only future events on landing
+
 ## [0.0.74] - 2024-10-08
 
 ### Add
