@@ -43,7 +43,7 @@
 <div
   id="navbar"
   class={`w-full py-2 px-4 z-40 pt-2 fixed ${
-    isScrolled ? "backdrop-blur-md bg-black/25 top-0" : "top-12"
+    isScrolled ? "backdrop-blur-md bg-black/25 top-0" : "top-0"
   } transition-all ease-linear duration-50`}
 >
   <div
@@ -129,7 +129,8 @@
 </div>
 <!-- Drawer Menu -->
 <MobileNavMenu bind:this={mobileNavMenu} />
-<Topbar />
+<!-- PARA MOVER EL NAV HAY QUE AGREGAR "top-12" CUANDO isScrolled ES TRUE -->
+<!-- <Topbar /> -->
 
 <style>
   .transition-blur {

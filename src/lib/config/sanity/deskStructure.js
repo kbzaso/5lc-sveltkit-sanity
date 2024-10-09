@@ -10,7 +10,7 @@ export const myStructure = (S) =>
         .child(
           S.documentList()
             .title("Próximos Eventos")
-            .filter("date >= now()")
+            .filter("active == true")
             .defaultOrdering([{ field: "date", direction: "asc" }])
         ),
       S.listItem()
@@ -18,7 +18,7 @@ export const myStructure = (S) =>
         .schemaType("event")
         .child(
           S.documentList()
-            .title("Próximos Pasados")
+            .title("Eventos Pasados")
             .filter("date <= now()")
             .defaultOrdering([{ field: "date", direction: "desc" }])
         ),

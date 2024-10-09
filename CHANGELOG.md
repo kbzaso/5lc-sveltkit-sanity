@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- New hero video (dron)
+
+### Fix
+
+- Take out Topbar component
+
 ## [0.0.73] - 2024-09-28
 
 ### Fix
