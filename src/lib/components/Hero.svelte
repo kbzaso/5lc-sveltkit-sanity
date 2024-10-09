@@ -11,7 +11,7 @@
   };
 
   export let info: Info;
-  export let containerClass: string = "min-h-svh lg:min-h-[800px]";
+  export let containerClass: string = "";
   export let titleClass: string = "text-7xl md:text-[150px]";
   export let descriptionClass: string = "";
   export let cta: boolean = false;
@@ -19,11 +19,11 @@
 </script>
 
 <section
-  class={`mx-auto ${containerClass} relative w-full md:aspect-video max-h-[700px] min-w-[375px]`}
+  class={`mx-auto ${containerClass} relative w-full max-h-[700px] 2xl:max-h-[1000px] min-w-[375px]`}
 >
   {#if info.video}
     <div
-      class="z-10 absolute top-1/2 max-w-6xl lg:left-1/2 lg:-translate-x-[50%] md:-translate-y-[150px] xl:-translate-y-[100px] lg:-translate-y-[200px] space-y-4 flex flex-col lg:flex-row lg:items-end w-full justify-between px-4 lg:mx-0"
+      class="z-10 absolute top-1/2 max-w-6xl lg:left-1/2 lg:-translate-x-[50%] translate-y-[150px] md:-translate-y-[150px] xl:-translate-y-[100px] lg:-translate-y-[80px] space-y-4 flex flex-col lg:flex-row lg:items-end w-full justify-between px-4 lg:mx-0"
     >
       <div class="space-y-4">
         <h1
