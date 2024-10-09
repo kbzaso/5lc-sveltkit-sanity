@@ -113,7 +113,9 @@
     </h2>
     <section class="flex items-start lg:gap-4 pl-4 xl:pl-0 flex-wrap">
       {#each events as event}
-        <CardEvent {event} />
+        {#if new Date(event.date) > new Date()}
+          <CardEvent {event} />
+        {/if}
       {/each}
       <SuscribeForm info={infoLanding.newsletter} />
     </section>
