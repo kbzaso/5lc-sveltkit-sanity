@@ -14,7 +14,7 @@ export const infoLanding = {
     image:
       `${BASE_URL_ASSETS}/home_preview_web_video.jpg`,
     video:
-      `${BASE_URL_ASSETS}/home_bg_video.mp4`,
+      `${BASE_URL_ASSETS}/bg_video.mp4`,
   },
   newsletter: {
     title: "¡Suscríbete a nuestro Newsletter!",

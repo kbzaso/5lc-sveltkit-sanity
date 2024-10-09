@@ -96,7 +96,8 @@
   <Hero
     info={infoLanding.hero}
     tag="h1"
-    titleClass="text-6xl sm:text-8xl md:text-9xl"
+    titleClass="text-6xl mix-blend-plus-lighter md:mt-60"
+    descriptionClass="md:mt-40 text-xl"
   />
   <main
     id="events"

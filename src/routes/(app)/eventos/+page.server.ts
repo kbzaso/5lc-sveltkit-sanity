@@ -23,7 +23,7 @@ export const load: PageServerLoad = async ({ parent, params, request, setHeaders
     throw error(500, "No se encontraron resultados");
   }
 
-  kv.set("results", JSON.stringify(results), { ex: 86400 });
+  kv.set("results", JSON.stringify(results), { ex: 43200 });
 
   return {
     results,
