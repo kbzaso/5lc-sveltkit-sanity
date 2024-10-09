@@ -96,29 +96,35 @@
   <Hero
     info={infoLanding.hero}
     tag="h1"
-    titleClass="text-6xl mix-blend-plus-lighter md:mt-60"
-    descriptionClass="md:mt-40 text-xl"
+    titleClass="text-6xl md:mt-60"
+    descriptionClass="text-xl max-w-2xl"
   />
   <main
     id="events"
-    class="container mx-auto max-w-6xl -mt-10 md:-mt-20 relative md:mb-20 scroll-mt-20"
+    class="container mx-auto max-w-6xl relative mt-10 lg:-mt-36 scroll-mt-20"
   >
-    <h2
-      class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 xl:pl-0"
-    >
-      Próximos Eventos <span
-        aria-hidden="true"
-        class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
+    {#if events.length > 0}
+      <h2
+        class="text-4xl font-bold text-white mask font-ibm italic mb-4 pl-4 xl:pl-0"
       >
-    </h2>
-    <section class="flex items-start lg:gap-4 pl-4 xl:pl-0 flex-wrap">
-      {#each events as event}
-        {#if new Date(event.date) > new Date()}
-          <CardEvent {event} />
-        {/if}
-      {/each}
+        Próximos Eventos <span
+          aria-hidden="true"
+          class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
+        >
+      </h2>
+      <div class="carousel carousel-center w-full space-x-4 pl-4 lg:ml-0">
+        {#each events as event}
+          <div class="carousel-item">
+            <CardEvent {event} />
+          </div>
+        {/each}
+        <div class="carousel-item">
+          <SuscribeForm info={infoLanding.newsletter} width="w-64"/>
+        </div>
+      </div>
+    {:else}
       <SuscribeForm info={infoLanding.newsletter} />
-    </section>
+    {/if}
   </main>
   <Statistics />
   <Video url="https://youtu.be/v5Nj6oG-Fs0?si=Grt_PcZO9VohSpDg" />
@@ -126,11 +132,11 @@
   <Slider items={allStaff2} reverse={true} />
   <WhoWeAre />
   <Faq questions={faq} />
-  <Hero
-    info={infoLanding.cta}
-    containerClass={"min-h-[450px] lg:min-h-[600px] container"}
-    titleClass={"text-7xl"}
-    descriptionClass={"font-ibm italic text-4xl"}
-    cta={true}
-  />
 </div>
+<Hero
+  info={infoLanding.cta}
+  containerClass={"min-h-[450px] lg:min-h-[600px]"}
+  titleClass={"text-7xl"}
+  descriptionClass={"font-ibm italic text-4xl"}
+  cta={true}
+/>

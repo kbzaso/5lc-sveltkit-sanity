@@ -1,6 +1,12 @@
 export * from "./preview-cookies";
 
-export let LocaleConfig: Intl.DateTimeFormatOptions = { dateStyle: "full" };
+export let LocaleConfig: Intl.DateTimeFormatOptions = {
+  hour: "numeric",
+  minute: "numeric",
+  timeZone: "America/Santiago",
+  month: "short",
+  day: "numeric",
+};
 
 // Función para obtener el id de un video de YouTube
 export function extractYouTubeId(url: string) {
