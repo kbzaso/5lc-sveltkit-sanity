@@ -22,42 +22,9 @@ export const prerender = true;
 export const load: PageServerLoad = async () => {
   const settings = await getSanityServerClient(false).fetch(settingsQuery);
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
-  let nextEvent = await getSanityServerClient(false).fetch(nextEventQuery);
   let events = await getSanityServerClient(false).fetch(ActiveEventsQuery);
   let allStaff = await getSanityServerClient(false).fetch(allStaffQuery);
   let allStaff2 = await getSanityServerClient(false).fetch(allStaffQuery2);
-
-  // Valida si existe un solo evento
-  if (events.length === 1) {
-    const ticketsSold = await client.payment.aggregate({
-      where: {
-        payment_status: "success",
-        AND: [
-          {
-            productId: nextEvent._id,
-          },
-        ],
-      },
-      _sum: {
-        ticketAmount: true,
-      },
-    });
-
-    // Suma de tickets que quedan en el Studio
-    const totalTicketsLeftStudio =
-      nextEvent?.ticket?.firsts_tickets?.amount +
-      nextEvent?.ticket?.seconds_tickets?.amount +
-      nextEvent?.ticket?.thirds_tickets?.amount;
-    // Suma de tickets que quedan en el Studio + los que se han vendido
-
-    const totalTickets =
-      totalTicketsLeftStudio + ticketsSold._sum?.ticketAmount || 0;
-
-    let ticketsSoldCount = ticketsSold._sum?.ticketAmount || 0;
-
-    nextEvent.tickets_sold = ticketsSoldCount;
-    nextEvent.total_tickets = totalTickets;
-  }
 
   if (!settings) {
     throw error(500, "Settings not found");
@@ -70,7 +37,6 @@ export const load: PageServerLoad = async () => {
     events,
     settings,
     welcome,
-    nextEvent,
     allStaff,
     allStaff2,
   };
@@ -87,13 +53,13 @@ interface BuysObject {
 }
 
 // Hace la traduccoion de los tipos de tickets para guardarlo en DB
-let ubicatonTicketType = (type: string) => {
-  if (type === "ringside_tickets") {
-    return "Ringside";
-  } else if (type === "general_tickets") {
-    return "General";
-  }
-};
+// let ubicatonTicketType = (type: string) => {
+//   if (type === "ringside_tickets") {
+//     return "Ringside";
+//   } else if (type === "general_tickets") {
+//     return "General";
+//   }
+// };
 
 // export const actions: Actions = {
 //   ubication: async (event) => {
