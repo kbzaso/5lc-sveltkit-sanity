@@ -199,7 +199,7 @@ export const eventQuery = groq`
 }`;
 
 export const ActiveEventsQuery = groq`
-*[_type == "event" && active == true] | order(date desc, _updatedAt desc) {
+*[_type == "event" && active == true] | order(date asc) {
   ${eventFields}
 }`;
 

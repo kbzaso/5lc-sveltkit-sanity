@@ -23,7 +23,7 @@
 >
   {#if info.video}
     <div
-      class="z-10 absolute top-1/2 max-w-6xl lg:left-1/2 lg:-translate-x-[50%] translate-y-[150px] md:-translate-y-[150px] xl:-translate-y-[100px] lg:-translate-y-[80px] space-y-4 flex flex-col lg:flex-row lg:items-end w-full justify-between px-4 lg:mx-0"
+      class="z-10 absolute top-1/2 max-w-6xl lg:left-1/2 lg:-translate-x-[50%] translate-y-[150px] md:-translate-y-[150px] xl:-translate-y-[100px] lg:-translate-y-[150px] space-y-4 flex flex-col lg:flex-row lg:items-end w-full justify-between px-4 xl:px-0"
     >
       <div class="space-y-4">
         <h1
@@ -36,7 +36,7 @@
             {info.title}
           </span>
         </h1>
-        <p class={`text-gray-300 ${descriptionClass}`}>
+        <p class={`text-gray-300 max-w-xl text-pretty ${descriptionClass}`}>
           {info.description}
         </p>
       </div>

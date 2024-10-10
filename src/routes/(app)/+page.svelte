@@ -17,7 +17,7 @@
 
   export let data: PageData;
 
-  $: ({ settings, nextEvent, events, allStaff, allStaff2 } = data);
+  $: ({ settings, events, allStaff, allStaff2 } = data);
 
   let isMobile = false;
 
@@ -27,27 +27,7 @@
 
   let seo_image = urlForImage($page.data.settings?.logo).url();
 
-  let formattedFirstsPrice: string;
-  let formattedSecondsPrice: string;
-  let formattedThirthsPrice: string;
   onMount(() => {
-    let firstTicketPrice = nextEvent.ticket?.firsts_tickets?.price;
-    let secondsTicketPrice = nextEvent.ticket?.seconds_tickets?.price;
-    let thirdsTicketPrice = nextEvent.ticket?.thirds_tickets?.price;
-
-    formattedFirstsPrice = new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(firstTicketPrice);
-    formattedSecondsPrice = new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(secondsTicketPrice);
-    formattedThirthsPrice = new Intl.NumberFormat("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    }).format(thirdsTicketPrice);
-
     checkScreenWidth();
     window.addEventListener("resize", checkScreenWidth);
 
@@ -101,7 +81,7 @@
   />
   <main
     id="events"
-    class="container mx-auto max-w-6xl relative mt-96 md:mt-40 scroll-mt-20"
+    class="container mx-auto max-w-6xl relative mt-96 md:mt-40 lg:-mt-10 xl:mt-10 scroll-mt-20"
   >
     {#if events.length > 0}
       <h2
@@ -112,7 +92,7 @@
           class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
         >
       </h2>
-      <div class="carousel carousel-center w-full space-x-4 pl-4 md:pl-0 lg:ml-0">
+      <div class="carousel carousel-center w-full space-x-4 pl-4 xl:pl-0 lg:ml-0">
         {#each events as event}
           <div class="carousel-item">
             <CardEvent {event} />

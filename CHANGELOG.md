@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Invert order on active events
+
 ## [0.0.76] - 2024-10-09
 
 ### Fix
