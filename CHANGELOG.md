@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.77] - 2024-10-10
+
 ### Fix
 
 - Invert order on active events
@@ -492,7 +494,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.76...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.77...HEAD
+[0.0.77]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.76...0.0.77
 [0.0.76]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.75...0.0.76
 [0.0.75]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.74...0.0.75
 [0.0.74]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.73...0.0.74
