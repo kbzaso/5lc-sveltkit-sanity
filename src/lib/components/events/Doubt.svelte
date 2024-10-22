@@ -5,9 +5,9 @@
 <div class="flex flex-col gap-8 container max-h-[600px] mx-auto mt-10">
     <div class="relative w-full overflow-hidden ">
       <img
-        src={`${BASE_URL_ASSETS}/sara_cta.jpg`}
+        src={`${BASE_URL_ASSETS}/5luchas/kira-natalia-ivan-horizontal.jpg`}
         alt="Luchadora en el ring"
-        class="w-full h-[400px] object-cover lg:object-top"
+        class="w-full h-[400px] object-cover lg:object-center"
         width={1200}
         height={600}
       />

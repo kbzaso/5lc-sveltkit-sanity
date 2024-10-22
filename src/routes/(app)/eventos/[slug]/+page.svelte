@@ -416,7 +416,7 @@
                   <Cartelera billboard={event?.billboard?.images} />
                 </section>
               {/if}
-              <section class="gap-8 w-full grid grid-cols-1 md:grid-cols-2">
+              <section class="gap-8 w-full grid grid-cols-1 md:grid-cols-2 my-20">
                 {#if event?.agenda && event?.attraction}
                   <Agenda agenda={event?.agenda[0]} alone={false} />
                   <Attraction

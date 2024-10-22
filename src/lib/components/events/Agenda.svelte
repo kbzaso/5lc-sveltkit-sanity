@@ -17,7 +17,7 @@
 
 </script>
 
-<article id="agenda" class={`w-full bg-black/30 ${alone ? "col-span-2" : ""}`}>
+<article id="agenda" class={`w-full ${alone ? "col-span-2" : ""}`}>
   <h5 class="text-4xl font-ibm italic mask text-white mb-4">
     <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
       >P</span

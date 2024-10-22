@@ -59,7 +59,7 @@
             {question}
           </button>
           <div
-            class="collapse-content text-primary-content peer-checked:border peer-checked:border-primary peer-checked:bg-black/50 peer-checked:text-white pt-2"
+            class="collapse-content text-primary-content peer-checked:border peer-checked:border-primary peer-checked:text-white pt-2"
           >
             <p>{answer}</p>
           </div>
