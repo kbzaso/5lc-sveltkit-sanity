@@ -20,7 +20,7 @@
       >realizados</span
     >
     <img
-      src={`${BASE_URL_ASSETS}/home_eventos_realizados.avif`}
+      src={`${BASE_URL_ASSETS}/5luchas/kira-natalia-ivan.jpg`}
       alt="Lucha libre en la Bóveda Secreta"
       class="absolute opacity-60 object-cover h-[380px] w-full"
     />
@@ -38,7 +38,7 @@
       >vividas</span
     >
     <img
-      src={`${BASE_URL_ASSETS}/home_luchas_vividas.avif`}
+      src={`${BASE_URL_ASSETS}/5luchas/intensidad.jpg`}
       alt="Lucha libre en la Bóveda Secreta"
       class="absolute opacity-60 object-cover h-[380px] w-full"
     />
@@ -52,7 +52,7 @@
       >Adhesiones</span
     >
     <img
-      src={`${BASE_URL_ASSETS}/home_adhesiones.avif`}
+      src={`${BASE_URL_ASSETS}/5luchas/dylan-camilove.jpg`}
       alt="Lucha libre en la Bóveda Secreta"
       class="absolute opacity-60 object-cover h-[380px] w-full"
     />

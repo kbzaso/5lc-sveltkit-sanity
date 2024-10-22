@@ -19,7 +19,7 @@
 </script>
 
 <section
-  class={`mx-auto ${containerClass} relative w-full max-h-[700px] 2xl:max-h-[1000px] min-w-[375px]`}
+  class={`mx-auto ${containerClass} 2xl:container relative w-full max-h-[700px] 2xl:max-h-[1000px] min-w-[375px]`}
 >
   {#if info.video}
     <div
@@ -57,7 +57,7 @@
       id="bg_video"
       autoplay
       loop
-      class="w-full h-[400px] md:h-[600px] lg:h-[800px] object-cover object-bottom z-0 maskImages"
+      class="w-full h-[400px] md:h-[600px] object-cover object-bottom z-0 maskImages"
       poster="https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/zzvzz41vo88dfhoief9v"
       muted
       playsinline

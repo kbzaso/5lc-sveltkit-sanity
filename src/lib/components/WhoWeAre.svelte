@@ -15,7 +15,7 @@
         >
       </div>
 
-      <img src={`${BASE_URL_ASSETS}/home_siempre_buena_onda.avif`} alt="Asistentes al evento asombrados" class="object-cover h-full w-full">
+      <img src={`${BASE_URL_ASSETS}/5luchas/buena-onda.jpg`} alt="Asistentes al evento asombrados" class="object-cover h-full w-full">
     </div>
 
     <div class="h-96 w-full wrap">
@@ -27,7 +27,7 @@
         >
       </div>
 
-      <img src={`${BASE_URL_ASSETS}/home_intensidad.avif`} alt="" class="object-cover h-full w-full">
+      <img src={`${BASE_URL_ASSETS}/5luchas/intensidad-2.jpg`} alt="" class="object-cover h-full w-full">
     </div>
 
     <div class="md:col-span-2 md:row-start-2 h-96 w-full wrap">
@@ -39,7 +39,7 @@
         >
       </div>
 
-      <img src={`${BASE_URL_ASSETS}/home_boveda_secreta.avif`} alt="Comunidad 5 luchas clandestino" class="object-cover object-bottom h-[500px] w-full">
+      <img src={`${BASE_URL_ASSETS}/5luchas/comunidad.jpg`} alt="Comunidad 5 luchas clandestino" class="object-cover object-bottom h-[500px] w-full">
     </div>
   </div>
 </section>

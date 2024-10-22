@@ -81,7 +81,7 @@
   />
   <main
     id="events"
-    class="container mx-auto max-w-6xl relative mt-96 md:mt-40 lg:-mt-10 xl:mt-10 scroll-mt-20"
+    class="container mx-auto max-w-6xl relative mt-72 md:mt-28 lg:mt-10 xl:mt-20 scroll-mt-20"
   >
     {#if events.length > 0}
       <h2
