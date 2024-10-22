@@ -15,7 +15,7 @@ export const infoLanding = {
     image:
       `${BASE_URL_ASSETS}/home_preview_web_video.jpg`,
     video:
-      `${BASE_URL_ASSETS}/bg_video.mp4`,
+      `${BASE_URL_ASSETS}/5luchas/bg_hero.mp4`,
   },
   newsletter: {
     title: "¡Suscríbete a nuestro Newsletter!",
@@ -27,7 +27,7 @@ export const infoLanding = {
     title: "¡Se parte!",
     description: "Y súmate a la comunidad",
     image:
-      `${BASE_URL_ASSETS}/sara_cta.jpg`,
+      `${BASE_URL_ASSETS}/5luchas/kira-natalia-ivan-horizontal.jpg`,
   },
 };
 
