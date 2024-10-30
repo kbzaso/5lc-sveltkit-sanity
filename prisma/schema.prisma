@@ -24,8 +24,10 @@ model Payment {
   buys               Json
   payment_id_service String?  @unique
   ticketsType        String
-  product            Product  @relation(fields: [productId], references: [id])
   discount_code      String?
+  ticketValidated    Int      @default(0)
+  client_id          String?
+  product            Product  @relation(fields: [productId], references: [id])
 }
 
 model Product {

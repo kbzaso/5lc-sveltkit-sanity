@@ -275,6 +275,24 @@ export const actions: Actions = {
 
     let dataUrlRedirect = "";
 
+    async function generatePaymentCode(eventName: string, eventId: string): Promise<string> {
+      const sanitizedEventName = eventName.replace(/\s+/g, '-');
+      // Fetch the current count of payments for the event
+      const paymentCount = await client.payment.count({
+        where: {
+          productId: eventId
+        }
+      });
+    
+      // Generate the code using the event name and a zero-padded sequential number
+      const sequentialNumber = (paymentCount + 1).toString().padStart(3, '0');
+      const paymentCode = `${sanitizedEventName}-${sequentialNumber}`;
+    
+      return paymentCode;
+    }
+
+    const client_id = await generatePaymentCode(event.title, event._id);
+
     try {
       const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
         method: "POST",
@@ -294,6 +312,7 @@ export const actions: Actions = {
           rut: rut as string,
           payment_status: result.status,
           ticketAmount: tickets,
+          client_id: client_id,
           ticketsType: ubicatonTicketType(ticketsType || ""),
           price: Number(totalPrice),
           buys: buyObject,
@@ -401,6 +420,24 @@ export const actions: Actions = {
 
     let dataUrlRedirect = "";
 
+    async function generatePaymentCode(eventName: string, eventId: string): Promise<string> {
+      const sanitizedEventName = eventName.replace(/\s+/g, '-');
+      // Fetch the current count of payments for the event
+      const paymentCount = await client.payment.count({
+        where: {
+          productId: eventId
+        }
+      });
+    
+      // Generate the code using the event name and a zero-padded sequential number
+      const sequentialNumber = (paymentCount + 1).toString().padStart(3, '0');
+      const paymentCode = `${sanitizedEventName}-${sequentialNumber}`;
+    
+      return paymentCode;
+    }
+
+    const client_id = await generatePaymentCode(event.title, event._id);
+
     try {
       const response = await fetch(`${VITE_PAYKU_API_URL}/transaction`, {
         method: "POST",
@@ -423,6 +460,7 @@ export const actions: Actions = {
           price: Number(totalPrice),
           buys: priceTotal.ticket,
           ticketsType: "Tandas",
+          client_id: client_id,
           discount_code: normalizeDiscountCode,
           payment_id_service: result.id,
           product: {
