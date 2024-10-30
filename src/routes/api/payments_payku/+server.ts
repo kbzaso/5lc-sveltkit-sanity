@@ -139,7 +139,7 @@ export const POST: RequestHandler = async (event) => {
                 : VENUE.ADDRESS
             }</p>
   <p>Numero de orden: <strong>${
-    paymentWithProduct?.payment_id_service
+    paymentWithProduct?.client_id
   }</strong></p>
   <p><strong>5 Luchas Clandestino</strong></p>
               `,
