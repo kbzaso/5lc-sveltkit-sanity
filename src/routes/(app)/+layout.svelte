@@ -40,11 +40,7 @@
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
     rel="stylesheet"
   />
-  <script
-    async
-    src="https://analytics.umami.is/script.js"
-    data-website-id="86ceac1e-89c3-42ea-abef-dbfac5379da5"
-  ></script>
+  <script defer src="https://umami-production-da63.up.railway.app/script.js" data-website-id="ffab1633-eea1-4614-bfe9-0a580ab41cd9"></script>
   <link
     rel="preload"
     href="/fonts/AtomicMarkerExtras.woff2"
