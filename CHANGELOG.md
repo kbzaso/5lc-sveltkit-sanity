@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.81] - 2024-11-06
+
 ### Add
 
 - CTA for refund
@@ -516,7 +518,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.80...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.81...HEAD
+[0.0.81]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.80...0.0.81
 [0.0.80]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.79...0.0.80
 [0.0.79]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.78...0.0.79
 [0.0.78]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.77...0.0.78
