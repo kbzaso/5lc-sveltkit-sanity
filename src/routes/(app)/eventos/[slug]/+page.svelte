@@ -452,7 +452,12 @@
       {/if}
     </div>
     {#if event?.active}
-      <Doubt />
+    <section class="flex md:flex-row flex-col">
+      <Doubt title={"¿Aún no estái' seguro/a de ir?"} background="/5luchas/kira-natalia-ivan-horizontal.jpg" tallyCode={"w5vZoZ"} btnText="Escríbenos y te guiamos" />
+      <Doubt title={"¿Compraste entrada y no puedes ir?"} background="/5luchas/fear.webp" tallyCode={"mYz7qB"} 
+      btnText="Pide la devolución de tu entrada"
+      />
+    </section>
     {/if}
 
     {#if validatedDiscount?.success && event?.active}

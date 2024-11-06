@@ -7,21 +7,25 @@
 
 ## Event Landing Page
 
+### Fix
+    - [ ] Fix gallery on results
+
 ### Add
     - [x] Add btn to contact
     - [x] CTA
     - [x] FAQ
     - [ ] Venue's images
     - [ ] Press appearances releated
-    - [ ] VS
-    - [ ] Tabs - Agenda and atractions
+    - [s] VS
+    - [x] Tabs - Agenda and atractions
+    - [ ] Create tickets refund on slug
 
 ## Agregar información en pagina de exito y error
 
 ### Fix
 
 ### Add to DB
-    - [ ] ¿hizo ingreso?
+    - [x] ¿hizo ingreso?
 
 ### Add to email confirmation
     - [ ] QR o PDF
