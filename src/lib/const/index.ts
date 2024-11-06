@@ -79,6 +79,6 @@ export const faq = [
   {
     question: "¿Que pasa si compre mi entrada y no puedo ir?",
     answer:
-      "En caso de imprevistos que te impidan asistir, puedes contactarnos a hola@5luchas.cl para solicitar el reembolso de tu entrada. También tienes la opción de venderla a otra persona interesada en asistir al evento. Estos trámites deben realizarse antes de la fecha del show correspondiente.",
+      "En caso de imprevistos que te impidan asistir, puedes contactarnos a hola@5luchas.cl para solicitar el reembolso de tu entrada indicándonos el RUT, email, número de orden, si necesitas todas o una porción de la compra y tus datos de transferencia.",
   },
 ];
