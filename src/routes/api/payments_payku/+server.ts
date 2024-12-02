@@ -110,8 +110,6 @@ export const POST: RequestHandler = async (event) => {
       },
     });
 
-    console.log(paymentsSold._sum.ticketAmount);
-
     if (result.status === "success") {
       // Enviamos email de confirmación
       (async function () {
