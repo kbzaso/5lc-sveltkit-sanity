@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.82] - 2024-12-02
+
 ### Add
 
 - Video component on event slug, active and result event
@@ -523,7 +525,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.81...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.82...HEAD
+[0.0.82]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.81...0.0.82
 [0.0.81]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.80...0.0.81
 [0.0.80]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.79...0.0.80
 [0.0.79]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.78...0.0.79
