@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Video component on event slug, active and result event
+
 ## [0.0.81] - 2024-11-06
 
 ### Add

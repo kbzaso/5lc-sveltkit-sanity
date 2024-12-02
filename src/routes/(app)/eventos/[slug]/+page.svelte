@@ -431,8 +431,8 @@
               </section>
               <!-- VIDEO TESTIMONIO -->
               <Video
-                title="¿Qué dicen los asistentes a 5 Luchas Clandestino?"
-                url="https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"
+                title={event?.promotion_video?.title ? event?.promotion_video?.title : "¿Qué dicen los asistentes a 5 Luchas Clandestino?"}
+                url={event?.promotion_video?.url ? event?.promotion_video?.url : "https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"}
               />
               {#if event?.faq}
                 <Faq
@@ -476,11 +476,9 @@
     {/if}
   </div>
   {#if event.videoUrl && !event.active}
-    <Youtube
-      link={event.videoUrl}
-      image={event?.gallery
-        ? event?.gallery[0]
-        : "https://res.cloudinary.com/dtj5xnlou/image/upload/f_auto,q_auto/v1/5LC/boveda"}
+    <Video 
+    title="Streaming del evento"
+    url={event.videoUrl}
     />
   {/if}
   {#if event.playlist && !event.active}

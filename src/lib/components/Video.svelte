@@ -4,17 +4,10 @@
   import { extractYouTubeId } from "$lib/utils";
   import { onMount } from "svelte";
 
-  export let url: string;
+  export let url: string
   export let title: string = "Testimonios";
 
   const videoId = extractYouTubeId(url);
-
-  let isBaseRoute = false;
-
-  onMount(() => {
-    // Verifica si la ruta actual es la base
-    isBaseRoute = location.pathname === '/';
-  });
 </script>
 
 <section
@@ -30,7 +23,7 @@
       >
   </h3>
   <div
-    class={`${isBaseRoute ? 'hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16' : 'hidden'}`}
+    class='hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16'
   >
     <span
       aria-hidden="true"
@@ -50,13 +43,13 @@
   </div>
   <div class="lg:mb-20 z-10 border border-primary lg:w-[800px]">
     <Youtube id={videoId} animations={false} --title-color={"transparent"}>
-      <button class="bg-black/50 rounded-full p-4"
+      <button aria-label="Play" class="bg-black/50 rounded-full p-4"
         ><YTIcon class="stroke-primary w-10 h-10" /></button
       >
     </Youtube>
   </div>
   <div
-    class={`${isBaseRoute ? 'lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10' : 'hidden'}`}
+    class='lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10'
   >
     <span
       aria-hidden="true"
