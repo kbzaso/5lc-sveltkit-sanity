@@ -103,6 +103,7 @@
   <meta property="og:title" content={`${event?.title}`} />
   <meta property="og:description" content={`${event?.seo_description}`} />
   <meta property="og:url" content={`${$page.url.href}`} />
+  <meta property="og:site_name" content="5 Luchas Clandestino - Lucha Libre Chilena">
 </svelte:head>
 
 {#if event}
@@ -340,9 +341,6 @@
               {/if}
               <!-- /EVENTO ACTIVO -->
             </div>
-            {#if event?.promotion_video}
-              <PromotionalVideo url={event?.promotion_video.url} />
-            {/if}
           </div>
         </div>
       </div>
@@ -452,7 +450,7 @@
       {/if}
     </div>
     {#if event?.active}
-    <section class="flex md:flex-row flex-col">
+    <section class="flex md:flex-row flex-col container mx-auto">
       <Doubt title={"¿Aún no estái' seguro/a de ir?"} background="/5luchas/kira-natalia-ivan-horizontal.jpg" tallyCode={"w5vZoZ"} btnText="Escríbenos y te guiamos" />
       <Doubt title={"¿Compraste entrada y no puedes ir?"} background="/5luchas/fear.webp" tallyCode={"mYz7qB"} 
       btnText="Pide la devolución de tu entrada"
