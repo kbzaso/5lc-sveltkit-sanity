@@ -172,9 +172,9 @@ export const POST: RequestHandler = async (event) => {
               <p style="margin-bottom: 20px;">¡Wena wena! ${
               paymentWithProduct?.customer_name
               },</p>
-              <p style="margin-bottom: 20px;">Gracias por su adhesión. Tú entrada para ${
+              <p style="margin-bottom: 20px;">Gracias por tu adhesión. Tu entrada para ${
               paymentWithProduct?.product.name
-              } ha sido confirmada. ¡Estamos emocionados de verle allí! 🔥</p>
+              } ha sido confirmada. ¡Estamos emocionados de verte allí! 🔥</p>
               <table width="100%" cellpadding="10" cellspacing="0" style="border: 1px solid #dddddd; margin-bottom: 20px;">
               <tr>
                 <td style="background-color: #181818; font-weight: bold;">Evento</td>
@@ -210,8 +210,8 @@ export const POST: RequestHandler = async (event) => {
                 <td>${paymentWithProduct?.ticketAmount} x $${paymentWithProduct?.price}.-</td>
               </tr>
               </table>
-              <p style="margin-bottom: 20px;">Si tienes alguna pregunta o necesita hacer cambios en su adhesión, por favor contacte a nuestro equipo de soporte en hola@5luchas.cl. 👨‍💻</p>
-              <p style="margin-bottom: 20px;">¡Esperamos verle en el evento! 💪</p>
+              <p style="margin-bottom: 20px;">Si tienes alguna pregunta o necesitas hacer cambios en su adhesión, por favor contacta a nuestro equipo de soporte en hola@5luchas.cl. 👨‍💻</p>
+              <p style="margin-bottom: 20px;">¡Esperamos verte en el evento! 💪</p>
               <p>Saludos,<br>El Equipo de 5 Luchas Clandestino</p>
             </td>
             </tr>

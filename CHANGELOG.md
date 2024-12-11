@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.84] - 2024-12-11
+
 ### Add
 
 - Email template now supports dark-mode and light-mode color schemes
@@ -535,7 +537,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.83...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.84...HEAD
+[0.0.84]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.83...0.0.84
 [0.0.83]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.82...0.0.83
 [0.0.82]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.81...0.0.82
 [0.0.81]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.80...0.0.81
