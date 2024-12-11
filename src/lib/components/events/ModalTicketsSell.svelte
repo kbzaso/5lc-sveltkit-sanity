@@ -149,18 +149,18 @@
   });
 </script>
 
-<button
-  disabled={!$disclaimerEvent}
-  class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline disabled:bg-primary disabled:text-black btn-lg"
-  onclick="my_modal_5.showModal()"
->
-<Ticket />
-  ¡Quiero ir!</button
->
+<div class="w-full flex justify-center">
+  <button
+    disabled={!$disclaimerEvent}
+    class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline btn-lg disabled:btn-disabled max-w-md mx-auto"
+    onclick="my_modal_5.showModal()"
+  >
+    <Ticket />
+    ¡Quiero ir!</button
+  >
+</div>
 {#if !$disclaimerEvent}
-  <p class="mt-2 badge badge-error w-full rounded-none">
-    Debes aceptar el código de conducta
-  </p>
+  <p class="mt-2 text-center">*Debes aceptar el código de conducta</p>
 {/if}
 <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle bg-black/75">
   <div class="modal-box">

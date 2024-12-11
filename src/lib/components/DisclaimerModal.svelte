@@ -26,7 +26,7 @@
 {#each disclaimers as disclaimer, i}
   <div class="form-control">
     <label
-      class="cursor-pointer label flex gap-4 justify-start"
+      class="cursor-pointer label flex gap-4 justify-center"
       for={`input_${disclaimer.modalId}`}
     >
       <input
@@ -35,7 +35,7 @@
         id={`input_${disclaimer.modalId}`}
         class="checkbox checkbox-primary "
       />
-      <p class="label-text text-primary">
+      <p class="label-text text-primary font-bold text-center">
         Acepto el <span
           class="anchor"
           onclick={`my_modal_${disclaimer.modalId}.showModal()`}
