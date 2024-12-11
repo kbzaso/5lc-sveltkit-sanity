@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Email template now supports dark-mode and light-mode color schemes
+
 ## [0.0.83] - 2024-12-11
 
 ### Fix
