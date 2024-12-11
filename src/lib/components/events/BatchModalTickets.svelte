@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { enhance } from "$app/forms";
   import { onMount } from "svelte";
   import type { Event } from "$lib/types";
   import { calculatePrice } from "$lib/utils/eventUtils";

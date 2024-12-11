@@ -149,7 +149,7 @@
   });
 </script>
 
-<div class="w-full flex justify-center">
+<div class="flex justify-center">
   <button
     disabled={!$disclaimerEvent}
     class="mt-4 btn grow w-full rounded-none btn-primary cursor-pointer text-black no-underline btn-lg disabled:btn-disabled max-w-md mx-auto"

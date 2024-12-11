@@ -69,7 +69,7 @@
     "daisyui": "^4.12.10",
     "groq": "^2.33.2",
     "jsonwebtoken": "^9.0.2",
-    "lucide-svelte": "^0.397.0",
+    "lucide-svelte": "^0.468.0",
     "masonry-layout": "^4.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

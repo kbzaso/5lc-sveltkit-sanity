@@ -59,6 +59,7 @@
   }
 
   let tandas: Tandas[] = [];
+  let activeTanda;
   let ubications: any[] = [];
 
   onMount(() => {
