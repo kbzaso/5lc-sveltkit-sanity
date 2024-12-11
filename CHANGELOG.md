@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.83] - 2024-12-11
+
 ### Fix
 
 - Changes in the TandasTicketsCard for improve the UI
@@ -529,7 +531,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.82...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.83...HEAD
+[0.0.83]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.82...0.0.83
 [0.0.82]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.81...0.0.82
 [0.0.81]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.80...0.0.81
 [0.0.80]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.79...0.0.80
