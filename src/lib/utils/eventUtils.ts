@@ -47,7 +47,20 @@ export function calculateTandas(tickets: Tickets) {
     type: key as TicketType,
     ...value,
     index: partsOrder.indexOf(key as TicketType),
+    active: value.amount > 0,
   }));
+
+  // Ensure only the first ticket type with a non-zero amount remains active
+  let foundActive = false;
+  tandas = tandas
+    .sort((a, b) => a.index - b.index)
+    .map((tanda) => {
+      if (tanda.amount > 0 && !foundActive) {
+        foundActive = true;
+        return { ...tanda, active: true };
+      }
+      return { ...tanda, active: false };
+    });
 
   tandas.sort(
     (a, b) => partsOrder.indexOf(a.type) - partsOrder.indexOf(b.type)
