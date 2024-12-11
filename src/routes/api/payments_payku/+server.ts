@@ -148,88 +148,88 @@ export const POST: RequestHandler = async (event) => {
       // Enviamos email de confirmación
       (async function () {
         try {
-          const data = await resend.emails.send({
+            const data = await resend.emails.send({
             from: "5 Luchas Clandestino <hola@5luchas.cl>",
             to: paymentWithProduct.customer_email,
             subject: `✅ Tú adhesión para ${paymentWithProduct.product.name} fue existosa!`,
             html: `<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmación de adhesión</title>
-</head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #ffffff; margin: 0; padding: 0;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background-color: #0c0c0c;">
-        <tr>
+          <html lang="es">
+          <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Confirmación de adhesión</title>
+          </head>
+          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #ffffff; margin: 0; padding: 0; background-color: #0c0c0c;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background-color: #0c0c0c;">
+            <tr>
             <td style="padding: 20px; text-align: center; background-color: #0c0c0c;">
-                <img src="https://5lc-website-assets.pages.dev/5luchas/logo.jpg" alt="Logo de 5LC" style="max-width: 150px;">
+              <img src="https://5lc-website-assets.pages.dev/5luchas/logo.jpg" alt="Logo de 5LC" style="max-width: 150px;">
             </td>
-        </tr>
-        <tr>
+            </tr>
+            <tr>
             <td style="padding: 20px;">
-                <h1 style="color: #4a4a4a; margin-bottom: 20px;">¡Su Entrada está Confirmada!</h1>
-                <p style="margin-bottom: 20px;">¡Wena wena! ${
-                  paymentWithProduct?.customer_name
-                },</p>
-                <p style="margin-bottom: 20px;">Gracias por su adhesión. Tú entrada para ${
-                  paymentWithProduct?.product.name
-                } ha sido confirmada. ¡Estamos emocionados de verle allí! 🔥</p>
-                
-                <table width="100%" cellpadding="10" cellspacing="0" style="border: 1px solid #dddddd; margin-bottom: 20px;">
-                    <tr>
-                        <td style="background-color: #181818; font-weight: bold;">Evento</td>
-                        <td>${paymentWithProduct?.product.name}</td>
-                    </tr>
-                    <tr>
-                        <td style="background-color: #181818; font-weight: bold;">Fecha</td>
-                        <td>${paymentWithProduct?.product.date}</td>
-                    </tr>
-                    <tr>
-                        <td style="background-color: #181818; font-weight: bold;">Nº de orden</td>
-                        <td>${paymentWithProduct?.client_id}</td>
-                    </tr>
-                    <tr>
-                        <td style="background-color: #181818; font-weight: bold;">Lugar</td>
-                        <td>
-                        ${
-                          nextEvent[0]?.venue?.venueName
-                            ? nextEvent[0]?.venue?.venueName
-                            : VENUE.NAME
-                        } | ${
+              <h1 style="color: #f9c414; margin-bottom: 20px;">¡Estamos ready!</h1>
+              <p style="margin-bottom: 20px;">¡Wena wena! ${
+              paymentWithProduct?.customer_name
+              },</p>
+              <p style="margin-bottom: 20px;">Gracias por su adhesión. Tú entrada para ${
+              paymentWithProduct?.product.name
+              } ha sido confirmada. ¡Estamos emocionados de verle allí! 🔥</p>
+              <table width="100%" cellpadding="10" cellspacing="0" style="border: 1px solid #dddddd; margin-bottom: 20px;">
+              <tr>
+                <td style="background-color: #181818; font-weight: bold;">Evento</td>
+                <td>${paymentWithProduct?.product.name}</td>
+              </tr>
+              <tr>
+                <td style="background-color: #181818; font-weight: bold;">Fecha</td>
+                <td>${new Intl.DateTimeFormat("es-CL", {
+                dateStyle: "full",
+                timeStyle: "short",
+                }).format(new Date(paymentWithProduct?.product.date))}</td>
+              </tr>
+              <tr>
+                <td style="background-color: #181818; font-weight: bold;">Nº de orden</td>
+                <td>${paymentWithProduct?.client_id}</td>
+              </tr>
+              <tr>
+                <td style="background-color: #181818; font-weight: bold;">Lugar</td>
+                <td>
+                ${
+                nextEvent[0]?.venue?.venueName
+                  ? nextEvent[0]?.venue?.venueName
+                  : VENUE.NAME
+                } | ${
               nextEvent[0]?.venue?.venueAdress
-                ? nextEvent[0]?.venue?.venueAdress
-                : VENUE.ADDRESS
+              ? nextEvent[0]?.venue?.venueAdress
+              : VENUE.ADDRESS
             }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background-color: #181818; font-weight: bold;">Cantidad de entradas</td>
-                        <td>${paymentWithProduct?.ticketAmount}</td>
-                    </tr>
-                </table>
-                <p style="margin-bottom: 20px;">Si tienes alguna pregunta o necesita hacer cambios en su adhesión, por favor contacte a nuestro equipo de soporte en hola@5luchas.cl. 👨‍💻</p>
-                
-                <p style="margin-bottom: 20px;">¡Esperamos verle en el evento! 💪</p>
-                
-                <p>Saludos,<br>El Equipo de 5 Luchas Clandestino</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: #181818; font-weight: bold;">Cantidad de entradas</td>
+                <td>${paymentWithProduct?.ticketAmount} x $${paymentWithProduct?.price}.-</td>
+              </tr>
+              </table>
+              <p style="margin-bottom: 20px;">Si tienes alguna pregunta o necesita hacer cambios en su adhesión, por favor contacte a nuestro equipo de soporte en hola@5luchas.cl. 👨‍💻</p>
+              <p style="margin-bottom: 20px;">¡Esperamos verle en el evento! 💪</p>
+              <p>Saludos,<br>El Equipo de 5 Luchas Clandestino</p>
             </td>
-        </tr>
-        <tr>
+            </tr>
+            <tr>
             <td style="padding: 20px; text-align: center; background-color: #0c0c0c; font-size: 12px; color: #ffffff;">
-                <p>&copy; 2024 5 Luchas Clandestino. Todos los derechos reservados.</p>
+              <p>&copy; 2024 5 Luchas Clandestino. Todos los derechos reservados.</p>
             </td>
-        </tr>
-    </table>
-</body>
-</html>`,
+            </tr>
+          </table>
+          </body>
+          </html>`,
             tags: [
               {
-                name: "category",
-                value: "confirm_email",
+              name: "category",
+              value: "confirm_email",
               },
             ],
-          });
+            });
         } catch (e) {
           console.error(e);
           throw error(500, "El email no pudo ser enviado");
