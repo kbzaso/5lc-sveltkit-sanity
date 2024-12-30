@@ -116,7 +116,7 @@
       <div
         id="event"
         class={`flex ${
-          event?.active ? "wrap flex-col" : "flex-col lg:flex-row"
+          event?.active ? "wrap flex-col" : "flex-col lg:flex-row container mx-auto"
         } md:gap-4 lg:gap-0`}
       >
         <img
@@ -148,7 +148,7 @@
                   {eventDateFormatted.charAt(0).toUpperCase() +
                     eventDateFormatted.slice(1)}
                 </time>
-                <div class="flex gap-4">
+                <div>
                   <h1 class="mt-2 text-5xl font-bold text-primary mask">
                     {event?.title}
                   </h1>
