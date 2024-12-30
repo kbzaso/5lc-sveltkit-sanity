@@ -6,7 +6,7 @@
   import InfiniteScroll from "$lib/components/InfiniteScroll.svelte";
   import CardEvent from "$lib/components/events/CardEvent.svelte";
   import SuscribeForm from "$lib/components/SuscribeForm.svelte";
-  import { TinySlider } from "svelte-tiny-slider";
+  import { animate, scroll, inView } from "motion";
   import Slider from "$lib/components/equipo/Slider.svelte";
   import Faq from "$lib/components/Faq.svelte";
   import Hero from "$lib/components/Hero.svelte";
@@ -32,6 +32,15 @@
     window.addEventListener("resize", checkScreenWidth);
 
     return () => window.removeEventListener("resize", checkScreenWidth);
+  });
+  onMount(() => {
+    // scroll((progress: number) => console.log(progress));
+    inView(".motion", (info) => {
+      console.log("The link ", info.target.id, " has entered the viewport");
+      const animation = animate(".motion", { opacity: 1 }, { duration: 0.5 });
+      // This will fire when the element leaves the viewport
+      return () => animation.stop();
+    });
   });
 </script>
 
@@ -81,7 +90,7 @@
   />
   <main
     id="events"
-    class="container mx-auto max-w-6xl relative mt-72 md:mt-28 lg:mt-10 xl:mt-20 scroll-mt-20"
+    class="container mx-auto max-w-6xl relative mt-72 md:mt-28 lg:mt-10 xl:mt-20 scroll-mt-20 motion opacity-0"
   >
     {#if events.length > 0}
       <h2
@@ -92,14 +101,16 @@
           class="font-[AtomicMarkerExtras] text-primary text-5xl">P</span
         >
       </h2>
-      <div class="carousel carousel-center w-full space-x-4 pl-4 xl:pl-0 lg:ml-0">
+      <div
+        class="carousel carousel-center w-full space-x-4 pl-4 xl:pl-0 lg:ml-0"
+      >
         {#each events as event}
           <div class="carousel-item">
             <CardEvent {event} />
           </div>
         {/each}
         <div class="carousel-item">
-          <SuscribeForm info={infoLanding.newsletter} width="w-64"/>
+          <SuscribeForm info={infoLanding.newsletter} width="w-64" />
         </div>
       </div>
     {:else}

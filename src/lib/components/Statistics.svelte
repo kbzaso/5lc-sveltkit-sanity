@@ -1,12 +1,23 @@
 <script lang="ts">
   import { BASE_URL_ASSETS } from "$lib/const";
+  import { animate, inView } from "motion";
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    // scroll((progress: number) => console.log(progress));
+    inView(".motion", (info) => {
+      console.log("The link ", info.target.id, " has entered the viewport")
+      const animation = animate(".motion", { opacity: 1 }, { duration: 0.5 })
+      return () => animation.stop();
+    });
+  });
 </script>
 
 <section
   class="mb-20 lg:mb-40 mt-20 mx-auto flex flex-col items-center md:flex-row gap-10 md:gap-0 md:justify-center lg:max-w-6xl"
 >
   <div
-    class="h-[380px] w-56 md:w-4/12 flex flex-col items-center relative grow"
+    class="h-[380px] w-56 md:w-4/12 flex flex-col items-center relative grow motion opacity-0"
   >
     <span class="text-white font-ibm italic text-6xl z-10 pt-56 lg:pt-60"
       >+170</span
@@ -26,7 +37,7 @@
     />
   </div>
   <div
-    class="h-[380px] w-56 md:w-4/12 flex flex-col items-center relative grow"
+    class="h-[380px] w-56 md:w-4/12 flex flex-col items-center relative grow motion opacity-0"
   >
     <span class="text-white font-ibm italic text-6xl z-10 pt-60">+850</span>
     <span
@@ -44,7 +55,7 @@
     />
   </div>
   <div
-    class="h-[380px] w-56 md:w-4/12 flex flex-col items-center relative grow"
+    class="h-[380px] w-56 md:w-4/12 flex flex-col items-center relative grow motion opacity-0"
   >
     <span class="text-white font-ibm italic text-6xl z-10 pt-60">+13.600</span>
     <span
