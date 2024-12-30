@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Truncate title of event card when excced width
+- Max width of result page
+
 ## [0.0.84] - 2024-12-11
 
 ### Add

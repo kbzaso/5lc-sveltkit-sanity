@@ -51,12 +51,12 @@
       />
     </figure>
   </div>
-  <div class="h-max grow z-10 w-full">
-    <h2 class="text-primary font-ibm italic text-xl pt-2 mask">
+  <div class="h-max grow z-10 max-w-64">
+    <h2 class="text-primary font-ibm italic text-xl pt-2 mask truncate">
       {event.title}
     </h2>
     <p
-      class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1 truncate"
+      class="text-xs md:text-md uppercase tracking-wider md:tracking-widest text-white mt-1"
     >
       <time class="flex items-center gap-2" datetime={event.date.toString()}>
         <CalendarRange />
