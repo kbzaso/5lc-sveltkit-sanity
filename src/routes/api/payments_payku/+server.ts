@@ -184,7 +184,6 @@ export const POST: RequestHandler = async (event) => {
                 <td style="background-color: #181818; font-weight: bold;">Fecha</td>
                 <td>${new Intl.DateTimeFormat("es-CL", {
                 dateStyle: "full",
-                timeStyle: "short",
                 }).format(new Date(paymentWithProduct?.product.date))}</td>
               </tr>
               <tr>
