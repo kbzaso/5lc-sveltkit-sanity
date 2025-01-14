@@ -23,7 +23,7 @@
           class="font-[AtomicMarker] text-5xl -rotate-6 mt-4 text-primary z-10 mix-blend-plus-lighter pt-56 lg:pt-60"
           >{attraction.title}</span
         >
-        <p class="text-xs px-2 pt-4">{attraction.description}</p>
+        <p class="px-2 pt-6">{attraction.description}</p>
         <img
           src={urlForImage(attraction.asset).url()}
           alt="Atractivo de la Bóveda Secreta"
