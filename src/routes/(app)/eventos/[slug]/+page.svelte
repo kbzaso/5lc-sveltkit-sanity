@@ -78,8 +78,8 @@
     } else {
       hasPhotos = [];
     }
+    console.log(event)
   });
-
 </script>
 
 <svelte:head>
@@ -257,87 +257,6 @@
                       </div>
                     {/if}
                   </div>
-                  <!-- LISTA -->
-                  <!-- <ul class="list-none o-0">
-                    <li class="flex items-center gap-2">
-                      <CalendarDays class="stroke-primary" />
-                      <time datetime={eventDateFormatted}>
-                        {eventDateFormatted.charAt(0).toUpperCase() +
-                          eventDateFormatted.slice(1)}
-                      </time>
-                    </li>
-                    <li class="flex items-center gap-2">
-                      <BellRing class="stroke-primary" />
-                      <time datetime={eventDateFormatted}>
-                        Campanazo inicial:
-                        {new Intl.DateTimeFormat("es-CL", {
-                          hour: "numeric",
-                          minute: "numeric",
-                          timeZone: "America/Santiago",
-                        }).format(eventDate)}
-                      </time>
-                    </li>
-                    <li class="flex items-center gap-2">
-                      <DoorOpen class="stroke-primary" />
-                      <span
-                        >Apertura de puertas: {new Intl.DateTimeFormat(
-                          "es-CL",
-                          {
-                            hour: "numeric",
-                            minute: "numeric",
-                            timeZone: "America/Santiago",
-                          }
-                        ).format(
-                          eventDate.setMinutes(
-                            eventDate.getMinutes() - event?.doorsOpen
-                          )
-                        )}</span
-                      >
-                    </li>
-                    {#if event.boveda}
-                      <li class="flex items-center gap-2">
-                        <MapPin class="stroke-primary" />
-                        <span>
-                          Bóveda Secreta - <a
-                            class="text-primary"
-                            target="_blank"
-                            rel="noreferrer"
-                            href="https://goo.gl/maps/85ZfvTdLAoDpt9xr9"
-                          >
-                            San Antonio 705, Santiago, Región Metropolitana</a
-                          >
-                        </span>
-                      </li>
-                    {:else}
-                      <li class="flex items-center gap-2">
-                        <MapPin class="stroke-primary" />
-                        <span>
-                          {event.venue?.venueName} -
-                          <a
-                            class="text-primary"
-                            target="_blank"
-                            rel="noreferrer"
-                            href={event.venue?.venueUrl}
-                          >
-                            {event.venue?.venueAdress}</a
-                          >
-                        </span>
-                      </li>
-                    {/if}
-                  </ul>
-                  {#if event.boveda}
-                    <p class="border border-dashed border-primary p-4 text-sm">
-                      La Bóveda Secreta se encuentra en el 3er piso de la
-                      Galería “Nueva Copacabana” ubicada en calle San Antonio
-                      #705, Santiago Centro. Las estaciones de Metro más
-                      cercanas a ella son <span class="text-primary"
-                        >Plaza de Armas</span
-                      >,
-                      <span class="text-primary">Bellas Artes</span>
-                      y
-                      <span class="text-primary">Puente Cal y Canto</span>.
-                    </p>
-                  {/if} -->
                 </div>
               {/if}
               <!-- /EVENTO ACTIVO -->
@@ -402,30 +321,19 @@
                     : event?.ticket?.batch}
                 />
               {/if}
-              {#if event?.tournament_billboard?.images.length > 0}
+              {#if event?.cartelera}
                 <section class="py-40 space-y-8">
-                  <Cartelera
-                    billboard={event?.tournament_billboard?.images}
-                    title="Luchas del Torneo"
-                  />
+                  <Cartelera billboard={event?.cartelera} />
                 </section>
               {/if}
-              {#if event?.billboard?.images.length > 0}
-                <section class="py-40 space-y-8">
-                  <Cartelera billboard={event?.billboard?.images} />
-                </section>
-              {/if}
-              <section class="gap-8 w-full grid grid-cols-1 md:grid-cols-2 my-20">
-                {#if event?.agenda && event?.attraction}
-                  <Agenda agenda={event?.agenda[0]} alone={false} />
+              <section class="gap-8 w-full my-20">
+                {#if event.agenda}
+                  <Agenda agenda={event?.agenda[0]} />
+                {/if}
+                {#if event?.attraction}
                   <Attraction
                     attractions={event?.attraction[0]}
-                    alone={false}
                   />
-                {:else if event?.agenda}
-                  <Agenda agenda={event?.agenda[0]} alone={true} />
-                {:else if event?.attraction}
-                  <Attraction attractions={event?.attraction[0]} alone={true} />
                 {/if}
               </section>
               <!-- VIDEO TESTIMONIO -->

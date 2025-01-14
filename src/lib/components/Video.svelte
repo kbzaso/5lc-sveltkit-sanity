@@ -11,7 +11,7 @@
 </script>
 
 <section
-  class="container mx-auto max-w-6xl flex flex-col items-center relative mt-20"
+  class="container mx-auto max-w-6xl flex flex-col items-center relative"
 >
   <h3 class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4">
     <!-- <span aria-hidden="true"
@@ -23,7 +23,7 @@
       >
   </h3>
   <div
-    class='hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-16'
+    class='hidden lg:absolute lg:left-2 lg:flex lg:flex-col gap-10 lg:top-12'
   >
     <span
       aria-hidden="true"
@@ -49,7 +49,7 @@
     </Youtube>
   </div>
   <div
-    class='lg:absolute lg:right-2 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10'
+    class='lg:absolute lg:right-0 flex lg:flex-col gap-10 lg:top-4 mt-6 mb-10'
   >
     <span
       aria-hidden="true"

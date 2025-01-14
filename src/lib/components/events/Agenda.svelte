@@ -5,7 +5,6 @@
   import { convertNewlinesToBreaks } from "$lib/utils/index";
 
   export let agenda;
-  export let alone: boolean;
 
   const agendaItems = agenda.schedule;
 
@@ -17,7 +16,7 @@
 
 </script>
 
-<article id="agenda" class={`w-full ${alone ? "col-span-2" : ""}`}>
+<article id="agenda" class={`w-full`}>
   <h5 class="text-4xl font-ibm italic mask text-white mb-4">
     <span aria-hidden="true" class="font-[AtomicMarkerExtras] text-primary"
       >P</span

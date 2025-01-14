@@ -23,7 +23,7 @@
   }
 </script>
 
-<section class={`container mx-auto space-y-2 mb-20 mt-40 ${poster ? '' : 'max-w-2xl'}`}>
+<section class={`container mx-auto space-y-2 my-20 ${poster ? '' : 'max-w-2xl'}`}>
   <h3
     class="text-4xl font-bold text-white mask font-ibm italic mb-4 text-center"
   >

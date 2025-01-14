@@ -42,53 +42,63 @@ export const staffSliderFields = groq`
     }`;
 
 export const eventFields = groq`
-    _id,
-    _createdAt,
-    name,
+  _id,
+  _createdAt,
+  name,
+  title,
+  date,
+  doorsOpen,
+  boveda,
+  "attraction" : attraction[] -> {
     title,
-    date,
-    doorsOpen,
-    boveda,
-    "attraction" : attraction[] -> {
+    item[] {
       title,
-      item[] {
-          title,
-          description,
-          asset,
-      }
-    },
-    "agenda" : agenda[] -> {
-      title,
-      schedule[] {
-        title,
-        activity_date,
-        description,
-      }
-    },
-    assistance,
-    playlist,
-    slug,
-    billboard,
-    tournament_billboard,
-    sponsors_array,
-    promotion_video,
-    "faq": faq[] -> {
-      title,
-    faq {
-      doubt[] {
-          question,
-          answer
-      }
+      description,
+      asset,
     }
-    },
-    venue,
-    sell_type,
-    ticket,
-    total_tickets,
-    sell,
-    result,
-    active,
-    "disclaimers": disclaimer[] -> {
+  },
+  "agenda" : agenda[] -> {
+    title,
+    schedule[] {
+    title,
+    activity_date,
+    description,
+    }
+  },
+  assistance,
+  playlist,
+  slug,
+  cartelera {
+    _type,
+    asset->,
+    cartelera_description,
+    "referenceStaff": referenceStaff[]-> {
+      _id,
+      title,
+      staffImage,
+      staffType,
+      "slug": slug.current,
+    }
+  },
+  sponsors_array,
+  promotion_video,
+  "faq": faq[] -> {
+    title,
+    faq {
+    doubt[] {
+      question,
+      answer
+    }
+    }
+  },
+  venue,
+  sell_type,
+  ticket,
+  total_tickets,
+  sell,
+  result,
+  active,
+  "disclaimers": disclaimer[] -> {
     title,
     disclaimer,
   },
@@ -97,22 +107,22 @@ export const eventFields = groq`
     active,
     percentage,
   },
-    description,
-    seo_description,
-    poster,
-    videoUrl,
-    "slug": slug.current,
-    "gallery": gallery.images[]{
-      alt,
-      active,
-      vertical,
-      crop,
-      hotspot,
-      _type,
-      _key,
-      asset,
-      photographer->
-    }
+  description,
+  seo_description,
+  poster,
+  videoUrl,
+  "slug": slug.current,
+  "gallery": gallery.images[]{
+    alt,
+    active,
+    vertical,
+    crop,
+    hotspot,
+    _type,
+    _key,
+    asset,
+    photographer->
+  }
 `;
 
 export const settingsQuery = groq`*[_type == "settings"][0]`;
