@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.87] - 2025-01-14
+
 ### Fix
 
 - Cartelera component UI
@@ -555,7 +557,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.86...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.87...HEAD
+[0.0.87]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.86...0.0.87
 [0.0.86]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.85...0.0.86
 [0.0.85]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.84...0.0.85
 [0.0.84]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.83...0.0.84
