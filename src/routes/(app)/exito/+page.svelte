@@ -38,7 +38,7 @@
         loading="eager"
         width="1000"
         height="750"
-        src={urlForImage(event.poster).width(600).height(750).url()}
+        src={urlForImage(event?.poster).width(600).height(750).url()}
         alt="Afiche del evento"
       />
     </figure>

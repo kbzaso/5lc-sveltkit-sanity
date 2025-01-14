@@ -123,6 +123,43 @@ export default defineType({
       validation: (Rule) => [Rule.required()],
     },
     {
+      name: "cartelera",
+      type: "image",
+      title: "Cartelera",
+      hidden: ({ document }) => document?.active === false,
+      fields: [
+        {
+          type: "array",
+          of: [
+            {
+              type: "block",
+            },
+          ],
+          name: "cartelera_description",
+          title: "Descripción de la cartelera",
+          hidden: ({ document }) => document?.active === false,
+          validation: (Rule) => [Rule.required()],
+        },
+        {
+          name: "referenceStaff",
+          title: "Staff",
+          type: "array",
+          description: "Equipo que participara en la cartelera",
+          hidden: ({ document }) => document?.active === false,
+          validation: (Rule) => Rule.unique(),
+          of: [
+            {
+              type: "reference",
+              to: [{ type: "staff" }],
+            },
+          ],
+          options: {
+            layout: "grid",
+          },
+        },
+      ],
+    },
+    {
       title: "Venta de entradas",
       name: "sell",
       type: "boolean",
@@ -400,160 +437,6 @@ export default defineType({
                   type: "boolean",
                   initialValue: false,
                   validation: (Rule) => Rule.required(),
-                },
-              ],
-            },
-          ],
-          options: {
-            layout: "grid",
-          },
-        },
-      ],
-      preview: {
-        select: {
-          images: "images",
-          image: "images.0",
-        },
-        prepare(selection) {
-          const { images, image } = selection;
-
-          return {
-            title: `Gallery block of ${Object.keys(images).length} images`,
-            subtitle: `Alt text: ${image.alt}`,
-            media: image,
-          };
-        },
-      },
-    },
-    {
-      title: "¿Es un torneo?",
-      name: "is_tournament",
-      type: "boolean",
-      initialValue: false,
-    },
-    {
-      name: "tournament_billboard",
-      type: "object",
-      title: "Luchas del torneo",
-      hidden: ({ document }) => document?.is_tournament === false,
-      fields: [
-        {
-          name: "images",
-          type: "array",
-          title: "Images",
-          of: [
-            {
-              name: "image",
-              type: "image",
-              title: "Image",
-              fields: [
-                {
-                  name: "type_of_match",
-                  type: "string",
-                  title: "Tipo de lucha",
-                  description: "Ejemplo: Perfecto Bundy vs. Come Niños",
-                },
-                {
-                  type: "text",
-                  name: "description",
-                  title: "Descripción de la lucha",
-                  description: "Ejemplo: Lucha sin descalificación y sin limite de tiempo",
-                },
-                {
-                  name: "url",
-                  type: "url",
-                  title: "URL del video promocional",
-                },
-                {
-                  name: "referenceStaff",
-                  title: "Staff",
-                  type: "array",
-                  description: "Equipo que participa en la lucha",
-                  hidden: ({ document }) => document?.active === false,
-                  validation: (Rule) => Rule.unique(),
-                  of: [
-                    {
-                      type: "reference",
-                      to: [{ type: "staff" }],
-                    },
-                  ],
-                  options: {
-                    layout: "grid",
-                  },
-                },
-              ],
-            },
-          ],
-          options: {
-            layout: "grid",
-          },
-        },
-      ],
-      preview: {
-        select: {
-          images: "images",
-          image: "images.0",
-        },
-        prepare(selection) {
-          const { images, image } = selection;
-
-          return {
-            title: `Gallery block of ${Object.keys(images).length} images`,
-            subtitle: `Alt text: ${image.alt}`,
-            media: image,
-          };
-        },
-      },
-    },
-    {
-      name: "billboard",
-      type: "object",
-      title: "Luchas confirmadas",
-      hidden: ({ document }) => document?.active === false,
-      fields: [
-        {
-          name: "images",
-          type: "array",
-          title: "Images",
-          of: [
-            {
-              name: "image",
-              type: "image",
-              title: "Image",
-              fields: [
-                {
-                  name: "type_of_match",
-                  type: "string",
-                  title: "Tipo de lucha",
-                  initialValue: "Ejemplo: Perfecto Bundy vs. Come Niños",
-                },
-                {
-                  type: "text",
-                  name: "description",
-                  title: "Descripción de la lucha",
-                  description: "Ejemplo: Lucha sin descalificación y sin limite de tiempo",
-                },
-                {
-                  name: "url",
-                  type: "url",
-                  title: "URL del video promocional",
-                },
-                {
-                  name: "referenceStaff",
-                  title: "Staff",
-                  type: "array",
-                  description: "Equipo que participa en la lucha",
-                  hidden: ({ document }) => document?.active === false,
-                  validation: (Rule) => Rule.unique(),
-                  of: [
-                    {
-                      type: "reference",
-                      to: [{ type: "staff" }],
-                    },
-                  ],
-                  options: {
-                    layout: "grid",
-                  },
                 },
               ],
             },

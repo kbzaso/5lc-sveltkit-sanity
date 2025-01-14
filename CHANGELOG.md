@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Cartelera component UI
+- Atractions component UI
+
 ## [0.0.85] - 2024-12-30
 
 ### Fix
