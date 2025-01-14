@@ -5,7 +5,7 @@
   export let attractions;
 </script>
 
-<section id="attractions" class="w-full mt-20">
+<section id="attractions" class="w-full py-20">
   <h5
     class="text-4xl font-ibm italic mask text-left md:text-center text-white mb-4"
   >
@@ -14,10 +14,10 @@
     >
     Servicios y Facilidades
   </h5>
-  <div class="flex flex-col md:flex-row gap-4">
+  <div class="flex flex-col md:flex-row gap-6">
     {#each attractions.item as attraction, index}
       <div
-        class="h-[380px] w-full md:min-w-4/12 flex flex-col items-start relative"
+        class=" w-full md:min-w-4/12 flex flex-col items-start relative"
       >
         <span
           class="font-[AtomicMarker] text-5xl -rotate-6 mt-4 text-primary z-10 mix-blend-plus-lighter pt-56 lg:pt-60"
