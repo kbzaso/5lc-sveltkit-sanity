@@ -2,7 +2,7 @@
   import { BASE_URL_ASSETS } from "$lib/const";
 </script>
 
-<section>
+<section class="">
   <div
     class="grid grid-cols-1 grid-rows-3 md:grid-cols-2 md:grid-rows-2 w-full mx-auto max-w-7xl"
   >
@@ -39,7 +39,7 @@
         >
       </div>
 
-      <img src={`${BASE_URL_ASSETS}/5luchas/comunidad.jpg`} alt="Comunidad 5 luchas clandestino" class="object-cover object-bottom h-[500px] w-full">
+      <img src={`${BASE_URL_ASSETS}/5luchas/comunidad.jpg`} alt="Comunidad 5 luchas clandestino" class="object-cover object-bottom h-96 w-full">
     </div>
   </div>
 </section>

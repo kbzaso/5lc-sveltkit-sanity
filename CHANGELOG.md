@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nav button names
 - Overflow of Team Cards on Cartelera component
+- Fix bottom margin on WhoWeAre component
 
 ## [0.0.87] - 2025-01-14
 
