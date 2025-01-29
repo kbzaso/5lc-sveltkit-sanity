@@ -322,7 +322,7 @@
                 />
               {/if}
               {#if event?.cartelera}
-                <section class="py-40 space-y-8">
+                <section class="py-20 space-y-8">
                   <Cartelera billboard={event?.cartelera} />
                 </section>
               {/if}

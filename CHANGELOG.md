@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fix
 
 - Nav button names
+- Overflow of Team Cards on Cartelera component
 
 ## [0.0.87] - 2025-01-14
 

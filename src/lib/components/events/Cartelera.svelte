@@ -51,7 +51,23 @@
         </p>
         {#if billboard?.referenceStaff}
           <p class="my-4">Parte del equipo que estará presente:</p>
-          <div class="flex gap-4 mt-4">
+          <div class="flex gap-2 mt-4 flex-wrap">
+            {#each billboard?.referenceStaff as staff}
+              <div class="tooltip tooltip-primary" data-tip={staff?.title}>
+                <a
+                  href={`${url[staff?.staffType]}${staff?.slug}`}
+                  class="rounded-sm h-14 w-14 inline-block"
+                >
+                  <img
+                    src={urlForImage(staff?.staffImage)
+                      .width(150)
+                      .height(150)
+                      .url()}
+                    alt=""
+                  />
+                </a>
+              </div>
+            {/each}
             {#each billboard?.referenceStaff as staff}
               <div class="tooltip tooltip-primary" data-tip={staff?.title}>
                 <a
