@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Nav button names
+
 ## [0.0.87] - 2025-01-14
 
 ### Fix
