@@ -198,8 +198,6 @@
                 {#if event?.assistance && !event?.active}
                   <AttendanceStat
                     assistance={event?.assistance}
-                    event={event?.title}
-                    venue={event?.venue?.venueName}
                   />
                 {/if}
               {/if}
