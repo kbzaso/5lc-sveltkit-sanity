@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fix
 
+- Fix spaces and gaps
 - Nav button names
 - Overflow of Team Cards on Cartelera component
 - Fix bottom margin on WhoWeAre component
