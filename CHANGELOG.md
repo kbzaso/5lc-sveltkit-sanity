@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.89] - 2025-01-30
+
 ### Fix
 
 - UI fixes
@@ -573,7 +575,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Several UI fixes in next event, and add price format
 
-[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.88...HEAD
+[unreleased]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.89...HEAD
+[0.0.89]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.88...0.0.89
 [0.0.88]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.87...0.0.88
 [0.0.87]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.86...0.0.87
 [0.0.86]: https://github.com/kbzaso/5lc-sveltkit-sanity/compare/0.0.85...0.0.86
