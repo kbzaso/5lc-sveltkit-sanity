@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Overflow of Team Cards on Cartelera component
 - Fix bottom margin on WhoWeAre component
 - Footer year and attendace stat component UI
+- Fix video component and width on event slug
+- Fix UI
 
 ## [0.0.87] - 2025-01-14
 

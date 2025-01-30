@@ -7,7 +7,7 @@
   export let btnText: string;
 </script>
 
-<div class="flex flex-col gap-8 container max-h-[600px] mx-auto mt-10">
+<div class="flex flex-col gap-8 container max-h-[600px] mx-auto">
     <div class="relative w-full overflow-hidden ">
       <img
         src={`${BASE_URL_ASSETS}${background}`}

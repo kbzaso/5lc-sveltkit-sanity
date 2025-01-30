@@ -68,22 +68,6 @@
                 </a>
               </div>
             {/each}
-            {#each billboard?.referenceStaff as staff}
-              <div class="tooltip tooltip-primary" data-tip={staff?.title}>
-                <a
-                  href={`${url[staff?.staffType]}${staff?.slug}`}
-                  class="rounded-sm h-14 w-14 inline-block"
-                >
-                  <img
-                    src={urlForImage(staff?.staffImage)
-                      .width(150)
-                      .height(150)
-                      .url()}
-                    alt=""
-                  />
-                </a>
-              </div>
-            {/each}
           </div>
         {/if}
       </div>
