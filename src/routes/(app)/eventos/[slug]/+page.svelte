@@ -197,9 +197,7 @@
                 </div>
                 {#if event?.assistance && !event?.active}
                   <AttendanceStat
-                    assistance={event.assistance}
-                    event={event.title}
-                    venue={event.venue?.venueName}
+                    assistance={event?.assistance}
                   />
                 {/if}
               {/if}

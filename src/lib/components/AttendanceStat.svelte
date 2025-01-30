@@ -1,9 +1,5 @@
 <script lang="ts">
   export let assistance: number;
-  export let event: string;
-  export let venue: string;
-
-  console.log(venue)
 </script>
 
 <div
@@ -11,6 +7,6 @@
 >
   <div class="w-fit flex items-center p-6 gap-6">
     <div class="stat-value text-white mask bg-black p-4">{assistance}</div>
-    <p class="text-black text-pretty">Personas se reunieron en {venue} para compartir en {event}</p>
+    <p class="text-black text-pretty">Personas se reunieron para pasarla increíble y hacer de este evento algo único</p>
   </div>
 </div>
