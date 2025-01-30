@@ -29,7 +29,7 @@
         class="border-b border-primary/50 last:border-b-0 pb-4 last:pb-0"
         transition:slide={{ duration: 300, easing: quintOut, axis: "y" }}
       >
-        <div class="flex  justify-between items-start gap-4">
+        <div class="flex justify-between items-center gap-4">
             <h3 class="text-lg font-ibm-sans text-gray-100">
               {item.title}
             </h3>

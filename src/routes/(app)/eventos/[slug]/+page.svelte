@@ -56,6 +56,7 @@
     amount: number;
     price: number;
     type: string;
+    active: boolean;
   }
 
   let tandas: Tandas[] = [];
@@ -78,7 +79,6 @@
     } else {
       hasPhotos = [];
     }
-    console.log(event)
   });
 </script>
 
@@ -104,25 +104,33 @@
   <meta property="og:title" content={`${event?.title}`} />
   <meta property="og:description" content={`${event?.seo_description}`} />
   <meta property="og:url" content={`${$page.url.href}`} />
-  <meta property="og:site_name" content="5 Luchas Clandestino - Lucha Libre Chilena">
+  <meta
+    property="og:site_name"
+    content="5 Luchas Clandestino - Lucha Libre Chilena"
+  />
 </svelte:head>
 
 {#if event}
   <div class=" mx-auto min-w-[350px]">
     {#if event?.active}
-    <Countdown date={eventDate} />
+      <Countdown date={eventDate} />
     {/if}
-    <div class="min-w-[350px] mx-auto mt-20 h-min">
+
+    <div
+      class={`min-w-[350px] mx-auto mt-20 h-min ${!event?.active ? 'max-w-6xl' : 'max-w-6xl' }`}
+    >
       <div
         id="event"
         class={`flex ${
-          event?.active ? "wrap flex-col" : "flex-col lg:flex-row container mx-auto"
+          event?.active
+            ? "wrap flex-col"
+            : "flex-col lg:flex-row container mx-auto"
         } md:gap-4 lg:gap-0`}
       >
         <img
           class={`${
             event?.active
-              ? "object-cover blur-lg object-top md:w-full h-96 md:h-[500px] opacity-50 -mt-20"
+              ? "object-cover blur-sm object-top md:w-full h-96 md:h-[500px] opacity-30 -mt-20"
               : "object-contain w-full lg:w-1/2"
           }  md:rounded-sm maskImages`}
           loading="lazy"
@@ -191,6 +199,7 @@
                   <AttendanceStat
                     assistance={event.assistance}
                     event={event.title}
+                    venue={event.venue?.venueName}
                   />
                 {/if}
               {/if}
@@ -322,7 +331,7 @@
                 />
               {/if}
               {#if event?.cartelera}
-                <section class="py-40 space-y-8">
+                <section class="py-20 space-y-8">
                   <Cartelera billboard={event?.cartelera} />
                 </section>
               {/if}
@@ -331,15 +340,17 @@
                   <Agenda agenda={event?.agenda[0]} />
                 {/if}
                 {#if event?.attraction}
-                  <Attraction
-                    attractions={event?.attraction[0]}
-                  />
+                  <Attraction attractions={event?.attraction[0]} />
                 {/if}
               </section>
               <!-- VIDEO TESTIMONIO -->
               <Video
-                title={event?.promotion_video?.title ? event?.promotion_video?.title : "¿Qué dicen los asistentes a 5 Luchas Clandestino?"}
-                url={event?.promotion_video?.url ? event?.promotion_video?.url : "https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"}
+                title={event?.promotion_video?.title
+                  ? event?.promotion_video?.title
+                  : "¿Qué dicen los asistentes a 5 Luchas Clandestino?"}
+                url={event?.promotion_video?.url
+                  ? event?.promotion_video?.url
+                  : "https://youtu.be/v5Nj6oG-Fs0?si=eFCH8txRzc6vYMTd"}
               />
               {#if event?.faq}
                 <Faq
@@ -359,12 +370,20 @@
       {/if}
     </div>
     {#if event?.active}
-    <section class="flex md:flex-row flex-col container mx-auto">
-      <Doubt title={"¿Aún no estái' seguro/a de ir?"} background="/5luchas/kira-natalia-ivan-horizontal.jpg" tallyCode={"w5vZoZ"} btnText="Escríbenos y te guiamos" />
-      <Doubt title={"¿Compraste entrada y no puedes ir?"} background="/5luchas/fear.webp" tallyCode={"mYz7qB"} 
-      btnText="Pide la devolución de tu entrada"
-      />
-    </section>
+      <section class="flex md:flex-row flex-col max-w-6xl mx-auto gap-6">
+        <Doubt
+          title={"¿Aún no estái' seguro/a de ir?"}
+          background="/5luchas/kira-natalia-ivan-horizontal.jpg"
+          tallyCode={"w5vZoZ"}
+          btnText="Escríbenos y te guiamos"
+        />
+        <Doubt
+          title={"¿Compraste entrada y no puedes ir?"}
+          background="/5luchas/fear.webp"
+          tallyCode={"mYz7qB"}
+          btnText="Pide la devolución de tu entrada"
+        />
+      </section>
     {/if}
 
     {#if validatedDiscount?.success && event?.active}
@@ -373,9 +392,19 @@
 
     {#if hasPhotos.length > 0}
       <section class="md:mt-20">
-        <h2 class="sub-title px-4">Galería de imagenes</h2>
+        <div class="flex items-center justify-center">
+          <span
+            aria-hidden="true"
+            class="font-[AtomicMarkerExtras] text-primary text-3xl">N</span
+          >
+          <h3
+            class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4"
+          >
+            Galería de imagenes
+          </h3>
+        </div>
         <div
-          class="container p-4 mx-auto w-full flex flex-col justify-center h-fit"
+          class="container max-w-6xl p-4 mx-auto flex flex-col justify-center h-fit"
         >
           <Gallery id={event.slug} images={event.gallery} />
         </div>
@@ -383,10 +412,9 @@
     {/if}
   </div>
   {#if event.videoUrl && !event.active}
-    <Video 
-    title="Streaming del evento"
-    url={event.videoUrl}
-    />
+    <section class="my-20">
+      <Video title="Streaming del evento" url={event.videoUrl} />
+    </section>
   {/if}
   {#if event.playlist && !event.active}
     <Spotify src={event.playlist} />

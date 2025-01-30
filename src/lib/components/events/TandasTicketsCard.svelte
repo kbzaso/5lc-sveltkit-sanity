@@ -25,7 +25,7 @@
 </script>
 
 <div
-  class:opacity-50={!ticket.active}
+  class:opacity-50={!ticket?.active}
   class={`w-full border-2 p-2 indicator flex flex-col justify-center items-center pt-2 ${ticket.active ? 'border-primary min-h-36' : 'border-white min-h-20'} rounded-sm`}
 >
   <span

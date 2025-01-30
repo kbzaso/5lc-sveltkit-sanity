@@ -67,8 +67,8 @@
     <div class="flex-none hidden md:flex">
       <nav class="menu menu-horizontal px-1 gap-2">
         <a
-          class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
-          href="/">Inicio</a
+          class="btn btn-primary font-ibm font-black text-xl italic normal-case"
+          href="#events">¡Quiero ir!</a
         >
         <div class="dropdown dropdown-end">
           <label
@@ -113,7 +113,7 @@
 
         <a
           class="btn btn-ghost text-primary font-ibm font-black text-xl italic normal-case"
-          href="/eventos">Eventos pasados</a
+          href="/eventos">Resultados</a
         >
 
         <button
