@@ -481,6 +481,24 @@ export default defineType({
       ],
     },
     {
+      name: "recap_video",
+      type: "object",
+      title: "Video resumen",
+      hidden: ({ document }) => document?.active === true,
+      fields: [
+        {
+          name: "title",
+          type: "string",
+          title: "Titulo del video.",
+        },
+        {
+          name: "url",
+          type: "url",
+          title: "URL del video",
+        },
+      ],
+    },
+    {
       name: "videoUrl",
       type: "url",
       title: "URL de la grabación del evento",
@@ -498,20 +516,6 @@ export default defineType({
       title: "Playlist de Spotify",
       description: "Solo debes agregar el atributo 'src' del iframe de Spotify",
       hidden: ({ document }) => document?.active === true,
-    },
-    {
-      name: "referenceStaff",
-      title: "Staff",
-      type: "array",
-      description: "Equipo que participo en el evento",
-      hidden: ({ document }) => document?.active === true,
-      validation: (Rule) => Rule.unique(),
-      of: [
-        {
-          type: "reference",
-          to: [{ type: "staff" }],
-        },
-      ],
     },
     {
       name: "attraction",

@@ -2,6 +2,8 @@
   import { urlForImage } from "$lib/config/sanity";
   export let reverse: boolean;
   export let items;
+
+  console.log(items)
 </script>
 
 <section class="container mx-auto max-w-6xl">

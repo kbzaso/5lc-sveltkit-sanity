@@ -31,9 +31,16 @@
   import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
   import Attraction from "$lib/components/events/Attraction.svelte";
   import Agenda from "$lib/components/events/Agenda.svelte";
+  import Slider from "$lib/components/equipo/Slider.svelte";
 
   export let data: PageData;
   export let form;
+
+  const url = {
+    wrestler: "/equipo/luchadores/",
+    referee: "/equipo/arbitros/",
+    annonceurs: "/equipo/presentadores/",
+  };
 
   $: ({ event, validatedDiscount } = data);
 
@@ -117,7 +124,9 @@
     {/if}
 
     <div
-      class={`min-w-[350px] mx-auto mt-20 h-min ${!event?.active ? 'max-w-6xl' : 'max-w-6xl' }`}
+      class={`min-w-[350px] mx-auto mt-20 h-min ${
+        !event?.active ? "max-w-6xl" : "max-w-6xl"
+      }`}
     >
       <div
         id="event"
@@ -196,9 +205,7 @@
                   {/if}
                 </div>
                 {#if event?.assistance && !event?.active}
-                  <AttendanceStat
-                    assistance={event?.assistance}
-                  />
+                  <AttendanceStat assistance={event?.assistance} />
                 {/if}
               {/if}
 
@@ -398,7 +405,7 @@
           <h3
             class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4"
           >
-            Galería de imagenes
+            Momentos
           </h3>
         </div>
         <div
@@ -409,9 +416,22 @@
       </section>
     {/if}
   </div>
+  {#if !event?.active && event?.cartelera?.referenceStaff}
+  <h3 class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4">
+    <span aria-hidden="true"
+        class="font-[AtomicMarkerExtras] text-primary text-5xl">E</span
+      >
+    Equipo que participó
+  </h3>
+    <Slider items={event.cartelera?.referenceStaff} reverse={true} />
+  {/if}
+  <!-- VIDEO RECAP -->
+  {#if event?.recap_video && !event.active}
+    <Video title={event?.recap_video?.title} url={event?.recap_video?.url} />
+  {/if}
   {#if event.videoUrl && !event.active}
-    <section class="my-20">
-      <Video title="Streaming del evento" url={event.videoUrl} />
+    <section>
+      <Video title="Streaming" url={event.videoUrl} />
     </section>
   {/if}
   {#if event.playlist && !event.active}
