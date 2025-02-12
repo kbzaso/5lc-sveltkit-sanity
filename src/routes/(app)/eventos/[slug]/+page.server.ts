@@ -21,34 +21,20 @@ import {
 import { kv } from "$lib/server/kv";
 
 export const load: PageServerLoad = async ({ parent, params, url }) => {
-  const cachedResult = await kv.get(params.slug);
+  const result = await getSanityServerClient(false).fetch(resultQuery, {
+    slug: params.slug,
+  });
 
-  if (cachedResult) {
-    return {
-       event: cachedResult,
-    };
-  } else {
-    const result = await getSanityServerClient(false).fetch(resultQuery, {
-      slug: params.slug,
-    });
+  const discountCodeFromUrl = url.searchParams
+    .get("discount_code")
+    ?.toString()
+    .toLowerCase();
 
-    if(result){
-      // Cachea la data por 1 semana
-      await kv.set(params.slug, JSON.stringify(result), { ex: 86400 });
-      return {
-        event: result,
-      }
-    }
-  }
-
-  const discountCodeFromUrl = url.searchParams.get("discount_code")?.toString().toLowerCase();
-
-  
   const { previewMode } = await parent();
   const welcome = await getSanityServerClient(false).fetch(welcomeQuery);
-  
+
   let totalTicketsLeftStudio;
-  
+
   let { event, moreEvents } = await getSanityServerClient(previewMode).fetch<{
     event: Event;
     moreEvents: Event[];
@@ -137,8 +123,11 @@ export const load: PageServerLoad = async ({ parent, params, url }) => {
   }
 
   let validatedDiscount;
-   if(Array.isArray(event.discounts)){
-     validatedDiscount = validateDiscount(event.discounts, discountCodeFromUrl ?? "");
+  if (Array.isArray(event.discounts)) {
+    validatedDiscount = validateDiscount(
+      event.discounts,
+      discountCodeFromUrl ?? ""
+    );
   }
 
   return {
@@ -171,7 +160,7 @@ export const actions: Actions = {
     const form = await request.formData();
     const discountCode = form.get("discount")?.toString().toLowerCase();
 
-    if(Array.isArray(event.discounts)){
+    if (Array.isArray(event.discounts)) {
       return validateDiscount(event.discounts, discountCode ?? "");
     }
   },
@@ -181,7 +170,7 @@ export const actions: Actions = {
     }>(eventQuery, {
       slug: params.slug,
     });
-    
+
     const form = await request.formData();
     const name = form.get("name")?.toString();
     const rut = form.get("rut")?.toString();
@@ -190,15 +179,15 @@ export const actions: Actions = {
     const tickets = Number(form.get("tickets"));
     const ticketsType = form.get("ticketsType")?.toString() || "";
     const totalPrice = form.get("totalPrice")?.toString();
-    
+
     const discountCode = form.get("discountCode")?.toString();
     const normalizeDiscountCode = discountCode
-    ?.normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ /g, "");
-    
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/ /g, "");
+
     let buyObject;
-    console.log(form)
+    console.log(form);
 
     if (ticketsType === "ringside_tickets") {
       buyObject = {
@@ -275,19 +264,22 @@ export const actions: Actions = {
 
     let dataUrlRedirect = "";
 
-    async function generatePaymentCode(eventName: string, eventId: string): Promise<string> {
-      const sanitizedEventName = eventName.replace(/\s+/g, '-');
+    async function generatePaymentCode(
+      eventName: string,
+      eventId: string
+    ): Promise<string> {
+      const sanitizedEventName = eventName.replace(/\s+/g, "-");
       // Fetch the current count of payments for the event
       const paymentCount = await client.payment.count({
         where: {
-          productId: eventId
-        }
+          productId: eventId,
+        },
       });
-    
+
       // Generate the code using the event name and a zero-padded sequential number
-      const sequentialNumber = (paymentCount + 1).toString().padStart(3, '0');
+      const sequentialNumber = (paymentCount + 1).toString().padStart(3, "0");
       const paymentCode = `${sanitizedEventName}-${sequentialNumber}`;
-    
+
       return paymentCode;
     }
 
@@ -420,19 +412,22 @@ export const actions: Actions = {
 
     let dataUrlRedirect = "";
 
-    async function generatePaymentCode(eventName: string, eventId: string): Promise<string> {
-      const sanitizedEventName = eventName.replace(/\s+/g, '-');
+    async function generatePaymentCode(
+      eventName: string,
+      eventId: string
+    ): Promise<string> {
+      const sanitizedEventName = eventName.replace(/\s+/g, "-");
       // Fetch the current count of payments for the event
       const paymentCount = await client.payment.count({
         where: {
-          productId: eventId
-        }
+          productId: eventId,
+        },
       });
-    
+
       // Generate the code using the event name and a zero-padded sequential number
-      const sequentialNumber = (paymentCount + 1).toString().padStart(3, '0');
+      const sequentialNumber = (paymentCount + 1).toString().padStart(3, "0");
       const paymentCode = `${sanitizedEventName}-${sequentialNumber}`;
-    
+
       return paymentCode;
     }
 
