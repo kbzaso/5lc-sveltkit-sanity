@@ -430,7 +430,7 @@
     <Video title={event?.recap_video?.title} url={event?.recap_video?.url} />
   {/if}
   {#if event.videoUrl && !event.active}
-    <section class="my-20">
+    <section>
       <Video title="Streaming" url={event.videoUrl} />
     </section>
   {/if}
