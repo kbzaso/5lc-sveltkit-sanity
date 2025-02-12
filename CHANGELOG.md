@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Add
 
 - Recap video on result page
+- Staff that work on the event Slider
 
 ## [0.0.89] - 2025-01-30
 

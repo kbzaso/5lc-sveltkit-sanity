@@ -518,20 +518,6 @@ export default defineType({
       hidden: ({ document }) => document?.active === true,
     },
     {
-      name: "referenceStaff",
-      title: "Staff",
-      type: "array",
-      description: "Equipo que participo en el evento",
-      hidden: ({ document }) => document?.active === true,
-      validation: (Rule) => Rule.unique(),
-      of: [
-        {
-          type: "reference",
-          to: [{ type: "staff" }],
-        },
-      ],
-    },
-    {
       name: "attraction",
       title: "Atracciones o Facilidades",
       type: "array",

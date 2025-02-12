@@ -31,9 +31,16 @@
   import PromotionalVideo from "$lib/components/events/PromotionalVideo.svelte";
   import Attraction from "$lib/components/events/Attraction.svelte";
   import Agenda from "$lib/components/events/Agenda.svelte";
+  import Slider from "$lib/components/equipo/Slider.svelte";
 
   export let data: PageData;
   export let form;
+
+  const url = {
+    wrestler: "/equipo/luchadores/",
+    referee: "/equipo/arbitros/",
+    annonceurs: "/equipo/presentadores/",
+  };
 
   $: ({ event, validatedDiscount } = data);
 
@@ -409,12 +416,18 @@
       </section>
     {/if}
   </div>
+  {#if !event?.active && event?.cartelera?.referenceStaff}
+  <h3 class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4">
+    <span aria-hidden="true"
+        class="font-[AtomicMarkerExtras] text-primary text-5xl">E</span
+      >
+    Equipo que participó
+  </h3>
+    <Slider items={event.cartelera?.referenceStaff} reverse={true} />
+  {/if}
   <!-- VIDEO RECAP -->
   {#if event?.recap_video && !event.active}
-    <Video
-      title={event?.recap_video?.title}
-      url={event?.recap_video?.url}
-    />
+    <Video title={event?.recap_video?.title} url={event?.recap_video?.url} />
   {/if}
   {#if event.videoUrl && !event.active}
     <section class="my-20">
