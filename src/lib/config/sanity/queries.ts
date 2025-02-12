@@ -82,6 +82,7 @@ export const eventFields = groq`
   },
   sponsors_array,
   promotion_video,
+  recap_video,
   "faq": faq[] -> {
     title,
     faq {

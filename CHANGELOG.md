@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Recap video on result page
+
 ## [0.0.89] - 2025-01-30
 
 ### Fix

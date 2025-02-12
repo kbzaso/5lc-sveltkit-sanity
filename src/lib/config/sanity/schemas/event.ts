@@ -481,6 +481,24 @@ export default defineType({
       ],
     },
     {
+      name: "recap_video",
+      type: "object",
+      title: "Video resumen",
+      hidden: ({ document }) => document?.active === true,
+      fields: [
+        {
+          name: "title",
+          type: "string",
+          title: "Titulo del video.",
+        },
+        {
+          name: "url",
+          type: "url",
+          title: "URL del video",
+        },
+      ],
+    },
+    {
       name: "videoUrl",
       type: "url",
       title: "URL de la grabación del evento",

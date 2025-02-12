@@ -34,7 +34,7 @@ export const load: PageServerLoad = async ({ parent, params, url }) => {
 
     if(result){
       // Cachea la data por 1 semana
-      await kv.set(params.slug, JSON.stringify(result), { ex: 604800 });
+      await kv.set(params.slug, JSON.stringify(result), { ex: 86400 });
       return {
         event: result,
       }
