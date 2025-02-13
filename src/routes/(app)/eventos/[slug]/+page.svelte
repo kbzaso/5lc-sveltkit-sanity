@@ -280,7 +280,7 @@
       </div>
 
       {#if event?.active}
-        <div class="container mx-auto px-4 mt-36 lg:mt-10">
+        <div id="buy" class=" scroll-mt-20 container mx-auto px-4 mt-36 lg:mt-10">
           <h3 class="text-3xl font-ibm italic text-white mask text-center">
             <span
               aria-hidden="true"
@@ -395,6 +395,19 @@
       <ChatBubble />
     {/if}
 
+    {#if !event?.active && event?.cartelera?.referenceStaff}
+      <h3
+        class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4"
+      >
+        <span
+          aria-hidden="true"
+          class="font-[AtomicMarkerExtras] text-primary text-5xl">E</span
+        >
+        Equipo que participó
+      </h3>
+      <Slider items={event.cartelera?.referenceStaff} reverse={true} />
+    {/if}
+
     {#if hasPhotos.length > 0}
       <section class="md:mt-20">
         <div class="flex items-center justify-center">
@@ -416,15 +429,6 @@
       </section>
     {/if}
   </div>
-  {#if !event?.active && event?.cartelera?.referenceStaff}
-  <h3 class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4">
-    <span aria-hidden="true"
-        class="font-[AtomicMarkerExtras] text-primary text-5xl">E</span
-      >
-    Equipo que participó
-  </h3>
-    <Slider items={event.cartelera?.referenceStaff} reverse={true} />
-  {/if}
   <!-- VIDEO RECAP -->
   {#if event?.recap_video && !event.active}
     <Video title={event?.recap_video?.title} url={event?.recap_video?.url} />

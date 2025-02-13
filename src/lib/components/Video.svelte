@@ -11,7 +11,7 @@
 </script>
 
 <section
-  class="container mx-auto max-w-6xl flex flex-col items-center relative"
+  class="container mx-auto max-w-6xl flex flex-col items-center relative px-4"
 >
   <h3 class="text-4xl text-center font-bold text-white mask font-ibm italic mb-4 pl-4">
     <!-- <span aria-hidden="true"

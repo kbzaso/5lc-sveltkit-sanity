@@ -39,6 +39,7 @@
     "svelte-check": "^2.10.3",
     "svelte-image-gallery": "^1.7.0",
     "svelte-preprocess": "^4.10.7",
+    "svelte-render-scan": "^1.0.4",
     "svelte-seo": "^1.5.3",
     "svelte-tiny-slider": "^1.1.5",
     "svelte-youtube-embed": "^0.3.0",

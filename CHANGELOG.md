@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Add
+
+- Link to buy on Countdown component
+
+### Fix
+
+- Margin x on video component on mobile
+
 ## [0.0.90] - 2025-02-12
 
 ### Fix

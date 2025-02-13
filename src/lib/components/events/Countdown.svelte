@@ -51,7 +51,7 @@
   }
 </script>
 
-<div
+<a href="#buy"
   class="fixed backdrop-blur-lg z-20 w-full bottom-0 md:w-96 md:right-10 md:bottom-10 flex items-center justify-center"
 >
   <div
@@ -70,4 +70,4 @@
       {/each}
     </div>
   </div>
-</div>
+</a>
